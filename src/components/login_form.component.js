@@ -2,6 +2,7 @@ import React from "react";
 import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useHistory } from "react-router-dom"
 
 const LoginForm = () => {
     return (
@@ -32,6 +33,7 @@ const LoginForm = () => {
                                 .then(res => {
                                     alert(res.data);
                                     console.log(res.headers["token"]);
+                                    history.push("/");
                                 })
                                 .catch(err => {
                                     if (err.response) {
