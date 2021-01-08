@@ -1,38 +1,9 @@
 import React from "react";
 import axios from "../axios";
-import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const LoginForm = () => {
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: ""
-        },
-        onSubmit: values => {
-            axios.post("/staff/login", {
-                "email": values.email,
-                "password": values.password
-            })
-                .then(res => {
-                    alert(res.data);
-                    console.log(res.headers["token"]);
-                })
-                .catch(err => {
-                    if (err.response) {
-                        alert(err.response.data);
-                        console.log(err.response);
-                    }
-                    else if (err.request) {
-                        console.log(err.request);
-                    }
-                    else {
-                        console.log(err.message);
-                    }
-                    console.log(err.toJSON());
-                });
-        },
-    });
-
     return (
         <div className="container">
             <div className="row">
@@ -41,43 +12,57 @@ const LoginForm = () => {
                         Login
                     </div>
                     <div className="card-body">
-                        <form onSubmit={formik.handleSubmit}>
-                            <label htmlFor="email">Email Address</label><br />
-                            <input
-                                id="email"
-                                name="email"
-                                type="email"
-                                onChange={formik.handleChange}
-                                value={formik.values.email}
-                            /><br />
-                            <label htmlFor="password">Password</label><br />
-                            <input
-                                id="password"
-                                name="password"
-                                type="password"
-                                onChange={formik.handleChange}
-                                value={formik.values.password}
-                            /><br />
-                            <div className="">
-                            <   button type="submit">Submit</button>
-                            </div>
-                        </form>
+                        <Formik
+                            initialValues={{
+                                email: "",
+                                password: ""
+                            }}
+                            validationSchema={Yup.object({
+                                email: Yup.string()
+                                    .email("Invalid email address")
+                                    .required("Required"),
+                                password: Yup.string()
+                                    .required("Required")
+                            })}
+                            onSubmit={values => {
+                                axios.post("/staff/login", {
+                                    "email": values.email,
+                                    "password": values.password
+                                })
+                                .then(res => {
+                                    alert(res.data);
+                                    console.log(res.headers["token"]);
+                                })
+                                .catch(err => {
+                                    if (err.response) {
+                                        alert(err.response.data);
+                                        console.log(err.response);
+                                    }
+                                    else if (err.request) {
+                                        console.log(err.request);
+                                    }
+                                    else {
+                                        console.log(err.message);
+                                    }
+                                    console.log(err.toJSON());
+                                });
+                            }}
+                        >
+                            <Form>
+                            <label htmlFor="email">Email Address</label> <br/>
+                            <Field name="email" type="email" /> <br/>
+                            <ErrorMessage name="email" /> <br/> <br/>
+                            <label htmlFor="password">Password</label> <br/>
+                            <Field name="password" type="password" /> <br/>
+                            <ErrorMessage name="password" /> <br/> <br/>
+                            <button type="submit">Submit</button> <br/>
+                            </Form>
+                        </Formik>
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
-// class LoginForm extends React.Component {
-//     render() {
-//         return (
-//             <div>
-//                 <h1>Login Form</h1>
-//                 <Formik></Formik>
-//             </div>
-//         );
-//     }
-// }
 
 export default LoginForm;
