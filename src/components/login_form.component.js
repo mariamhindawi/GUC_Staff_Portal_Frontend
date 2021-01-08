@@ -1,8 +1,11 @@
 import React from "react";
 import axios from "../axios";
 import { useFormik } from "formik";
+import { useHistory } from 'react-router-dom'
 
 const LoginForm = () => {
+    const history = useHistory()
+   
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -16,6 +19,8 @@ const LoginForm = () => {
                 .then(res => {
                     alert(res.data);
                     console.log(res.headers["token"]);
+                    history.push("/");
+
                 })
                 .catch(err => {
                     if (err.response) {
@@ -59,7 +64,7 @@ const LoginForm = () => {
                                 value={formik.values.password}
                             /><br />
                             <div className="">
-                            <   button type="submit">Submit</button>
+                                <   button type="submit">Submit</button>
                             </div>
                         </form>
                     </div>
