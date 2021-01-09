@@ -1,19 +1,18 @@
 import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import LoginForm from "./components/login_form.component";
-import Header from "./components/HeaderComponent"
-import Home from "./components/HomeComponent"
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Header from "./components/header.component";
+import Home from "./components/home.component";
 
 function App() {
   return (
-    <BrowserRouter>
-      <div className="App">
-        <Switch>
-          <Route exact path="/login" component={LoginForm}/>
-          <Route exact path="/" component={()=>(<><Header /><Home/></>)}/>
-        </Switch>
+    <Router>
+      <div className="container">
+        <Route path="/login" component={LoginForm}/>
+        <Route path="/staff" component={Header}/>
+        <Route exact path="/staff/home" component={Home}/>
       </div>
-    </BrowserRouter>
+    </Router>
   );
 }
 

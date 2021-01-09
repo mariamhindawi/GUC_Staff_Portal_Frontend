@@ -1,3 +1,41 @@
 .navbar-dark {
     background-color: #dcb228;
 }
+
+.align-vertical-center {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%) ;
+}
+
+.rounded-border {
+    border-radius: 20px;
+}
+
+.bottom-border {
+    border: 0px;
+    border-bottom:2px solid black;
+    outline: none;
+}
+
+.login-icon {
+    margin-right: 15px;
+}
+
+#login-container {
+    position: absolute;
+    top: 45%;
+    transform: translate(0, -50%) ;
+}
+
+#login-card-title {
+    margin-top:5%;
+    font-size: 25px;
+    margin-bottom: -2%;
+}
+
+#login-button {
+    margin-top: 10%;
+    padding: 7px;
+    width: 100%;
+}

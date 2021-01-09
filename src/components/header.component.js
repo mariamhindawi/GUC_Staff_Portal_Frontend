@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
     Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
     Button, Modal, ModalHeader, ModalBody,
@@ -6,7 +6,7 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 
-class HeaderComponent extends Component {
+class Header extends React.Component {
     constructor(props) {
         super(props);
 
@@ -50,4 +50,4 @@ class HeaderComponent extends Component {
     }
 }
 
-export default HeaderComponent
+export default Header;
