@@ -18,30 +18,46 @@ class Header extends React.Component {
         this.toggleNav = this.toggleNav.bind(this);
     }
 
+    handleLogOut() {
+        sessionStorage.removeItem("token");
+    }   
+    
     toggleNav() {
         this.setState({
             isNavOpen: !this.state.isNavOpen
         });
     }
-
+    
     render() {
         return (
             <Navbar dark expand="md">
                 <div className="container">
                     <NavbarToggler onClick={this.toggleNav} />
-                    <NavbarBrand className="mr-auto" href="/"><img src="logo192.png" height="40" width="40" alt="GUC Staff Portal" /></NavbarBrand>
+                    <NavbarBrand className="mr-auto" href="/"><img src="logo192.png" height="40" width="40" alt='GUC Staff Portal' /></NavbarBrand>
                     <Collapse isOpen={this.state.isNavOpen} navbar>
                         <Nav navbar>
                             <NavItem>
-                                {/* <NavLink className="nav-link" to="/home"> */}
+                                <NavLink className="nav-link" to='/'>
                                     <span className="fa fa-home fa-lg"></span>
-                                     {/* Home</NavLink> */}
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to='/'>
+                                    <span className="fa fa-home fa-lg"></span>
+                                </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink className="nav-link" to='/'>
+                                    <span className="fa fa-home fa-lg"></span>
+                                </NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>
                     <Nav className="ml-auto" navbar>
                         <NavItem>
-                            <Button outline onClick={this.toggleModal}><span className="fa fa-sign-in fa-lg"></span> Log out</Button>
+                            <NavLink className="nav-link" to="/login">
+                                <Button outline onClick={this.handleLogOut}><span className="fa fa-sign-in fa-lg"></span> Log out</Button>
+                            </NavLink>
                         </NavItem>
                     </Nav>
                 </div>

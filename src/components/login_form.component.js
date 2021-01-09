@@ -3,53 +3,55 @@ import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-
-const validationSchema = Yup.object({
-    email: Yup.string()
-        .email("Invalid email address")
-        .required("This field is required"),
-    password: Yup.string()
-        .required("This field is required")
-});
-
-const handleSubmit = values => {
-    const history = useHistory();
-    axios.post("/staff/login", {
-        "email": values.email,
-        "password": values.password
-    })
-    .then(res => {
-        alert(res.data);
-        console.log(res.headers["token"]);
-        history.push("/staff/home");
-    })
-    .catch(err => {
-        if (err.response) {
-            alert(err.response.data);
-            console.log(err.response);
-        }
-        else if (err.request) {
-            console.log(err.request);
-        }
-        else {
-            console.log(err.message);
-        }
-        console.log(err.toJSON());
-    });
-};
-
-const handleFocus = (e) => {
-    e.target.placeholder = "";
-};
-
-const handleBlur = (e, setFieldTouched) => {
-    const name = e.target.name;
-    e.target.placeholder = name.charAt(0).toUpperCase() + name.slice(1);
-    setFieldTouched(e.target.name);
-};
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const LoginForm = () => {
+    const history = useHistory();
+
+    const validationSchema = Yup.object({
+        email: Yup.string()
+            .email("Invalid email address")
+            .required("This field is required"),
+        password: Yup.string()
+            .required("This field is required")
+    });
+    
+    const handleSubmit = values => {
+        axios.post("/staff/login", {
+            "email": values.email,
+            "password": values.password
+        })
+        .then(res => {
+            console.log("done");
+            alert(res.data);
+            sessionStorage.setItem("token", res.headers["token"]);
+            history.push("/staff/home");
+        })
+        .catch(err => {
+            if (err.response) {
+                alert(err.response.data);
+                console.log(err.response);
+            }
+            else if (err.request) {
+                console.log(err.request);
+            }
+            else {
+                console.log(err.message);
+            }
+            console.log(err.toJSON());
+        });
+    };
+    
+    const handleFocus = (e) => {
+        e.target.placeholder = "";
+    };
+    
+    const handleBlur = (e, setFieldTouched) => {
+        const name = e.target.name;
+        e.target.placeholder = name.charAt(0).toUpperCase() + name.slice(1);
+        setFieldTouched(e.target.name);
+    };
+
     return (
         <div id="login-container" className="container">
             <div className="row">
