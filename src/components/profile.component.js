@@ -31,7 +31,7 @@ class profileComponent extends React.Component {
                             <br />
                             <br />
                             <br />
-                            <Spinner color="warning" />
+                            <Spinner color="primary" />
                         </Col>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ class profileComponent extends React.Component {
             return (
                 <div className="container">
                     <div className="row mt-5">
-                        <Col md={{ size: 6, offset: 3 }}>
+                    <Col md={{ size: 6, offset: 3 }}>
                             <Card className="bg-warning p-1">
                                 <CardBody>
                                     <CardTitle tag="h1">{user.name}</CardTitle>
@@ -69,7 +69,8 @@ class profileComponent extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                    </div></div>
+                    </div>
+                </div>
             )
         }
     }

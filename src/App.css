@@ -1,7 +1,14 @@
-.navbar-dark {
-    background-color: #dcb228;
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
-
+#root {
+    height: 100vh;
+    background: rgb(115,149,174);
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+}
 .align-vertical-center {
     position: absolute;
     top: 50%;
@@ -12,6 +19,11 @@
     border-radius: 20px;
 }
 
+.rounded-top-border{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
 .bottom-border {
     border: 0px;
     border-bottom:2px solid black;
@@ -19,23 +31,81 @@
 }
 
 .login-icon {
-    margin-right: 15px;
+    margin-right: 5px;
+}
+
+.login-input-error-message {
+    height: 20px;
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 12px;
+    color:red;
+}
+
+.navbar-border {
+    background: rgb(115,149,174);
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
 }
 
 #login-container {
     position: absolute;
     top: 45%;
     transform: translate(0, -50%) ;
+    -webkit-animation: login-container 1s ease;
 }
 
 #login-card-title {
     margin-top:5%;
     font-size: 25px;
-    margin-bottom: -2%;
+    margin-bottom: 0;
 }
 
 #login-button {
     margin-top: 10%;
     padding: 7px;
     width: 100%;
+    outline: none;
+    font-weight: bold;
+    background-color: #88bdbc
+    ;
+  
+}
+@keyframes login-container
+{
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 45%;
+  }
+}
+
+#login-error-messages {
+        height: 10px;
+        margin-left: 0px;
+        font-weight: bold;
+        font-size: 12px;
+        color:red;
+}
+
+@media (max-width: 375px) {
+
+    .navbar-staff-portal{
+        font-size: 9px;
+    }
+    #navbar-logo{
+        height: 14px;
+        width: 14px;
+    }
+}
+@media (max-width: 322px) {
+
+    .login-input-error-message {
+        height: 20px;
+        margin-left: 0px;
+        font-weight: bold;
+        font-size: 12px;
+        color:red;
+    }
+    
 }
