@@ -13,6 +13,8 @@ class HomePage extends React.Component {
                     <Link to={`${this.props.match.url}/profile`}>Profile</Link>
                     <br/> <br/>
                     <Link to={`${this.props.match.url}/hod-courses`}>HOD courses</Link>
+                    <br></br>
+                    <Link to="/hr-rooms">HR Rooms</Link>
                 </div>
                 <Router>
                     <Route exact path={`${this.props.match.path}/profile`}> <Profile /> </Route>
