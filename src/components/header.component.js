@@ -1,10 +1,10 @@
 import React from "react";
 import {
-    Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, Jumbotron,
-    Button, Modal, ModalHeader, ModalBody,
-    Form, FormGroup, Input, Label
+    Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem,
+    Button
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Header extends React.Component {
     constructor(props) {
@@ -33,22 +33,17 @@ class Header extends React.Component {
             <Navbar dark expand="md">
                 <div className="container">
                     <NavbarToggler onClick={this.toggleNav} />
-                    <NavbarBrand className="mr-auto" href="/"><img src="logo192.png" height="40" width="40" alt='GUC Staff Portal' /></NavbarBrand>
+                    <NavbarBrand className="mr-auto" href="/"><img src="https://image.winudf.com/v2/image1/ZWcuZWR1Lmd1Y19pY29uXzE1NjcwMTM4NTVfMDc0/icon.png?w=170&fakeurl=1" height="40" width="40" alt='GUC Staff Portal' /></NavbarBrand>
                     <Collapse isOpen={this.state.isNavOpen} navbar>
                         <Nav navbar>
                             <NavItem>
-                                <NavLink className="nav-link" to='/'>
-                                    <span className="fa fa-home fa-lg"></span>
+                                <NavLink className="nav-link" to='/staff/profile'>
+                                    <FontAwesomeIcon className="login-icon" icon="user"/>
                                 </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink className="nav-link" to='/'>
-                                    <span className="fa fa-home fa-lg"></span>
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink className="nav-link" to='/'>
-                                    <span className="fa fa-home fa-lg"></span>
+                                <NavLink className="nav-link" to='/staff/requests'>
+                                    Requests
                                 </NavLink>
                             </NavItem>
                         </Nav>

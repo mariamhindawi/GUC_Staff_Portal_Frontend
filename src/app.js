@@ -5,6 +5,7 @@ import Header from "./components/header.component";
 import HomePage from "./components/home.component";
 import Profile from "./components/profile.component"
 import Root from "./components/root.component"
+import Requests from "./components/requests.component"
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/staff" component={Header}/>
         <Route exact path="/staff/home" component={HomePage}/>
         <Route exact path="/staff/profile" component={Profile}/>
+        <Route exact path="/staff/requests" component={Requests}/>
       </div>
     </Router>
   );
