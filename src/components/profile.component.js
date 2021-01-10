@@ -17,11 +17,11 @@ class profileComponent extends React.Component {
     componentDidMount() {
         Axios.get('/staff/view-profile', {
             headers: {
-                'token': sessionStorage.token
+                token: sessionStorage.getItem("token")
             }
         }).then(res => this.setState({ user: res.data.user, office: res.data.office }))
     }
-
+    
     render() {
         if (!this.state.user) {
             return (

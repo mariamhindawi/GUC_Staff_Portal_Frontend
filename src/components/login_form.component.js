@@ -22,7 +22,6 @@ const LoginForm = () => {
             "password": values.password
         })
         .then(res => {
-            console.log("done");
             alert(res.data);
             sessionStorage.setItem("token", res.headers["token"]);
             history.push("/staff/home");
@@ -38,7 +37,7 @@ const LoginForm = () => {
             else {
                 console.log(err.message);
             }
-            console.log(err.toJSON());
+            console.log(err);
         });
     };
     
