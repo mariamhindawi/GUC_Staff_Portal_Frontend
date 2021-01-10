@@ -6,6 +6,7 @@ import HomePage from "./components/home.component";
 import Root from "./components/root.component"
 import Requests from "./components/requests.component";
 import Profile from "./components/profile.component";
+import Schedule from "./components/schedule.component";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/staff/home"> <HomePage /> </Route>
         <Route path="/staff/profile" component={Profile}/>
         <Route path="/staff/requests" component={Requests}/>
+        <Route path="/staff/schedule" component={Schedule}/>
       </Router>
     </div>
   );
