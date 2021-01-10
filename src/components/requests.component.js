@@ -105,31 +105,32 @@ class requestsComponent extends React.Component {
             )
         }
         else if (!this.state.loading) {
-            <div className="container">
-                <div className="row">
-                    <Breadcrumb>
-                        <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
-                        <BreadcrumbItem active>Requests</BreadcrumbItem>
-                    </Breadcrumb>
-                </div>
-                <div className="row">
-                    <div className="col-12">
-                        <Table striped>
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Message</th>
-                                    <th>Day</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                        </Table>
+            return (
+                <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
+                            <BreadcrumbItem active>Requests</BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <Table striped>
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Message</th>
+                                        <th>Day</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </Table>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            );
         }
         else {
             return <div className="container">

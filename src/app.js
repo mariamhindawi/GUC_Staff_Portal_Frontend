@@ -4,7 +4,8 @@ import LoginForm from "./components/login_form.component";
 import Header from "./components/header.component";
 import HomePage from "./components/home.component";
 import Root from "./components/root.component"
-import Requests from "./components/requests.component"
+import Requests from "./components/requests.component";
+import Profile from "./components/profile.component";
 
 function App() {
   return (

@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
-class profileComponent extends React.Component {
+class Profile extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -94,4 +94,4 @@ class profileComponent extends React.Component {
     }
 }
 
-export default profileComponent
+export default Profile
