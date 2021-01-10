@@ -4,6 +4,7 @@ import LoginForm from "./components/login_form.component";
 import Header from "./components/header.component";
 import HomePage from "./components/home.component";
 import Root from "./components/root.component"
+import Requests from "./components/requests.component"
 
 function App() {
   return (
@@ -13,6 +14,8 @@ function App() {
         <Route exact path="/login"> <LoginForm/> </Route>
         <Route path="/staff"> <Header/> </Route>
         <Route path="/staff/home"> <HomePage /> </Route>
+        <Route path="/staff/profile" component={Profile}/>
+        <Route path="/staff/requests" component={Requests}/>
       </Router>
     </div>
   );

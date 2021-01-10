@@ -2,8 +2,10 @@ import React from 'react'
 import Axios from '../axios'
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, List, Col, Spinner
+    CardTitle, CardSubtitle, Button, List, Col, Spinner,
+    Breadcrumb, BreadcrumbItem
 } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
 
 class profileComponent extends React.Component {
     constructor(props) {
@@ -26,6 +28,12 @@ class profileComponent extends React.Component {
         if (!this.state.user) {
             return (
                 <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
+                            <BreadcrumbItem active>Profile</BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
                     <div className="row mt-10">
                         <Col md={{ offset: 6 }}>
                             <br />
@@ -42,6 +50,12 @@ class profileComponent extends React.Component {
             const office = this.state.office
             return (
                 <div className="container">
+                    <div className="row">
+                        <Breadcrumb>
+                            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
+                            <BreadcrumbItem active>Profile</BreadcrumbItem>
+                        </Breadcrumb>
+                    </div>
                     <div className="row mt-5">
                     <Col md={{ size: 6, offset: 3 }}>
                             <Card className="bg-warning p-1">
@@ -64,6 +78,10 @@ class profileComponent extends React.Component {
                                             <dd className="col-6">{user.annualLeaveBalance}</dd>
                                             <dt className="col-6">Annual Leave Balance:</dt>
                                             <dd className="col-6">{user.accidentalLeaveBalance}</dd>
+                                            <dt className="col-6">Faculty:</dt>
+                                            <dd className="col-6">{user.faculty}</dd>
+                                            <dt className="col-6">Department:</dt>
+                                            <dd className="col-6">{user.department}</dd>
                                         </> : undefined}
                                     </dl>
                                 </CardBody>
