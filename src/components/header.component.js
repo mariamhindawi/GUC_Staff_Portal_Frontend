@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
    NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem
 } from "reactstrap";
@@ -22,12 +22,12 @@ const Header = (props) => {
             <div className="d-flex flex-row justify-content-between navbar-border navbar-staff-portal">
                 <ul className="nav">
                     <NavItem  className="nav-item"> 
-                        <a className="nav-link text-white">  <img id="navbar-logo"src={Logo} height="20" width="20" alt='GUC Staff Portal'></img> &nbsp; GUC Staff Portal</a>
+                        <a className="nav-link text-white">  <img id="navbar-logo"src={Logo} height="20" width="20" alt="GUC Staff Portal"></img> &nbsp; GUC Staff Portal</a>
                     </NavItem>
                 </ul>
                 <ul className="nav">
                     <NavItem>
-                        <NavLink className="nav-link" to='/'>
+                        <NavLink className="nav-link" to="/">
                         <span className="active nav-icon text-white" href="#" ><FontAwesomeIcon icon="home"/></span>
                         </NavLink>
                     </NavItem>

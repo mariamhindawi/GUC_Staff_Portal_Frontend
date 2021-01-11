@@ -1,11 +1,11 @@
-import React from 'react'
-import Axios from '../axios'
+import React from "react"
+import Axios from "../axios"
 import {
     Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button, List, Col, Spinner,
     Breadcrumb, BreadcrumbItem
-} from 'reactstrap';
-import { NavLink } from 'react-router-dom';
+} from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class Profile extends React.Component {
     }
 
     componentDidMount() {
-        Axios.get('/staff/view-profile', {
+        Axios.get("/staff/view-profile", {
             headers: {
                 token: sessionStorage.getItem("token")
             }
@@ -61,7 +61,7 @@ class Profile extends React.Component {
                             <Card className="bg-warning p-1">
                                 <CardBody>
                                     <CardTitle tag="h1">{user.name}</CardTitle>
-                                    <CardSubtitle tag="h3">{user.role ? user.role : 'HR'}</CardSubtitle>
+                                    <CardSubtitle tag="h3">{user.role ? user.role : "HR"}</CardSubtitle>
                                     <dl className="row p-1">
                                         <dt className="col-6">ID:</dt>
                                         <dd className="col-6">{user.id}</dd>

@@ -4,10 +4,10 @@ import Profile from "./profile.component";
 import Requests from "./requests.component";
 import Schedule from "./schedule.component";
 import HODCourses from "./hod_courses.component";
-import HRrooms from './hr_rooms.component';
-import HRacademics from './hr_academics.component';
-import HRfaculty from './hr_faculty.component';
-import HRdepartments from './hr_departments.component';
+import HRrooms from "./hr_rooms.component";
+import HRacademics from "./hr_academics.component";
+import HRfaculty from "./hr_faculty.component";
+import HRdepartments from "./hr_departments.component";
 import RoomForm from "./room_form.component";
 
 class HomePage extends React.Component {

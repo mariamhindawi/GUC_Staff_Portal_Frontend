@@ -1,7 +1,7 @@
-import React from 'react'
-import Axios from '../axios'
-import { Col, Table, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from 'reactstrap'
-import { NavLink } from 'react-router-dom'
+import React from "react"
+import Axios from "../axios"
+import { Col, Table, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from "reactstrap"
+import { NavLink } from "react-router-dom"
 
 class requestsComponent extends React.Component {
     constructor(props) {
@@ -15,9 +15,9 @@ class requestsComponent extends React.Component {
         }
     }
     componentDidMount() {
-        Axios.get('/academic/all-requests/All', {
+        Axios.get("/academic/all-requests/All", {
             headers: {
-                'token': sessionStorage.token
+                "token": sessionStorage.token
             }
         }).then(res => this.setState({ requests: res.data, loading: false }))
     }
@@ -29,12 +29,12 @@ class requestsComponent extends React.Component {
         Axios.delete(`/academic/cancel-request/${id}`,
             {
                 headers: {
-                    'token': sessionStorage.token
+                    "token": sessionStorage.token
                 }
             }).then(res => alert(res.data)).then(() => {
-                Axios.get('/academic/all-requests/All', {
+                Axios.get("/academic/all-requests/All", {
                     headers: {
-                        'token': sessionStorage.token
+                        "token": sessionStorage.token
                     }
                 }).then(res => this.setState({ requests: res.data, loading: false }))
             })
@@ -48,11 +48,11 @@ class requestsComponent extends React.Component {
                         <th>{request.id}</th>
                         <td>{request.type}</td>
                         <td>{request.status}</td>
-                        <td>{request.type === 'slotLinkingRequest' ? request.ccComent : request.HODComment}</td>
+                        <td>{request.type === "slotLinkingRequest" ? request.ccComent : request.HODComment}</td>
                         <td>{request.day.split("T")[0]}</td>
-                        {request.type !== 'slotLinkingRequest' && request.type !== 'dayOffChangeRequest' &&
+                        {request.type !== "slotLinkingRequest" && request.type !== "dayOffChangeRequest" &&
                             new Date(request.day) > new Date() ||
-                            request.status === 'Under review' ?
+                            request.status === "Under review" ?
                             <td><Button onClick={() => this.cancelRequest(request.id)}>Cancel</Button></td> : <td></td>}
                     </tr>
                 )
