@@ -45,11 +45,9 @@ const Header = (props) => {
                                 <DropdownItem header>User Name</DropdownItem>
                                 <DropdownItem href="/staff/profile">View Profile</DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem  href="/"><span onClick={handleLogOut}><FontAwesomeIcon icon="sign-out-alt"/> &nbsp; Log out</span></DropdownItem>
+                                <DropdownItem  href="/login"><span onClick={handleLogOut}><FontAwesomeIcon icon="sign-out-alt"/> &nbsp; Log out</span></DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown >
-
-  
                     </NavItem>
                 </ul>
            </div>
