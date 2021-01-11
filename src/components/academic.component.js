@@ -1,7 +1,6 @@
 import React from "react";
 
 const Academic = (props) => {
-    console.log(props.id);
     return (
         <div>
             <h6>ID:</h6>

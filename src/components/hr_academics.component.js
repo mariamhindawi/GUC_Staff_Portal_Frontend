@@ -1,6 +1,6 @@
-import React from 'react';
-import axios from '../axios';
-import AcademicList from '../components/academic_list.component';
+import React from "react";
+import axios from "../axios";
+import AcademicList from "../components/academic_list.component";
 
 class HRacademics extends React.Component {
     constructor(props) {
@@ -12,36 +12,32 @@ class HRacademics extends React.Component {
         }
     }
 
-    async componentDidMount() {
-        await axios.get("/fe/get-academics",{
+    componentDidMount() {
+        axios.get("/fe/get-academics", {
             headers: {
-                token : sessionStorage.getItem("token")
+                token: sessionStorage.getItem("token")
             }
         })
-        .then(res => {
-            this.setState({
-                academics: res.data.academics,
-                departments: res.data.departments,
-                rooms: res.data.rooms
+            .then(res => {
+                this.setState({
+                    academics: res.data.academics,
+                    departments: res.data.departments,
+                    rooms: res.data.rooms
+                });
+            })
+            .catch(err => {
+                if (err.response) {
+                    console.log(err.response);
+                }
+                else if (err.request) {
+                    console.log(err.request);
+                }
+                else {
+                    console.log(err.message);
+                }
+                console.log(err);
             });
-        })
-        .catch(err => {
-            if (err.response) {
-                alert(err.response.data);
-                console.log(err.response);
-            }
-            else if (err.request) {
-                console.log(err.request);
-            }
-            else {
-                console.log(err.message);
-            }
-            console.log(err);
-        });
-
-        
-    }   
-
+    }
 
     render() {
         return (

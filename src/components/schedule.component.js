@@ -18,7 +18,7 @@ class Schedule extends React.Component {
     viewSchedule(day, slot) {
         axios.get("/academic/schedule", {
             headers: {
-                'token': sessionStorage.token
+                "token": sessionStorage.token
             }
         })
             .then(res => {

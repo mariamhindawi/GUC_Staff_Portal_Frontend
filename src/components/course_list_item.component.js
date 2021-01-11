@@ -1,5 +1,4 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
 
 const CourseListItem = (props) => {
 

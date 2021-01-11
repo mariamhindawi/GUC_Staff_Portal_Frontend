@@ -1,6 +1,6 @@
-import React from 'react';
-import axios from '../axios';
-import DepartmentList from '../components/department_list.component';
+import React from "react";
+import axios from "../axios";
+import DepartmentList from "../components/department_list.component";
 
 class HRdepartments extends React.Component {
     constructor(props) {
@@ -12,40 +12,35 @@ class HRdepartments extends React.Component {
         }
     }
 
-    async componentDidMount() {
-        await axios.get("/fe/get-departments",{
+    componentDidMount() {
+        axios.get("/fe/get-departments", {
             headers: {
-                token : sessionStorage.getItem("token")
+                token: sessionStorage.getItem("token")
             }
         })
-        .then(res => {
-            console.log(res.data)
-            this.setState({
-                departments: res.data.departments,
-                faculties: res.data.faculties,
-                heads: res.data.heads
+            .then(res => {
+                this.setState({
+                    departments: res.data.departments,
+                    faculties: res.data.faculties,
+                    heads: res.data.heads
+                });
+            })
+            .catch(err => {
+                if (err.response) {
+                    console.log(err.response);
+                }
+                else if (err.request) {
+                    console.log(err.request);
+                }
+                else {
+                    console.log(err.message);
+                }
+                console.log(err);
             });
-        })
-        .catch(err => {
-            if (err.response) {
-                alert(err.response.data);
-                console.log(err.response);
-            }
-            else if (err.request) {
-                console.log(err.request);
-            }
-            else {
-                console.log(err.message);
-            }
-            console.log(err);
-        });
-
-        
-    }   
+    }
 
 
     render() {
-        console.log(this.state);
         return (
             <div>
                 <DepartmentList departments={this.state.departments} faculties={this.state.faculties} heads={this.state.heads}></DepartmentList>

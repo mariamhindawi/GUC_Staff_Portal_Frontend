@@ -1,8 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Link, Redirect } from "react-router-dom";
 
 const RoomListItem = (props) => {
-
     return (
         <tr>
             <td>{props.room.name}</td>

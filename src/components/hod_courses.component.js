@@ -24,7 +24,6 @@ class HODCourses extends React.Component {
         })
         .catch(err => {
             if (err.response) {
-                alert(err.response.data);
                 console.log(err.response);
             }
             else if (err.request) {
@@ -51,7 +50,6 @@ class HODCourses extends React.Component {
         })
         .catch(err => {
             if (err.response) {
-                alert(err.response.data);
                 console.log(err.response);
             }
             else if (err.request) {
