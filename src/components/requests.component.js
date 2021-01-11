@@ -1,7 +1,8 @@
 import React from 'react'
 import Axios from '../axios'
-import { Col, Table, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from 'reactstrap'
+import { Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from 'reactstrap'
 import { NavLink } from 'react-router-dom'
+import RequestsTableComponent from './requestsTable.component'
 
 class requestsComponent extends React.Component {
     constructor(props) {
@@ -13,13 +14,14 @@ class requestsComponent extends React.Component {
             filter: "",
             loading: true
         }
+        this.cancelRequest = this.cancelRequest.bind(this)
     }
     componentDidMount() {
         Axios.get('/academic/all-requests/All', {
             headers: {
                 'token': sessionStorage.token
             }
-        }).then(res => this.setState({ requests: res.data, loading: false }))
+        }).then(res => this.setState({ requests: res.data, loading: false })).catch(error=>alert(error))
     }
 
     toggleDropDown() {
@@ -36,27 +38,12 @@ class requestsComponent extends React.Component {
                     headers: {
                         'token': sessionStorage.token
                     }
-                }).then(res => this.setState({ requests: res.data, loading: false }))
-            })
+                }).then(res =>{console.log(res); this.setState({ requests: res.data, loading: false })})
+            }).catch(error=>alert(error))
     }
     render() {
-        let requests = this.state.requests
-        if (requests.length !== 0) {
-            requests = requests.filter(request => this.state.filter ? request.status === this.state.filter : true).map(request => {
-                return (
-                    <tr key={request.id}>
-                        <th>{request.id}</th>
-                        <td>{request.type}</td>
-                        <td>{request.status}</td>
-                        <td>{request.type === 'slotLinkingRequest' ? request.ccComent : request.HODComment}</td>
-                        <td>{request.day.split("T")[0]}</td>
-                        {request.type !== 'slotLinkingRequest' && request.type !== 'dayOffChangeRequest' &&
-                            new Date(request.day) > new Date() ||
-                            request.status === 'Under review' ?
-                            <td><Button onClick={() => this.cancelRequest(request.id)}>Cancel</Button></td> : <td></td>}
-                    </tr>
-                )
-            })
+        let requests = this.state.requests.filter(request => this.state.filter ? request.status === this.state.filter : true)
+        if (!this.state.loading) {
             return (
                 <div className="container">
                     <div className="row">
@@ -84,53 +71,11 @@ class requestsComponent extends React.Component {
                     </div>
                     <div className="row">
                         <div className="col-12">
-                            <Table striped>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Message</th>
-                                        <th>Day</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {requests}
-                                </tbody>
-                            </Table>
+                            <RequestsTableComponent requests={requests} cancelRequest={this.cancelRequest}/>
                         </div>
                     </div>
                 </div>
             )
-        }
-        else if (!this.state.loading) {
-            return (
-                <div className="container">
-                    <div className="row">
-                        <Breadcrumb>
-                            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
-                            <BreadcrumbItem active>Requests</BreadcrumbItem>
-                        </Breadcrumb>
-                    </div>
-                    <div className="row">
-                        <div className="col-12">
-                            <Table striped>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Type</th>
-                                        <th>Status</th>
-                                        <th>Message</th>
-                                        <th>Day</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                            </Table>
-                        </div>
-                    </div>
-                </div>
-            );
         }
         else {
             return <div className="container">

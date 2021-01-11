@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link, withRouter } from "react-router-dom";
 import Profile from "./profile.component";
 import HODCourses from "./hod_courses.component";
+import HODRequests from './HODrequests.component'
 
 class HomePage extends React.Component {
     render() {
@@ -13,10 +14,14 @@ class HomePage extends React.Component {
                     <Link to={`${this.props.match.url}/profile`}>Profile</Link>
                     <br/> <br/>
                     <Link to={`${this.props.match.url}/hod-courses`}>HOD courses</Link>
+                    <br /> <br />
+                    <Link to={`${this.props.match.url}/hod-requests`}>HOD requests</Link>
+
                 </div>
                 <Router>
                     <Route exact path={`${this.props.match.path}/profile`}> <Profile /> </Route>
                     <Route exact path={`${this.props.match.path}/hod-courses`}> <HODCourses /> </Route>
+                    <Route exact path={`${this.props.match.path}/hod-requests`}> <HODRequests /> </Route>
                 </Router>
             </div>
         )
