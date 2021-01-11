@@ -7,6 +7,8 @@ import Root from "./components/root.component"
 import Requests from "./components/requests.component";
 import Profile from "./components/profile.component";
 import Schedule from "./components/schedule.component";
+import Attendance from "./components/attendance.component";
+import MissingDays from "./components/missing_days.component";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/staff/profile" component={Profile}/>
         <Route path="/staff/requests" component={Requests}/>
         <Route path="/staff/schedule" component={Schedule}/>
+        <Route path="/staff/attendance" component={Attendance}/>
+        <Route path="/staff/missingdays" component={MissingDays}/>
       </Router>
     </div>
   );
