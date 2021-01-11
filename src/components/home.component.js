@@ -9,6 +9,7 @@ import HRacademics from "./hr_academics.component";
 import HRfaculty from "./hr_faculty.component";
 import HRdepartments from "./hr_departments.component";
 import RoomForm from "./room_form.component";
+import HODRequests from './HODrequests.component'
 
 class HomePage extends React.Component {
     render() {
@@ -35,6 +36,7 @@ class HomePage extends React.Component {
                     <Link to={`${this.props.match.url}/requests`}>Requests</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/schedule`}>Schedule</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/hod-courses`}>HOD courses</Link>
+                    <Link to={`${this.props.match.url}/hod-requests`}>HOD requests</Link>
                     <br />
                     <Link to={`${this.props.match.url}/hr-rooms`}>HR rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/hr-academics`}>HR academics</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -49,6 +51,7 @@ class HomePage extends React.Component {
                     <Route exact path={`${this.props.match.path}/requests`}> <Requests/> </Route>
                     <Route exact path={`${this.props.match.path}/schedule`}> <Schedule/> </Route>
                     <Route exact path={`${this.props.match.path}/hod-courses`}> <HODCourses /> </Route>
+                    <Route exact path={`${this.props.match.path}/hod-requests`}> <HODRequests /> </Route>
                     <Route exact path={`${this.props.match.path}/hr-rooms`}> <HRrooms /> </Route>
                     <Route exact path={`${this.props.match.path}/hr-academics`}> <HRacademics /> </Route>
                     <Route exact path={`${this.props.match.path}/hr-faculties`}> <HRfaculty /> </Route>
