@@ -9,7 +9,6 @@ const RoomListItem = (props) => {
             <td>{props.room.capacity}</td>
             <td>{props.room.remainingCapacity}</td>
             <td>{props.room.type}</td>
-            <td><button>Go to room page</button></td>
         </tr>
     )
 };

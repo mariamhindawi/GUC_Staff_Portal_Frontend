@@ -1,5 +1,5 @@
 import React from "react";
-import RoomListItem from "./course_list_item.component";
+import RoomListItem from "./room_list_item.component";
 
 const RoomList = (props) => {
 

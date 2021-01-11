@@ -1,26 +1,24 @@
 import React from 'react';
 import axios from '../axios';
-import RoomList from '../components/room_list.component';
+import FacultyList from '../components/faculty_list.component';
 
-class HRrooms extends React.Component {
+class HRfaculty extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rooms: []
+            faculties: []
         }
     }
 
     async componentDidMount() {
-        console.log("Mount")
-        await axios.get("/fe/get-rooms",{
+        await axios.get("/fe/get-faculties",{
             headers: {
                 token : sessionStorage.getItem("token")
             }
         })
         .then(res => {
-            console.log(res.data)
             this.setState({
-                rooms: res.data
+                faculties: res.data
             });
         })
         .catch(err => {
@@ -36,15 +34,18 @@ class HRrooms extends React.Component {
             }
             console.log(err);
         });
+
+        
     }   
+
 
     render() {
         return (
             <div>
-                <RoomList rooms={this.state.rooms}></RoomList>
+                <FacultyList faculties={this.state.faculties} ></FacultyList>
             </div>
         )
     }
 }
 
-export default HRrooms;
+export default HRfaculty;
