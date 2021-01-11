@@ -12,10 +12,7 @@ import Record from "./attendance_item.component"
         axios.get('/staff/view-attendance-records' , {
           headers: {
               'token': sessionStorage.token
-          }}, {
-          data: {
-              month:1, year:2020
-            }})
+          }})
           .then(res => {
             
             let x = res.data

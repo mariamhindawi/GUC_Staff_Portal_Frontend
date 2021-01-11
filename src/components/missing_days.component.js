@@ -60,6 +60,22 @@ export default class MissingDays extends React.Component {
                                 <DropdownItem onClick={() => { this.setState({ month: 3 }) }}>3</DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem onClick={() => { this.setState({ month: 4 }) }}>4</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 5 }) }}>5</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 6 }) }}>6</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 7 }) }}>7</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 8 }) }}>8</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 9 }) }}>9</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 10 }) }}>10</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 11 }) }}>11</DropdownItem>
+                                <DropdownItem divider />
+                                <DropdownItem onClick={() => { this.setState({ month: 12 }) }}>12</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </div>
