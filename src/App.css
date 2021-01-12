@@ -88,6 +88,14 @@ input:-webkit-autofill:active  {
         color:red;
 }
 
+.form-message {
+    height: 10px;
+    margin-left: 0px;
+    font-weight: bold;
+    font-size: 12px;
+    color:green;
+}
+
 @media (max-width: 375px) {
 
     .navbar-staff-portal{

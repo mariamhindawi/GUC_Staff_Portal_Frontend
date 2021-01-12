@@ -3,51 +3,45 @@ import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
-const RoomForm = props => {
+const DepartmentForm = props => {
 
     const placeholders = {
-        name: "Room name",
-        capacity: "Capacity"
+        name: "Department name",
+        headOfDepartment: "Head of Department"
     }
 
     const initialValues = { 
-        name: props.room.name,
-        capacity: props.room.capacity,
-        type: props.room.type
+        name: props.department.name,
+        faculty: props.department.faculty,
+        headOfDepartment: props.department.headOfDepartment
     }
 
     const validationSchema = Yup.object({
         name: Yup.string()
             .required("This field is required"),
-        capacity: Yup.number()
-            .typeError("Capacity must be a number")
-            .required("This field is required")
-            .positive("Capacity must be a positive number")
-            .integer("Capacity must be an integer"),
-        type: Yup.string()
-            .required("This field is required")
-            .oneOf(["Office", "Tutorial", "Lab", "Lecture"], "Invalid room type")
+        faculty: Yup.string(),
+        headOfDepartment: Yup.string()
     });
 
     const handleSubmit = values => {
         axios({
             method: props.formType === "add" ? "post" : "put",
-            url: `/hr/${props.formType}-room${props.formType === "add" ? "" : `/${props.room.name}`}`,
+            url: `/hr/${props.formType}-department${props.formType === "add" ? "" : `/${props.department.name}`}`,
             headers: {
                 token: sessionStorage.getItem("token")
             },
             data: {
                 name: values.name,
-                capacity: values.capacity,
-                type: values.type
+                faculty: values.faculty,
+                headOfDepartment: values.headOfDepartment
             }
         })
             .then(response => {
-                document.getElementById("room-form-message").innerHTML = response.data;
+                document.getElementById("department-form-message").innerHTML = response.data;
             })
             .catch(error => {
                 if (error.response) {
-                    document.getElementById("room-form-error-message").innerHTML = error.response.data;
+                    document.getElementById("department-form-error-message").innerHTML = error.response.data;
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -82,26 +76,24 @@ const RoomForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="name"/>
                         </div>
-                        <Field name="capacity" placeholder={placeholders.capacity}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="capacity"/>
-                        </div>
-                        <Field name="type" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                            <option disabled value="">Room type</option>
-                            <option value="Office">Office</option>
-                            <option value="Tutorial">Tutorial Room</option>
-                            <option value="Lab">Lab</option>
-                            <option value="Lecture">Lecture Hall</option>
+                        <Field name="faculty" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                            <option value="">UNASSIGNED</option>
+                            <option value="Engineering">Engineering</option>
+                            <option value="Mimi">Mimi</option>
                         </Field>
                         <div className="form-input-error-message">
-                            <ErrorMessage name="type"/>
+                            <ErrorMessage name="faculty"/>
+                        </div>
+                        <Field name="headOfDepartment" placeholder={placeholders.headOfDepartment}
+                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                        <div className="form-input-error-message">
+                            <ErrorMessage name="headOfDepartment"/>
                         </div>
                         <div>
-                            <button type="submit">{props.formType === "add" ? "Add room" : "Update Room"}</button>
+                            <button type="submit">{props.formType === "add" ? "Add department" : "Update department"}</button>
                         </div>
-                        <div className="form-error-message" id="room-form-error-message"></div>
-                        <div className="form-message" id="room-form-message"></div>
+                        <div className="form-error-message" id="department-form-error-message"></div>
+                        <div className="form-message" id="department-form-message"></div>
                     </Form>
                 )}
             </Formik>
@@ -109,4 +101,4 @@ const RoomForm = props => {
     );
 };
 
-export default RoomForm;
+export default DepartmentForm;
