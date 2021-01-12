@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GUC from "../GUC_Building.jpg";
+import {Button} from 'reactstrap'
 
 const LoginForm = () => {
     const history = useHistory();
@@ -13,7 +14,7 @@ const LoginForm = () => {
         email: "Email",
         password: "Password"
     }
-
+    const error="";
     const validationSchema = Yup.object({
         email: Yup.string()
             .email("Invalid email address")
@@ -85,7 +86,7 @@ const LoginForm = () => {
                                             <ErrorMessage name="password" />
                                         </div>
                                         <div className="text-center">
-                                            <button id="login-button" className="rounded-border border-0" type="submit">LOG IN</button>
+                                            <Button id="login-button" className="rounded border-0" type="submit">LOG IN</Button>
                                             <div className="form-error-message" id="login-form-error-message"></div>
                                         </div>
                                     </Form>

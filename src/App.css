@@ -4,11 +4,8 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
-#root {
-    height: 100vh;
-    background: rgb(115,149,174);
-    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
-}
+
+
 .align-vertical-center {
     position: absolute;
     top: 50%;
@@ -22,12 +19,6 @@ input:-webkit-autofill:active  {
 .rounded-top-border{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-}
-
-.bottom-border {
-    border: 0px;
-    border-bottom:2px solid black;
-    outline: none;
 }
 
 .login-icon {
@@ -46,7 +37,47 @@ input:-webkit-autofill:active  {
     background: rgb(115,149,174);
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
 }
-
+.profile-list li{
+    list-style-type:none;
+}
+.profile-container{
+    position: absolute;
+    top: 15%;
+    border: #88bdbc 3px solid;
+    width: 50%;    
+}
+.profile-input {
+    outline: none;
+}
+.profile-edit-button{
+    float:right;
+}
+.profile-button{
+    background: rgb(115,149,174);
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+    border:none;
+    color: black;
+    font-weight: bolder;
+}
+.navbar-dropdown{
+    margin-right:120px ;
+    }
+   
+    .table thead th{
+        border-bottom:  #88bdbc 1px solid;
+    }
+    .table-row td, .table-row th{
+        border: none;
+        text-align: center;
+    }
+    .table-row td button {
+        outline: none;
+        background: rgb(115,149,174);
+        background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+        border:none;
+        color: black;
+        font-weight: bolder;
+    }
 #login-container {
     position: absolute;
     top: 45%;
@@ -64,10 +95,11 @@ input:-webkit-autofill:active  {
     margin-top: 10%;
     padding: 7px;
     width: 100%;
-    outline: none;
-    font-weight: bold;
-    background-color: #88bdbc
-    ;
+    border:none;
+    color: black;
+    font-weight: bolder;
+    background: rgb(115,149,174);
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
   
 }
 @keyframes login-container
@@ -88,6 +120,33 @@ input:-webkit-autofill:active  {
         color:red;
 }
 
+.table { 
+    width: 100%; 
+    border-collapse: separate; 
+  }
+  .table-container{
+    border: #88bdbc 3px solid;
+    border-radius: 20px;
+}
+  .table-row th { 
+    font-weight: bold;
+  }
+  td, th { 
+    padding: 6px; 
+     
+    text-align: left; 
+  }
+
+tbody .table-row td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+}
 @media (max-width: 375px) {
 
     .navbar-staff-portal{
@@ -96,6 +155,9 @@ input:-webkit-autofill:active  {
     #navbar-logo{
         height: 14px;
         width: 14px;
+    }
+    .navbar-dropdown{
+        margin-right: 135px;
     }
 }
 
@@ -107,4 +169,25 @@ input:-webkit-autofill:active  {
         font-size: 12px;
         color:red;
     }
+}
+@media (max-width: 576px){
+    .profile-container{
+        width:94%;
+    }
+}
+
+@media only screen and (max-width: 760px){
+
+	/* Force table to not be like tables anymore */
+	.table, .table-head, .table tbody, .table-head, .table-row td, .table-row { 
+		display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.table-head .table-row { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+    }
+        
 }
