@@ -25,6 +25,7 @@ class HomePage extends React.Component {
             name: "C7.305",
             capacity: 10,
             remainingCapacity: 5,
+            type: "Office",
         };
 
         const faculty = {

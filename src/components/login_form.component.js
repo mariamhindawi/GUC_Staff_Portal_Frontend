@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -9,6 +9,7 @@ import { Button } from "reactstrap";
 
 const LoginForm = () => {
     const history = useHistory();
+    const [errorMessage, setErrorMessage] = useState("");
 
     const placeholders = {
         email: "Email",
@@ -29,20 +30,19 @@ const LoginForm = () => {
             "password": values.password
         })
             .then(res => {
-                document.getElementById("login-form-error-message").innerHTML = res.data;
                 sessionStorage.setItem("token", res.headers["token"]);
                 history.push("/staff/home");
             })
-            .catch(err => {
-                if (err.response) {
-                    document.getElementById("login-form-error-message").innerHTML = err.response.data;
-                    console.log(err.response);
+            .catch(error => {
+                if (error.response) {
+                    setErrorMessage(error.response.data);
+                    console.log(error.response);
                 }
-                else if (err.request) {
-                    console.log(err.request);
+                else if (error.request) {
+                    console.log(error.request);
                 }
                 else {
-                    console.log(err.message);
+                    console.log(error.message);
                 }
             });
     };
@@ -87,7 +87,7 @@ const LoginForm = () => {
                                         </div>
                                         <div className="text-center">
                                             <Button id="login-button" className="rounded border-0" type="submit">LOG IN</Button>
-                                            <div className="form-error-message" id="login-form-error-message"></div>
+                                            <div className="form-error-message">{errorMessage}</div>
                                         </div>
                                     </Form>
                                 )}

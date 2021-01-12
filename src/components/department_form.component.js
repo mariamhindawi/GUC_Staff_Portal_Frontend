@@ -1,16 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const DepartmentForm = props => {
+    const [faculties, setFaculties] = useState([]);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+
+    const componentDidMount = () => {
+        axios.get("/fe/get-faculties", {
+            headers: {
+                token: sessionStorage.getItem("token")
+            },
+        })
+            .then(response => {
+                const faculties = response.data;
+                setFaculties(faculties.map((faculty) => {
+                    return <option value={faculty.name} key={faculty._id}>{faculty.name}</option>
+                }));
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+                return [];
+            });
+    };
+    useEffect(componentDidMount, []);
 
     const placeholders = {
         name: "Department name",
         headOfDepartment: "Head of Department"
     }
 
-    const initialValues = { 
+    const initialValues = {
         name: props.department.name,
         faculty: props.department.faculty,
         headOfDepartment: props.department.headOfDepartment
@@ -37,11 +67,13 @@ const DepartmentForm = props => {
             }
         })
             .then(response => {
-                document.getElementById("department-form-message").innerHTML = response.data;
+                setErrorMessage("");
+                setSuccessMessage(response.data);
             })
             .catch(error => {
                 if (error.response) {
-                    document.getElementById("department-form-error-message").innerHTML = error.response.data;
+                    setErrorMessage(error.response.data);
+                    setSuccessMessage("");
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -61,7 +93,7 @@ const DepartmentForm = props => {
         e.target.placeholder = placeholders[e.target.name];
         formikProps.setFieldTouched(e.target.name);
     };
-    
+
     return (
         <div>
             <Formik
@@ -69,31 +101,31 @@ const DepartmentForm = props => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                { formikProps => (
+                {formikProps => (
                     <Form>
                         <Field name="name" placeholder={placeholders.name}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
-                            <ErrorMessage name="name"/>
+                            <ErrorMessage name="name" />
                         </div>
                         <Field name="faculty" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                            <option disabled value="">Faculty name</option>
                             <option value="">UNASSIGNED</option>
-                            <option value="Engineering">Engineering</option>
-                            <option value="Mimi">Mimi</option>
+                            {faculties}
                         </Field>
                         <div className="form-input-error-message">
-                            <ErrorMessage name="faculty"/>
+                            <ErrorMessage name="faculty" />
                         </div>
                         <Field name="headOfDepartment" placeholder={placeholders.headOfDepartment}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
-                            <ErrorMessage name="headOfDepartment"/>
+                            <ErrorMessage name="headOfDepartment" />
                         </div>
                         <div>
                             <button type="submit">{props.formType === "add" ? "Add department" : "Update department"}</button>
                         </div>
-                        <div className="form-error-message" id="department-form-error-message"></div>
-                        <div className="form-message" id="department-form-message"></div>
+                        <div className="form-error-message">{errorMessage}</div>
+                        <div className="form-success-message">{successMessage}</div>
                     </Form>
                 )}
             </Formik>

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const RoomForm = props => {
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
 
     const placeholders = {
         name: "Room name",
@@ -43,11 +45,13 @@ const RoomForm = props => {
             }
         })
             .then(response => {
-                document.getElementById("room-form-message").innerHTML = response.data;
+                setErrorMessage("");
+                setSuccessMessage(response.data);
             })
             .catch(error => {
                 if (error.response) {
-                    document.getElementById("room-form-error-message").innerHTML = error.response.data;
+                    setErrorMessage(error.response.data);
+                    setSuccessMessage("");
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -100,8 +104,8 @@ const RoomForm = props => {
                         <div>
                             <button type="submit">{props.formType === "add" ? "Add room" : "Update Room"}</button>
                         </div>
-                        <div className="form-error-message" id="room-form-error-message"></div>
-                        <div className="form-message" id="room-form-message"></div>
+                        <div className="form-error-message">{errorMessage}</div>
+                        <div className="form-success-message">{successMessage}</div>
                     </Form>
                 )}
             </Formik>
