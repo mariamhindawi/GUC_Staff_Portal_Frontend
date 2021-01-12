@@ -2,7 +2,7 @@ import React from "react";
 
 const RoomListItem = (props) => {
     return (
-        <tr>
+        <tr className="table-row">
             <td>{props.room.name}</td>
             <td>{props.room.capacity}</td>
             <td>{props.room.remainingCapacity}</td>

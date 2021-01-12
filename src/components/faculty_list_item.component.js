@@ -2,7 +2,7 @@ import React from "react";
 
 const FacultyListItem = (props) => {
     return (
-        <tr>
+        <tr className="table-row">
             <td>{props.faculty.name}</td>
         </tr>
     );

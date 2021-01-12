@@ -9,7 +9,7 @@ import HRacademics from "./hr_academics.component";
 import HRfaculty from "./hr_faculty.component";
 import HRdepartments from "./hr_departments.component";
 import RoomForm from "./room_form.component";
-import HODRequests from './HODrequests.component'
+import HODRequests from "./HODrequests.component"
 import FacultyForm from "./faculty_form.component";
 import DepartmentForm from "./department_form.component";
 

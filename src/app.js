@@ -7,7 +7,7 @@ import HomePage from "./components/home.component";
 
 function App() {
   return (
-    <div className="container">
+    <div>
       <Router>
         <Route exact path="/"> <Root/> </Route>
         <Route exact path="/login"> <LoginForm/> </Route>

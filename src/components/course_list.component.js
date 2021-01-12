@@ -1,33 +1,61 @@
 import React from "react";
 import CourseListItem from "./course_list_item.component";
+import {
+  Col, Spinner,
+  Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
+} from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 const CourseList = (props) => {
 
-    const courseList = () => {
-        if (!props.courses) {
-          return [];
-        }
-        return props.courses.map((course, i) => {
-            return <CourseListItem course={course} department={props.departments[i]} key={course._id} />
-        });
-    };
-
+  const courseList = () => {
+    if (!props.courses) {
+      return [];
+    }
+    return props.courses.map((course, i) => {
+      return <CourseListItem course={course} department={props.departments[i]} key={course._id} />
+    });
+  };
+  if (props.courses.length == 0) {
     return (
+      <div className="container">
+        <div className="row">
+          <Breadcrumb>
+            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
+            <BreadcrumbItem active>HOD Courses</BreadcrumbItem>
+          </Breadcrumb>
+        </div>
+        <div className="row mt-10">
+          <Col xs={{ offset: 6 }}>
+            <br />
+            <br />
+            <br />
+            <Spinner color="primary" />
+          </Col>
+        </div>
+      </div>
+    )
+  }
+  else {
+    return (
+
       <table className="table">
-          <thead className="thead-light">
-              <tr>
-                <th>Course ID</th>
-                <th>Course name</th>
-                <th>Department</th>
-                <th>Course coordinator</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              { courseList() }
-            </tbody>
+        <thead className="table-head">
+          <tr className="table-row">
+            <th>Course ID</th>
+            <th>Course name</th>
+            <th>Department</th>
+            <th>Course coordinator</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {courseList()}
+        </tbody>
       </table>
+
     );
+  }
 }
 
 export default CourseList;

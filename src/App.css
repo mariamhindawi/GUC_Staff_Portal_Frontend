@@ -4,11 +4,13 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
+
 #root {
     height: 100vh;
-    background: rgb(115,149,174);
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+
 }
+
 .align-vertical-center {
     position: absolute;
     top: 50%;
@@ -19,19 +21,15 @@ input:-webkit-autofill:active  {
     border-radius: 20px;
 }
 
-.rounded-top-border{
+.rounded-top-border {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
 }
 
 .bottom-border {
-    border: 0px;
-    border-bottom:2px solid black;
     outline: none;
-}
-
-.login-icon {
-    margin-right: 5px;
+    border: none;
+    border-bottom: 3px solid black;
 }
 
 .form-input-error-message {
@@ -42,9 +40,61 @@ input:-webkit-autofill:active  {
     color:red;
 }
 
-.navbar-border {
+.form-error-message {
+    height: 10px;
+    margin-left: 0px;
+    font-weight: bold;
+    font-size: 12px;
+    color:red;
+}
+
+.table thead th{
+    border-bottom:  #88bdbc 2px solid;
+}
+.table-row td, .table-row th{
+    border: none;
+    text-align: center;
+
+}
+.table-row td button {
+    outline: none;
     background: rgb(115,149,174);
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+    border:none;
+    color: black;
+    font-weight: bolder;
+}
+
+.table { 
+    margin-left: 5%;
+    width: 90%; 
+    border-collapse: separate;
+    border: #88bdbc 3px solid;
+    border-radius: 20px;
+}
+
+.table-row th { 
+    font-weight: bold;
+}
+
+tbody .table-row td:before { 
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%; 
+    padding-right: 10px; 
+    white-space: nowrap;
+}
+
+.navbar-border {
+    background: rgb(115,149,174);
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);   
+}
+
+.navbar-dropdown {
+    margin-right:130px ;
 }
 
 #login-container {
@@ -52,6 +102,16 @@ input:-webkit-autofill:active  {
     top: 45%;
     transform: translate(0, -50%) ;
     -webkit-animation: login-container 1s ease;
+}
+
+@keyframes login-container
+{
+  0% {
+    top: 0%;
+  }
+  100% {
+    top: 45%;
+  }
 }
 
 #login-card-title {
@@ -64,44 +124,79 @@ input:-webkit-autofill:active  {
     margin-top: 10%;
     padding: 7px;
     width: 100%;
+    border:none;
+    color: black;
+    font-weight: bolder;
+    background: rgb(115,149,174);
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);  
+}
+
+.login-icon {
+    margin-right: 5px;
+}
+.profile-container{
+    position: absolute;
+    top: 15%;
+    border: #88bdbc 3px solid;
+    width: 50%; 
+    margin-left: 10%;   
+}
+
+.profile-list li {
+    list-style-type:none;
+}
+
+.profile-input {
     outline: none;
-    font-weight: bold;
-    background-color: #88bdbc
-    ;
-  
-}
-@keyframes login-container
-{
-  0% {
-    top: 0%;
-  }
-  100% {
-    top: 45%;
-  }
 }
 
-.form-error-message {
-        height: 10px;
-        margin-left: 0px;
-        font-weight: bold;
-        font-size: 12px;
-        color:red;
+#profile-edit-button-div {
+    float:right;
 }
 
-.form-message {
-    height: 10px;
-    margin-left: 0px;
-    font-weight: bold;
-    font-size: 12px;
-    color:green;
+#profile-edit-button {
+    background: rgb(115,149,174);
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+    border:none;
+    color: black;
+    font-weight: bolder;
+}
+
+@media (max-width: 760px){
+
+	/* Force table to not be like tables anymore */
+	.table, .table-head, .table tbody,.table-row td, .table-row { 
+        display: block; 
+	}
+	
+	/* Hide table headers (but not display: none;, for accessibility) */
+	.table-head .table-row { 
+        display: none;
+    }
+    .table-row{
+        border-bottom: #88bdbc 3px solid;
+        
+    }
+    .table-row:last-child {
+        border-bottom: none;
+    }
+    .table-row td, .table-row th {
+        border: none;
+        text-align: center;
+    }
+}
+@media (max-width: 576px) {
+    .profile-container{
+        width:80%;
+    }
 }
 
 @media (max-width: 375px) {
 
-    .navbar-staff-portal{
+    .navbar-staff-portal {
         font-size: 9px;
     }
-    #navbar-logo{
+    #navbar-logo {
         height: 14px;
         width: 14px;
     }

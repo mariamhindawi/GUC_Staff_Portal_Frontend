@@ -1,8 +1,8 @@
-import React from 'react'
-import Axios from '../axios'
-import { Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from 'reactstrap'
-import { NavLink } from 'react-router-dom'
-import RequestsTableComponent from './requestsTable.component'
+import React from "react"
+import Axios from "../axios"
+import { Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from "reactstrap"
+import { NavLink } from "react-router-dom"
+import RequestsTableComponent from "./requestsTable.component"
 
 class requestsComponent extends React.Component {
     constructor(props) {

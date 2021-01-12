@@ -2,7 +2,7 @@ import React from "react";
 
 const DepartmentListItem = (props) => {
     return (
-        <tr>
+        <tr  className="table-row">
             <td>{props.department.name}</td>
             <td>{props.faculty !== "UNASSIGNED" ? props.faculty : "-"}</td>
             <td>{props.headOfDepartment !== "UNASSIGNED" ? props.headOfDepartment : "-"}</td>
