@@ -4,49 +4,47 @@ import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const AcademicMemberForm = props => {
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageStyle, setMessageStyle] = useState("");
 
     const placeholders = {
         name: "Name",
         email: "Email",
-        password: "Password",
         department: "Department",
         office: "Office",
-        salary: "Salary"
+        salary: "Salary",
+        password: "Password"
     }
 
     const initialValues = {
-        name: props.academic.name,
-        email: props.academic.email,
-        password: props.academic.password,
-        department: props.academic.department,
-        office: props.academic.office,
-        salary: props.academic.salary,
-        dayOff: props.academic.dayOff,
-        gender: props.academic.gender,
-        role: props.academic.role
+        name: props.academicMember.name,
+        email: props.academicMember.email,
+        gender: props.academicMember.gender,
+        role: props.academicMember.role,
+        department: props.academicMember.department,
+        office: props.academicMember.office,
+        salary: props.academicMember.salary,
+        dayOff: props.academicMember.dayOff,
+        password: props.academicMember.password
     }
 
-    const validationSchema = Yup.object({
+    const validationSchemaAdd = Yup.object({
         name: Yup.string()
             .required("This field is required"),
         email: Yup.string()
             .email("Invalid email address")
             .required("This field is required"),
-        password: Yup.string()
-            .required("This field is required"),
         department: Yup.string(),
         office: Yup.string()
             .required("This feild is required"),
         salary: Yup.number()
-            .typeError("Capacity must be a number")
+            .typeError("Salary must be a number")
             .required("This field is required")
-            .positive("Capacity must be a positive number")
-            .integer("Capacity must be an integer"),
+            .positive("Salary must be a positive number")
+            .integer("Salary must be an integer"),
         gender: Yup.string()
             .required("This field is required")
-            .oneOf(["Male", "Female"], "Invalid Gender Type"),
+            .oneOf(["Male", "Female"], "Invalid gender"),
         role: Yup.string()
             .required("This field is required")
             .oneOf(["Course Instructor", "Head of Department", "Teaching Assistant"], "Invalid role"),
@@ -55,31 +53,62 @@ const AcademicMemberForm = props => {
             .oneOf(["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], "Invalid day off")
     });
 
+    const validationSchemaUpdate = Yup.object({
+        name: Yup.string()
+            .required("This field is required"),
+        email: Yup.string()
+            .email("Invalid email address")
+            .required("This field is required"),
+        department: Yup.string(),
+        office: Yup.string()
+            .required("This feild is required"),
+        salary: Yup.number()
+            .typeError("Salary must be a number")
+            .required("This field is required")
+            .positive("Salary must be a positive number")
+            .integer("Salary must be an integer"),
+        gender: Yup.string()
+            .required("This field is required")
+            .oneOf(["Male", "Female"], "Invalid gender"),
+        role: Yup.string()
+            .required("This field is required")
+            .oneOf(["Course Instructor", "Head of Department", "Teaching Assistant"], "Invalid role"),
+        dayOff: Yup.string()
+            .required("This field is required")
+            .oneOf(["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], "Invalid day off"),
+        password: Yup.string()
+            .required("This field is required")
+    });
+
+    const validationSchema = props.formType === "add" ? validationSchemaAdd : validationSchemaUpdate;
+
     const handleSubmit = values => {
         axios({
             method: props.formType === "add" ? "post" : "put",
-            url: `/hr/${props.formType}-academic-member${props.formType === "add" ? "" : `/${props.academic.id}`}`,
+            url: `/hr/${props.formType}-academic-member${props.formType === "add" ? "" : `/${props.academicMember.id}`}`,
             headers: {
                 token: sessionStorage.getItem("token")
             },
             data: {
                 name: values.name,
                 email: values.email,
+                gender: values.gender,
+                role: values.role,
                 department: values.department,
                 office: values.office,
                 salary: values.salary,
-                gender: values.gender,
-                role: values.role
+                dayOff: values.dayOff,
+                password: values.password
             }
         })
             .then(response => {
-                setErrorMessage("");
-                setSuccessMessage(response.data);
+                setMessageStyle("form-success-message");
+                setMessage(response.data);
             })
             .catch(error => {
                 if (error.response) {
-                    setErrorMessage(error.response.data);
-                    setSuccessMessage("");
+                    setMessageStyle("form-error-message");
+                    setMessage(error.response.data);
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -98,6 +127,18 @@ const AcademicMemberForm = props => {
         e.target.placeholder = placeholders[e.target.name];
         formikProps.setFieldTouched(e.target.name);
     };
+
+    const renderPassword = (formikProps) => {
+        return (
+            <>
+                <Field name="password" type="password" placeholder={placeholders.password}
+                    onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                <div className="form-input-error-message">
+                    <ErrorMessage name="password" />
+                </div>
+            </>
+        );
+    }
 
     return (
         <div>
@@ -118,21 +159,6 @@ const AcademicMemberForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="email" />
                         </div>
-                        <Field name="department" placeholder={placeholders.department}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="department" />
-                        </div>
-                        <Field name="office" placeholder={placeholders.office}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="office" />
-                        </div>
-                        <Field name="salary" placeholder={placeholders.salary}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="salary" />
-                        </div>
                         <Field name="gender" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                             <option disabled value="">Gender</option>
                             <option value="Male">Male</option>
@@ -150,6 +176,21 @@ const AcademicMemberForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="role" />
                         </div>
+                        <Field name="department" placeholder={placeholders.department}
+                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                        <div className="form-input-error-message">
+                            <ErrorMessage name="department" />
+                        </div>
+                        <Field name="office" placeholder={placeholders.office}
+                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                        <div className="form-input-error-message">
+                            <ErrorMessage name="office" />
+                        </div>
+                        <Field name="salary" placeholder={placeholders.salary}
+                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                        <div className="form-input-error-message">
+                            <ErrorMessage name="salary" />
+                        </div>
                         <Field name="dayOff" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                             <option disabled value="">Day Off</option>
                             <option value="Saturday">Saturday</option>
@@ -162,11 +203,11 @@ const AcademicMemberForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="dayOff" />
                         </div>
+                        {props.formType === "update" ? renderPassword(formikProps) : <></>}
                         <div>
                             <button type="submit">{props.formType === "add" ? "Add academic member" : "Update academic member"}</button>
                         </div>
-                        <div className="form-error-message">{errorMessage}</div>
-                        <div className="form-success-message">{successMessage}</div>
+                        <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>

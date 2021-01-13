@@ -14,9 +14,7 @@ import HODRequests from "./HODrequests.component"
 import FacultyForm from "./faculty_form.component";
 import DepartmentForm from "./department_form.component";
 import AcademicMemberForm from "./academic_member_form.component";
-import AcademicMemberFormUpdate from './academic_member_form_update.component';
 import HrMemberForm from './hr_member_form.component';
-import HrMemberFormUpdate from './hr_member_form_update.component';
 import CourseForm from './course_form.component';
 
 class HomePage extends React.Component {
@@ -132,12 +130,12 @@ class HomePage extends React.Component {
                     <Link to={`${this.props.match.url}/add-department`}>Add department</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/update-department`}>Update department</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <br/>
+                    <Link to={`${this.props.match.url}/add-hr-member`}>Add hr member</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`${this.props.match.url}/update-hr-member`}>Update hr member</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/add-academic`}>Add academic member</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/update-academic`}>Update academic member</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/add-course`}>Add course</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/update-course`}>Update course</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Link to={`${this.props.match.url}/add-hr-member`}>Add hr member</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <Link to={`${this.props.match.url}/update-hr-member`}>Update hr member</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <br/><br/>
                 </div>
                 <Router>
@@ -151,18 +149,18 @@ class HomePage extends React.Component {
                     <Route exact path={`${this.props.match.path}/hr-hr-members`}> <HRhrmembers /> </Route>
                     <Route exact path={`${this.props.match.path}/hr-faculties`}> <HRfaculty /> </Route>
                     <Route exact path={`${this.props.match.path}/hr-departments`}> <HRdepartments /> </Route>
-                    <Route exact path={`${this.props.match.path}/add-room`}> <RoomForm room={room} formType="add" /> </Route>
-                    <Route exact path={`${this.props.match.path}/update-room`}> <RoomForm room={room1} formType="update" /> </Route>
-                    <Route exact path={`${this.props.match.path}/add-faculty`}> <FacultyForm faculty={faculty} formType="add" /> </Route>
+                    <Route exact path={`${this.props.match.path}/add-room`}> <RoomForm room={room} formType="add"/> </Route>
+                    <Route exact path={`${this.props.match.path}/update-room`}> <RoomForm room={room1} formType="update"/> </Route>
+                    <Route exact path={`${this.props.match.path}/add-faculty`}> <FacultyForm faculty={faculty} formType="add"/> </Route>
                     <Route exact path={`${this.props.match.path}/update-faculty`}> <FacultyForm faculty={faculty1} formType="update" /> </Route>
-                    <Route exact path={`${this.props.match.path}/add-department`}> <DepartmentForm department={department} formType="add" /> </Route>
-                    <Route exact path={`${this.props.match.path}/update-department`}> <DepartmentForm department={department1} formType="update" /> </Route>
-                    <Route exact path={`${this.props.match.path}/add-academic`}> <AcademicMemberForm academic={academicMember} formType="add" /> </Route>
-                    <Route exact path={`${this.props.match.path}/update-academic`}> <AcademicMemberFormUpdate academic={academicMember1} formType="update" /> </Route>
+                    <Route exact path={`${this.props.match.path}/add-department`}> <DepartmentForm department={department} formType="add"/> </Route>
+                    <Route exact path={`${this.props.match.path}/update-department`}> <DepartmentForm department={department1} formType="update"/> </Route>
+                    <Route exact path={`${this.props.match.path}/add-hr-member`}> <HrMemberForm hrMember={hrmember} formType="add"/> </Route>
+                    <Route exact path={`${this.props.match.path}/update-hr-member`}> <HrMemberForm hrMember={hrmember1} formType="update"/> </Route>
+                    <Route exact path={`${this.props.match.path}/add-academic`}> <AcademicMemberForm academicMember={academicMember} formType="add"/> </Route>
+                    <Route exact path={`${this.props.match.path}/update-academic`}> <AcademicMemberForm academicMember={academicMember1} formType="update"/> </Route>
                     <Route exact path={`${this.props.match.path}/add-course`}> <CourseForm course={course} formType="add" /> </Route>
-                    <Route exact path={`${this.props.match.path}/update-course`}> <CourseForm course={course1} formType="update" /> </Route>
-                    <Route exact path={`${this.props.match.path}/add-hr-member`}> <HrMemberForm hrmember={hrmember} formType="add"/> </Route>
-                    <Route exact path={`${this.props.match.path}/update-hr-member`}> <HrMemberFormUpdate hrmember={hrmember1} formType="update"/> </Route>
+                    <Route exact path={`${this.props.match.path}/update-course`}> <CourseForm course={course1} formType="update"/> </Route>
                 </Router>
             </div>
         )

@@ -4,12 +4,12 @@ import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const CourseForm = props => {
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageStyle, setMessageStyle] = useState("");
 
     const placeholders = {
         id: "ID",
-        name: "name",
+        name: "Course name",
         department: "Department"
     }
 
@@ -42,13 +42,13 @@ const CourseForm = props => {
             }
         })
             .then(response => {
-                setErrorMessage("");
-                setSuccessMessage(response.data);
+                setMessageStyle("form-success-message");
+                setMessage(response.data);
             })
             .catch(error => {
                 if (error.response) {
-                    setErrorMessage(error.response.data);
-                    setSuccessMessage("");
+                    setMessageStyle("form-error-message");
+                    setMessage(error.response.data);
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -96,8 +96,7 @@ const CourseForm = props => {
                         <div>
                             <button type="submit">{props.formType === "add" ? "Add course" : "Update course"}</button>
                         </div>
-                        <div className="form-error-message">{errorMessage}</div>
-                        <div className="form-success-message">{successMessage}</div>
+                        <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>

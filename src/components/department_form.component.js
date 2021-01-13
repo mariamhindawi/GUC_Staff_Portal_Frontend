@@ -4,9 +4,9 @@ import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const DepartmentForm = props => {
+    const [message, setMessage] = useState("");
+    const [messageStyle, setMessageStyle] = useState("");
     const [faculties, setFaculties] = useState([]);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
 
     const componentDidMount = () => {
         axios.get("/fe/get-faculties", {
@@ -67,13 +67,13 @@ const DepartmentForm = props => {
             }
         })
             .then(response => {
-                setErrorMessage("");
-                setSuccessMessage(response.data);
+                setMessageStyle("form-success-message");
+                setMessage(response.data);
             })
             .catch(error => {
                 if (error.response) {
-                    setErrorMessage(error.response.data);
-                    setSuccessMessage("");
+                    setMessageStyle("form-error-message");
+                    setMessage(error.response.data);
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -124,8 +124,7 @@ const DepartmentForm = props => {
                         <div>
                             <button type="submit">{props.formType === "add" ? "Add department" : "Update department"}</button>
                         </div>
-                        <div className="form-error-message">{errorMessage}</div>
-                        <div className="form-success-message">{successMessage}</div>
+                        <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>
