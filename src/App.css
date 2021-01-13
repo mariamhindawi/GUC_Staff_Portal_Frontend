@@ -125,6 +125,9 @@ margin-top: 20px;
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%); 
 
 }
+.navbar-dropdown{
+    margin-right: 130px;
+}
 
 #show{
     display: block;
@@ -332,10 +335,13 @@ display: none;
         margin-left: 10%;
         width:80%;
     }
+   
 }
 
 @media (max-width: 378px) {
-
+    .navbar-dropdown{
+        margin-right: 140px;
+    }
     .sidebar-icon{
         font-size: 16px;
     }
