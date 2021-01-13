@@ -120,34 +120,28 @@ margin-left: 15%;
 margin-top: 20px;
 }
 .navbar-staff-portal {
-    position: fixed;
     width: 100%;
     background: rgb(115,149,174);
-    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);   
+    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%); 
+
 }
 
-.show{
+#show{
     display: block;
 }
-.hide{
+#hide{
 display: none;
 }
 #bars:hover , #times:hover{
     color: black;
 }
 
-#bars{
-font-size: 18px;
-}
-#times{
-
-}
-.sidebar {
+.sidebar, #sidebar-closed {
     width: 50px;
     height: 100%;
     position: fixed;
     z-index: 1;
-    margin-top: 40px;
+    
     background: rgb(115,149,174);
     background: linear-gradient(180deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
     transition: 0.5s;
@@ -155,7 +149,7 @@ font-size: 18px;
     padding-top: 50px;
     white-space: nowrap;
   }
-  .sidebar:hover{
+  .sidebar:hover, #sidebar-open{
       width: 170px;
      
   }
@@ -182,6 +176,13 @@ font-size: 18px;
   font-size: 20px;
     padding-bottom: 3px;
     margin-right: 20px;
+  }
+  .toggle{
+      font-size: 22px;
+      vertical-align: middle;
+      padding-left: 15px;
+      margin-top: -40px;
+      margin-bottom: 30px;
   }
 
 #login-container {
@@ -335,14 +336,11 @@ font-size: 18px;
 
 @media (max-width: 378px) {
 
-    .sidebar{
-        margin-top:35px;
-    }
     .sidebar-icon{
         font-size: 16px;
     }
     .navbar-staff-portal {
-        font-size: 9px;
+        font-size: 11px;
         border: none;
     }
     #navbar-logo {
