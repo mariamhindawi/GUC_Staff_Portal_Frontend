@@ -12,7 +12,7 @@ const DepartmentForm = props => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
 
-    const getFaculties = () => {
+    const fetchFaculties = () => {
         axiosInstance.get("/fe/get-faculties", {
             cancelToken: source.token,
             headers: {
@@ -39,7 +39,7 @@ const DepartmentForm = props => {
     }
 
     const componentDidMount = () => {
-        getFaculties();
+        fetchFaculties();
         return () => {
             source.cancel("Operation canceled by the user");
         }

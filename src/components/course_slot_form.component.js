@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from "react";
-import axios from '../axios';
+import axios from "axios";
+import axiosInstance from '../axios';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const CourseSlotForm = props => {
-    const [courses, setCourses] = useState([]);
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
+    const [courses, setCourses] = useState([]);
 
-    const componentDidMount = () => {
-        axios.get("/cc/get-courses-of-cc", {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const fetchCourses = () => {
+        axiosInstance.get("/cc/get-courses-of-cc", {
             headers: {
                 token: sessionStorage.getItem("token")
             },
         })
             .then(response => {
-                setMessageStyle("form-success-message");
-                setMessage(response.data);
                 const courses = response.data;
                 setCourses(courses.map((course) => {
                     return <option value={course.id} key={course._id}>{course.id}</option>
@@ -24,8 +26,6 @@ const CourseSlotForm = props => {
             })
             .catch(error => {
                 if (error.response) {
-                    setMessageStyle("form-error-message");
-                    setMessage(error.response.data);
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -34,18 +34,19 @@ const CourseSlotForm = props => {
                 else {
                     console.log(error.message);
                 }
-                return [];
             });
+    }
+
+    const componentDidMount = () => {
+        fetchCourses();
+        return () => {
+            source.cancel("Operation canceled by the user");
+        }
     };
     useEffect(componentDidMount, []);
 
-    // componentWillUnmount() {
-    //     this.axiosCancelSource.cancel("Operation canceled by the user");
-    // }
-
     const placeholders = {
         room: "Room"
-        // course: "Course ID"
     }
 
     const initialValues = {
@@ -60,20 +61,20 @@ const CourseSlotForm = props => {
         day: Yup.string()
             .required("This field is required"),
         slotNumber: Yup.number()
-            .typeError("Slot Number must be a number")
+            .typeError("Slot number must be a number")
             .required("This field is required")
-            .oneOf([1,2,3,4,5],"Incorrect slot number"),
+            .oneOf([1, 2, 3, 4, 5], "Incorrect slot number"),
         room: Yup.string()
             .required("This field is required"),
         course: Yup.string()
             .required("This field is required"),
         type: Yup.string()
             .required("This field is required")
-            .oneOf(["Tutorial","Lecture","Lab"],"Invalid room type")      
+            .oneOf(["Tutorial", "Lecture", "Lab"], "Invalid room type")
     });
 
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: props.formType === "add" ? "post" : "put",
             url: `/cc/${props.formType}-course-slot${props.formType === "add" ? "" : `${props.courseSlot.day}/${props.courseSlot.slotNumber}/${props.courseSlot.room}/${props.courseSlot.course}`}`,
             headers: {
@@ -88,13 +89,13 @@ const CourseSlotForm = props => {
             }
         })
             .then(response => {
-                setErrorMessage("");
-                setSuccessMessage(response.data);
+                setMessageStyle("form-success-message");
+                setMessage(response.data);
             })
             .catch(error => {
                 if (error.response) {
-                    setErrorMessage(error.response.data);
-                    setSuccessMessage("");
+                    setMessageStyle("form-error-message");
+                    setMessage(error.response.data);
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -169,7 +170,7 @@ const CourseSlotForm = props => {
                             <ErrorMessage name="type" />
                         </div>
                         <div>
-                            <button type="submit"disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</button>
+                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</button>
                         </div>
                         <div className={messageStyle} >{message}</div>
                     </Form>
