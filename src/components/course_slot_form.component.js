@@ -5,8 +5,8 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const CourseSlotForm = props => {
     const [courses, setCourses] = useState([]);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [successMessage, setSuccessMessage] = useState("");
+    const [message, setMessage] = useState("");
+    const [messageStyle, setMessageStyle] = useState("");
 
     const componentDidMount = () => {
         axios.get("/cc/get-courses-of-cc", {
@@ -15,6 +15,8 @@ const CourseSlotForm = props => {
             },
         })
             .then(response => {
+                setMessageStyle("form-success-message");
+                setMessage(response.data);
                 const courses = response.data;
                 setCourses(courses.map((course) => {
                     return <option value={course.id} key={course._id}>{course.id}</option>
@@ -22,6 +24,8 @@ const CourseSlotForm = props => {
             })
             .catch(error => {
                 if (error.response) {
+                    setMessageStyle("form-error-message");
+                    setMessage(error.response.data);
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -34,6 +38,10 @@ const CourseSlotForm = props => {
             });
     };
     useEffect(componentDidMount, []);
+
+    // componentWillUnmount() {
+    //     this.axiosCancelSource.cancel("Operation canceled by the user");
+    // }
 
     const placeholders = {
         room: "Room"
@@ -52,10 +60,8 @@ const CourseSlotForm = props => {
         day: Yup.string()
             .required("This field is required"),
         slotNumber: Yup.number()
-            .typeError("Capacity must be a number")
+            .typeError("Slot Number must be a number")
             .required("This field is required")
-            .positive("Capacity must be a positive number")
-            .integer("Capacity must be an integer")
             .oneOf([1,2,3,4,5],"Incorrect slot number"),
         room: Yup.string()
             .required("This field is required"),
@@ -66,11 +72,10 @@ const CourseSlotForm = props => {
             .oneOf(["Tutorial","Lecture","Lab"],"Invalid room type")      
     });
 
-    const handleSubmit = values => {
-        console.log("submit");
-        axios({
-            method: "post",
-            url: `/cc/add-course-slot`,
+    const handleSubmit = async values => {
+        await axios({
+            method: props.formType === "add" ? "post" : "put",
+            url: `/cc/${props.formType}-course-slot${props.formType === "add" ? "" : `${props.courseSlot.day}/${props.courseSlot.slotNumber}/${props.courseSlot.room}/${props.courseSlot.course}`}`,
             headers: {
                 token: sessionStorage.getItem("token")
             },
@@ -154,11 +159,6 @@ const CourseSlotForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="course" />
                         </div>
-                        {/* <Field name="course" placeholder={placeholders.course}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="course" />
-                        </div> */}
                         <Field name="type" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                             <option disabled value="">Type</option>
                             <option value="Tutorial">Tutorial</option>
@@ -169,10 +169,9 @@ const CourseSlotForm = props => {
                             <ErrorMessage name="type" />
                         </div>
                         <div>
-                            <button type="submit">Add Course Slot</button>
+                            <button type="submit"disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</button>
                         </div>
-                        <div className="form-error-message">{errorMessage}</div>
-                        <div className="form-success-message">{successMessage}</div>
+                        <div className={messageStyle} >{message}</div>
                     </Form>
                 )}
             </Formik>
