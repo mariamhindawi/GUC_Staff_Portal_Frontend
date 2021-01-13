@@ -57,7 +57,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div id="login-container" className="container">
+       <div className="container">
+            <div id="login-container" className="container">
             <div className="row">
                 <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
                     <div className="card align-items-center rounded-border">
@@ -97,6 +98,7 @@ const LoginForm = () => {
                 </div>
             </div>
         </div>
+       </div>
     );
 };
 

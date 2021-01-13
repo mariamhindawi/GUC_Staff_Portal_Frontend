@@ -45,7 +45,6 @@ const RoomList = (props) => {
           <th>Capacity</th>
           <th>Remaining Capacity</th>
           <th>Type</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>

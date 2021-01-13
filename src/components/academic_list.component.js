@@ -44,7 +44,7 @@ const AcademicList = (props) => {
         <thead className="table-head">
           <tr className="table-row">
             <th>ID</th>
-            <th>name</th>
+            <th>Name</th>
             <th>Department</th>
             <th>Office</th>
             <th>Salary</th>

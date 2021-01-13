@@ -15,7 +15,7 @@ class Schedule extends React.Component {
         }
     }
 
-    viewSchedule(day, slot) {
+    viewSchedule() {
         axios.get("/academic/schedule", {
             headers: {
                 "token": sessionStorage.token
@@ -23,7 +23,6 @@ class Schedule extends React.Component {
         })
             .then(res => {
                 let data = res.data;
-                let newdata;
                 let sat = [{ course: "" }, { course: "" }, { course: "" }, { course: "" }, { course: "" }, { course: "" }];
                 let sun = [{ course: "" }, { course: "" }, { course: "" }, { course: "" }, { course: "" }, { course: "" }];
                 let mon = [{ course: "" }, { course: "" }, { course: "" }, { course: "" }, { course: "" }, { course: "" }];
@@ -42,7 +41,7 @@ class Schedule extends React.Component {
                             mon[data[i].slotNumber - 1] = data[i];
                         }
                         if (tue[i].day === "Tuesday") {
-                            newdata[data[i].slotNumber - 1] = data[i];
+                            tue[data[i].slotNumber - 1] = data[i];
                         }
                         if (data[i].day === "Wednesday") {
                             wed[data[i].slotNumber - 1] = data[i];
@@ -52,8 +51,7 @@ class Schedule extends React.Component {
                         }
                     }
                 }
-                //console.log(newdata);
-                /* data = data.filter(slots=>slots.day===day && slots.slotNumber===slot); */
+               
                 this.setState({ Saturday: sat, Sunday: sun, Monday: mon, Tuesday: tue, Wednesday: wed, Thursday: thu, alldata: data })
             })
     }
@@ -61,53 +59,53 @@ class Schedule extends React.Component {
 
 
     render() {
-        this.viewSchedule("Saturday", 1);
+        this.viewSchedule();
         return (
             <div>
-                <table className="table table-dark">
-                    <thead>
-                        <tr>
+                <table className="table text-center schedule-table">
+                    <thead className="schedule-head table-head">
+                        <tr className="schedule-row table-row">
                             <th scope="col"></th>
-                            <th scope="col">First Slot</th>
-                            <th scope="col">Second Slot</th>
-                            <th scope="col">Third Slot</th>
-                            <th scope="col">Fourth Slot</th>
-                            <th scope="col">Fifth slot</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Second</th>
+                            <th scope="col">Third</th>
+                            <th scope="col">Fourth</th>
+                            <th scope="col">Fifth</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <tr className="schedule-row table-row">
                             <th scope="row">Saturday</th>
                             {this.state.Saturday.map(item => (
                                 <td key={item._id} >{item.course}</td>
                             ))}
                             <schedulePopoverComponent data={this.state.data} ></schedulePopoverComponent>
                         </tr>
-                        <tr>
+                        <tr className="schedule-row table-row">
                             <th scope="row">Sunday</th>
                             {this.state.Sunday.map(item => (
                                 <td key={item.slotNumber}>{item.course}</td>
                             ))}
                         </tr>
-                        <tr>
+                        <tr className="schedule-row table-row">
                             <th scope="row">Monday</th>
                             {this.state.Monday.map(item => (
                                 <td key={item.slotNumber}>{item.course}</td>
                             ))}
                         </tr>
-                        <tr>
+                        <tr className="schedule-row table-row">
                             <th scope="row">Tuesday</th>
                             {this.state.Tuesday.map(item => (
                                 <td key={item.slotNumber}>{item.course}</td>
                             ))}
                         </tr>
-                        <tr>
+                        <tr className="schedule-row table-row">
                             <th scope="row">Wednesday</th>
                             {this.state.Wednesday.map(item => (
                                 <td key={item.slotNumber}>{item.course}</td>
                             ))}
                         </tr>
-                        <tr>
+                        <tr className="schedule-row table-row">
                             <th scope="row">Thursday</th>
                             {this.state.Thursday.map(item => (
                                 <td key={item._id}>{item.course}</td>

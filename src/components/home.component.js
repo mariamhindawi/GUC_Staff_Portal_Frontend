@@ -15,6 +15,7 @@ import DepartmentForm from "./department_form.component";
 
 class HomePage extends React.Component {
     render() {
+        // const margin="58px"
         const room = {
             name: "",
             capacity: "",
@@ -49,7 +50,8 @@ class HomePage extends React.Component {
 
         return (
             <div>
-                <div>
+                {/*style={{ marginLeft: margin }}*/}
+                <div >
                     <h1>Welcome</h1>
                     <Link to={`${this.props.match.url}/profile`}>Profile</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/requests`}>Requests</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
