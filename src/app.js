@@ -8,15 +8,20 @@ import HomePage from "./components/home.component";
 
 function App() {
   return (
-    <div>
+   <div>
+     
+     <div>
       <Router>
-        <Route exact path="/"> <Root/> </Route>
+        <Route exact path="/"><Root/> </Route>
         <Route exact path="/login"> <LoginForm/> </Route>
         <Route path="/staff"> <Header/></Route>
-     {/*   <Route path="/staff"> <Sidebar/></Route> */}
+       
+        <Route path="/staff"> <Sidebar/></Route> 
+       
         <Route path="/staff/home"> <HomePage /> </Route>
       </Router>
     </div>
+   </div>
   );
 }
 

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from 'react';
 import AcademicListItem from "././academic_list_item.component";
+import Pagination from "././pagination.component";
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -7,13 +8,21 @@ import {
 import { NavLink } from "react-router-dom";
 
 const AcademicList = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  // Get current posts
+ const indexOfLastPost = currentPage * postsPerPage;
+ const indexOfFirstPost = indexOfLastPost - postsPerPage;
+ const currentPosts = props.academics.slice(indexOfFirstPost, indexOfLastPost);
+ // Change page
+ const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const academicList = () => {
     if (!props.academics) {
       return [];
     }
-
-    return props.academics.map((academic, i) => {
+    return currentPosts.map((academic, i) => {
       return <AcademicListItem academic={academic} department={props.departments[i]} room={props.rooms[i]} key={academic.id} />
     });
   };
@@ -38,8 +47,8 @@ const AcademicList = (props) => {
     )
   }
   else {
-
     return (
+      <div>
       <table className="table">
         <thead className="table-head">
           <tr className="table-row">
@@ -55,7 +64,15 @@ const AcademicList = (props) => {
         <tbody>
           {academicList()}
         </tbody>
+        
       </table>
+    <Pagination
+    postsPerPage={postsPerPage}
+    totalPosts={props.academics.length}
+    paginate={paginate}
+  />
+  </div>
+      
     );
   }
 }
