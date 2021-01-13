@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from 'react';
 import FacultyListItem from "./faculty_list_item.component";
+import Pagination from "././pagination.component";
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -8,12 +9,21 @@ import { NavLink } from "react-router-dom";
 
 const FacultyList = (props) => {
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = props.faculties.slice(indexOfFirstPost, indexOfLastPost);
+ // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
   const facultyList = () => {
     if (!props.faculties) {
       return [];
     }
 
-    return props.faculties.map((faculty) => {
+    return currentPosts.map((faculty) => {
       return <FacultyListItem faculty={faculty} key={faculty._id} />
     });
   };
@@ -39,16 +49,23 @@ const FacultyList = (props) => {
   }
   else {
     return (
-      <table className="table">
+      <div>
+        <table className="table">
         <thead className="table-head">
           <tr className="table-row">
-            <th>Name</th>
+            <th>Faculty Name</th>
           </tr>
         </thead>
         <tbody>
           {facultyList()}
         </tbody>
+        <Pagination
+       postsPerPage={postsPerPage}
+       totalPosts={props.faculties.length}
+       paginate={paginate}
+     />
       </table>
+  </div>
     );
   }
 }

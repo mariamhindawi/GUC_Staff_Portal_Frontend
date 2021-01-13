@@ -31,7 +31,7 @@ const LoginForm = () => {
         })
             .then(res => {
                 sessionStorage.setItem("token", res.headers["token"]);
-                history.push("/home");
+                history.push("/staff/hr");
             })
             .catch(error => {
                 if (error.response) {
@@ -59,7 +59,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div id="login-container" className="container">
+       <div className="container">
+            <div id="login-container" className="container">
             <div className="row">
                 <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
                     <div className="card align-items-center rounded-border">
@@ -99,6 +100,7 @@ const LoginForm = () => {
                 </div>
             </div>
         </div>
+       </div>
     );
 };
 

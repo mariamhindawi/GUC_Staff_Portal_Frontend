@@ -5,11 +5,13 @@ input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
+/*
 #root {
     height: 100vh;
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
 
 }
+*/
 
 .align-vertical-center {
     position: absolute;
@@ -32,9 +34,14 @@ input:-webkit-autofill:active  {
     border-bottom: 3px solid black;
 }
 
+.home-margin {
+    margin-left: 50px;
+}
+
 .form-input-error-message {
     height: 20px;
-    margin-left: 20px;
+    margin-left: 15px;
+    margin-bottom: 10px;
     font-weight: bold;
     font-size: 12px;
     color:red;
@@ -42,7 +49,7 @@ input:-webkit-autofill:active  {
 
 .form-error-message {
     height: 10px;
-    margin-left: 0px;
+    margin-left: 15px;
     font-weight: bold;
     font-size: 12px;
     color:red;
@@ -62,7 +69,6 @@ input:-webkit-autofill:active  {
 .table-row td, .table-row th{
     border: none;
     text-align: center;
-
 }
 .table-row td button {
     outline: none;
@@ -72,13 +78,27 @@ input:-webkit-autofill:active  {
     color: black;
     font-weight: bolder;
 }
+.table-row th{
+    background: rgba(136,189,188,0.5);
+}
+.table-row th:first-child{
+    border-top-left-radius: 10px;
+}
+.table-row th:last-child{
+    border-top-right-radius: 10px;
+    
+}
+.table-row:nth-child(even){
+    background-color: rgba(136,189,188,0.1);
+}
 
 .table { 
-    margin-left: 5%;
-    width: 90%; 
+    margin-left: 15%;
+    width: 70%; 
     border-collapse: separate;
     border: #88bdbc 3px solid;
     border-radius: 20px;
+    border-spacing: 0;
 }
 
 .table-row th { 
@@ -95,15 +115,74 @@ tbody .table-row td:before {
     padding-right: 10px; 
     white-space: nowrap;
 }
-
-.navbar-border {
+.pagination{
+margin-left: 15%;
+margin-top: 20px;
+}
+.navbar-staff-portal {
+    position: fixed;
+    width: 100%;
     background: rgb(115,149,174);
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);   
 }
 
-.navbar-dropdown {
-    margin-right:130px ;
+.show{
+    display: block;
 }
+.hide{
+display: none;
+}
+#bars:hover , #times:hover{
+    color: black;
+}
+
+#bars{
+font-size: 18px;
+}
+#times{
+
+}
+.sidebar {
+    width: 50px;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    margin-top: 40px;
+    background: rgb(115,149,174);
+    background: linear-gradient(180deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+    transition: 0.5s;
+    overflow-x: hidden;
+    padding-top: 50px;
+    white-space: nowrap;
+  }
+  .sidebar:hover{
+      width: 170px;
+     
+  }
+  
+  .sidebar a {
+    padding: 8px 8px 8px 17px;
+    text-decoration: none;
+    font-size: 15px;
+    color: white;
+    display: block;
+    font-weight: bold;
+  }
+  
+  .sidebar a:hover {
+    color: black;
+  }
+  
+  .sidebar-icon,
+  .icon-text {
+    vertical-align: middle;
+  }
+  
+  .sidebar-icon{
+  font-size: 20px;
+    padding-bottom: 3px;
+    margin-right: 20px;
+  }
 
 #login-container {
     position: absolute;
@@ -138,16 +217,21 @@ tbody .table-row td:before {
     background: rgb(115,149,174);
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);  
 }
+#login-button:hover{
+    color: white;
+}
 
 .login-icon {
     margin-right: 5px;
 }
+
 .profile-container{
-    position: absolute;
+    position: relative;
+    overflow: hidden;
     top: 15%;
     border: #88bdbc 3px solid;
-    width: 50%; 
-    margin-left: 10%;   
+    width: 60%; 
+    margin-left: 20%;
 }
 
 .profile-list li {
@@ -169,8 +253,57 @@ tbody .table-row td:before {
     color: black;
     font-weight: bolder;
 }
+#profile-edit-button:hover{
+    color: white;
+}
+.form-input-border{
+    border: 2px rgba(136,189,188,1) solid;
+    outline: none;
+}
+.form-input-label{
+    font-weight: bold;
+   
+}
+.form-button{
+  background: rgb(115,149,174);
+  background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+  border:none;
+  color: black;
+  font-weight: bolder;
+  
+}
+.form-button-div{
+  float: right;
+}
+.form-button:hover{
+  color: white;
+}
+.input-form {
+  border: #88bdbc 3px solid;
+}
+.add-room-form {
+  position: absolute;
+  top: 40%;
+  border: #88bdbc 3px solid;
+  width: 60%; 
+  margin-left: 20%;   
+}
+.add-faculty-form {
+  position: absolute;
+  top: 40%;
+  border: #88bdbc 3px solid;
+  width: 60%; 
+  margin-left: 20%;   
+}
+.add-department-form{
+  position: absolute;
+  top: 40%;
+  border: #88bdbc 3px solid;
+  width: 60%; 
+  margin-left: 20%;   
+}
 
-@media (max-width: 760px){
+@media (max-width: 768px){
 
 	/* Force table to not be like tables anymore */
 	.table, .table-head, .table tbody,.table-row td, .table-row { 
@@ -195,14 +328,22 @@ tbody .table-row td:before {
 }
 @media (max-width: 576px) {
     .profile-container{
+        margin-left: 10%;
         width:80%;
     }
 }
 
-@media (max-width: 375px) {
+@media (max-width: 378px) {
 
+    .sidebar{
+        margin-top:35px;
+    }
+    .sidebar-icon{
+        font-size: 16px;
+    }
     .navbar-staff-portal {
         font-size: 9px;
+        border: none;
     }
     #navbar-logo {
         height: 14px;
@@ -219,3 +360,5 @@ tbody .table-row td:before {
         color:red;
     }
 }
+
+  

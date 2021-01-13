@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from 'react';
 import DepartmentListItem from "./department_list_item.component";
+import Pagination from "././pagination.component";
+
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -7,13 +9,21 @@ import {
 import { NavLink } from "react-router-dom";
 
 const DepartmentList = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = props.departments.slice(indexOfFirstPost, indexOfLastPost);
+ // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const departmentList = () => {
     if (!props.departments) {
       return [];
     }
 
-    return props.departments.map((department, i) => {
+    return currentPosts.map((department, i) => {
       return <DepartmentListItem department={department} faculty={props.faculties[i]} headOfDepartment={props.heads[i]}
         key={department._id} />
     });
@@ -41,7 +51,8 @@ const DepartmentList = (props) => {
   else {
 
     return (
-      <table className="table">
+     <div>
+        <table className="table">
         <thead className="table-head">
           <tr className="table-row">
             <th>Name</th>
@@ -52,7 +63,13 @@ const DepartmentList = (props) => {
         <tbody>
           {departmentList()}
         </tbody>
+        <Pagination
+       postsPerPage={postsPerPage}
+       totalPosts={props.departments.length}
+       paginate={paginate}
+     />
       </table>
+     </div>
     );
   }
 }

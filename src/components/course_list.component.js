@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from 'react';
 import CourseListItem from "./course_list_item.component";
+import Pagination from "././pagination.component";
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -7,12 +8,21 @@ import {
 import { NavLink } from "react-router-dom";
 
 const CourseList = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  // Get current posts
+ const indexOfLastPost = currentPage * postsPerPage;
+ const indexOfFirstPost = indexOfLastPost - postsPerPage;
+ const currentPosts = props.courses.slice(indexOfFirstPost, indexOfLastPost);
+ // Change page
+ const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const courseList = () => {
     if (!props.courses) {
       return [];
     }
-    return props.courses.map((course, i) => {
+    return currentPosts.map((course, i) => {
       return <CourseListItem course={course} department={props.departments[i]} key={course._id} />
     });
   };
@@ -38,8 +48,8 @@ const CourseList = (props) => {
   }
   else {
     return (
-
-      <table className="table">
+      <div>
+         <table className="table">
         <thead className="table-head">
           <tr className="table-row">
             <th>Course ID</th>
@@ -52,7 +62,13 @@ const CourseList = (props) => {
         <tbody>
           {courseList()}
         </tbody>
+        <Pagination
+       postsPerPage={postsPerPage}
+       totalPosts={props.courses.length}
+       paginate={paginate}
+     />
       </table>
+      </div>
 
     );
   }

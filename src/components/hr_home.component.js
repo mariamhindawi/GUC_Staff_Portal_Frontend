@@ -6,13 +6,13 @@ import HRhrmembers from "./hr_hrmembers.component";
 import HRfaculty from "./hr_faculty.component";
 import HRdepartments from "./hr_departments.component";
 
-class HomePage extends React.Component {
+class HrHomePage extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Welcome</h1>
+            <div className="home-margin">
                 <div>
+                    <h1>Welcome</h1>
                     <Link to={`${this.props.match.url}/rooms`}>HR rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/academic-members`}>HR academics</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/hr-members`}>HR hr members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -32,4 +32,4 @@ class HomePage extends React.Component {
     }
 }
 
-export default withRouter(HomePage);
+export default withRouter(HrHomePage);
