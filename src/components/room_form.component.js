@@ -47,7 +47,7 @@ const RoomForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
-                props.updateRooms;
+                props.updateRooms();
             })
             .catch(error => {
                 if (error.response) {
