@@ -21,7 +21,7 @@ class requestsComponent extends React.Component {
             headers: {
                 "token": sessionStorage.token
             }
-        }).then(res => this.setState({ requests: res.data, loading: false })).catch(error=>alert(error))
+        }).then(res => this.setState({ requests: res.data, loading: false })).catch(error => alert(error))
     }
 
     toggleDropDown() {
@@ -38,8 +38,8 @@ class requestsComponent extends React.Component {
                     headers: {
                         "token": sessionStorage.token
                     }
-                }).then(res =>{console.log(res); this.setState({ requests: res.data, loading: false })})
-            }).catch(error=>alert(error))
+                }).then(res => { console.log(res); this.setState({ requests: res.data, loading: false }) })
+            }).catch(error => alert(error))
     }
     render() {
         let requests = this.state.requests.filter(request => this.state.filter ? request.status === this.state.filter : true)
@@ -55,7 +55,7 @@ class requestsComponent extends React.Component {
                     <div className="row">
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
                             <DropdownToggle caret>
-                                Filter
+                                {!this.state.filter ? 'Filter' : this.state.filter === 'Under review' ? 'Pending' : this.state.filter}
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem onClick={() => { this.setState({ filter: "" }); console.log(this.state) }}>All</DropdownItem>
@@ -67,11 +67,13 @@ class requestsComponent extends React.Component {
                                 <DropdownItem onClick={() => { this.setState({ filter: "Under review" }) }}>Pending</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <Button className="bg-warning">Create a new request</Button>
-                    </div>
+                        <NavLink to="/staff/home/send-leave-request">                        
+                            <Button className="bg-warning">Create a new request</Button>
+                        </NavLink>                    
+                        </div>
                     <div className="row">
                         <div className="col-12">
-                            <RequestsTableComponent requests={requests} cancelRequest={this.cancelRequest}/>
+                            <RequestsTableComponent requests={requests} cancelRequest={this.cancelRequest} />
                         </div>
                     </div>
                 </div>
