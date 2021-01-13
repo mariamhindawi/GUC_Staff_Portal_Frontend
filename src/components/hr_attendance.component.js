@@ -4,11 +4,12 @@ import Record from "./attendance_item.component"
 import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
 
 
-  export default class Attendance extends React.Component {
+  export default class HRAttendance extends React.Component {
     constructor(props) {
       super(props);
       
       this.state = {records: [],
+        id:null,
         dropdownOpen: false,
         dropdownOpenY: false,
         month:null,
@@ -18,19 +19,20 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
     componentDidMount() {
         axios({
           method:'get',
-          url:'/staff/view-attendance-records' ,
+          url:'/hr/view-staff-attendance-records' ,
           headers: {
             'token': sessionStorage.token
         }, 
           params: {
-              month:this.state.month, year:this.state.year
+            id:this.state.id,
+            month:this.state.month,
+            year:this.state.year
           }
         })
           .then(res => {
             
             let x = res.data
-            console.log(this.state.month);
-            console.log(this.state.month);
+            console.log(x);
             this.setState({ records: res.data })
           })
           .catch((error) => {
@@ -41,24 +43,25 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
       componentDidUpdate() {
         axios({
           method:'get',
-          url:'/staff/view-attendance-records' ,
+          url:'/hr/view-staff-attendance-records' ,
           headers: {
             'token': sessionStorage.token
         }, 
           params: {
-              month:this.state.month, year:this.state.year
+            id:this.state.id,
+            month:this.state.month, 
+            year:this.state.year
           }
         })
           .then(res => {
-            
-            let x = res.data
-            console.log(this.state.month);
+            console.log(this.state.id);
             this.setState({ records: res.data })
           })
           .catch((error) => {
             console.log(error);
           })
       }
+
 
       toggleDropDown() {
         this.setState({ dropdownOpen: !this.state.dropdownOpen })
@@ -69,6 +72,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
   }
 
       attendanceList() {
+        console.log(typeof this.state.records);
         if(typeof this.state.records ==="object"){
         console.log(this.state.records);
         return this.state.records.map((currentRecord) => {
@@ -82,6 +86,18 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
     render() {
         return (
           <div>
+
+<form>
+      <span className="formtext">&#x3C;Form /&#x3E;</span>
+    	  <input 
+          type="text" 
+          onSubmit={e => this.setState({id:e.target.value})}
+          placeholder="Enter ID" 
+          required 
+        />
+        <button>Submit</button>
+    	</form>
+
             <div className="row">
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
                             <DropdownToggle caret>

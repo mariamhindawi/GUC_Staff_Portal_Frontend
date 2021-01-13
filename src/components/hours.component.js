@@ -1,37 +1,35 @@
 import React from "react";
 import axios from '../axios'
-import Record from "./attendance_item.component"
-import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
+import { Col, Table, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from 'reactstrap'
 
 
-  export default class Attendance extends React.Component {
+export default class Hours extends React.Component {
     constructor(props) {
       super(props);
-      
-      this.state = {records: [],
+      this.state = {hours:[],
         dropdownOpen: false,
         dropdownOpenY: false,
         month:null,
-        year:null};
+        year:null
+    };
     }
 
     componentDidMount() {
-        axios({
-          method:'get',
-          url:'/staff/view-attendance-records' ,
-          headers: {
-            'token': sessionStorage.token
-        }, 
-          params: {
-              month:this.state.month, year:this.state.year
-          }
-        })
+      axios({
+        method:'get',
+        url:'/staff/view-hours' ,
+        headers: {
+          'token': sessionStorage.token
+      }, 
+        params: {
+            month:this.state.month, year:this.state.year
+        }
+      })
           .then(res => {
             
             let x = res.data
-            console.log(this.state.month);
-            console.log(this.state.month);
-            this.setState({ records: res.data })
+            console.log(x);
+            this.setState({ hours: res.data })
           })
           .catch((error) => {
             console.log(error);
@@ -41,19 +39,20 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
       componentDidUpdate() {
         axios({
           method:'get',
-          url:'/staff/view-attendance-records' ,
+          url:'/staff/view-hours' ,
           headers: {
             'token': sessionStorage.token
         }, 
           params: {
-              month:this.state.month, year:this.state.year
+              month:this.state.month,
+              year:this.state.year
           }
         })
           .then(res => {
             
             let x = res.data
-            console.log(this.state.month);
-            this.setState({ records: res.data })
+            console.log(x);
+            this.setState({ hours: res.data })
           })
           .catch((error) => {
             console.log(error);
@@ -68,21 +67,11 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
       this.setState({ dropdownOpenY: !this.state.dropdownOpenY })
   }
 
-      attendanceList() {
-        if(typeof this.state.records ==="object"){
-        console.log(this.state.records);
-        return this.state.records.map((currentRecord) => {
-            return <Record records={currentRecord} key={currentRecord._id}/>;
-        })
-      }
-      else return [];
-    }
-
 
     render() {
         return (
-          <div>
-            <div className="row">
+            <div>
+                <div className="row">
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
                             <DropdownToggle caret>
                                 Month
@@ -136,21 +125,23 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
                         </Dropdown>
                     </div>
             <div>
-              <h3>Attendance Records</h3>
-              <table className="table">
-                <thead className="thead-light">
-                  <tr>
-                    <th>User</th>
-                    <th>SignIn Time</th>
-                    <th>SignOut Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.attendanceList()}
-                </tbody>
-              </table>
-            </div>
+            <h3>Hours</h3>
+            <table className="table">
+              <thead className="thead-light">
+                <tr>
+                  <th>Missing Hours</th>
+                  <th>Extra Hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td>{this.state.hours.missingHours}</td>
+                    <td>{this.state.hours.extraHours}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
           </div>
         )
-      }
-  }
+}
+}
