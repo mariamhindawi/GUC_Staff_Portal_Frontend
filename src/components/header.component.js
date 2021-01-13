@@ -10,25 +10,14 @@ import Logo from "../logo192.png";
 const handleLogOut = () => {
     sessionStorage.removeItem("token");
 }
-const showBars=(id)=> {
-
-}
-
-
 
 const Header = (props) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggle = () => setDropdownOpen(prevState => !prevState);
-
-
+   
     return (
         <div className="d-flex flex-row justify-content-between navbar-staff-portal">
             <ul className="nav">
-                <NavItem className="nav-item">
-                <div className="nav-link">
-                        <span className="nav-icon text-white" ><FontAwesomeIcon id="bars" icon="bars" onClick={showBars("bars")}/></span>
-                    </div>
-                </NavItem>
                 <NavItem className="nav-item">
                     <a className="nav-link text-white">  <img id="navbar-logo" src={Logo} height="20" width="20" alt="GUC Staff Portal"></img> &nbsp; GUC Staff Portal</a>
                 </NavItem>

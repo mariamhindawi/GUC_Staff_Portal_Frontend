@@ -11,7 +11,7 @@ class HrHomePage extends React.Component {
     render() {
         return (
             <div className="home-margin">
-                <div>
+                <div >
                     <h1>Welcome</h1>
                     <Link to={`${this.props.match.url}/rooms`}>HR rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/academic-members`}>HR academics</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
