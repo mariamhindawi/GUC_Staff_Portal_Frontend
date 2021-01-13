@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "../axios";
+import axios from "axios";
+import axiosInstance from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
@@ -8,8 +9,12 @@ const DepartmentForm = props => {
     const [messageStyle, setMessageStyle] = useState("");
     const [faculties, setFaculties] = useState([]);
 
-    const componentDidMount = () => {
-        axios.get("/fe/get-faculties", {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+
+    const getFaculties = () => {
+        axiosInstance.get("/fe/get-faculties", {
+            cancelToken: source.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },
@@ -30,8 +35,14 @@ const DepartmentForm = props => {
                 else {
                     console.log(error.message);
                 }
-                return [];
             });
+    }
+
+    const componentDidMount = () => {
+        getFaculties();
+        return () => {
+            source.cancel("Operation canceled by the user");
+        }
     };
     useEffect(componentDidMount, []);
 
@@ -54,7 +65,7 @@ const DepartmentForm = props => {
     });
 
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-department${props.formType === "add" ? "" : `/${props.department.name}`}`,
             headers: {

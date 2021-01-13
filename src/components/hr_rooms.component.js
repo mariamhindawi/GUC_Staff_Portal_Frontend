@@ -15,7 +15,6 @@ class HrRooms extends React.Component {
     }
 
     fetchRooms() {
-        this.axiosCancelSource = axios.CancelToken.source();
         axiosInstance.get("/fe/get-rooms", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
@@ -42,6 +41,7 @@ class HrRooms extends React.Component {
     }
 
     componentDidMount() {
+        this.axiosCancelSource = axios.CancelToken.source();
         this.fetchRooms();
     }
 
