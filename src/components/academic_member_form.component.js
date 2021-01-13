@@ -82,8 +82,8 @@ const AcademicMemberForm = props => {
 
     const validationSchema = props.formType === "add" ? validationSchemaAdd : validationSchemaUpdate;
 
-    const handleSubmit = values => {
-        axios({
+    const handleSubmit = async values => {
+        await axios({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-academic-member${props.formType === "add" ? "" : `/${props.academicMember.id}`}`,
             headers: {
@@ -205,7 +205,7 @@ const AcademicMemberForm = props => {
                         </div>
                         {props.formType === "update" ? renderPassword(formikProps) : <></>}
                         <div>
-                            <button type="submit">{props.formType === "add" ? "Add academic member" : "Update academic member"}</button>
+                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add academic member" : "Update academic member"}</button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>

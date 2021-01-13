@@ -31,8 +31,8 @@ const RoomForm = props => {
             .oneOf(["Office", "Tutorial", "Lab", "Lecture"], "Invalid room type")
     });
 
-    const handleSubmit = values => {
-        axios({
+    const handleSubmit = async values => {
+        await axios({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-room${props.formType === "add" ? "" : `/${props.room.name}`}`,
             headers: {
@@ -47,6 +47,7 @@ const RoomForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
+                props.updateRooms;
             })
             .catch(error => {
                 if (error.response) {
@@ -102,7 +103,7 @@ const RoomForm = props => {
                             <ErrorMessage name="type"/>
                         </div>
                         <div>
-                            <button type="submit">{props.formType === "add" ? "Add room" : "Update Room"}</button>
+                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add room" : "Update Room"}</button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>

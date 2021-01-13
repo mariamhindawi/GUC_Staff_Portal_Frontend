@@ -24,14 +24,14 @@ const LoginForm = () => {
             .required("This field is required")
     });
 
-    const handleSubmit = values => {
-        axios.post("/staff/login", {
+    const handleSubmit = async (values, formikProps) => {
+        await axios.post("/staff/login", {
             "email": values.email,
             "password": values.password
         })
             .then(res => {
                 sessionStorage.setItem("token", res.headers["token"]);
-                history.push("/staff/home");
+                history.push("/home");
             })
             .catch(error => {
                 if (error.response) {
@@ -44,6 +44,8 @@ const LoginForm = () => {
                 else {
                     console.log(error.message);
                 }
+                formikProps.setFieldValue("email", "", false);
+                formikProps.setFieldValue("password", "", false);
             });
     };
 
@@ -71,7 +73,7 @@ const LoginForm = () => {
                                 {formikProps => (
                                     <Form>
                                         <FontAwesomeIcon className="login-icon" icon="user" />
-                                        <Field className="bottom-border" name="email" type="email" placeholder={placeholders.email}
+                                        <Field className="bottom-border" name="email" placeholder={placeholders.email}
                                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                                         <div className="form-input-error-message">
                                             <ErrorMessage name="email" />
@@ -86,7 +88,7 @@ const LoginForm = () => {
                                             <ErrorMessage name="password" />
                                         </div>
                                         <div className="text-center">
-                                            <Button id="login-button" className="rounded border-0" type="submit">LOG IN</Button>
+                                            <Button id="login-button" className="rounded border-0" type="submit" disabled={formikProps.isSubmitting}>LOG IN</Button>
                                             <div className="form-error-message">{errorMessage}</div>
                                         </div>
                                     </Form>

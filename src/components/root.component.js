@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 
 const Root = () => {
     const history = useHistory();
-    sessionStorage.token ? history.push("/staff/home") : history.push("/login");
+    sessionStorage.token ? history.push("/home") : history.push("/login");
     return <></>;
 }
 

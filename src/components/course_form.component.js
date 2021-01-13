@@ -27,9 +27,8 @@ const CourseForm = props => {
         department: Yup.string()
     });
 
-    const handleSubmit = values => {
-        console.log(props.course.id);
-        axios({
+    const handleSubmit = async values => {
+        await axios({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-course${props.formType === "add" ? "" : `/${props.course.id}`}`,
             headers: {
@@ -94,7 +93,7 @@ const CourseForm = props => {
                             <ErrorMessage name="department" />
                         </div>
                         <div>
-                            <button type="submit">{props.formType === "add" ? "Add course" : "Update course"}</button>
+                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add course" : "Update course"}</button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>

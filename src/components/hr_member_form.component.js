@@ -64,8 +64,8 @@ const HrMemberForm = props => {
 
     const validationSchema = props.formType === "add" ? validationSchemaAdd : validationSchemaUpdate;
 
-    const handleSubmit = values => {
-        axios({
+    const handleSubmit = async values => {
+        await axios({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-hr-member${props.formType === "add" ? "" : `/${props.hrMember.id}`}`,
             headers: {
@@ -158,7 +158,7 @@ const HrMemberForm = props => {
                         </div>
                         {props.formType === "update" ? renderPassword(formikProps) : <></>}
                         <div>
-                            <button type="submit">{props.formType === "add" ? "Add hr member" : "Update hr member"}</button>
+                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add hr member" : "Update hr member"}</button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>

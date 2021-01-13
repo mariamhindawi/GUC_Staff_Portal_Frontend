@@ -14,7 +14,7 @@ const RoomList = (props) => {
     }
 
     return props.rooms.map((room) => {
-      return <RoomListItem room={room} key={room._id} />
+      return <RoomListItem room={room} key={room._id} role={props.role}/>
     });
   };
   if (props.rooms.length == 0) {
@@ -45,7 +45,6 @@ const RoomList = (props) => {
           <th>Capacity</th>
           <th>Remaining Capacity</th>
           <th>Type</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>

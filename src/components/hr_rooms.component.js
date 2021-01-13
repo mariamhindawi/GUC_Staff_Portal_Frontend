@@ -1,8 +1,12 @@
 import React from "react";
-import axios from "../axios";
+import { Route, withRouter } from "react-router-dom";
+import axios from "axios";
+import axiosInstance from "../axios";
 import RoomList from "../components/room_list.component";
+import DeleteRoom from "./delete_room.component";
+import RoomForm from "./room_form.component";
 
-class HRrooms extends React.Component {
+class HrRooms extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -10,8 +14,10 @@ class HRrooms extends React.Component {
         }
     }
 
-    componentDidMount() {
-        axios.get("/fe/get-rooms", {
+    fetchRooms() {
+        this.axiosCancelSource = axios.CancelToken.source();
+        axiosInstance.get("/fe/get-rooms", {
+            cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             }
@@ -21,27 +27,52 @@ class HRrooms extends React.Component {
                     rooms: res.data
                 });
             })
-            .catch(err => {
-                if (err.response) {
-                    console.log(err.response);
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.response);
                 }
-                else if (err.request) {
-                    console.log(err.request);
+                else if (error.request) {
+                    console.log(error.request);
                 }
                 else {
-                    console.log(err.message);
+                    console.log(error.message);
                 }
-                console.log(err);
+                console.log(error);
             });
     }
+
+    componentDidMount() {
+        this.fetchRooms();
+    }
+
+    componentWillUnmount() {
+        this.axiosCancelSource.cancel("Operation canceled by the user");
+    }
+
+    getRoom(roomName) {
+        const rooms = this.state.rooms;
+        for (let i = 0; i < rooms.length; i++) {
+            if (rooms[i].name === roomName)
+                return rooms[i];
+        }
+        return { name: "", capacity: "", type: "" }
+    };
 
     render() {
         return (
             <div>
-                <RoomList rooms={this.state.rooms} />
+                <Route exact path={`${this.props.match.path}`}> <RoomList rooms={this.state.rooms} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}/update/:name`}
+                    render={routeProps => (
+                        <RoomForm room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms()} formType="update" />
+                    )} />
+                <Route exact path={`${this.props.match.path}/delete/:name`}
+                    render={routeProps => (
+                        <DeleteRoom room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms()} />
+                    )} />
             </div>
         );
     }
 }
 
-export default HRrooms;
+export default withRouter(HrRooms);

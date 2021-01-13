@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import {
     NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../logo192.png";
 
 
 const handleLogOut = () => {
     sessionStorage.removeItem("token");
-
 }
 
 
@@ -47,11 +46,17 @@ const Header = (props) => {
                                 <Button className="rounded-circle">M</Button>
                             </div>
                             <br></br>
-                            <DropdownItem href="/staff/profile"><FontAwesomeIcon icon="address-card" /> &nbsp; View Profile</DropdownItem>
                             <DropdownItem divider />
-                            <DropdownItem href="/reset-password"><FontAwesomeIcon icon="key" /> &nbsp; Reset Password</DropdownItem>
+                            <Link to="/">
+                                <DropdownItem><FontAwesomeIcon icon="address-card" /> &nbsp; View Profile</DropdownItem>
+                            </Link>
+                            <Link to="/">
+                                <DropdownItem><FontAwesomeIcon icon="key" /> &nbsp; Reset Password</DropdownItem>
+                            </Link>
                             <DropdownItem divider />
-                            <DropdownItem href="/login"><span onClick={handleLogOut}></span><FontAwesomeIcon icon="sign-out-alt" /> &nbsp; Log out</DropdownItem>
+                            <Link to="/login" onClick={handleLogOut}>
+                                <DropdownItem><FontAwesomeIcon icon="sign-out-alt" /> &nbsp; Log out</DropdownItem>
+                            </Link>
                         </DropdownMenu>
                     </UncontrolledDropdown >
                 </NavItem>

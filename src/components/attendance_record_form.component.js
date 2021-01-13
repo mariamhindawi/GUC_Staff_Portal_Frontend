@@ -19,7 +19,7 @@ const AttendanceRecordForm = props => {
 
     });
 
-    const handleSubmit = values => {
+    const handleSubmit = async values => {
         
     };
 
@@ -48,7 +48,7 @@ const AttendanceRecordForm = props => {
                         </div>
 
                         <div>
-                            <button type="submit">{props.formType === "add" ? "Add room" : "Update Room"}</button>
+                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add room" : "Update Room"}</button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>

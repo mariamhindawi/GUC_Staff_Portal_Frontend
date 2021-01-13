@@ -20,8 +20,8 @@ const FacultyForm = props => {
             .required("This field is required")
     });
 
-    const handleSubmit = values => {
-        axios({
+    const handleSubmit = async values => {
+        await axios({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-faculty${props.formType === "add" ? "" : `/${props.faculty.name}`}`,
             headers: {
@@ -74,7 +74,7 @@ const FacultyForm = props => {
                             <ErrorMessage name="name"/>
                         </div>
                         <div>
-                            <button type="submit">{props.formType === "add" ? "Add faculty" : "Update faculty"}</button>
+                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>
