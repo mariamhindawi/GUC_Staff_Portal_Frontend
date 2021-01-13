@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from "react";
 import axios from '../axios';
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
-const HrMemberForm = props => {
-    
+const HrMemberFormUpdate = props => {
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+
     const placeholders = {
         name: "Name",
         email: "Email",
+        password: "Password",
         office: "Office",
         salary: "Salary",
     }
@@ -15,6 +18,7 @@ const HrMemberForm = props => {
     const initialValues = {
         name: props.hrmember.name,
         email: props.hrmember.email,
+        password: props.hrmember.password,
         office: props.hrmember.office,
         salary: props.hrmember.salary,
         gender: props.hrmember.gender
@@ -26,6 +30,8 @@ const HrMemberForm = props => {
         email: Yup.string()
             .email("Invalid email address")
             .required("This field is required"),
+        password: Yup.string()
+            .required("This field is required"),    
         office: Yup.string()
             .required("This feild is required"),
         salary: Yup.number()
@@ -48,17 +54,20 @@ const HrMemberForm = props => {
             data: {
                 name: values.name,
                 email: values.email,
+                password: values.password,
                 office: values.office,
                 salary: values.salary,
-                gender: values.gender
+                gender: values.gender,
             }
         })
             .then(response => {
-                document.getElementById("hr-member-form-message").innerHTML = response.data;
+                setErrorMessage("");
+                setSuccessMessage(response.data);
             })
             .catch(error => {
                 if (error.response) {
-                    document.getElementById("hr-member-form-error-message").innerHTML = error.response.data;
+                    setErrorMessage(error.response.data);
+                    setSuccessMessage("");
                     console.log(error.response);
                 }
                 else if (error.request) {
@@ -92,10 +101,15 @@ const HrMemberForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="name"/>
                         </div>
-                        <Field name="email" placeholder={placeholders.email}
+                        <Field name="email" type="email" placeholder={placeholders.email}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="email"/>
+                        </div>
+                        <Field name="password" type="password" placeholder={placeholders.password}
+                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                        <div className="form-input-error-message">
+                            <ErrorMessage name="password"/>
                         </div>
                         <Field name="office" placeholder={placeholders.office}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
@@ -118,8 +132,8 @@ const HrMemberForm = props => {
                         <div>
                             <button type="submit">{props.formType === "add" ? "Add hr member" : "Update hr member"}</button>
                         </div>
-                        <div className="form-error-message" id="hr-member-form-error-message"></div>
-                        <div className="form-message" id="hr-member-form-message"></div>
+                        <div className="form-error-message">{errorMessage}</div>
+                        <div className="form-success-message">{successMessage}</div>
                     </Form>
                 )}
             </Formik>
@@ -127,4 +141,4 @@ const HrMemberForm = props => {
     );
 };
 
-export default HrMemberForm;
+export default HrMemberFormUpdate;

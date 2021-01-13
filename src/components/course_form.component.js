@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from "react";
 import axios from '../axios';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const CourseForm = props => {
+    const [errorMessage, setErrorMessage] = useState("");
+    const [successMessage, setSuccessMessage] = useState("");
+
     const placeholders = {
         id: "ID",
         name: "name",
@@ -21,7 +24,7 @@ const CourseForm = props => {
             .required("This field is required"),
         name: Yup.string()
             .required("This string is required"),
-        department: Yup.string()        
+        department: Yup.string()
     });
 
     const handleSubmit = values => {
@@ -38,21 +41,23 @@ const CourseForm = props => {
                 department: values.department
             }
         })
-        .then(response => {
-            document.getElementById("course-form-message").innerHTML = response.data;
-        })
-        .catch(error => {
-            if (error.response) {
-                document.getElementById("course-form-error-message").innerHTML = error.response.data;
-                console.log(error.response);
-            }
-            else if (error.request) {
-                console.log(error.request);
-            }
-            else {
-                console.log(error.message);
-            }
-        });
+            .then(response => {
+                setErrorMessage("");
+                setSuccessMessage(response.data);
+            })
+            .catch(error => {
+                if (error.response) {
+                    setErrorMessage(error.response.data);
+                    setSuccessMessage("");
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+            });
     };
 
     const handleFocus = (e) => {
@@ -71,28 +76,28 @@ const CourseForm = props => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                { formikProps => (
+                {formikProps => (
                     <Form>
                         <Field name="id" placeholder={placeholders.id}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
-                            <ErrorMessage name="id"/>
+                            <ErrorMessage name="id" />
                         </div>
                         <Field name="name" placeholder={placeholders.name}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
-                            <ErrorMessage name="name"/>
+                            <ErrorMessage name="name" />
                         </div>
                         <Field name="department" placeholder={placeholders.department}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
-                            <ErrorMessage name="department"/>
+                            <ErrorMessage name="department" />
                         </div>
                         <div>
                             <button type="submit">{props.formType === "add" ? "Add course" : "Update course"}</button>
                         </div>
-                        <div className="form-error-message" id="course-form-error-message"></div>
-                        <div className="form-message" id="course-form-message"></div>
+                        <div className="form-error-message">{errorMessage}</div>
+                        <div className="form-success-message">{successMessage}</div>
                     </Form>
                 )}
             </Formik>

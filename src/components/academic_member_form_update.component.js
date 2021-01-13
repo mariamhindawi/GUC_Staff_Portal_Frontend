@@ -3,7 +3,7 @@ import axios from '../axios';
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
-const AcademicMemberForm = props => {
+const AcademicMemberFormUpdate = props => {
     const [errorMessage, setErrorMessage] = useState("");
     const [successMessage, setSuccessMessage] = useState("");
 
@@ -65,11 +65,13 @@ const AcademicMemberForm = props => {
             data: {
                 name: values.name,
                 email: values.email,
+                password: values.password,
                 department: values.department,
                 office: values.office,
                 salary: values.salary,
                 gender: values.gender,
-                role: values.role
+                role: values.role,
+                dayOff: values.dayOff
             }
         })
             .then(response => {
@@ -117,6 +119,11 @@ const AcademicMemberForm = props => {
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="email" />
+                        </div>
+                        <Field name="password" type="password" placeholder={placeholders.password}
+                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                        <div className="form-input-error-message">
+                            <ErrorMessage name="password" />
                         </div>
                         <Field name="department" placeholder={placeholders.department}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
@@ -174,4 +181,4 @@ const AcademicMemberForm = props => {
     );
 };
 
-export default AcademicMemberForm;
+export default AcademicMemberFormUpdate;
