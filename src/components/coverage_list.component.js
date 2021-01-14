@@ -30,12 +30,6 @@ const CoverageList = (props) => {
   if (props.courses.length == 0) {
     return (
       <div className="container">
-        <div className="row">
-          <Breadcrumb>
-            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
-            <BreadcrumbItem active>Course coverages</BreadcrumbItem>
-          </Breadcrumb>
-        </div>
         <div className="row mt-10">
           <Col xs={{ offset: 6 }}>
             <br />

@@ -30,12 +30,6 @@ const HrList = (props) => {
   if (props.hrmembers.length == 0) {
     return (
       <div className="container">
-        <div className="row">
-          <Breadcrumb>
-            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
-            <BreadcrumbItem active>HR Members</BreadcrumbItem>
-          </Breadcrumb>
-        </div>
         <div className="row mt-10">
           <Col xs={{ offset: 6 }}>
             <br />
