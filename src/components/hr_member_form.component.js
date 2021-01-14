@@ -120,25 +120,29 @@ const HrMemberForm = props => {
     }
 
     return (
-        <div>
-            <Formik
+        <div className="input-form add-room-form rounded-border container">
+            <div className="pt-3 pb-3">
+                <Formik  className="row"
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
-            >
+                >
                 {formikProps => (
                     <Form>
-                        <Field name="name" placeholder={placeholders.name}
+                         <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                        <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="name" />
                         </div>
-                        <Field name="email" type="email" placeholder={placeholders.email}
+                        <label className="form-input-label col-sm-4" htmlFor="email">Room name</label>
+                        <Field className="rounded form-input-border col-sm-8" name="email" type="email" placeholder={placeholders.email}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="email" />
                         </div>
-                        <Field name="gender" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                        <label className="form-input-label col-sm-4" htmlFor="gender">Room name</label>
+                        <Field className="rounded form-input-border col-sm-8" name="gender" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                             <option disabled value="">Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -146,12 +150,14 @@ const HrMemberForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="gender" />
                         </div>
-                        <Field name="office" placeholder={placeholders.office}
+                        <label className="form-input-label col-sm-4" htmlFor="office">Room name</label>
+                        <Field className="rounded form-input-border col-sm-8" name="office" placeholder={placeholders.office}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="office" />
                         </div>
-                        <Field name="salary" placeholder={placeholders.salary}
+                        <label className="form-input-label col-sm-4" htmlFor="salary">Room name</label>
+                        <Field className="rounded form-input-border col-sm-8" name="salary" placeholder={placeholders.salary}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="salary" />
@@ -164,6 +170,7 @@ const HrMemberForm = props => {
                     </Form>
                 )}
             </Formik>
+            </div>
         </div>
     );
 };

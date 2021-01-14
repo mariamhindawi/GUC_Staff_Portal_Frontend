@@ -9,7 +9,7 @@ const HrListItem = (props) => {
             <td>{props.room}</td>
             <td>{props.hrmember.salary}</td>
             <td>{props.hrmember.email}</td>
-            <td><Button className="rounded">View Hr Member</Button></td>
+            <td><Button className="rounded">View HR</Button></td>
         </tr>
     )
 };

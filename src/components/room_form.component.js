@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Button } from "reactstrap";
 
 const RoomForm = props => {
     const [message, setMessage] = useState("");
@@ -74,25 +75,29 @@ const RoomForm = props => {
     };
     
     return (
-        <div>
-            <Formik
+        <div className="input-form add-room-form rounded-border container">
+             <div className="pt-3 pb-3">
+            <Formik  className="row"
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
                 { formikProps => (
                     <Form>
-                        <Field name="name" placeholder={placeholders.name}
+                        <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                        <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="name"/>
                         </div>
-                        <Field name="capacity" placeholder={placeholders.capacity}
+                        <label className="form-input-label col-sm-4" htmlFor="capacity">Room capacity</label>
+                        <Field className="rounded form-input-border col-sm-8" name="capacity"  placeholder={placeholders.capacity}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="capacity"/>
                         </div>
-                        <Field name="type" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                        <label className="form-input-label col-sm-4" htmlFor="type">Room type</label>
+                        <Field className="rounded form-input-border col-sm-8" name="type" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                             <option disabled value="">Room type</option>
                             <option value="Office">Office</option>
                             <option value="Tutorial">Tutorial Room</option>
@@ -102,13 +107,14 @@ const RoomForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="type"/>
                         </div>
-                        <div>
-                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add room" : "Update Room"}</button>
+                        <div className="form-button-div mb-2">
+                            <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add room" : "Update Room"}</Button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>
+            </div>
         </div>
     );
 };

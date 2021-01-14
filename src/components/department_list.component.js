@@ -63,12 +63,12 @@ const DepartmentList = (props) => {
         <tbody>
           {departmentList()}
         </tbody>
-        <Pagination
+      </table>
+      <Pagination
        postsPerPage={postsPerPage}
        totalPosts={props.departments.length}
        paginate={paginate}
      />
-      </table>
      </div>
     );
   }

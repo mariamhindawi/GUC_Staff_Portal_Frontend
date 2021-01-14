@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useState} from "react";
 import HrListItem from "././hr_list_item.component";
+import Pagination from "././pagination.component";
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -7,13 +8,22 @@ import {
 import { NavLink } from "react-router-dom";
 
 const HrList = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  // Get current posts
+ const indexOfLastPost = currentPage * postsPerPage;
+ const indexOfFirstPost = indexOfLastPost - postsPerPage;
+ const currentPosts = props.hrmembers.slice(indexOfFirstPost, indexOfLastPost);
+ // Change page
+ const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const hrList = () => {
     if (!props.hrmembers) {
       return [];
     }
 
-    return props.hrmembers.map((hrmember, i) => {
+    return currentPosts.map((hrmember, i) => {
       return <HrListItem hrmember={hrmember} room={props.rooms[i]} key={hrmember.id} />
     });
   };
@@ -40,7 +50,8 @@ const HrList = (props) => {
   else {
 
     return (
-      <table className="table">
+    <div>
+        <table className="table">
         <thead className="table-head">
           <tr className="table-row">
             <th>ID</th>
@@ -55,6 +66,12 @@ const HrList = (props) => {
           {hrList()}
         </tbody>
       </table>
+      <Pagination
+      postsPerPage={postsPerPage}
+      totalPosts={props.hrmembers.length}
+      paginate={paginate}
+    />
+    </div>
     );
   }
 }

@@ -1,5 +1,7 @@
-import React from "react";
+import React,{useState} from "react";
 import CoverageListItem from "./coverage_list_item.component";
+import Pagination from "././pagination.component";
+
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -7,13 +9,21 @@ import {
 import { NavLink } from "react-router-dom";
 
 const CoverageList = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = props.courses.slice(indexOfFirstPost, indexOfLastPost);
+ // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const coverageList = () => {
     if (!props.courses) {
       return [];
     }
 
-    return props.courses.map((course, i) => {
+    return currentPosts.map((course, i) => {
       return <CoverageListItem course={course} coverage={props.coverages[i]} key={course._id} />
     });
   };
@@ -40,7 +50,8 @@ const CoverageList = (props) => {
   else {
 
     return (
-      <table className="table">
+      <div>
+        <table className="table">
         <thead className="table-head">
           <tr className="table-row">
             <th>Course ID</th>
@@ -53,6 +64,12 @@ const CoverageList = (props) => {
           {coverageList()}
         </tbody>
       </table>
+       <Pagination
+       postsPerPage={postsPerPage}
+       totalPosts={props.courses.length}
+       paginate={paginate}
+     />
+    </div>
     );
   }
 }

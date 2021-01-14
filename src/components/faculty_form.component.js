@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Button } from "reactstrap";
 
 const FacultyForm = props => {
     const [message, setMessage] = useState("");
@@ -60,26 +61,29 @@ const FacultyForm = props => {
     };
     
     return (
-        <div>
-            <Formik
+        <div className="input-form add-room-form rounded-border container">
+            <div className="pt-3 pb-3">
+                <Formik  className="row"
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
                 { formikProps => (
                     <Form>
-                        <Field name="name" placeholder={placeholders.name}
+                        <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                        <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="name"/>
                         </div>
-                        <div>
-                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</button>
+                        <div className="form-button-div mb-2">
+                            <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</Button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>
+            </div>
         </div>
     );
 };

@@ -59,12 +59,12 @@ const FacultyList = (props) => {
         <tbody>
           {facultyList()}
         </tbody>
-        <Pagination
+      </table>
+      <Pagination
        postsPerPage={postsPerPage}
        totalPosts={props.faculties.length}
        paginate={paginate}
      />
-      </table>
   </div>
     );
   }

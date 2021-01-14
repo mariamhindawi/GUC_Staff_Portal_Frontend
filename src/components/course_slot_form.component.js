@@ -3,6 +3,7 @@ import axios from "axios";
 import axiosInstance from '../axios';
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Button } from "reactstrap";
 
 const CourseSlotForm = props => {
     const [message, setMessage] = useState("");
@@ -116,65 +117,72 @@ const CourseSlotForm = props => {
     };
 
     return (
-        <div>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                {formikProps => (
-                    <Form>
-                        <Field name="day" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                            <option disabled value="">Day</option>
-                            <option value="Saturday">Saturday</option>
-                            <option value="Sunday">Sunday</option>
-                            <option value="Monday">Monday</option>
-                            <option value="Tuesday">Tuesday</option>
-                            <option value="Wednesday">Wednesday</option>
-                            <option value="Thursday">Thursday</option>
-                        </Field>
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="day" />
-                        </div>
-                        <Field name="slotNumber" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                            <option disabled value="">Slot Number</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                        </Field>
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="slotNumber" />
-                        </div>
-                        <Field name="room" placeholder={placeholders.room}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="room" />
-                        </div>
-                        <Field name="course" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                            <option disabled value="">Course ID</option>
-                            {courses}
-                        </Field>
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="course" />
-                        </div>
-                        <Field name="type" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                            <option disabled value="">Type</option>
-                            <option value="Tutorial">Tutorial</option>
-                            <option value="Lab">Lab</option>
-                            <option value="Lecture">Lectrue</option>
-                        </Field>
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="type" />
-                        </div>
-                        <div>
-                            <button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</button>
-                        </div>
-                        <div className={messageStyle} >{message}</div>
-                    </Form>
-                )}
-            </Formik>
+        <div className="input-form add-room-form rounded-border container">
+            <div className="pt-3 pb-3">
+                <Formik  className="row"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {formikProps => (
+                        <Form>
+                            <label className="form-input-label col-sm-4" htmlFor="day">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="day" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                                <option disabled value="">Day</option>
+                                <option value="Saturday">Saturday</option>
+                                <option value="Sunday">Sunday</option>
+                                <option value="Monday">Monday</option>
+                                <option value="Tuesday">Tuesday</option>
+                                <option value="Wednesday">Wednesday</option>
+                                <option value="Thursday">Thursday</option>
+                            </Field>
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="day" />
+                            </div>
+                            <label className="form-input-label col-sm-4" htmlFor="slotNumber">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="slotNumber" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                                <option disabled value="">Slot Number</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </Field>
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="slotNumber" />
+                            </div>
+                            <label className="form-input-label col-sm-4" htmlFor="room">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="room" placeholder={placeholders.room}
+                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="room" />
+                            </div>
+                            <label className="form-input-label col-sm-4" htmlFor="course">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="course" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                                <option disabled value="">Course ID</option>
+                                {courses}
+                            </Field>
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="course" />
+                            </div>
+                            <label className="form-input-label col-sm-4" htmlFor="type">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="type" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
+                                <option disabled value="">Type</option>
+                                <option value="Tutorial">Tutorial</option>
+                                <option value="Lab">Lab</option>
+                                <option value="Lecture">Lectrue</option>
+                            </Field>
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="type" />
+                            </div>
+                            <div className="form-button-div mb-2">
+                                <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</Button>
+                            </div>
+                            <div className={messageStyle} >{message}</div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
         </div>
     );
 
