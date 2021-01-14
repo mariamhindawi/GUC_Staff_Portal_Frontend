@@ -1,5 +1,6 @@
-import React from "react";
+import React,{useState} from "react";
 import RoomListItem from "./room_list_item.component";
+import Pagination from "././pagination.component";
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -7,13 +8,23 @@ import {
 import { NavLink } from "react-router-dom";
 
 const RoomList = (props) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+
+  // Get current posts
+ const indexOfLastPost = currentPage * postsPerPage;
+ const indexOfFirstPost = indexOfLastPost - postsPerPage;
+ const currentPosts = props.rooms.slice(indexOfFirstPost, indexOfLastPost);
+ // Change page
+ const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const roomList = () => {
+   
     if (!props.rooms) {
       return [];
     }
 
-    return props.rooms.map((room) => {
+    return currentPosts.map((room) => {
       return <RoomListItem room={room} key={room._id} role={props.role}/>
     });
   };
@@ -38,6 +49,7 @@ const RoomList = (props) => {
     )
   }
   return (
+    <div>
     <table className="table">
       <thead className="table-head">
         <tr className="table-row">
@@ -51,6 +63,12 @@ const RoomList = (props) => {
         {roomList()}
       </tbody>
     </table>
+    <Pagination
+    postsPerPage={postsPerPage}
+    totalPosts={props.rooms.length}
+    paginate={paginate}
+  />
+  </div>
   );
 }
 
