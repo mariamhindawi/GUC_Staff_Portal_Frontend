@@ -22,8 +22,8 @@ const CourseList = (props) => {
     if (!props.courses) {
       return [];
     }
-    return currentPosts.map((course, i) => {
-      return <CourseListItem course={course} department={props.departments[i]} key={course._id} />
+    return props.courses.map((course, i) => {
+      return <CourseListItem course={course} department={props.departments[i]} role={props.role} key={course._id} />
     });
   };
   if (props.courses.length == 0) {

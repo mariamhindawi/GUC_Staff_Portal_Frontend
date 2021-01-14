@@ -1,7 +1,30 @@
 import React from "react";
+import { Link, useRouteMatch } from "react-router-dom";
 import { Button } from "reactstrap";
 
 const HrListItem = (props) => {
+    const match = useRouteMatch();
+
+    const customButtons = () => {
+        switch (props.role) {
+            case "hr":
+                return (
+                    <>
+                        <td>
+                            <Link to={`${match.url}/update/${props.hrmember.id}`}>
+                                <button>Update Hr</button>
+                            </Link>
+                        </td>
+                        <td>
+                            <Link to={`${match.url}/delete/${props.hrmember.id}`}>
+                                <button>Delete Hr</button>
+                            </Link>
+                        </td>
+                    </>
+                );
+            default: return <></>;
+        }
+    };
     return (
         <tr className="table-row">
             <td>{props.hrmember.id}</td>
@@ -10,6 +33,7 @@ const HrListItem = (props) => {
             <td>{props.hrmember.salary}</td>
             <td>{props.hrmember.email}</td>
             <td><Button className="rounded">View Hr Member</Button></td>
+            {customButtons()}
         </tr>
     )
 };

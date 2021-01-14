@@ -53,8 +53,8 @@ const DepartmentForm = props => {
 
     const initialValues = {
         name: props.department.name,
-        faculty: props.department.faculty,
-        headOfDepartment: props.department.headOfDepartment
+        faculty: props.faculty,
+        headOfDepartment: props.headOfDepartment
     }
 
     const validationSchema = Yup.object({
@@ -80,6 +80,7 @@ const DepartmentForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
+                this.updateDepartments();
             })
             .catch(error => {
                 if (error.response) {

@@ -16,7 +16,7 @@ const CourseForm = props => {
     const initialValues = {
         id: props.course.id,
         name: props.course.name,
-        department: props.course.department
+        department: props.department
     }
 
     const validationSchema = Yup.object({
@@ -43,6 +43,7 @@ const CourseForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
+                this.updateCourses();
             })
             .catch(error => {
                 if (error.response) {

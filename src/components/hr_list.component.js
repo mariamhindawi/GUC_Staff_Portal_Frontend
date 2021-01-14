@@ -14,7 +14,7 @@ const HrList = (props) => {
     }
 
     return props.hrmembers.map((hrmember, i) => {
-      return <HrListItem hrmember={hrmember} room={props.rooms[i]} key={hrmember.id} />
+      return <HrListItem hrmember={hrmember} room={props.rooms[i]} role={props.role} key={hrmember.id} />
     });
   };
   if (props.hrmembers.length == 0) {

@@ -19,7 +19,7 @@ const HrMemberForm = props => {
         name: props.hrMember.name,
         email: props.hrMember.email,
         gender: props.hrMember.gender,
-        office: props.hrMember.office,
+        office: props.office,
         salary: props.hrMember.salary,
         password: props.hrMember.password
     }
@@ -83,6 +83,7 @@ const HrMemberForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
+                this.updateHrMembers();
             })
             .catch(error => {
                 if (error.response) {

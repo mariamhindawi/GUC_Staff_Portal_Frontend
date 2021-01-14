@@ -14,19 +14,21 @@ const FacultyList = (props) => {
 
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = props.faculties.slice(indexOfFirstPost, indexOfLastPost);
+  // const currentPosts = props.faculties.slice(indexOfFirstPost, indexOfLastPost);
  // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const facultyList = () => {
+    
     if (!props.faculties) {
       return [];
     }
 
-    return currentPosts.map((faculty) => {
-      return <FacultyListItem faculty={faculty} key={faculty._id} />
+    return props.faculties.map((faculty) => {
+      return <FacultyListItem faculty={faculty} role={props.role} key={faculty._id} />
     });
   };
+  console.log(props.faculties);
   if (props.faculties.length == 0) {
     return (
       <div className="container">

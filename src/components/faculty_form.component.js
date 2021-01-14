@@ -34,6 +34,7 @@ const FacultyForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
+                this.updateFaculties();
             })
             .catch(error => {
                 if (error.response) {
