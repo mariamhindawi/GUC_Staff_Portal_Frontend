@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react"
-import { Spinner } from "reactstrap";
-import Axios from "../axios"
-import RequestsTable from "./requestsTable.component"
+import React, { useEffect, useState } from 'react'
+import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from 'reactstrap';
+import Axios from '../axios'
+import RequestsTable from './requestsTable.component'
 
 const HODRequestsComponent = (props) => {
     const [leaveRequests, setLeaveRequests] = useState([]);
     const [loading, setLoading] = useState([]);
+    const [message, setMessage] = useState("")
+    const [requestID, setRequestID] = useState(0)
+    const [modal, setModal] = useState(false);
+    const toggle = (reqID) => {setRequestID(reqID);setModal(!modal)};
 
     useEffect(() => {
         Axios.get("/hod/staff-requests", {
@@ -13,40 +17,52 @@ const HODRequestsComponent = (props) => {
                 "token": sessionStorage.token
             }
         }
-        ).then((res) => {console.log(res.data);setLeaveRequests(res.data);setLoading(false)}).catch(error=>alert(error))
-    },[])
+        ).then((res) => { console.log(res.data);setLeaveRequests(res.data); setLoading(false) }).catch(error => alert(error))
+    }, [])
     const acceptRequest = id => {
-        Axios.put(`/hod/staff-requests/${id}/accept`, {
-            "headers": {
-                "token": sessionStorage.token
+        Axios(`/hod/staff-requests/${id}/accept`, {
+            method: 'put',
+            'headers': {
+                'token': sessionStorage.token
             }
-        }).then(res=>alert(res.data)).then(()=>Axios.get("/hod/staff-requests", {
-            "headers": {
-                "token": sessionStorage.token
+        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get('/hod/staff-requests', {
+            'headers': {
+                'token': sessionStorage.token
             }
         }
-        ).then((res) => {setLeaveRequests(res.data);setLoading(false)})).catch(error=>alert(error))
+        ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))
     }
-    const rejectRequest = (id, HODComment) => {
-        Axios.put(`/hod/staff-requests/${id}/reject`, {
-            "headers": {
-                "token": sessionStorage.token
+
+    function handleChange(event) {
+        event.preventDefault();
+        setMessage(event.target.value)
+    }
+    function handleSubmit(event) {
+        event.preventDefault();
+        rejectRequest()
+    }
+    const rejectRequest = () => {
+        toggle()
+        Axios(`/hod/staff-requests/${requestID}/reject`, {
+            method: 'put',
+            'headers': {
+                'token': sessionStorage.token
             },
             data: {
-                HODComment: HODComment
+                HODComment: message
             }
-        }).then(res=>alert(res.data)).then(()=>Axios.get("/hod/staff-requests", {
-            "headers": {
-                "token": sessionStorage.token
+        }).then(res => console.log("Request " + res.data.id + " rejected")).then(() => Axios.get('/hod/staff-requests', {
+            'headers': {
+                'token': sessionStorage.token
             }
         }
-        ).then((res) => {setLeaveRequests(res.data);setLoading(false)})).catch(error=>alert(error))
+        ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))
     }
     if (loading) {
         return <div className="container">
             <div className="row">
                 <div className="offset-5">
-                    <Spinner color="primary"/>
+                    <Spinner color="primary" />
                 </div>
             </div>
         </div>
@@ -54,7 +70,16 @@ const HODRequestsComponent = (props) => {
     else {
         return (<div className="container">
             <div className="row">
-                <RequestsTable requests={leaveRequests} acceptRequest={acceptRequest} rejectRequest={rejectRequest} />
+                <RequestsTable requests={leaveRequests} acceptRequest={acceptRequest} rejectRequest={toggle} />
+                <Modal toggle={toggle} isOpen={modal}>
+                    <ModalBody>
+                        <Form onSubmit={handleSubmit}>
+                            <Label for="message">Message: </Label>
+                            <Input value={message} name="message" onChange={handleChange} type="textarea" />
+                            <Button type="submit" className="bg-danger">Reject</Button>
+                        </Form>
+                    </ModalBody>
+                </Modal>
             </div>
         </div>
         )
