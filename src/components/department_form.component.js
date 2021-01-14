@@ -8,13 +8,11 @@ const DepartmentForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
     const [faculties, setFaculties] = useState([]);
-
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
+    const axiosCancelSource = axios.CancelToken.source();
 
     const fetchFaculties = () => {
         axiosInstance.get("/fe/get-faculties", {
-            cancelToken: source.token,
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },
@@ -41,7 +39,7 @@ const DepartmentForm = props => {
     const componentDidMount = () => {
         fetchFaculties();
         return () => {
-            source.cancel("Operation canceled by the user");
+            axiosCancelSource.cancel("Operation canceled by the user");
         }
     };
     useEffect(componentDidMount, []);

@@ -8,12 +8,11 @@ const CourseSlotForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
     const [courses, setCourses] = useState([]);
-
-    const CancelToken = axios.CancelToken;
-    const source = CancelToken.source();
+    const axiosCancelSource = axios.CancelToken.source();
 
     const fetchCourses = () => {
         axiosInstance.get("/cc/get-courses-of-cc", {
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },
@@ -40,7 +39,7 @@ const CourseSlotForm = props => {
     const componentDidMount = () => {
         fetchCourses();
         return () => {
-            source.cancel("Operation canceled by the user");
+            axiosCancelSource.cancel("Operation canceled by the user");
         }
     };
     useEffect(componentDidMount, []);
