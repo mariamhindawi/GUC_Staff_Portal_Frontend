@@ -35,6 +35,7 @@ input:-webkit-autofill:active  {
 
 .home-margin {
     margin-left: 50px;
+    padding-top: 33px;
 }
 
 .form-input-error-message {

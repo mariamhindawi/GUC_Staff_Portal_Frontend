@@ -86,6 +86,7 @@ const Header = (props) => {
                     </UncontrolledDropdown >
                 </NavItem>
             </ul>
+        
         </div>
     )
 }
