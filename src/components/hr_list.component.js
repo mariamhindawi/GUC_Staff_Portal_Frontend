@@ -19,15 +19,15 @@ const HrList = (props) => {
  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const hrList = () => {
-    if (!props.hrmembers) {
-      return [];
-    }
+    if (props.hrmembers.length===0) {
+      return <HrListItem/>    }
+
 
     return currentPosts.map((hrmember, i) => {
       return <HrListItem hrmember={hrmember} room={props.rooms[i]} key={hrmember.id} />
     });
   };
-  if (props.hrmembers.length == 0) {
+  if (props.loading) {
     return (
       <div className="container">
         <div className="row mt-10">

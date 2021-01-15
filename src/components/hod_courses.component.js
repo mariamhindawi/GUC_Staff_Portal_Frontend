@@ -7,7 +7,8 @@ class HODCourses extends React.Component {
         super(props);
         this.state = {
             courses: [],
-            department: {}
+            department: {},
+            loading:true
         };
     }
 
@@ -19,7 +20,8 @@ class HODCourses extends React.Component {
         })
         .then(res => {
             this.setState({
-                department: res.data
+                department: res.data,
+                loading:false
             });
         })
         .catch(err => {
@@ -46,6 +48,7 @@ class HODCourses extends React.Component {
         .then(res => {
             this.setState({
                 courses: res.data
+                
             });
         })
         .catch(err => {
@@ -67,7 +70,7 @@ class HODCourses extends React.Component {
         departments.fill(this.state.department);
         return (
             <div>
-                <CourseList courses={this.state.courses} departments={departments} ></CourseList>
+                <CourseList courses={this.state.courses} departments={departments} loading={this.state.loading}></CourseList>
             </div>
         )
     }

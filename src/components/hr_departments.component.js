@@ -8,7 +8,8 @@ class HRdepartments extends React.Component {
         this.state = {
             departments: [],
             faculties: [],
-            heads: []
+            heads: [],
+            loading:true
         }
     }
 
@@ -22,7 +23,8 @@ class HRdepartments extends React.Component {
                 this.setState({
                     departments: res.data.departments,
                     faculties: res.data.faculties,
-                    heads: res.data.heads
+                    heads: res.data.heads,
+                    loading:false
                 });
             })
             .catch(err => {
@@ -43,7 +45,7 @@ class HRdepartments extends React.Component {
     render() {
         return (
             <div>
-                <DepartmentList departments={this.state.departments} faculties={this.state.faculties} heads={this.state.heads}></DepartmentList>
+                <DepartmentList departments={this.state.departments} faculties={this.state.faculties} heads={this.state.heads} loading={this.state.loading}></DepartmentList>
             </div>
         )
     }

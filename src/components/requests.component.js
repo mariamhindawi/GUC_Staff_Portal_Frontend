@@ -46,12 +46,7 @@ class requestsComponent extends React.Component {
         if (!this.state.loading) {
             return (
                 <div className="container">
-                    <div className="row">
-                        <Breadcrumb>
-                            <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
-                            <BreadcrumbItem active>Requests</BreadcrumbItem>
-                        </Breadcrumb>
-                    </div>
+                   
                     <div className="row">
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
                             <DropdownToggle caret>
@@ -81,18 +76,12 @@ class requestsComponent extends React.Component {
         }
         else {
             return <div className="container">
-                <div className="row">
-                    <Breadcrumb>
-                        <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
-                        <BreadcrumbItem active>Requests</BreadcrumbItem>
-                    </Breadcrumb>
-                </div>
                 <div className="row mt-10">
                     <Col md={{ offset: 6 }}>
                         <br />
                         <br />
                         <br />
-                        <Spinner color="warning" />
+                        <Spinner color="primary" />
                     </Col>
                 </div>
             </div>

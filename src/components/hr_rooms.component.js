@@ -10,7 +10,8 @@ class HrRooms extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            rooms: []
+            rooms: [],
+            loading:true
         }
     }
 
@@ -23,7 +24,8 @@ class HrRooms extends React.Component {
         })
             .then(res => {
                 this.setState({
-                    rooms: res.data
+                    rooms: res.data,
+                    loading:false
                 });
             })
             .catch(error => {
@@ -61,7 +63,7 @@ class HrRooms extends React.Component {
     render() {
         return (
             <div>
-                <Route exact path={`${this.props.match.path}`}> <RoomList rooms={this.state.rooms} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}`}> <RoomList rooms={this.state.rooms} role="hr" loading={this.state.loading} /> </Route>
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => (
                         <RoomForm room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms()} formType="update" />

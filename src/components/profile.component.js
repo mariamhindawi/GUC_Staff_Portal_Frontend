@@ -27,12 +27,6 @@ class Profile extends React.Component {
     if (!this.state.user) {
       return (
         <div className="container">
-          <div className="row">
-            <Breadcrumb>
-              <BreadcrumbItem><NavLink to="/staff/home">Home</NavLink></BreadcrumbItem>
-              <BreadcrumbItem active>Profile</BreadcrumbItem>
-            </Breadcrumb>
-          </div>
           <div className="row mt-10">
             <Col xs={{ offset: 6 }}>
               <br />

@@ -7,7 +7,8 @@ class HODcoverage extends React.Component {
         super(props);
         this.state = {
             courses: [],
-            coverages: []
+            coverages: [],
+            loading:true
         }
     }
 
@@ -20,7 +21,8 @@ class HODcoverage extends React.Component {
             .then(res => {
                 this.setState({
                     courses: res.data.courses,
-                    coverages: res.data.coverages
+                    coverages: res.data.coverages,
+                    loading:false
                 });
             })
             .catch(err => {
@@ -40,7 +42,7 @@ class HODcoverage extends React.Component {
     render() {
         return (
             <div>
-                <CoverageList courses={this.state.courses} coverages={this.state.coverages}></CoverageList>
+                <CoverageList courses={this.state.courses} coverages={this.state.coverages} loading={this.state.loading}></CoverageList>
             </div>
         )
     }

@@ -7,7 +7,8 @@ class HRhrmembers extends React.Component {
         super(props);
         this.state = {
             hrmembers: [],
-            rooms: []
+            rooms: [],
+            loading:true
         }
     }
 
@@ -20,7 +21,8 @@ class HRhrmembers extends React.Component {
             .then(res => {
                 this.setState({
                     hrmembers: res.data.hrmembers,
-                    rooms: res.data.rooms
+                    rooms: res.data.rooms,
+                    loading:false
                 });
             })
             .catch(err => {
@@ -40,7 +42,7 @@ class HRhrmembers extends React.Component {
     render() {
         return (
             <div>
-                <HrList hrmembers={this.state.hrmembers} rooms={this.state.rooms}></HrList>
+                <HrList hrmembers={this.state.hrmembers} rooms={this.state.rooms} loading={this.state.loading}></HrList>
             </div>
         )
     }

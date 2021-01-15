@@ -19,14 +19,15 @@ const AcademicList = (props) => {
  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const academicList = () => {
-    if (!props.academics) {
-      return [];
-    }
+
+    if (props.academics.length===0) {
+      return <AcademicListItem/>    }
+      
     return currentPosts.map((academic, i) => {
       return <AcademicListItem academic={academic} department={props.departments[i]} room={props.rooms[i]} key={academic.id} />
     });
   };
-  if (props.academics.length == 0) {
+  if (props.loading) {
     return (
       <div className="container">
         <div className="row mt-10">
@@ -57,6 +58,7 @@ const AcademicList = (props) => {
         </thead>
         <tbody>
           {academicList()}
+
         </tbody>
         
       </table>

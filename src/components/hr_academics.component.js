@@ -8,7 +8,8 @@ class HRacademics extends React.Component {
         this.state = {
             academics: [],
             departments: [],
-            rooms: []
+            rooms: [],
+            loading:true
         }
     }
 
@@ -22,7 +23,8 @@ class HRacademics extends React.Component {
                 this.setState({
                     academics: res.data.academics,
                     departments: res.data.departments,
-                    rooms: res.data.rooms
+                    rooms: res.data.rooms,
+                    loading:false
                 });
             })
             .catch(err => {
@@ -42,7 +44,7 @@ class HRacademics extends React.Component {
     render() {
         return (
             <div>
-                <AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms}></AcademicList>
+                <AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} loading={this.state.loading}></AcademicList>
             </div>
         )
     }

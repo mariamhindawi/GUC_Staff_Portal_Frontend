@@ -20,15 +20,15 @@ const RoomList = (props) => {
 
   const roomList = () => {
    
-    if (!props.rooms) {
-      return [];
-    }
+    if (props.rooms.length===0) {
+      return <RoomListItem/>    }
+
 
     return currentPosts.map((room) => {
       return <RoomListItem room={room} key={room._id} role={props.role}/>
     });
   };
-  if (props.rooms.length == 0) {
+  if (props.loading) {
     return (
       <div className="container">
         <div className="row mt-10">

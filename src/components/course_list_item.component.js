@@ -3,6 +3,7 @@ import { Button } from "reactstrap";
 
 const CourseListItem = (props) => {
 
+    if(props.course){
     return (
         <tr className="table-row">
             <td>{props.course.id}</td>
@@ -12,6 +13,10 @@ const CourseListItem = (props) => {
             <td><Button className="rounded">View Course</Button></td>
         </tr>
     )
+    }
+    else{
+        return( <tr className="no-items">No Items</tr>)
+     }
 };
 
 export default CourseListItem;

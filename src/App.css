@@ -367,3 +367,11 @@ display: none;
         color:red;
     }
 }
+
+.no-items{
+color: rgba(136,189,188,1);
+font-weight: bold;
+font-size: large;
+    text-align: center;
+
+}

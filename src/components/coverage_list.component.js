@@ -19,15 +19,13 @@ const CoverageList = (props) => {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const coverageList = () => {
-    if (!props.courses) {
-      return [];
-    }
-
+    if (props.courses.length===0) {
+      return <CoverageListItem/>    }
     return currentPosts.map((course, i) => {
       return <CoverageListItem course={course} coverage={props.coverages[i]} key={course._id} />
     });
   };
-  if (props.courses.length == 0) {
+  if (props.loading) {
     return (
       <div className="container">
         <div className="row mt-10">

@@ -19,16 +19,15 @@ const DepartmentList = (props) => {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const departmentList = () => {
-    if (!props.departments) {
-      return [];
-    }
+    if (props.departments.length===0) {
+      return <DepartmentListItem/>    }
 
     return currentPosts.map((department, i) => {
       return <DepartmentListItem department={department} faculty={props.faculties[i]} headOfDepartment={props.heads[i]}
         key={department._id} />
     });
   };
-  if (props.departments.length == 0) {
+  if (props.loading) {
     return (
       <div className="container">
         <div className="row mt-10">

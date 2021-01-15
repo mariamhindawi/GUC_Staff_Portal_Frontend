@@ -5,6 +5,10 @@ import HRacademics from "./hr_academics.component";
 import HRhrmembers from "./hr_hrmembers.component";
 import HRfaculty from "./hr_faculty.component";
 import HRdepartments from "./hr_departments.component";
+import Requests from "./requests.component";
+import Request from "./createRequest.component";
+import Slot from "./createSlotLinkingRequest.component";
+import Schedule from "./schedule.component"
 
 class HrHomePage extends React.Component {
 
@@ -12,13 +16,17 @@ class HrHomePage extends React.Component {
         return (
             <div className="home-margin">
                 <div>
-                <br /><br />
                     <h1>Welcome</h1>
                     <Link to={`${this.props.match.url}/rooms`}>HR rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/academic-members`}>HR academics</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/hr-members`}>HR hr members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/faculties`}>HR faculties</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/departments`}>HR departments</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`${this.props.match.url}/requests`}>requests</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`${this.props.match.url}/send-leave-request`}>send leave request</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`${this.props.match.url}/send-slot-request`}>send slot request</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`${this.props.match.url}/view-schedule`}>schedule</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
                     <br /><br />
                 </div>
                 <div>
@@ -27,6 +35,14 @@ class HrHomePage extends React.Component {
                     <Route path={`${this.props.match.path}/hr-members`}> <HRhrmembers /> </Route>
                     <Route path={`${this.props.match.path}/faculties`}> <HRfaculty /> </Route>
                     <Route path={`${this.props.match.path}/departments`}> <HRdepartments /> </Route>
+                    <Route path={`${this.props.match.path}/requests`}> <Requests /> </Route>
+                    <Route path={`${this.props.match.path}/send-leave-request`}> <Request /> </Route>
+                    <Route path={`${this.props.match.path}/send-slot-request`}> <Slot /> </Route>
+                    <Route path={`${this.props.match.path}/view-schedule`}> <Schedule /> </Route>      </div>
+
+
+                <div>
+
                 </div>
             </div>
         )

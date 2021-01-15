@@ -19,14 +19,14 @@ const CourseList = (props) => {
  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const courseList = () => {
-    if (!props.courses) {
-      return [];
-    }
+    if (props.academics.length===0) {
+      return <CourseListItem/>    }
+
     return currentPosts.map((course, i) => {
       return <CourseListItem course={course} department={props.departments[i]} key={course._id} />
     });
   };
-  if (props.courses.length == 0) {
+  if (props.loading) {
     return (
       <div className="container">
 
