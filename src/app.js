@@ -7,6 +7,12 @@ import Sidebar from "./components/sidebar.component";
 import HrHomePage from "./components/hr_home.component";
 import DepartmentForm from "./components/department_form.component";
 import CourseSlotForm from "./components/course_slot_form.component";
+import Attendance from "./components/attendance.component";
+import MissingDays from "./components/missing_days.component";
+import Hours from "./components/hours.component";
+import HRAttendance from "./components/hr_attendance.component";
+import HRHours from "./components/hr_hours.component";
+import HRDays from "./components/hr_days.component";
 
 function App() {
   return (
@@ -18,6 +24,12 @@ function App() {
       <Route path="/staff/hr"> <HrHomePage /> </Route>
       <Route path="/test/department-form"> <DepartmentForm department={{name: "", faculty: "", headOfDepartment: ""}} formType="add" /> </Route>
       <Route path="/test/course-slot-form"> <CourseSlotForm courseSlot={{slotNumber: "", day: "", course: "", type:"", room: ""}} formType="add" /> </Route>
+      <Route path="/staff/attendance"> <Attendance /> </Route>
+      <Route path="/staff/missingdays"> <MissingDays /> </Route>
+      <Route path="/staff/hours"> <Hours /> </Route>
+      <Route path="/hr/attendance"> <HRAttendance /> </Route>
+      <Route path="/hr/hours"> <HRHours/>  </Route>
+      <Route path="/hr/days"> <HRDays/>  </Route>
     </div>
   );
 }
