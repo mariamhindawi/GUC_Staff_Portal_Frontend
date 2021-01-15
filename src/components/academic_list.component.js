@@ -24,7 +24,7 @@ const AcademicList = (props) => {
       return <AcademicListItem/>    }
       
     return currentPosts.map((academic, i) => {
-      return <AcademicListItem academic={academic} department={props.departments[i]} room={props.rooms[i]} key={academic.id} />
+      return <AcademicListItem academic={academic} department={props.departments[i]} room={props.rooms[i]} role={props.role} key={academic.id} />
     });
   };
   if (props.loading) {
@@ -51,7 +51,7 @@ const AcademicList = (props) => {
             <th>Name</th>
             <th>Department</th>
             <th>Office</th>
-            <th>Salary</th>
+            <th>Day Off</th>
             <th>Email</th>
             <th></th>
           </tr>

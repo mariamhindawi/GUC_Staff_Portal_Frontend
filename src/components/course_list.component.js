@@ -12,15 +12,16 @@ const CourseList = (props) => {
   const [postsPerPage] = useState(5);
 
   // Get current posts
- const indexOfLastPost = currentPage * postsPerPage;
- const indexOfFirstPost = indexOfLastPost - postsPerPage;
- const currentPosts = props.courses.slice(indexOfFirstPost, indexOfLastPost);
- // Change page
- const paginate = pageNumber => setCurrentPage(pageNumber);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = props.courses.slice(indexOfFirstPost, indexOfLastPost);
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const courseList = () => {
-    if (props.academics.length===0) {
-      return <CourseListItem/>    }
+    if (props.academics.length === 0) {
+      return <CourseListItem />
+    }
 
     return currentPosts.map((course, i) => {
       return <CourseListItem course={course} department={props.departments[i]} key={course._id} />
@@ -44,25 +45,25 @@ const CourseList = (props) => {
   else {
     return (
       <div>
-         <table className="table">
-        <thead className="table-head">
-          <tr className="table-row">
-            <th>Course ID</th>
-            <th>Course name</th>
-            <th>Department</th>
-            <th>Course coordinator</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {courseList()}
-        </tbody>
-      </table>
-      <Pagination
-       postsPerPage={postsPerPage}
-       totalPosts={props.courses.length}
-       paginate={paginate}
-     />
+        <table className="table">
+          <thead className="table-head">
+            <tr className="table-row">
+              <th>Course ID</th>
+              <th>Course name</th>
+              <th>Department</th>
+              <th>Course coordinator</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {courseList()}
+          </tbody>
+        </table>
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={props.courses.length}
+          paginate={paginate}
+        />
       </div>
 
     );

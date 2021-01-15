@@ -22,8 +22,8 @@ const AcademicMemberForm = props => {
         email: props.academicMember.email,
         gender: props.academicMember.gender,
         role: props.academicMember.role,
-        department: props.academicMember.department,
-        office: props.academicMember.office,
+        department: props.department,
+        office: props.office,
         salary: props.academicMember.salary,
         dayOff: props.academicMember.dayOff,
         password: props.academicMember.password
@@ -105,6 +105,7 @@ const AcademicMemberForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
+                this.updateAcademics();
             })
             .catch(error => {
                 if (error.response) {

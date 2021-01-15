@@ -23,7 +23,7 @@ const DepartmentList = (props) => {
       return <DepartmentListItem/>    }
 
     return currentPosts.map((department, i) => {
-      return <DepartmentListItem department={department} faculty={props.faculties[i]} headOfDepartment={props.heads[i]}
+      return <DepartmentListItem department={department} faculty={props.faculties[i]} headOfDepartment={props.heads[i]} role={props.role}
         key={department._id} />
     });
   };

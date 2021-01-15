@@ -4,14 +4,14 @@ import { Button } from "reactstrap";
 import axios from "../axios";
 
 
-const DeleteRoom = props => {
+const DeleteFaculty = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
 
-    async function DeleteRoom(e) {
+    async function Deletefaculty(e) {
         await axios({
             method: "delete",
-            url: `/hr/delete-room/${props.room.name}`,
+            url: `/hr/delete-faculty/${props.faculty.name}`,
             headers: {
                 token: sessionStorage.getItem("token")
             }
@@ -19,7 +19,7 @@ const DeleteRoom = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
-                this.updateRooms();
+                this.updateFaculties();
             })
             .catch(error => {
                 if (error.response) {
@@ -40,11 +40,11 @@ const DeleteRoom = props => {
     return (
         <div>
             <div>Are you sure?</div>
-            <Link to="/staff/hr/rooms">
-                <button className="rounded" onClick={DeleteRoom}>Yes</button>
+            <Link to="/staff/hr/faculties">
+                <button className="rounded" onClick={Deletefaculty}>Yes</button>
             </Link>
             <div>   </div>
-            <Link to="/staff/hr/rooms">
+            <Link to="/staff/hr/faculties">
                 <button className="rounded" >No</button>
             </Link>
         </div>
@@ -52,4 +52,4 @@ const DeleteRoom = props => {
     );
 }
 
-export default DeleteRoom;
+export default DeleteFaculty;

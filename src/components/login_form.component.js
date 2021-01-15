@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GUC from "../GUC_Building.jpg";
 import { Button } from "reactstrap";
+// import user_blacklist_model from "../../../GUC_Staff_Portal_Backend/models/user_blacklist_model";
 
 const LoginForm = () => {
     const history = useHistory();
@@ -31,7 +32,29 @@ const LoginForm = () => {
         })
             .then(res => {
                 sessionStorage.setItem("token", res.headers["token"]);
-                history.push("/staff/hr");
+                sessionStorage.setItem("user",JSON.stringify(res.data   ));
+                console.log(sessionStorage.getItem("user"));
+                if (res.data.role==="Head of Department") {
+                    history.push("/staff/hod");
+                }else {
+                    if (res.data.role==="Course Instructor") {
+                        history.push("/staff/ci");
+                    }
+                    else {
+                        if (res.data.role==="Teaching Assistant") {
+                            history.push("/staff/ta");
+                        }
+                        else {
+                            if (res.data.role==="Course Coordinator") {
+                                history.push("/staff/cc")
+                            }
+                            else {
+                                history.push("/staff/hr");
+                            }
+                        }
+                    } 
+                }
+                
             })
             .catch(error => {
                 if (error.response) {

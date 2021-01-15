@@ -5,9 +5,8 @@ import axiosInstance from "../axios";
 import CourseList from "./course_list.component";
 import DeleteCourse from "./delete_course.component";
 import CourseForm from "./course_form.component";
-import AssignCiForm from "./assign_ci_form.component";
 
-class HodCourses extends React.Component {
+class HrCourses extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +16,7 @@ class HodCourses extends React.Component {
     }
 
     fetchCourses() {
-        axiosInstance.get("/fe/get-courses-by-department", {
+        axiosInstance.get("/fe/get-courses", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -72,21 +71,20 @@ class HodCourses extends React.Component {
     };
 
     render() {
-        console.log(this.state.courses);
         return (
             <div>
-                <Route exact path={`${this.props.match.path}`}> <CourseList courses={this.state.courses} departments={this.state.departments} role="hod" /> </Route>
-                <Route exact path={`${this.props.match.path}/assign-ci/:id`}
+                <Route exact path={`${this.props.match.path}`}> <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}/update/:id`}
                     render={routeProps => (
-                        <AssignCiForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
+                        <CourseForm course={this.getCourse(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} updateCourses={this.fetchCourses()} formType="update" />
                     )} />
-                {/* <Route exact path={`${this.props.match.path}/delete/:name`}
+                <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
                         <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
-                    )} /> */}
+                    )} />
             </div>
         );
     }
 }
 
-export default withRouter(HodCourses);
+export default withRouter(HrCourses);

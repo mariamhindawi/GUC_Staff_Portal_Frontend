@@ -1,41 +1,45 @@
 import React, { useState } from "react";
-import axios from "../axios";
+import axios from '../axios';
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Button } from "reactstrap";
 
-const FacultyForm = props => {
+const AssignCiForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
 
     const placeholders = {
-        name: "Faculty name"
+        course: "Course",
+        courseInstructor: "ex: ac-1"
     }
 
-    const initialValues = { 
-        name: props.faculty.name
+    const initialValues = {
+        course: props.course.id,
+        courseInstructor: ""
     }
 
     const validationSchema = Yup.object({
-        name: Yup.string()
-            .required("This field is required")
+        course: Yup.string()
+            .required("This field is required"),
+        courseInstructor: Yup.string()
+            .required("This field is required")    
     });
 
     const handleSubmit = async values => {
         await axios({
-            method: props.formType === "add" ? "post" : "put",
-            url: `/hr/${props.formType}-faculty${props.formType === "add" ? "" : `/${props.faculty.name}`}`,
+            method: "post",
+            url: "/hod/assign-course-instructor",
             headers: {
                 token: sessionStorage.getItem("token")
             },
             data: {
-                name: values.name
+                course: values.course,
+                id: values.courseInstructor
             }
         })
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
-                this.updateFaculties();
+                this.updateAcademics();
             })
             .catch(error => {
                 if (error.response) {
@@ -51,7 +55,6 @@ const FacultyForm = props => {
                 }
             });
     };
-
     const handleFocus = (e) => {
         e.target.placeholder = "";
     };
@@ -60,33 +63,35 @@ const FacultyForm = props => {
         e.target.placeholder = placeholders[e.target.name];
         formikProps.setFieldTouched(e.target.name);
     };
-    
+
     return (
-        <div className="input-form add-room-form rounded-border container">
-            <div className="pt-3 pb-3">
-                <Formik  className="row"
+        <div>
+            <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                { formikProps => (
+                {formikProps => (
                     <Form>
-                        <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
-                        <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
+                        <Field name="course" placeholder={placeholders.course}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
-                            <ErrorMessage name="name"/>
+                            <ErrorMessage name="course" />
                         </div>
-                        <div className="form-button-div mb-2">
-                            <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</Button>
+                        <Field name="courseInstructor" placeholder={placeholders.courseInstructor}
+                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                        <div className="form-input-error-message">
+                            <ErrorMessage name="courseInstructor" />
+                        </div>
+                        <div>
+                            <button type="submit" disabled={formikProps.isSubmitting}>Assign Course Instructor</button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>
-            </div>
         </div>
     );
 };
 
-export default FacultyForm;
+export default AssignCiForm;

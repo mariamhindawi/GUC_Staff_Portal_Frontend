@@ -1,24 +1,24 @@
+
 import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
-import AcademicList from "../components/academic_list.component";
+import AcademicList from "./academic_list.component";
 import AcademicForm from "./academic_member_form.component";
 import DeleteAcademic from "./delete_academic_member.component";
 
-class HRacademics extends React.Component {
+class HODacademics extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             academics: [],
             departments: [],
-            rooms: [],
-            loading:true
+            rooms: []
         }
     }
 
     fetchAcademics() {
-        axiosInstance.get("/fe/get-academics", {
+        axiosInstance.get("/hod/view-all-staff", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -26,10 +26,9 @@ class HRacademics extends React.Component {
         })
             .then(res => {
                 this.setState({
-                    academics: res.data.academics,
+                    academics: res.data.staff,
                     departments: res.data.departments,
-                    rooms: res.data.rooms,
-                    loading:false
+                    rooms: res.data.rooms
                 });
             })
             .catch(error => {
@@ -87,18 +86,18 @@ class HRacademics extends React.Component {
     render() {
         return (
             <div>
-               <Route exact path={`${this.props.match.path}`}> <AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} role="hr" /> </Route>
-                <Route exact path={`${this.props.match.path}/update/:id`}
+               <Route exact path={`${this.props.match.path}`}> <AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} role="hod" /> </Route>
+                {/* <Route exact path={`${this.props.match.path}/update/:id`}
                     render={routeProps => (
                         <AcademicForm academicMember={this.getAcademic(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} formType="update" />
                     )} />
                 <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
                         <DeleteAcademic academicMember={this.getAcademic(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} />
-                    )} />
+                    )} /> */}
             </div>
         )
     }
 }
 
-export default withRouter(HRacademics);
+export default withRouter(HODacademics);

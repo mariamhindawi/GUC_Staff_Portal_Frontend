@@ -1,6 +1,10 @@
 import React from "react";
-import axios from "../axios";
+import { Route, withRouter } from "react-router-dom";
+import axios from "axios";
+import axiosInstance from "../axios";
 import FacultyList from "../components/faculty_list.component";
+import FacultyForm from "./faculty_form.component";
+import DeleteFaculty from "./delete_faculty.component";
 
 class HRfaculty extends React.Component {
     constructor(props) {
@@ -9,9 +13,9 @@ class HRfaculty extends React.Component {
             faculties: []
         }
     }
-
-    componentDidMount() {
-        axios.get("/fe/get-faculties", {
+    fetchFaculties() {
+        axiosInstance.get("/fe/get-faculties", {
+            cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             }
@@ -21,28 +25,53 @@ class HRfaculty extends React.Component {
                     faculties: res.data
                 });
             })
-            .catch(err => {
-                if (err.response) {
-                    console.log(err.response);
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.response);
                 }
-                else if (err.request) {
-                    console.log(err.request);
+                else if (error.request) {
+                    console.log(error.request);
                 }
                 else {
-                    console.log(err.message);
+                    console.log(error.message);
                 }
-                console.log(err);
+                console.log(error);
             });
     }
 
+    componentDidMount() {
+        this.axiosCancelSource = axios.CancelToken.source();
+        this.fetchFaculties();
+    }
+
+    componentWillUnmount() {
+        this.axiosCancelSource.cancel("Operation canceled by the user");
+    }
+
+    getFaculty(facultyName) {
+        const faculties = this.state.faculties;
+        for (let i = 0; i < faculties.length; i++) {
+            if (faculties[i].name === facultyName)
+                return faculties[i];
+        }
+        return { name: "" }
+    };
 
     render() {
         return (
             <div>
-                <FacultyList faculties={this.state.faculties} ></FacultyList>
+                <Route exact path={`${this.props.match.path}`}> <FacultyList faculties={this.state.faculties} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}/update/:name`}
+                    render={routeProps => (
+                        <FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties()} formType="update" />
+                    )} />
+                <Route exact path={`${this.props.match.path}/delete/:name`}
+                    render={routeProps => (
+                        <DeleteFaculty faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties()} />
+                    )} />
             </div>
         )
     }
 }
 
-export default HRfaculty;
+export default  withRouter(HRfaculty);
