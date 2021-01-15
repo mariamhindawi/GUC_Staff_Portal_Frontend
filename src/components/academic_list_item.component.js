@@ -12,12 +12,12 @@ const AcademicListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.academic.id}`}>
-                                <button>Update Academic</button>
+                                <button className="rounded">Update Academic</button>
                             </Link>
                         </td>
                         <td>
                             <Link to={`${match.url}/delete/${props.academic.id}`}>
-                                <button>Delete Academic</button>
+                                <button className="rounded">Delete Academic</button>
                             </Link>
                         </td>
                     </>
@@ -31,9 +31,8 @@ const AcademicListItem = (props) => {
             <td>{props.academic.name}</td>
             <td>{props.department !== "UNASSIGNED" ? props.department : "-"}</td>
             <td>{props.room}</td>
-            <td>{props.academic.salary}</td>
+            <td>{props.academic.dayOff}</td>
             <td>{props.academic.email}</td>
-            <td><Button className="rounded">View Academic</Button></td>
             {customButtons()}
             
         </tr>

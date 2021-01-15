@@ -1,76 +1,92 @@
 import React from "react";
-import axios from "../axios"
+import { Route, withRouter } from "react-router-dom";
+import axios from "axios";
+import axiosInstance from "../axios";
 import CourseList from "./course_list.component";
+import DeleteCourse from "./delete_course.component";
+import CourseForm from "./course_form.component";
+import AssignCiForm from "./assign_ci_form.component";
 
-class HODCourses extends React.Component {
+class HodCourses extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             courses: [],
-            department: {}
-        };
+            departments: []
+        }
     }
 
-    async componentDidMount() {
-        await axios.get("/fe/get-academic-department", {
+    fetchCourses() {
+        axiosInstance.get("/fe/get-courses-by-department", {
+            cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             }
         })
-        .then(res => {
-            this.setState({
-                department: res.data
+            .then(res => {
+                this.setState({
+                    courses: res.data.courses,
+                    departments: res.data.departments
+                });
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+                console.log(error);
             });
-        })
-        .catch(err => {
-            if (err.response) {
-                console.log(err.response);
-            }
-            else if (err.request) {
-                console.log(err.request);
-            }
-            else {
-                console.log(err.message);
-            }
-            console.log(err);
-        });
-
-        await axios.get("/fe/get-courses-by-department", {
-            headers: {
-                token: sessionStorage.getItem("token")
-            },
-            params: {
-                department: this.state.department._id
-            }
-        })
-        .then(res => {
-            this.setState({
-                courses: res.data
-            });
-        })
-        .catch(err => {
-            if (err.response) {
-                console.log(err.response);
-            }
-            else if (err.request) {
-                console.log(err.request);
-            }
-            else {
-                console.log(err.message);
-            }
-            console.log(err);
-        });
     }
+
+    componentDidMount() {
+        this.axiosCancelSource = axios.CancelToken.source();
+        this.fetchCourses();
+    }
+
+    componentWillUnmount() {
+        this.axiosCancelSource.cancel("Operation canceled by the user");
+    }
+
+    getCourse(courseID) {
+        const courses = this.state.courses;
+        for (let i = 0; i < courses.length; i++) {
+            if (courses[i].id === courseID)
+                return courses[i];
+        }
+        return { id: "", name: "", department: "" }
+    };
+
+    getDepartment(courseID) {
+        const courses = this.state.courses;
+        const departments = this.state.departments;
+        for (let i = 0; i < courses.length; i++) {
+            if (courses[i].id === courseID)
+                return departments[i];
+        }
+        return { department : "" }
+    };
 
     render() {
-        const departments = new Array(this.state.courses.length);
-        departments.fill(this.state.department);
+        console.log(this.state.courses);
         return (
             <div>
-                <CourseList courses={this.state.courses} departments={departments} ></CourseList>
+                <Route exact path={`${this.props.match.path}`}> <CourseList courses={this.state.courses} departments={this.state.departments} role="hod" /> </Route>
+                <Route exact path={`${this.props.match.path}/assign-ci/:id`}
+                    render={routeProps => (
+                        <AssignCiForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
+                    )} />
+                {/* <Route exact path={`${this.props.match.path}/delete/:name`}
+                    render={routeProps => (
+                        <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
+                    )} /> */}
             </div>
-        )
+        );
     }
 }
 
-export default HODCourses;
+export default withRouter(HodCourses);

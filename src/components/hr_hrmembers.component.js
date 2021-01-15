@@ -1,10 +1,11 @@
-import React from "react";
+import React,{useState} from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import HrList from "./hr_list.component";
 import HrMemberForm from "./hr_member_form.component";
 import DeleteHrMember from "./delete_hr_member.component";
+import ModalExample from "./delete_modal.component";
 
 class HRhrmembers extends React.Component {
     constructor(props) {
@@ -71,6 +72,7 @@ class HRhrmembers extends React.Component {
     };
 
     render() {
+        
         return (
             <div>
                <Route exact path={`${this.props.match.path}`}> <HrList hrmembers={this.state.hrmembers} rooms={this.state.rooms} role="hr" /> </Route>
@@ -82,6 +84,7 @@ class HRhrmembers extends React.Component {
                     render={routeProps => (
                         <DeleteHrMember hrMember={this.getHrMember(routeProps.match.params.id)} updateHrMembers={this.fetchHrMembers()} />
                     )} />
+                    
             </div>
         )
     }

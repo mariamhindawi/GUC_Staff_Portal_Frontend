@@ -12,15 +12,15 @@ const CourseList = (props) => {
   const [postsPerPage] = useState(5);
 
   // Get current posts
- const indexOfLastPost = currentPage * postsPerPage;
- const indexOfFirstPost = indexOfLastPost - postsPerPage;
- const currentPosts = props.courses.slice(indexOfFirstPost, indexOfLastPost);
+//  const indexOfLastPost = currentPage * postsPerPage;
+//  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+//  const currentPosts = props.courses.slice(indexOfFirstPost, indexOfLastPost);
  // Change page
  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const courseList = () => {
     if (!props.courses) {
-      return [];
+      return <div></div>;
     }
     return props.courses.map((course, i) => {
       return <CourseListItem course={course} department={props.departments[i]} role={props.role} key={course._id} />
@@ -63,9 +63,9 @@ const CourseList = (props) => {
           {courseList()}
         </tbody>
         <Pagination
-       postsPerPage={postsPerPage}
-       totalPosts={props.courses.length}
-       paginate={paginate}
+      //  postsPerPage={postsPerPage}
+      //  totalPosts={props.courses.length}
+      //  paginate={paginate}
      />
       </table>
       </div>

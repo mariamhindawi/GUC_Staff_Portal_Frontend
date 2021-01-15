@@ -22,6 +22,21 @@ const CourseListItem = (props) => {
                         </td>
                     </>
                 );
+            case "hod":
+                return (
+                    <>
+                        <td>
+                            <Link to={`${match.url}/assign-ci/${props.course.id}`}>
+                                <button>Assign Course Instructor</button>
+                            </Link>
+                        </td>
+                        <td>
+                            <Link to={`${match.url}/delete/${props.course.id}`}>
+                                <button>Delete course</button>
+                            </Link>
+                        </td>
+                    </>
+                );
             default: return <></>;
         }
     };

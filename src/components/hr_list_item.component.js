@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Button } from "reactstrap";
 
@@ -32,7 +32,6 @@ const HrListItem = (props) => {
             <td>{props.room}</td>
             <td>{props.hrmember.salary}</td>
             <td>{props.hrmember.email}</td>
-            <td><Button className="rounded">View Hr Member</Button></td>
             {customButtons()}
         </tr>
     )

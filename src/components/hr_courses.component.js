@@ -78,7 +78,7 @@ class HrCourses extends React.Component {
                     render={routeProps => (
                         <CourseForm course={this.getCourse(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} updateCourses={this.fetchCourses()} formType="update" />
                     )} />
-                <Route exact path={`${this.props.match.path}/delete/:name`}
+                <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
                         <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
                     )} />

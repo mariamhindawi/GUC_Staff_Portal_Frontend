@@ -56,7 +56,7 @@ const AcademicList = (props) => {
             <th>Name</th>
             <th>Department</th>
             <th>Office</th>
-            <th>Salary</th>
+            <th>Day Off</th>
             <th>Email</th>
             <th></th>
           </tr>
