@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
+import { Button } from "reactstrap";
 
 const HrListItem = (props) => {
     const match = useRouteMatch();
@@ -11,12 +12,12 @@ const HrListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.hrmember.id}`}>
-                                <button>Update Hr</button>
+                                <Button className="bg-info">Update HR</Button>
                             </Link>
                         </td>
                         <td>
                             <Link to={`${match.url}/delete/${props.hrmember.id}`}>
-                                <button>Delete Hr</button>
+                                <Button className="bg-danger">Delete HR</Button>
                             </Link>
                         </td>
                     </>

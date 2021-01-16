@@ -112,7 +112,7 @@ const ReplacementRequestComponent = ({ }) => {
                         <ErrorMessage name="replacement" />
                     </div>
                     <div>
-                        <Button type="submit">Send request</Button>
+                        <Button className="bg-success"type="submit">Send request</Button>
                     </div>
                     <div className="form-error-message" id="room-form-error-message"></div>
                 </Form>

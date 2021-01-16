@@ -52,7 +52,7 @@ const SlotLinkingForm = props => {
     if (slots)
         return <div className="container">
           <div className="pl-8">
-          <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+          <Dropdown className="bg-info" isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>
                     {course ? course : 'Select course'}
                 </DropdownToggle>
@@ -64,7 +64,7 @@ const SlotLinkingForm = props => {
             <div className="text-center"><h1>Choose a slot</h1></div>
             <SlotTableComponent slots={slots.filter(slot=>slot.staffMember==='UNASSIGNED')} onClick={setActive} active={active}/>
             <div className="form-button-div mb-2">
-            <Button type="submit" className={active?"bg-primary":""} onClick={sendRequest}>Send Request</Button>
+            <Button type="submit" className={active?"bg-success":""} onClick={sendRequest}>Send Request</Button>
             </div>
             {alert?<Alert className="bg-success">{alert}</Alert>:null}
             {error?<Alert className="bg-danger">{error}</Alert>:null}

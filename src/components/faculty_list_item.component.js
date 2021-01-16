@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
+import { Button } from "reactstrap";
 
 const FacultyListItem = (props) => {
     const match = useRouteMatch();
@@ -11,12 +12,12 @@ const FacultyListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.faculty.name}`}>
-                                <button>Update faculty</button>
+                                <Button className="bg-info">Update faculty</Button>
                             </Link>
                         </td>
                         <td>
                             <Link to={`${match.url}/delete/${props.faculty.name}`}>
-                                <button>Delete faculty</button>
+                                <Button className="bg-danger">Delete faculty</Button>
                             </Link>
                         </td>
                     </>

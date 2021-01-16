@@ -101,7 +101,7 @@ const LeaveRequestForm = props => {
            <div className="pt-3 pb-3">
     
                 <label className="form-input-label col-sm-4">Request Type</label>
-            <Dropdown className="col-sm-8"  isOpen={dropdownOpen} toggle={toggle}>
+            <Dropdown className="col-sm-8 bg-info"  isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>
                     {request ? request : 'Select request type'}
                 </DropdownToggle>
@@ -143,7 +143,7 @@ const LeaveRequestForm = props => {
                                 <ErrorMessage name="reason" />
                             </div></> : null}
                         <div className="form-button-div mb-2">
-                            <Button type="submit">Send request</Button>
+                            <Button type="submit" classNam="bg-success">Send request</Button>
                         </div>
                         <div className="form-error-message" id="room-form-error-message"></div>
                     </Form>
