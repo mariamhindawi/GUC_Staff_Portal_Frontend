@@ -5,8 +5,11 @@ import axiosInstance from "../axios";
 import DepartmentList from "../components/department_list.component";
 import DepartmentForm from "./department_form.component";
 import {
+    Button,
     Col, Modal, Spinner
 } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 class HrDepartments extends React.Component {
     constructor(props) {
@@ -116,8 +119,8 @@ class HrDepartments extends React.Component {
             return (
                 <>
                     <div>Are you sure?</div>
-                    <button onClick={() => this.deleteDepartment(this.state.departmentToDelete)}>Yes</button>
-                    <button onClick={this.toggleModal}>No</button>
+                    <Button classname="rounded bg-danger" onClick={() => this.deleteDepartment(this.state.departmentToDelete)}>Yes</Button>
+                    <Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
                 </>
             );
         }
@@ -151,7 +154,9 @@ class HrDepartments extends React.Component {
                         }
                         return (
                             <>
-                                <button>Add Department</button>
+                                <div className="row">
+                                <Button className="rounded bg-success float-button col-2 offset-8 mb-2">Add Department<FontAwesomeIcon className="ml-2" icon="plus"></FontAwesomeIcon></Button>
+                                </div>
                                 <DepartmentList departments={this.state.departments} faculties={this.state.faculties}
                                     heads={this.state.heads}role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>

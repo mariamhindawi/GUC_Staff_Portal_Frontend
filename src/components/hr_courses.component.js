@@ -5,8 +5,11 @@ import axiosInstance from "../axios";
 import CourseList from "./course_list.component";
 import CourseForm from "./course_form.component";
 import {
+    Button,
     Col, Modal, Spinner
 } from "reactstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 
 class HrCourses extends React.Component {
     constructor(props) {
@@ -113,8 +116,8 @@ class HrCourses extends React.Component {
             return (
                 <>
                     <div>Are you sure?</div>
-                    <button onClick={() => this.deleteCourse(this.state.courseToDelete)}>Yes</button>
-                    <button onClick={this.toggleModal}>No</button>
+                    <Button className="rounded bg-danger" onClick={() => this.deleteCourse(this.state.courseToDelete)}>Yes</Button>
+                    <Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
                 </>
             );
         }
@@ -148,7 +151,9 @@ class HrCourses extends React.Component {
                         }
                         return (
                             <>
-                                <button>Add Course</button>
+                                <div className="row">
+                                <Button className="rounded bg-success float-button col-2 offset-8 mb-2">Add Course<FontAwesomeIcon className="ml-2" icon="plus"></FontAwesomeIcon></Button>
+                                </div>
                                 <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
                                     {this.renderModal()}

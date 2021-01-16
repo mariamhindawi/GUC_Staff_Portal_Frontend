@@ -7,7 +7,6 @@ import AcademicList from "./academic_list.component";
 import AcademicForm from "./academic_member_form.component";
 import DeleteAcademic from "./delete_academic_member.component";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
-import othersProfile from "./others_profile.component";
 
 class HODacademics extends React.Component {
     constructor(props) {
@@ -134,10 +133,7 @@ class HODacademics extends React.Component {
                     </Dropdown>
                     <AcademicList academics={this.state.academics.filter(academic => !this.state.selectedCourse || this.state.courses.filter(course => course._id === this.state.selectedCourse)[0].courseInstructors.includes(academic.id) || this.state.courses.filter(course => course._id === this.state.selectedCourse)[0].teachingAssistants.includes(academic.id))} departments={this.state.departments} rooms={this.state.rooms} role="hod" />
                 </Route>
-                <Route exact path={`${this.props.match.path}/view-profile/:id`}
-                    render={routeProps => (
-                        <othersProfile academicMember={this.getAcademic(routeProps.match.params.id)}  />
-                    )} />
+               
                 {/* <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
                         <DeleteAcademic academicMember={this.getAcademic(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} />

@@ -5,6 +5,7 @@ import axiosInstance from "../axios";
 import AcademicList from "../components/academic_list.component";
 import AcademicForm from "./academic_member_form.component";
 import {
+    Button,
     Col, Modal, Spinner
 } from "reactstrap";
 
@@ -121,8 +122,8 @@ class HrAcademics extends React.Component {
             return (
                 <>
                     <div>Are you sure?</div>
-                    <button onClick={() => this.deleteAcademic(this.state.academicToDelete)}>Yes</button>
-                    <button onClick={this.toggleModal}>No</button>
+                    <Button className="rounded bg-danger" onClick={() => this.deleteAcademic(this.state.academicToDelete)}>Yes</Button>
+                    <Button className="rounded bg-secondary"onClick={this.toggleModal}>No</Button>
                 </>
             );
         }

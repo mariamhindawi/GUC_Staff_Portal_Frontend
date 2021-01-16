@@ -72,8 +72,7 @@ input:-webkit-autofill:active  {
 }
 .table-row td button {
     outline: none;
-    background: rgb(115,149,174);
-    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+   
     border:none;
     color: black;
     font-weight: bolder;
@@ -271,8 +270,7 @@ display: none;
    
 }
 .form-button{
-  background: rgb(115,149,174);
-  background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+  
   border:none;
   color: black;
   font-weight: bolder;
@@ -393,4 +391,62 @@ font-size: large;
 
 .table-schedule:nth-child(even){
     background-color: rgba(136,189,188,0.1);
+}
+
+.assign-cc-form{
+    position: absolute;
+    top: 40%;
+    border: #88bdbc 3px solid;
+    width: 60%; 
+    margin-left: 20%;   
+
+}
+
+.assign-ci-form{
+    position: absolute;
+    top: 40%;
+    border: #88bdbc 3px solid;
+    width: 60%; 
+    margin-left: 20%;   
+
+}
+
+.assign-ta-form{
+    position: absolute;
+    top: 40%;
+    border: #88bdbc 3px solid;
+    width: 60%; 
+    margin-left: 20%;   
+
+}
+.change-day-off{
+    position: absolute;
+    top: 40%;
+    border: #88bdbc 3px solid;
+    width: 60%; 
+    margin-left: 20%;  
+}
+.course-form{
+    position: absolute;
+    top: 40%;
+    border: #88bdbc 3px solid;
+    width: 60%; 
+    margin-left: 20%;  
+}
+.delete-ta-form{
+    position: absolute;
+    top: 40%;
+    border: #88bdbc 3px solid;
+    width: 60%; 
+    margin-left: 20%;  
+}
+.department-form{
+    position: absolute;
+    top: 40%;
+    border: #88bdbc 3px solid;
+    width: 60%; 
+    margin-left: 20%;  
+}
+.float-button{
+    float:right;
 }

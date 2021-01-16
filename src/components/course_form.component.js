@@ -81,7 +81,7 @@ const CourseForm = props => {
     };
 
     return (
-        <div className="input-form add-room-form rounded-border container">
+        <div className="input-form course-form rounded-border container">
             <div className="pt-3 pb-3">
                 <Formik className="row"
                     initialValues={initialValues}
@@ -109,7 +109,7 @@ const CourseForm = props => {
                                 <ErrorMessage name="department" />
                             </div>
                             <div className="form-button-div mb-2">
-                                <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add course" : "Update course"}</Button>
+                                <Button className="rounded bg-info" type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add course" : "Update course"}</Button>
                             </div>
                             <div className={messageStyle}>{message}</div>
                         </Form>

@@ -12,13 +12,13 @@ const FacultyListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.faculty.name}`}>
-                                <Button className="bg-info">Update faculty</Button>
+                                <Button className="rounded bg-info">Update faculty</Button>
                             </Link>
                         </td>
                         <td>
-                            <button  onClick={() => props.toggleModal(props.faculty.name)}>
+                            <Button className="rounded bg-danger" onClick={() => props.toggleModal(props.faculty.name)}>
                                 Delete faculty
-                            </button>
+                            </Button>
                         </td>
                     </>
                 );

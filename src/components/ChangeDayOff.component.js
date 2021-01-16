@@ -63,7 +63,7 @@ const DayOffChangeComponent = ({ }) => {
     };
 
     return (
-    <div className="input-form add-room-form rounded-border container">
+    <div className="input-form change-day-off rounded-border container">
         <div className="pt-3 pb-3">
         <Formik
             validationSchema={validationSchema}
@@ -93,7 +93,7 @@ const DayOffChangeComponent = ({ }) => {
                         <ErrorMessage name="reason" />
                     </div>
                     <div className="form-button-div mb-2">
-                        <Button type="submit">Send request</Button>
+                        <Button className="rounded bg-success" type="submit">Send request</Button>
                     </div>
                     <div className="form-error-message" id="room-form-error-message"></div>
                 </Form>

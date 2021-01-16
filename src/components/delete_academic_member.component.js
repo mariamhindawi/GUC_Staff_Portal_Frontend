@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
+import { Button } from "reactstrap";
 import axios from "../axios";
 
 
@@ -34,11 +35,11 @@ const DeleteAcademic = props => {
         <div>
             <div>Are you sure?</div>
             <Link to="/staff/hr/academic-members">
-                <button className="rounded" onClick={DeleteAcademicMember}>Yes</button>
+                <Button className="rounded bg-danger" onClick={DeleteAcademicMember}>Yes</Button>
             </Link>
             <div>   </div>
             <Link to="/staff/hr/academic-members">
-                <button className="rounded">No</button>
+                <Button className="rounded bg-secondary">No</Button>
             </Link>
         </div>
 

@@ -13,15 +13,15 @@ const ModalExample = (props) => {
 
   return (
     <div>
-      <Button color="danger" onClick={toggle}>{buttonLabel}</Button>
+      <Button className="bg-danger" onClick={toggle}>{buttonLabel}</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Modal title</ModalHeader>
         <ModalBody>
           Are you Sure?
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Yes</Button>{' '}
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+          <Button className="bg-danger" onClick={toggle}>Yes</Button>{' '}
+          <Button className="bg-secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </div>

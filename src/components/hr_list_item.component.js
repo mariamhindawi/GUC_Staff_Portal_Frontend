@@ -16,9 +16,9 @@ const HrListItem = (props) => {
                             </Link>
                         </td>
                         <td>
-                            <button  onClick={() => props.toggleModal(props.hrmember.id)}>
+                            <Button className="rounded bg-danger" onClick={() => props.toggleModal(props.hrmember.id)}>
                                 Delete HR Member
-                            </button>
+                            </Button>
                         </td>
                     </>
                 );

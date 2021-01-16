@@ -16,9 +16,9 @@ const CourseListItem = (props) => {
                             </Link>
                         </td>
                         <td>
-                            <button onClick={() => props.toggleModal(props.course.id)}>
+                            <Button className="rounded bg-danger" onClick={() => props.toggleModal(props.course.id)}>
                                 Delete course
-                            </button>
+                            </Button>
                         </td>
                     </>
                 );

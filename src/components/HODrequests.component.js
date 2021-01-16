@@ -76,7 +76,7 @@ const HODRequestsComponent = (props) => {
                         <Form onSubmit={handleSubmit}>
                             <Label for="message">Message: </Label>
                             <Input value={message} name="message" onChange={handleChange} type="textarea" />
-                            <Button type="submit" className="bg-danger">Reject</Button>
+                            <Button className="rounded bg-danger"type="submit" className="bg-danger">Reject</Button>
                         </Form>
                     </ModalBody>
                 </Modal>

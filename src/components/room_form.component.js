@@ -118,7 +118,7 @@ const RoomForm = props => {
                             <ErrorMessage name="type"/>
                         </div>
                         <div className="form-button-div mb-2">
-                            <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add room" : "Update Room"}</Button>
+                            <Button className="rounded bg-secondary" type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add room" : "Update Room"}</Button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>

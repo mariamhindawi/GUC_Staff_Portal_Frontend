@@ -157,7 +157,7 @@ const HrMemberForm = props => {
                             </div>
                             {props.formType === "update" ? renderPassword(formikProps) : <></>}
                             <div className="form-button-div mb-2">
-                                <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add hr member" : "Update hr member"}</Button>
+                                <Button className="rounded bg-info"type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add hr member" : "Update hr member"}</Button>
                             </div>
                             <div className={messageStyle}>{message}</div>
                         </Form>

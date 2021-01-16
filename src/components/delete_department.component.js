@@ -41,11 +41,11 @@ const DeleteDepartment = props => {
         <div>
             <div>Are you sure?</div>
             <Link to="/staff/hr/departments">
-                <button className="rounded" onClick={Deletedepartment}>Yes</button>
+                <Button className="rounded bg-danger" onClick={Deletedepartment}>Yes</Button>
             </Link>
             <div>   </div>
             <Link to="/staff/hr/departments">
-                <button className="rounded" >No</button>
+                <Button className="rounded bg-secondary" >No</Button>
             </Link>
         </div>
 

@@ -5,6 +5,7 @@ import axiosInstance from "../axios";
 import HrList from "./hr_list.component";
 import HrMemberForm from "./hr_member_form.component";
 import {
+    Button,
     Col, Modal, Spinner
 } from "reactstrap";
 
@@ -113,8 +114,8 @@ class HrHrMembers extends React.Component {
             return (
                 <>
                     <div>Are you sure?</div>
-                    <button onClick={() => this.deleteHrMember(this.state.hrMemberToDelete)}>Yes</button>
-                    <button onClick={this.toggleModal}>No</button>
+                    <Button className="rounded bg-danger"onClick={() => this.deleteHrMember(this.state.hrMemberToDelete)}>Yes</Button>
+                    <Button className="rounded bg-secondary"onClick={this.toggleModal}>No</Button>
                 </>
             );
         }

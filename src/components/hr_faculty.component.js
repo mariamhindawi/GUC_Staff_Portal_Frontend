@@ -4,7 +4,10 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import FacultyList from "../components/faculty_list.component";
 import FacultyForm from "./faculty_form.component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import {
+    Button,
     Col, Modal, Spinner
 } from "reactstrap";
 
@@ -110,8 +113,8 @@ class HrFaculty extends React.Component {
             return (
                 <>
                     <div>Are you sure?</div>
-                    <button onClick={() => this.deleteFaculty(this.state.facultyToDelete)}>Yes</button>
-                    <button onClick={this.toggleModal}>No</button>
+                    <Button className="rounded bg-danger" onClick={() => this.deleteFaculty(this.state.facultyToDelete)}>Yes</Button>
+                    <Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
                 </>
             );
         }
@@ -144,13 +147,15 @@ class HrFaculty extends React.Component {
                             );
                         }
                         return (
-                            <>
-                                <button>Add Faculty</button>
+                            <div className="container">
+                                <div className="row">
+                                <Button className="rounded bg-success float-button col-2 offset-8 mb-2">Add Faculty<FontAwesomeIcon className="ml-2" icon="plus"></FontAwesomeIcon></Button>
+                                </div>
                                 <FacultyList faculties={this.state.faculties} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
                                     {this.renderModal()}
                                 </Modal>
-                            </>
+                            </div>
                         );
                     }} />
                 <Route exact path={`${this.props.match.path}/update/:name`}

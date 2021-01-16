@@ -12,13 +12,13 @@ const RoomListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.room.name}`}>
-                                <button>Update Room</button>
+                                <Button className="rounded bg-secondary">Update Room</Button>
                             </Link>
                         </td>
                         <td>
-                            <button onClick={() => props.toggleModal(props.room.name)}>
+                            <Button className="rounded bg-danger" onClick={() => props.toggleModal(props.room.name)}>
                                 Delete Room
-                            </button>
+                            </Button>
                         </td>
                     </>
                 );
