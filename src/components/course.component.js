@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "reactstrap";
 
 const Course = (props) => {
 
@@ -12,9 +13,9 @@ const Course = (props) => {
             <p>{props.department.name}</p>
             <h6>Course coordinator:</h6>
             <p>{props.course.courseCoordinator}</p>
-            <button>View course instructors</button>
+            <Button className="bg-info">View course instructors</Button>
             <br/><br/>
-            <button>View teaching assistants</button>
+            <Button className="bg-info">View teaching assistants</Button>
         </div>
     )
 };

@@ -8,9 +8,9 @@ const SlotTableComponent = ({slots, onClick, active})=>{
         slotRows.push(<SlotTableRow key={i} slots={slots.filter(slot=>slot.slotNumber===i)} slotNumber={i} onClick={onClick} active={active}/>)
     }
 
-    return <Table striped>
-                <thead>
-                    <tr>
+    return <table className="table">
+                <thead className="table-head">
+                    <tr className="table-row">
                         <th></th>
                         <th>Saturday</th>
                         <th>Sunday</th>
@@ -23,13 +23,13 @@ const SlotTableComponent = ({slots, onClick, active})=>{
                 <tbody>
                     {slotRows}
                 </tbody>
-            </Table>
+            </table>
 }
 
 const SlotTableRow = ({ slotNumber, slots, chooseSlot, onClick, active}) => {
 
-    return <tr>
-        <th>{slotNumber}</th>
+    return <tr className="table-schedule">
+        <th className="table-row-schedule text-center">{slotNumber}</th>
         <td>{slots.filter(slot => slot.day === 'Saturday').map(slot => <Card key={slot._id} onClick={()=>onClick(slot._id)} className={active===slot._id?"bg-primary":"bg-transparent"}><CardTitle>{slot.course}</CardTitle>{slot.room}</Card>)}</td>
         <td>{slots.filter(slot => slot.day === 'Sunday').map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + ' | ' + slot.course}</Card>)}</td>
         <td>{slots.filter(slot => slot.day === 'Monday').map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + ' | ' + slot.course}</Card>)}</td>

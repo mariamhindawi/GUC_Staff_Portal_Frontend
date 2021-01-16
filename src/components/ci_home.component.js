@@ -7,17 +7,17 @@ import HrFaculty from "./hr_faculty.component";
 import HrDepartments from "./hr_departments.component";
 import HRcourses from "./hr_courses.component";
 import CIcoverage from "./ci_coverage.component";
+import jwt from "jsonwebtoken";
 
 class CiHomePage extends React.Component {
 
     render() {
-        console.log(sessionStorage.getItem("user"));
-        if (JSON.parse(sessionStorage.getItem("user")).role!=="Course Instructor") {
+        const token = jwt.decode(sessionStorage.token);
+        if (token.role !== "Course Instructor") {
             return (
-                <div><br /><br /><br />Unauthorized Access</div>
+                <div>Unauthorized Access</div>
             )
         }
-        else {
             return (
                 <div className="home-margin">
                     <div>
@@ -42,7 +42,6 @@ class CiHomePage extends React.Component {
             )
         }
     }
-        }
 
 
 export default withRouter(CiHomePage);

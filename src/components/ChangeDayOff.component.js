@@ -62,7 +62,9 @@ const DayOffChangeComponent = ({ }) => {
         formikProps.setFieldTouched(e.target.name);
     };
 
-    return (<>
+    return (
+    <div className="input-form add-room-form rounded-border container">
+        <div className="pt-3 pb-3">
         <Formik
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
@@ -70,8 +72,8 @@ const DayOffChangeComponent = ({ }) => {
         >
             {formikProps => (
                 <Form>
-                    <Label for="dayoff">Day off:</Label>
-                    <Field name="dayoff" as="select" placeholder={placeholders.dayoff}
+                    <Label className="form-input-label col-sm-4" for="dayoff">Day off:</Label>
+                    <Field className="rounded form-input-border col-sm-8" name="dayoff" as="select" placeholder={placeholders.dayoff}
                         onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                         <option disabled value="">Day off</option>
                         <option value="Saturday">Saturday</option>
@@ -84,20 +86,21 @@ const DayOffChangeComponent = ({ }) => {
                     <div className="form-input-error-message">
                         <ErrorMessage name="dayoff" />
                     </div>
-                    <Label for="reason">Reason:</Label>
-                    <Field name="reason" type="textarea" placeholder={placeholders.reason}
+                    <Label className="form-input-label col-sm-4" for="reason">Reason:</Label>
+                    <Field className="rounded form-input-border col-sm-8" name="reason" type="textarea" placeholder={placeholders.reason}
                         onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                     <div className="form-input-error-message">
                         <ErrorMessage name="reason" />
                     </div>
-                    <div>
+                    <div className="form-button-div mb-2">
                         <Button type="submit">Send request</Button>
                     </div>
                     <div className="form-error-message" id="room-form-error-message"></div>
                 </Form>
             )}
         </Formik>
-    </>
+        </div>
+    </div>
     )
 }
 

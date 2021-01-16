@@ -121,6 +121,7 @@ margin-top: 20px;
 }
 .navbar-staff-portal {
     position:fixed;
+    z-index:1;
     width: 100%;
     background: rgb(115,149,174);
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%); 
@@ -307,6 +308,13 @@ display: none;
   width: 60%; 
   margin-left: 20%;   
 }
+.add-request-form {
+  position: absolute;
+  top: 40%;
+  border: #88bdbc 3px solid;
+  width: 60%; 
+  margin-left: 20%;  
+}
 
 @media (max-width: 768px){
 
@@ -375,4 +383,14 @@ font-weight: bold;
 font-size: large;
     text-align: center;
 
+}
+
+.table-row-schedule{
+    background: rgba(136,189,188,0.5);
+    border: none;
+
+}
+
+.table-schedule:nth-child(even){
+    background-color: rgba(136,189,188,0.1);
 }

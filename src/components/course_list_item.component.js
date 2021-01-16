@@ -12,7 +12,7 @@ const CourseListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.course.id}`}>
-                                <button>Update course</button>
+                                <Button className="rounded bg-info">Update course</Button>
                             </Link>
                         </td>
                         <td>
