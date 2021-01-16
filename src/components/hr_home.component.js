@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Link, withRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import Sidebar from "./sidebar.component";
 import HrRooms from "./hr_rooms.component";
 import HrAcademics from "./hr_academics.component";
 import HrHrMembers from "./hr_hrmembers.component";
@@ -33,6 +34,7 @@ class HrHomePage extends React.Component {
                     <br /><br />
                 </div>
                 <div>
+                    <Route path={this.props.match.path}> <Sidebar /> </Route>
                     <Route path={`${this.props.match.path}/rooms`}> <HrRooms /> </Route>
                     <Route path={`${this.props.match.path}/academic-members`}> <HrAcademics /> </Route>
                     <Route path={`${this.props.match.path}/hr-members`}> <HrHrMembers /> </Route>

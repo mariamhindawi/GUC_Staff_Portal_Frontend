@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import FacultyList from "../components/faculty_list.component";
@@ -145,7 +145,9 @@ class HrFaculty extends React.Component {
                         }
                         return (
                             <>
-                                <button>Add Faculty</button>
+                                <Link to={`${this.props.match.url}/add`}>
+                                    <button>Add Faculty</button>
+                                </Link>
                                 <FacultyList faculties={this.state.faculties} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
                                     {this.renderModal()}
@@ -153,10 +155,13 @@ class HrFaculty extends React.Component {
                             </>
                         );
                     }} />
+                <Route exact path={`${this.props.match.path}/add`}>
+                    <FacultyForm faculty={{name: ""}} updateFaculties={this.fetchFaculties} formType="add" />
+                </Route>
                 <Route exact path={`${this.props.match.path}/update/:name`}
-                    render={routeProps => (
-                        <FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} formType="update" />
-                    )} />
+                    render={routeProps => {
+                        return (<FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} formType="update" />);
+                    }} />
             </>
         )
     }

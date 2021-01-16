@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import RoomList from "../components/room_list.component";
@@ -146,7 +146,9 @@ class HrRooms extends React.Component {
                         }
                         return (
                             <>
-                                <button>Add Room</button>
+                                <Link to={`${this.props.match.url}/add`}>
+                                    <button>Add Room</button>
+                                </Link>
                                 <RoomList rooms={this.state.rooms} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
                                     {this.renderModal()}
@@ -154,6 +156,9 @@ class HrRooms extends React.Component {
                             </>
                         );
                     }} />
+                <Route exact path={`${this.props.match.path}/add`}>
+                    <RoomForm room={{name: "", capacity: "", type: ""}} updateRooms={this.fetchRooms} formType="add" />
+                </Route>
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => (
                         <RoomForm room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms} formType="update" />

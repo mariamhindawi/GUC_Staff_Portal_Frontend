@@ -4,10 +4,7 @@ import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import AcademicList from "./academic_list.component";
-import AcademicForm from "./academic_member_form.component";
-import DeleteAcademic from "./delete_academic_member.component";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
-import othersProfile from "./others_profile.component";
 
 class HODacademics extends React.Component {
     constructor(props) {
@@ -138,10 +135,6 @@ class HODacademics extends React.Component {
                     render={routeProps => (
                         <othersProfile academicMember={this.getAcademic(routeProps.match.params.id)}  />
                     )} />
-                {/* <Route exact path={`${this.props.match.path}/delete/:id`}
-                    render={routeProps => (
-                        <DeleteAcademic academicMember={this.getAcademic(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} />
-                    )} /> */}
             </div>
         )
     }

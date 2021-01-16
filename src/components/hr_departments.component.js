@@ -153,13 +153,17 @@ class HrDepartments extends React.Component {
                             <>
                                 <button>Add Department</button>
                                 <DepartmentList departments={this.state.departments} faculties={this.state.faculties}
-                                    heads={this.state.heads}role="hr" toggleModal={this.toggleModal} />
+                                    heads={this.state.heads} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
                                     {this.renderModal()}
                                 </Modal>
                             </>
                         );
                     }} />
+                <Route exact path={`${this.props.match.path}/add`}>
+                    <DepartmentForm department={{name: ""}} faculty="" headOfDepartment=""
+                        updateDepartments={this.fetchDepartments} formType="add" />
+                </Route>
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => {
                         const { department, faculty, headOfDepartment } = this.getDepartment(routeProps.match.params.name);

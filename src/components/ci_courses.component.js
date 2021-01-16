@@ -3,8 +3,6 @@ import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import CourseList from "./course_list.component";
-import DeleteCourse from "./delete_course.component";
-import CourseForm from "./course_form.component";
 import AssignCcForm from "./assign_cc_form.component";
 import AssignTaForm from "./assign_ta_form.component";
 import DeleteTaForm from "./delete_ta_from_course.component";

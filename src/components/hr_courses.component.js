@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import CourseList from "./course_list.component";
@@ -148,7 +148,9 @@ class HrCourses extends React.Component {
                         }
                         return (
                             <>
-                                <button>Add Course</button>
+                                <Link to={`${this.props.match.url}/add`}>
+                                    <button>Add Course</button>
+                                </Link>
                                 <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
                                     {this.renderModal()}
@@ -156,6 +158,10 @@ class HrCourses extends React.Component {
                             </>
                         );
                     }} />
+                    <Route exact path={`${this.props.match.path}/add`}>
+                        <CourseForm course={{id: "", name: ""}} department="" 
+                            updateCourses={this.fetchCourses} formType="add" />
+                    </Route>
                 <Route exact path={`${this.props.match.path}/update/:id`}
                     render={routeProps => {
                         const { course, department } = this.getCourse(routeProps.match.params.id);
