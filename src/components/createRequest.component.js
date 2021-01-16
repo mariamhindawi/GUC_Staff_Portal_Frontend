@@ -97,8 +97,11 @@ const LeaveRequestForm = props => {
     };
 
     return (
-        <div>
-            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+        <div className="add-request-form rounded-border container">
+           <div className="pt-3 pb-3">
+    
+                <label className="form-input-label col-sm-4">Request Type</label>
+            <Dropdown className="col-sm-8"  isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>
                     {request ? request : 'Select request type'}
                 </DropdownToggle>
@@ -110,41 +113,44 @@ const LeaveRequestForm = props => {
                     <DropdownItem onClick={() => setRequest('Sick Leave')}>Sick Leave</DropdownItem>
                 </DropdownMenu>
             </Dropdown>
-            <Formik
+                 <Formik
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
                 initialValues={initialValues}
             >
                 {request ? formikProps => (
                     <Form>
-                        <Label for="day">Date:</Label>
-                        <DatePickerField name="day" />
+                        <Label  className="form-input-label col-sm-4" for="day">Date</Label>
+                        <DatePickerField className="rounded form-input-border col-sm-8"  name="day" />
                         <div className="form-input-error-message">
                             <ErrorMessage name="day" />
                         </div>
-                        {request === 'Maternity Leave' ? <><Label for="duration">Duration:</Label><Field name="duration" placeholder={placeholders.capacity}
+                        {request === 'Maternity Leave' ? <><Label  className="form-input-label col-sm-4" for="duration">Duration:</Label><Field className="rounded form-input-border col-sm-8"  name="duration" placeholder={placeholders.capacity}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">
                                 <ErrorMessage name="duration" /></div></> : null}
-                        {request === 'Maternity Leave' || request === 'Sick Leave' ? <><Label for="document">Document Link:</Label>
-                            <Field name="document" placeholder={placeholders.capacity}
+                        {request === 'Maternity Leave' || request === 'Sick Leave' ? <><Label className="form-input-label col-sm-4" for="document">Document Link</Label>
+                            <Field className="rounded form-input-border col-sm-8"  name="document" placeholder={placeholders.capacity}
                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">
                                 <ErrorMessage name="document" />
                             </div></> : null}
-                        {request !== 'Maternity Leave' ? <><Label for="reason">Reason:</Label>
-                            <Field name="reason" placeholder={placeholders.capacity}
+                        {request !== 'Maternity Leave' ? <>
+                        <Label  className="form-input-label col-sm-4" for="reason">Reason</Label>
+                            <Field className="rounded form-input-border col-sm-8"  name="reason" placeholder={placeholders.capacity}
                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">
                                 <ErrorMessage name="reason" />
                             </div></> : null}
-                        <div>
+                        <div className="form-button-div mb-2">
                             <Button type="submit">Send request</Button>
                         </div>
                         <div className="form-error-message" id="room-form-error-message"></div>
                     </Form>
                 ) : null}
-            </Formik>
+                </Formik>
+           </div>
+            
         </div>
     );
 };

@@ -6,17 +6,17 @@ import HrHrMembers from "./hr_hrmembers.component";
 import HrFaculty from "./hr_faculty.component";
 import HrDepartments from "./hr_departments.component";
 import HRcourses from "./hr_courses.component";
+import  jwt from "jsonwebtoken"
 
 class CCHome extends React.Component {
 
     render() {
-        console.log(sessionStorage.getItem("user"));
-        if (JSON.parse(sessionStorage.getItem("user")).role!=="Course Coordinator") {
+        const token = jwt.decode(sessionStorage.token);
+        if (token.role !== "Course Coordinator") {
             return (
-                <div><br /><br /><br />Unauthorized Access</div>
+                <div>Unauthorized Access</div>
             )
         }
-        else {
             return (
                 <div className="home-margin">
                     <div>
@@ -42,6 +42,5 @@ class CCHome extends React.Component {
         }
         
     }
-}
 
 export default withRouter(CCHome);

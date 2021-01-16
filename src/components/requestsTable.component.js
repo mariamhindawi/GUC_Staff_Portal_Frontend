@@ -1,14 +1,24 @@
 import React, { useState } from "react"
 import { Button, Table, Popover, PopoverBody, PopoverHeader, List } from "reactstrap"
+import Pagination from "././pagination.component";
 
 const RequestsTableComponent = ({ requests, cancelRequest, acceptRequest, rejectRequest }) => {
+    const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(5);
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = requests.slice(indexOfFirstPost, indexOfLastPost);
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
     const requestRows = requests.map(request => {
         return <RequestsTableRow key={request.id} request={request} cancelRequest={cancelRequest} acceptRequest={acceptRequest} rejectRequest={rejectRequest} />
     })
 
-    return <Table striped>
-        <thead>
-            <tr>
+    return <div style={{width:"100%"}}>
+     <table className="table">
+        <thead className="table-head">
+            <tr className="table-row">
                 <th>ID</th>
                 <th>Type</th>
                 {cancelRequest ? null : <th>Requested by</th>}
@@ -21,7 +31,14 @@ const RequestsTableComponent = ({ requests, cancelRequest, acceptRequest, reject
         <tbody>
             {requestRows}
         </tbody>
-    </Table>
+      
+    </table>
+      <Pagination
+      postsPerPage={postsPerPage}
+      totalPosts={requests.length}
+      paginate={paginate}
+    />
+    </div>
 }
 const RequestsTableRow = ({ request, cancelRequest, acceptRequest, rejectRequest }) => {
     const [popoverOpen, setPopoverOpen] = useState(false);

@@ -22,6 +22,8 @@ function App() {
       <Route path="/staff/ci"> <CiHomePage /> </Route>
       <Route path="/staff/ta"> <TaHomePage /> </Route>
       <Route path="/staff/cc"> <CCHome /> </Route>
+     
+
     </div>
   );
 }

@@ -1,8 +1,11 @@
-import React from "react"
-import Axios from "../axios"
-import { Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from "reactstrap"
-import { NavLink } from "react-router-dom"
-import RequestsTableComponent from "./requestsTable.component"
+import React from "react";
+import Axios from "../axios";
+import { Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { NavLink } from "react-router-dom";
+import RequestsTableComponent from "./requestsTable.component";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 class requestsComponent extends React.Component {
     constructor(props) {
@@ -46,8 +49,8 @@ class requestsComponent extends React.Component {
         if (!this.state.loading) {
             return (
                 <div className="container">
-                   
-                    <div className="row">
+                        <div className="row">
+                        <div className="col-1">
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
                             <DropdownToggle caret>
                                 {!this.state.filter ? 'Filter' : this.state.filter === 'Under review' ? 'Pending' : this.state.filter}
@@ -62,10 +65,14 @@ class requestsComponent extends React.Component {
                                 <DropdownItem onClick={() => { this.setState({ filter: "Under review" }) }}>Pending</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
-                        <NavLink to="/staff/home/send-leave-request">                        
-                            <Button className="bg-warning">Create a new request</Button>
-                        </NavLink>                    
                         </div>
+                        <div className="col-3 offset-7">
+                        <NavLink to="/staff/home/send-leave-request">                        
+                            <Button className="bg-success">Create a new request <FontAwesomeIcon className="ml-1" icon="plus"></FontAwesomeIcon></Button>
+                        </NavLink>     
+                        </div>
+                            </div>      
+                            <br></br>         
                     <div className="row">
                         <div className="col-12">
                             <RequestsTableComponent requests={requests} cancelRequest={this.cancelRequest} />
