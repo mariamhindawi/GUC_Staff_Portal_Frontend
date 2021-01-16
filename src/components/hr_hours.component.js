@@ -38,7 +38,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
           })
       }
 
-      componentDidUpdate() {
+      updateSelection() {
         axios({
           method:'get',
           url:'/hr/view-staff-missing-hours' ,
@@ -60,9 +60,6 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
       }
 
 
-      handleChange(event) {
-        this.setState({id: event.target.value});
-      }
 
       toggleDropDown() {
         this.setState({ dropdownOpen: !this.state.dropdownOpen })
@@ -93,7 +90,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
                                 Month
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem onClick={() => { this.setState({ month: 1 }) }}>1</DropdownItem>
+                                <DropdownItem onClick={() => { this.setState({ month: 1 });this.updateSelection() }}>1</DropdownItem>
                                 <DropdownItem divider />
                                 <DropdownItem onClick={() => { this.setState({ month: 2 }) }}>2</DropdownItem>
                                 <DropdownItem divider />
@@ -115,7 +112,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
                                 <DropdownItem divider />
                                 <DropdownItem onClick={() => { this.setState({ month: 11 }) }}>11</DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem onClick={() => { this.setState({ month: 12 }) }}>12</DropdownItem>
+                                <DropdownItem onClick={() => { this.setState({ month: 12 }); this.updateSelection()}}>12</DropdownItem>
                             </DropdownMenu>
                         </Dropdown>
                     </div>
@@ -133,9 +130,9 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
                                 <DropdownItem divider />
                                 <DropdownItem onClick={() => { this.setState({ year: 2019 }) }}>2019</DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem onClick={() => { this.setState({ year: 2020 }) }}>2020</DropdownItem>
+                                <DropdownItem onClick={() => { this.setState({ year: 2020 }); this.updateSelection() }}>2020</DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem onClick={() => { this.setState({ year: 2021 }) }}>2021</DropdownItem>
+                                <DropdownItem onClick={() => { this.setState({ year: 2021 }); this.updateSelection() }}>2021</DropdownItem>
                                 <DropdownItem divider />
                             </DropdownMenu>
                         </Dropdown>

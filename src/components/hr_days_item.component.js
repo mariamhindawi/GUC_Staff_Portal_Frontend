@@ -8,7 +8,7 @@ const HRDaysRecord= (props) => (
           
           {
           props.records.missingDays.map((currentRecord)=> {
-            return <table><tbody><tr><td>{currentRecord.substring(0,10)}</td></tr></tbody></table>;})}
+            return <table ><tbody><tr><td>{currentRecord.substring(0,10)}</td></tr></tbody></table>;})}
         </td>
     </tr>
   )

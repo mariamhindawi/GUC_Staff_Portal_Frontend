@@ -74,7 +74,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
         if(typeof this.state.records ==="object"){
         console.log(this.state.records);
         return this.state.records.map((currentRecord) => {
-            return <HRDaysRecord records={currentRecord} key={currentRecord._id}/>;
+            return <HRDaysRecord key={currentRecord._id} records={currentRecord}/>;
         })
       }
       else return [];
