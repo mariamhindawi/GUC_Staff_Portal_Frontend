@@ -7,6 +7,11 @@ import HrDepartments from "./hr_departments.component";
 import HRcourses from "./hr_courses.component";
 import HODacademics from "./hod_staff_members.component";
 import jwt from "jsonwebtoken";
+import Sidebar from "./sidebar.component";
+import { Card, CardHeader, Col, Container, Row } from "reactstrap"
+import GeneralRequests from './GeneralRequestsPage.component'
+import HODSlotAssignment from './HOD_ViewTeachingAssignments.component'
+import MySchedule from "./schedule.component"; 
 
 
 
@@ -27,19 +32,34 @@ class HodHomePage extends React.Component {
                     <Link to={`${this.props.match.url}/hod-courses`}>COURSES</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/hod-coverage`}>Courses Coverage</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/hod-staff-members`}>Staff Members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Link to={`${this.props.match.url}/faculties`}>Faculties</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Link to={`${this.props.match.url}/departments`}>Departments</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Link to={`${this.props.match.url}/courses`}>Courses</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                         <br /><br />
                 </div>
                 <div>
-                    <Route path={`${this.props.match.path}/hod-courses`}> <HODcourses /> </Route>
+                    <Route path={`${this.props.match.path}`}> <Sidebar /> </Route>
+                    <Route path={`${this.props.match.path}/hod-courses`}>
+
+                        <Container>
+                            <Row>
+                                <Col md={4}>
+                                    <Link to={`${this.props.match.url}/hod-courses-details`}>
+                                        <Card className="p-2 m-2">
+                                            <CardHeader>COURSES</CardHeader></Card></Link></Col>
+                                <Col md={4}><Link to={`${this.props.match.url}/hod-coverage`}><Card className="p-2 m-2"><CardHeader>Courses Coverage</CardHeader></Card></Link></Col>
+                                <Col md={4}>
+                                    <Link to={`${this.props.match.url}/hod-courses-slot-assignments`}>
+                                        <Card className="p-2 m-2">
+                                            <CardHeader>Slot Assignments</CardHeader></Card></Link></Col>
+                            </Row></Container>
+
+
+                    </Route>
+                    <Route path={`${this.props.match.path}/hod-courses-details`}> <HODcourses /> </Route>
                     <Route path={`${this.props.match.path}/hod-coverage`}> <HodCoverage /> </Route>
+                    <Route path={`${this.props.match.path}/hod-courses-slot-assignments`}> <HODSlotAssignment /> </Route>
+                    <Route path={`${this.props.match.path}/requests`}> <GeneralRequests /> </Route>
                     <Route path={`${this.props.match.path}/hod-staff-members`}> <HODacademics /> </Route>
-                    <Route path={`${this.props.match.path}/faculties`}> <HrFaculty /> </Route>
-                    <Route path={`${this.props.match.path}/departments`}> <HrDepartments /> </Route>
-                    <Route path={`${this.props.match.path}/courses`}> <HRcourses /> </Route>
+                    <Route path={`${this.props.match.path}/schedule`}> <MySchedule /> </Route>
                 </div>
             </div>
         )

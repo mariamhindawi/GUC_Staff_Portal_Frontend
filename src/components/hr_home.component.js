@@ -8,6 +8,7 @@ import HrFaculty from "./hr_faculty.component";
 import HrDepartments from "./hr_departments.component";
 import HrCourses from "./hr_courses.component";
 import AddMissingHours from "./AddMissingHours.component";
+import Sidebar from './sidebar.component'
 
 class HrHomePage extends React.Component {
 
@@ -33,6 +34,7 @@ class HrHomePage extends React.Component {
                     <br /><br />
                 </div>
                 <div>
+                    <Route path={this.props.match.path}> <Sidebar /> </Route>
                     <Route path={`${this.props.match.path}/rooms`}> <HrRooms /> </Route>
                     <Route path={`${this.props.match.path}/academic-members`}> <HrAcademics /> </Route>
                     <Route path={`${this.props.match.path}/hr-members`}> <HrHrMembers /> </Route>
@@ -42,7 +44,7 @@ class HrHomePage extends React.Component {
                     <Route path={`${this.props.match.path}/add-missing-record`}> <AddMissingHours /> </Route>
                 </div>
             </div>
-        )   
+        )
     }
 }
 
