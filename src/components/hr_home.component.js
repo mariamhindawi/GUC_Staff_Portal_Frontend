@@ -5,6 +5,7 @@ import HRacademics from "./hr_academics.component";
 import HRhrmembers from "./hr_hrmembers.component";
 import HRfaculty from "./hr_faculty.component";
 import HRdepartments from "./hr_departments.component";
+import AddMissingHours from './AddMissingHours.component'
 
 class HrHomePage extends React.Component {
 
@@ -18,6 +19,7 @@ class HrHomePage extends React.Component {
                     <Link to={`${this.props.match.url}/hr-members`}>HR hr members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/faculties`}>HR faculties</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/departments`}>HR departments</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`${this.props.match.url}/add-missing-record`}>Add missing record</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <br /><br />
                 </div>
                 <div>
@@ -26,6 +28,7 @@ class HrHomePage extends React.Component {
                     <Route path={`${this.props.match.path}/hr-members`}> <HRhrmembers /> </Route>
                     <Route path={`${this.props.match.path}/faculties`}> <HRfaculty /> </Route>
                     <Route path={`${this.props.match.path}/departments`}> <HRdepartments /> </Route>
+                    <Route path={`${this.props.match.path}/add-missing-record`}> <AddMissingHours /> </Route>
                 </div>
             </div>
         )

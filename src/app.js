@@ -7,6 +7,7 @@ import Sidebar from "./components/sidebar.component";
 import HrHomePage from "./components/hr_home.component";
 import DepartmentForm from "./components/department_form.component";
 import CourseSlotForm from "./components/course_slot_form.component";
+import GeneralRequestsPage from "./components/GeneralRequestsPage.component";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/staff"> <Header /> </Route>
       <Route path="/staff"> <Sidebar /> </Route>
       <Route path="/staff/hr"> <HrHomePage /> </Route>
+      <Route path="/staff/academic"> <GeneralRequestsPage /> </Route>
       <Route path="/test/department-form"> <DepartmentForm department={{name: "", faculty: "", headOfDepartment: ""}} formType="add" /> </Route>
       <Route path="/test/course-slot-form"> <CourseSlotForm courseSlot={{slotNumber: "", day: "", course: "", type:"", room: ""}} formType="add" /> </Route>
     </div>

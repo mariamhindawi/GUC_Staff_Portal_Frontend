@@ -34,7 +34,7 @@ const ScheduleComponent = () => {
                         <li key="k2">Day: {slot.day}</li>
                         <li key="k3">Course: {slot.course}</li>
                         <li key="k4">Room: {slot.room}</li>
-                        {jwt.decode(sessionStorage.token).id !== slot.staffMember ?<li key="k4">Academic Member: {slot.staffMember}</li>:null}
+                        {jwt.decode(sessionStorage.token).id !== slot.staffMember ?<li key="k5">Academic Member: {slot.staffMember}</li>:null}
                     </ul>
                 })}
             </ModalBody>

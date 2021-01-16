@@ -31,7 +31,7 @@ const LoginForm = () => {
         })
             .then(res => {
                 sessionStorage.setItem("token", res.headers["token"]);
-                history.push("/staff/hr");
+                history.push("/staff/academic");
             })
             .catch(error => {
                 if (error.response) {
