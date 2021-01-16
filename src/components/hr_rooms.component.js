@@ -5,6 +5,7 @@ import axiosInstance from "../axios";
 import RoomList from "../components/room_list.component";
 import RoomForm from "./room_form.component";
 import {
+    Button,
     Col, Modal, Spinner
 } from "reactstrap";
 
@@ -111,8 +112,8 @@ class HrRooms extends React.Component {
             return (
                 <>
                     <div>Are you sure?</div>
-                    <button onClick={() => this.deleteRoom(this.state.roomToDelete)}>Yes</button>
-                    <button onClick={this.toggleModal}>No</button>
+                    <Button className="rounded bg-danger" onClick={() => this.deleteRoom(this.state.roomToDelete)}>Yes</Button>
+                    <Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
                 </>
             );
         }

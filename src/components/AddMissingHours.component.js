@@ -189,7 +189,7 @@ const AddMissingHoursComponent = ({ }) => {
                             <ErrorMessage name="day" />
                         </div>
                         <div>
-                            <button type="submit">Get records</button>
+                            <Button type="submit">Get records</Button>
                         </div>
                         <div className="form-error-message" id="room-form-error-message"></div>
                     </Form>
@@ -233,7 +233,7 @@ const AddMissingHoursComponent = ({ }) => {
                                     <ErrorMessage name="signOut" />
                                 </div></>}
                             <div>
-                                <button type="submit">Send request</button>
+                                <Button className="rounded bg-success" type="submit">Send request</Button>
                             </div>
                             <div className="form-error-message" id="room-form-error-message"></div>
                         </Form>

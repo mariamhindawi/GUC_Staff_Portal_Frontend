@@ -3,6 +3,7 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Button } from "reactstrap";
 
 const AssignCiForm = props => {
     const [message, setMessage] = useState("");
@@ -74,31 +75,35 @@ const AssignCiForm = props => {
     };
 
     return (
-        <div>
-            <Formik
+        <div className="input-form assign-ci-form rounded-border container">
+            <div className="pt-3 pb-3">
+            <Formik className="row"
                 initialValues={initialValues}
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
                 {formikProps => (
                     <Form>
-                        <Field name="course" placeholder={placeholders.course}
+                        <label className="form-input-label col-sm-4" htmlFor="course">Course</label>
+                        <Field className="rounded form-input-border col-sm-8" name="course" placeholder={placeholders.course}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="course" />
                         </div>
-                        <Field name="courseInstructor" placeholder={placeholders.courseInstructor}
+                        <label className="form-input-label col-sm-4" htmlFor="courseInstructor">Course Instructor</label>
+                        <Field className="rounded form-input-border col-sm-8" name="courseInstructor" placeholder={placeholders.courseInstructor}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="courseInstructor" />
                         </div>
-                        <div>
-                            <button type="submit" disabled={formikProps.isSubmitting}>Assign Course Instructor</button>
+                        <div className="form-button-div mb-2">
+                            <Button className="rounded bg-success" type="submit" disabled={formikProps.isSubmitting}>Assign Course Instructor</Button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>
+        </div>
         </div>
     );
 };

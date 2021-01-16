@@ -88,7 +88,7 @@ const FacultyForm = props => {
                                 <ErrorMessage name="name" />
                             </div>
                             <div className="form-button-div mb-2">
-                                <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</Button>
+                                <Button className="bg-info" type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</Button>
                             </div>
                             <div className={messageStyle}>{message}</div>
                         </Form>

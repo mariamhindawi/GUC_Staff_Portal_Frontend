@@ -177,7 +177,7 @@ const CourseSlotForm = props => {
                                 <ErrorMessage name="type" />
                             </div>
                             <div className="form-button-div mb-2">
-                                <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</Button>
+                                <Button className="rounded bg-info" type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</Button>
                             </div>
                             <div className={messageStyle} >{message}</div>
                         </Form>

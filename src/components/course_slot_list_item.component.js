@@ -12,12 +12,12 @@ const CourseSlotListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.academic.id}`}>
-                                <button className="rounded">Update Academic</button>
+                                <Button className="rounded bg-info">Update Academic</Button>
                             </Link>
                         </td>
                         <td>
                             <Link to={`${match.url}/delete/${props.academic.id}`}>
-                                <button className="rounded">Delete Academic</button>
+                                <Button className="rounded bgg-danger">Delete Academic</Button>
                             </Link>
                         </td>
                     </>
