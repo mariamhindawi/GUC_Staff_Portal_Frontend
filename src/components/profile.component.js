@@ -1,10 +1,8 @@
 import React from "react"
 import Axios from "../axios"
 import {
-  Col, Spinner,
-  Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
+  Col, Spinner, Button, Form, FormGroup, Label, Input
 } from "reactstrap";
-import { NavLink } from "react-router-dom";
 
 class Profile extends React.Component {
   constructor(props) {

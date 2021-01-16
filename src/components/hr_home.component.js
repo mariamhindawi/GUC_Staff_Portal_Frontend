@@ -9,7 +9,6 @@ import HrFaculty from "./hr_faculty.component";
 import HrDepartments from "./hr_departments.component";
 import HrCourses from "./hr_courses.component";
 import AddMissingHours from "./AddMissingHours.component";
-import Sidebar from './sidebar.component'
 
 class HrHomePage extends React.Component {
 
@@ -25,14 +24,14 @@ class HrHomePage extends React.Component {
             <div className="home-margin">
                 <div>
                     <h1>Welcome</h1>
-                    <Link to={`${this.props.match.url}/rooms`}>Rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    {/* <Link to={`${this.props.match.url}/rooms`}>Rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/academic-members`}>Academic Members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/hr-members`}>HR Members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/faculties`}>Faculties</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/departments`}>Departments</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/courses`}>Courses</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/add-missing-record`}>Add missing record</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <br /><br />
+                    <br /><br /> */}
                 </div>
                 <div>
                     <Route path={this.props.match.path}> <Sidebar /> </Route>
