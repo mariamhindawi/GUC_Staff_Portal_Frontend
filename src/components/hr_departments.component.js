@@ -4,9 +4,8 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import DepartmentList from "../components/department_list.component";
 import DepartmentForm from "./department_form.component";
-import DeleteDepartment from "./delete_department.component";
 import {
-    Col, Spinner
+    Col, Modal, Spinner
 } from "reactstrap";
 
 class HrDepartments extends React.Component {
@@ -16,9 +15,15 @@ class HrDepartments extends React.Component {
             departments: [],
             faculties: [],
             heads: [],
+            deleteModalOpen: false,
+            departmentToDelete: "",
+            modalMessageStyle: "",
+            modalMessage: "",
             loading: true
         }
         this.fetchDepartments = this.fetchDepartments.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.deleteDepartment = this.deleteDepartment.bind(this);
     }
 
     async fetchDepartments() {
@@ -62,32 +67,68 @@ class HrDepartments extends React.Component {
 
     getDepartment(departmentName) {
         const departments = this.state.departments;
-        for (let i = 0; i < departments.length; i++) {
-            if (departments[i].name === departmentName)
-                return departments[i];
-        }
-        return { name: "" }
-    };
-
-    getFaculty(departmentName) {
-        const departments = this.state.departments;
         const faculties = this.state.faculties;
-        for (let i = 0; i < departments.length; i++) {
-            if (departments[i].name === departmentName)
-                return faculties[i];
-        }
-        return { faculty: "" }
-    };
-
-    getHead(departmentName) {
-        const departments = this.state.departments;
         const heads = this.state.heads;
         for (let i = 0; i < departments.length; i++) {
             if (departments[i].name === departmentName)
-                return heads[i];
+                return { department: departments[i], faculty: faculties[i], headOfDepartment: heads[i] };
         }
-        return { head: "" }
+        return { department: { name: "" }, faculty: "", headOfDepartment: "" }
     };
+
+    toggleModal(departmentName) {
+        this.setState({ deleteModalOpen: !this.state.deleteModalOpen, departmentToDelete: departmentName, modalMessage: "" });
+    }
+
+    async deleteDepartment(departmentName) {
+        await axiosInstance.delete(`/hr/delete-department/${departmentName}`, {
+            cancelToken: this.axiosCancelSource.token,
+            headers: {
+                token: sessionStorage.getItem("token")
+            }
+        })
+            .then(async response => {
+                this.setState({
+                    modalMessageStyle: "form-success-message",
+                    modalMessage: response.data
+                });
+                await this.fetchDepartments();
+            })
+            .catch(error => {
+                if (error.response) {
+                    this.setState({
+                        modalMessageStyle: "form-error-message",
+                        modalMessage: error.response.data
+                    });
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+            });
+    }
+
+    renderModal() {
+        if (!this.state.modalMessage) {
+            return (
+                <>
+                    <div>Are you sure?</div>
+                    <button onClick={() => this.deleteDepartment(this.state.departmentToDelete)}>Yes</button>
+                    <button onClick={this.toggleModal}>No</button>
+                </>
+            );
+        }
+        return (
+            <>
+                <br />
+                <div className={this.state.modalMessageStyle}>{this.state.modalMessage}</div>
+                <br />
+            </>
+        );
+    }
 
     render() {
         return (
@@ -108,16 +149,22 @@ class HrDepartments extends React.Component {
                                 </div>
                             );
                         }
-                        return (<DepartmentList departments={this.state.departments} faculties={this.state.faculties} heads={this.state.heads} role="hr" />);
+                        return (
+                            <>
+                                <button>Add Department</button>
+                                <DepartmentList departments={this.state.departments} faculties={this.state.faculties}
+                                    heads={this.state.heads}role="hr" toggleModal={this.toggleModal} />
+                                <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
+                                    {this.renderModal()}
+                                </Modal>
+                            </>
+                        );
                     }} />
                 <Route exact path={`${this.props.match.path}/update/:name`}
-                    render={routeProps => (
-                        <DepartmentForm department={this.getDepartment(routeProps.match.params.name)} faculty={this.getFaculty(routeProps.match.params.id)} headOfDepartment={this.getHead(routeProps.match.params.name)} updateDepartments={this.fetchDepartments} formType="update" />
-                    )} />
-                <Route exact path={`${this.props.match.path}/delete/:name`}
-                    render={routeProps => (
-                        <DeleteDepartment department={this.getDepartment(routeProps.match.params.name)} updateDepartments={this.fetchDepartments} />
-                    )} />
+                    render={routeProps => {
+                        const { department, faculty, headOfDepartment } = this.getDepartment(routeProps.match.params.name);
+                        return (<DepartmentForm department={department} faculty={faculty} headOfDepartment={headOfDepartment} updateDepartments={this.fetchDepartments} formType="update" />);
+                    }} />
             </div>
         )
     }

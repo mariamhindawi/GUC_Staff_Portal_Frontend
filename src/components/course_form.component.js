@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from '../axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import axiosInstance from "../axios";
 import * as Yup from 'yup';
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -7,6 +8,14 @@ import { Button } from "reactstrap";
 const CourseForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
+    const axiosCancelSource = axios.CancelToken.source();
+
+    const componentDidMount = () => {
+        return () => {
+            axiosCancelSource.cancel("Operation canceled by the user");
+        }
+    };
+    useEffect(componentDidMount, []);
 
     const placeholders = {
         id: "ID",
@@ -29,9 +38,10 @@ const CourseForm = props => {
     });
 
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-course${props.formType === "add" ? "" : `/${props.course.id}`}`,
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },
@@ -80,19 +90,19 @@ const CourseForm = props => {
                 >
                     {formikProps => (
                         <Form>
-                            <label className="form-input-label col-sm-4" htmlFor="id">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="id">Course ID</label>
                             <Field className="rounded form-input-border col-sm-8" name="id" placeholder={placeholders.id}
                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">
                                 <ErrorMessage name="id" />
                             </div>
-                            <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="name">Course name</label>
                             <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">
                                 <ErrorMessage name="name" />
                             </div>
-                            <label className="form-input-label col-sm-4" htmlFor="department">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="department">Department</label>
                             <Field className="rounded form-input-border col-sm-8" name="department" placeholder={placeholders.department}
                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">

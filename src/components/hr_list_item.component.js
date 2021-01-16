@@ -11,13 +11,13 @@ const HrListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.hrmember.id}`}>
-                                <button>Update Hr</button>
+                                <button>Update HR Member</button>
                             </Link>
                         </td>
                         <td>
-                            <Link to={`${match.url}/delete/${props.hrmember.id}`}>
-                                <button>Delete Hr</button>
-                            </Link>
+                            <button  onClick={() => props.toggleModal(props.hrmember.id)}>
+                                Delete HR Member
+                            </button>
                         </td>
                     </>
                 );

@@ -1,11 +1,20 @@
-import React, { useState } from "react";
-import axios from '../axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import axiosInstance from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 
 const AssignCiForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
+    const axiosCancelSource = axios.CancelToken.source();
+
+    const componentDidMount = () => {
+        return () => {
+            axiosCancelSource.cancel("Operation canceled by the user");
+        }
+    };
+    useEffect(componentDidMount, []);
 
     const placeholders = {
         course: "Course",
@@ -25,9 +34,10 @@ const AssignCiForm = props => {
     });
 
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: "post",
             url: "/hod/assign-course-instructor",
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },

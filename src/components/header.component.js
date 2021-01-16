@@ -26,7 +26,7 @@ const Header = (props) => {
             headers: {
                 token: sessionStorage.token
             }
-        }).then(res => { console.log(res.data); setNotifications(res.data) })
+        }).then(res => { setNotifications(res.data) })
     }, [])
 
     return (

@@ -19,7 +19,7 @@ const FacultyList = (props) => {
     }
 
     return currentPosts.map((faculty) => {
-      return <FacultyListItem faculty={faculty} role={props.role} key={faculty._id} />
+      return <FacultyListItem faculty={faculty} role={props.role} key={faculty._id} toggleModal={props.toggleModal} />
     });
   };
 

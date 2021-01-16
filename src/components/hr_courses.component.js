@@ -3,10 +3,9 @@ import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import CourseList from "./course_list.component";
-import DeleteCourse from "./delete_course.component";
 import CourseForm from "./course_form.component";
 import {
-    Col, Spinner
+    Col, Modal, Spinner
 } from "reactstrap";
 
 class HrCourses extends React.Component {
@@ -15,9 +14,15 @@ class HrCourses extends React.Component {
         this.state = {
             courses: [],
             departments: [],
+            deleteModalOpen: false,
+            courseToDelete: "",
+            modalMessageStyle: "",
+            modalMessage: "",
             loading: true
         }
         this.fetchCourses = this.fetchCourses.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.deleteCourse = this.deleteCourse.bind(this);
     }
 
     async fetchCourses() {
@@ -58,28 +63,73 @@ class HrCourses extends React.Component {
         this.axiosCancelSource.cancel("Operation canceled by the user");
     }
 
-    getCourse(courseID) {
-        const courses = this.state.courses;
-        for (let i = 0; i < courses.length; i++) {
-            if (courses[i].id === courseID)
-                return courses[i];
-        }
-        return { id: "", name: "", department: "" }
-    };
-
-    getDepartment(courseID) {
+    getCourse(courseId) {
         const courses = this.state.courses;
         const departments = this.state.departments;
         for (let i = 0; i < courses.length; i++) {
-            if (courses[i].id === courseID)
-                return departments[i];
+            if (courses[i].id === courseId)
+                return {course: courses[i], department: departments[i]};
         }
-        return { department: "" }
+        return {course: { id: "", name: "", department: "" }, department: ""};
     };
 
+    toggleModal(courseId) {
+        this.setState({ deleteModalOpen: !this.state.deleteModalOpen, courseToDelete: courseId, modalMessage: "" });
+    }
+
+    async deleteCourse(courseId) {
+        await axiosInstance.delete(`/hr/delete-course/${courseId}`, {
+            cancelToken: this.axiosCancelSource.token,
+            headers: {
+                token: sessionStorage.getItem("token")
+            }
+        })
+            .then(async response => {
+                this.setState({
+                    modalMessageStyle: "form-success-message",
+                    modalMessage: response.data
+                });
+                await this.fetchCourses();
+            })
+            .catch(error => {
+                if (error.response) {
+                    this.setState({
+                        modalMessageStyle: "form-error-message",
+                        modalMessage: error.response.data
+                    });
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+            });
+    }
+
+    renderModal() {
+        if (!this.state.modalMessage) {
+            return (
+                <>
+                    <div>Are you sure?</div>
+                    <button onClick={() => this.deleteCourse(this.state.courseToDelete)}>Yes</button>
+                    <button onClick={this.toggleModal}>No</button>
+                </>
+            );
+        }
+        return (
+            <>
+                <br />
+                <div className={this.state.modalMessageStyle}>{this.state.modalMessage}</div>
+                <br />
+            </>
+        );
+    }
+    
     render() {
         return (
-            <div>
+            <>
                 <Route exact path={`${this.props.match.path}`}
                     render={() => {
                         if (this.state.loading) {
@@ -96,17 +146,22 @@ class HrCourses extends React.Component {
                                 </div>
                             );
                         }
-                        <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" />
+                        return (
+                            <>
+                                <button>Add Course</button>
+                                <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" toggleModal={this.toggleModal} />
+                                <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
+                                    {this.renderModal()}
+                                </Modal>
+                            </>
+                        );
                     }} />
                 <Route exact path={`${this.props.match.path}/update/:id`}
-                    render={routeProps => (
-                        <CourseForm course={this.getCourse(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} updateCourses={this.fetchCourses} formType="update" />
-                    )} />
-                <Route exact path={`${this.props.match.path}/delete/:id`}
-                    render={routeProps => (
-                        <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses} />
-                    )} />
-            </div>
+                    render={routeProps => {
+                        const { course, department } = this.getCourse(routeProps.match.params.id);
+                        return (<CourseForm course={course} department={department} updateCourses={this.fetchCourses} formType="update" />);
+                    }} />
+            </>
         );
     }
 }

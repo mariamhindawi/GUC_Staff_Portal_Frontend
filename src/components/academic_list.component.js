@@ -19,7 +19,7 @@ const AcademicList = (props) => {
     }
 
     return currentPosts.map((academic, i) => {
-      return <AcademicListItem academic={academic} department={props.departments[i]} room={props.rooms[i]} role={props.role} key={academic.id} />
+      return <AcademicListItem academic={academic} department={props.departments[i]} room={props.rooms[i]} role={props.role} key={academic.id} toggleModal={props.toggleModal} />
     });
   };
 

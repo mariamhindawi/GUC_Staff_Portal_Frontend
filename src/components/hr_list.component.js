@@ -19,7 +19,7 @@ const HrList = (props) => {
     }
 
     return currentPosts.map((hrmember, i) => {
-      return <HrListItem hrmember={hrmember} room={props.rooms[i]} key={hrmember.id} />
+      return <HrListItem hrmember={hrmember} room={props.rooms[i]} key={hrmember.id} role={props.role} toggleModal={props.toggleModal} />
     });
   };
 

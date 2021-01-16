@@ -3,10 +3,9 @@ import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import RoomList from "../components/room_list.component";
-import DeleteRoom from "./delete_room.component";
 import RoomForm from "./room_form.component";
 import {
-    Col, Spinner
+    Col, Modal, Spinner
 } from "reactstrap";
 
 class HrRooms extends React.Component {
@@ -14,9 +13,15 @@ class HrRooms extends React.Component {
         super(props);
         this.state = {
             rooms: [],
+            deleteModalOpen: false,
+            roomToDelete: "",
+            modalMessageStyle: "",
+            modalMessage: "",
             loading: true
         }
         this.fetchRooms = this.fetchRooms.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.deleteRoom = this.deleteRoom.bind(this);
     }
 
     async fetchRooms() {
@@ -66,6 +71,60 @@ class HrRooms extends React.Component {
         return { name: "", capacity: "", type: "" }
     };
 
+    toggleModal(roomName) {
+        this.setState({ deleteModalOpen: !this.state.deleteModalOpen, roomToDelete: roomName, modalMessage: "" });
+    }
+
+    async deleteRoom(roomName) {
+        await axiosInstance.delete(`/hr/delete-room/${roomName}`, {
+            cancelToken: this.axiosCancelSource.token,
+            headers: {
+                token: sessionStorage.getItem("token")
+            }
+        })
+            .then(async response => {
+                this.setState({
+                    modalMessageStyle: "form-success-message",
+                    modalMessage: response.data
+                });
+                await this.fetchRooms();
+            })
+            .catch(error => {
+                if (error.response) {
+                    this.setState({
+                        modalMessageStyle: "form-error-message",
+                        modalMessage: error.response.data
+                    });
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+            });
+    }
+
+    renderModal() {
+        if (!this.state.modalMessage) {
+            return (
+                <>
+                    <div>Are you sure?</div>
+                    <button onClick={() => this.deleteRoom(this.state.roomToDelete)}>Yes</button>
+                    <button onClick={this.toggleModal}>No</button>
+                </>
+            );
+        }
+        return (
+            <>
+                <br />
+                <div className={this.state.modalMessageStyle}>{this.state.modalMessage}</div>
+                <br />
+            </>
+        );
+    }
+
     render() {
         return (
             <div>
@@ -85,15 +144,19 @@ class HrRooms extends React.Component {
                                 </div>
                             );
                         }
-                        return (<RoomList rooms={this.state.rooms} role="hr" />);
+                        return (
+                            <>
+                                <button>Add Room</button>
+                                <RoomList rooms={this.state.rooms} role="hr" toggleModal={this.toggleModal} />
+                                <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
+                                    {this.renderModal()}
+                                </Modal>
+                            </>
+                        );
                     }} />
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => (
                         <RoomForm room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms} formType="update" />
-                    )} />
-                <Route exact path={`${this.props.match.path}/delete/:name`}
-                    render={routeProps => (
-                        <DeleteRoom room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms} />
                     )} />
             </div>
         );

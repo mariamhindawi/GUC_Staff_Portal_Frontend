@@ -4,9 +4,8 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import AcademicList from "../components/academic_list.component";
 import AcademicForm from "./academic_member_form.component";
-import DeleteAcademic from "./delete_academic_member.component";
 import {
-    Col, Spinner
+    Col, Modal, Spinner
 } from "reactstrap";
 
 class HrAcademics extends React.Component {
@@ -16,9 +15,15 @@ class HrAcademics extends React.Component {
             academics: [],
             departments: [],
             rooms: [],
+            deleteModalOpen: false,
+            academicToDelete: "",
+            modalMessageStyle: "",
+            modalMessage: "",
             loading: true
         }
         this.fetchAcademics = this.fetchAcademics.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.deleteAcademic = this.deleteAcademic.bind(this);
     }
 
     async fetchAcademics() {
@@ -62,32 +67,73 @@ class HrAcademics extends React.Component {
 
     getAcademic(academicID) {
         const academics = this.state.academics;
-        for (let i = 0; i < academics.length; i++) {
-            if (academics[i].id === academicID)
-                return academics[i];
-        }
-        return { id: "", name: "", salary: "", dayOff: "", gender: "", role: "", email: "" }
-    };
-
-    getDepartment(academicID) {
-        const academics = this.state.academics;
         const departments = this.state.departments;
-        for (let i = 0; i < academics.length; i++) {
-            if (academics[i].id === academicID)
-                return departments[i];
-        }
-        return { department: "" }
-    };
-
-    getRoom(academicID) {
-        const academics = this.state.academics;
         const rooms = this.state.rooms;
         for (let i = 0; i < academics.length; i++) {
             if (academics[i].id === academicID)
-                return rooms[i];
+                return { academicMember: academics[i], department: departments[i], office: rooms[i]};
         }
-        return { room: "" }
+        return {
+            academicMember: { id: "", name: "", salary: "", dayOff: "", gender: "", role: "", email: "" },
+            department: "",
+            office: ""
+        }
     };
+
+    toggleModal(id) {
+        this.setState({ deleteModalOpen: !this.state.deleteModalOpen, academicToDelete: id, modalMessage: "" });
+    }
+
+    async deleteAcademic(id) {
+        console.log(`/hr/delete-academic-member/${id}`)
+        await axiosInstance.delete(`/hr/delete-academic-member/${id}`, {
+            cancelToken: this.axiosCancelSource.token,
+            headers: {
+                token: sessionStorage.getItem("token")
+            }
+        })
+            .then(async response => {
+                this.setState({
+                    modalMessageStyle: "form-success-message",
+                    modalMessage: response.data
+                });
+                await this.fetchAcademics();
+            })
+            .catch(error => {
+                if (error.response) {
+                    this.setState({
+                        modalMessageStyle: "form-error-message",
+                        modalMessage: error.response.data
+                    });
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+            });
+    }
+
+    renderModal() {
+        if (!this.state.modalMessage) {
+            return (
+                <>
+                    <div>Are you sure?</div>
+                    <button onClick={() => this.deleteAcademic(this.state.academicToDelete)}>Yes</button>
+                    <button onClick={this.toggleModal}>No</button>
+                </>
+            );
+        }
+        return (
+            <>
+                <br />
+                <div className={this.state.modalMessageStyle}>{this.state.modalMessage}</div>
+                <br />
+            </>
+        );
+    }
 
     render() {
         return (
@@ -108,16 +154,21 @@ class HrAcademics extends React.Component {
                                 </div>
                             );
                         }
-                        return (<AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} role="hr" />);
+                        return (
+                            <>
+                                <button>Add Academic Member</button>
+                                <AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} role="hr" toggleModal={this.toggleModal} />
+                                <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
+                                    {this.renderModal()}
+                                </Modal>
+                            </>
+                        );
                     }} />
                 <Route exact path={`${this.props.match.path}/update/:id`}
-                    render={routeProps => (
-                        <AcademicForm academicMember={this.getAcademic(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateAcademics={this.fetchAcademics} formType="update" />
-                    )} />
-                <Route exact path={`${this.props.match.path}/delete/:id`}
-                    render={routeProps => (
-                        <DeleteAcademic academicMember={this.getAcademic(routeProps.match.params.id)} updateAcademics={this.fetchAcademics} />
-                    )} />
+                    render={routeProps => {
+                        const { academicMember, department, office } = this.getAcademic(routeProps.match.params.id);
+                        return (<AcademicForm academicMember={academicMember} department={department} office={office} updateAcademics={this.fetchAcademics} formType="update" />);
+                    }} />
             </div>
         );
     }

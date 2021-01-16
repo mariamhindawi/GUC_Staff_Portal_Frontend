@@ -19,7 +19,7 @@ const RoomList = (props) => {
     }
 
     return currentPosts.map((room) => {
-      return <RoomListItem room={room} key={room._id} role={props.role} />
+      return <RoomListItem room={room} key={room._id} role={props.role} toggleModal={props.toggleModal}/>
     });
   };
 

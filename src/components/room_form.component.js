@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from "../axios";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import axiosInstance from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -7,6 +8,14 @@ import { Button } from "reactstrap";
 const RoomForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
+    const axiosCancelSource = axios.CancelToken.source();
+
+    const componentDidMount = () => {
+        return () => {
+            axiosCancelSource.cancel("Operation canceled by the user");
+        }
+    };
+    useEffect(componentDidMount, []);
 
     const placeholders = {
         name: "Room name",
@@ -33,9 +42,10 @@ const RoomForm = props => {
     });
 
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-room${props.formType === "add" ? "" : `/${props.room.name}`}`,
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },

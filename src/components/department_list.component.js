@@ -19,8 +19,8 @@ const DepartmentList = (props) => {
     }
 
     return currentPosts.map((department, i) => {
-      return <DepartmentListItem department={department} faculty={props.faculties[i]} headOfDepartment={props.heads[i]} role={props.role}
-        key={department._id} />
+      return <DepartmentListItem department={department} faculty={props.faculties[i]} headOfDepartment={props.heads[i]}
+        role={props.role} key={department._id} toggleModal={props.toggleModal} />
     });
   };
 
@@ -29,8 +29,8 @@ const DepartmentList = (props) => {
       case "hr":
         return (
           <>
-            <th/>
-            <th/>
+            <th />
+            <th />
           </>
         );
       default: return <></>;

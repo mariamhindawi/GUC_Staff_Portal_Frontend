@@ -4,9 +4,8 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import FacultyList from "../components/faculty_list.component";
 import FacultyForm from "./faculty_form.component";
-import DeleteFaculty from "./delete_faculty.component";
 import {
-    Col, Spinner
+    Col, Modal, Spinner
 } from "reactstrap";
 
 class HrFaculty extends React.Component {
@@ -14,9 +13,15 @@ class HrFaculty extends React.Component {
         super(props);
         this.state = {
             faculties: [],
+            deleteModalOpen: false,
+            facultyToDelete: "",
+            modalMessageStyle: "",
+            modalMessage: "",
             loading: true
         }
         this.fetchFaculties = this.fetchFaculties.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.deleteFaculty = this.deleteFaculty.bind(this);
     }
     
     async fetchFaculties() {
@@ -65,9 +70,63 @@ class HrFaculty extends React.Component {
         return { name: "" }
     };
 
+    toggleModal(facultyName) {
+        this.setState({ deleteModalOpen: !this.state.deleteModalOpen, facultyToDelete: facultyName, modalMessage: "" });
+    }
+
+    async deleteFaculty(facultyName) {
+        await axiosInstance.delete(`/hr/delete-faculty/${facultyName}`, {
+            cancelToken: this.axiosCancelSource.token,
+            headers: {
+                token: sessionStorage.getItem("token")
+            }
+        })
+            .then(async response => {
+                this.setState({
+                    modalMessageStyle: "form-success-message",
+                    modalMessage: response.data
+                });
+                await this.fetchFaculties();
+            })
+            .catch(error => {
+                if (error.response) {
+                    this.setState({
+                        modalMessageStyle: "form-error-message",
+                        modalMessage: error.response.data
+                    });
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+            });
+    }
+
+    renderModal() {
+        if (!this.state.modalMessage) {
+            return (
+                <>
+                    <div>Are you sure?</div>
+                    <button onClick={() => this.deleteFaculty(this.state.facultyToDelete)}>Yes</button>
+                    <button onClick={this.toggleModal}>No</button>
+                </>
+            );
+        }
+        return (
+            <>
+                <br />
+                <div className={this.state.modalMessageStyle}>{this.state.modalMessage}</div>
+                <br />
+            </>
+        );
+    }
+
     render() {
         return (
-            <div>
+            <>
                 <Route exact path={`${this.props.match.path}`}
                     render={() => {
                         if (this.state.loading) {
@@ -84,17 +143,21 @@ class HrFaculty extends React.Component {
                                 </div>
                             );
                         }
-                        return (<FacultyList faculties={this.state.faculties} role="hr" />);
+                        return (
+                            <>
+                                <button>Add Faculty</button>
+                                <FacultyList faculties={this.state.faculties} role="hr" toggleModal={this.toggleModal} />
+                                <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
+                                    {this.renderModal()}
+                                </Modal>
+                            </>
+                        );
                     }} />
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => (
                         <FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} formType="update" />
                     )} />
-                <Route exact path={`${this.props.match.path}/delete/:name`}
-                    render={routeProps => (
-                        <DeleteFaculty faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} />
-                    )} />
-            </div>
+            </>
         )
     }
 }

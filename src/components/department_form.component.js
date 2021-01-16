@@ -67,13 +67,14 @@ const DepartmentForm = props => {
         await axiosInstance({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-department${props.formType === "add" ? "" : `/${props.department.name}`}`,
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },
             data: {
                 name: values.name,
                 faculty: values.faculty,
-                headOfDepartment: values.headOfDepartment
+                headOfDepartment: values.headOfDepartment !== "UNASSIGNED" ? values.headOfDepartment : ""
             }
         })
             .then(response => {

@@ -15,9 +15,9 @@ const DepartmentListItem = (props) => {
                             </Link>
                         </td>
                         <td>
-                            <Link to={`${match.url}/delete/${props.department.name}`}>
-                                <button>Delete department</button>
-                            </Link>
+                            <button onClick={() => props.toggleModal(props.department.name)}>
+                                Delete department
+                            </button>
                         </td>
                     </>
                 );

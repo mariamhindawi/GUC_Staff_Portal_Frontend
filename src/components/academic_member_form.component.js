@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from '../axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import axiosInstance from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -7,6 +8,14 @@ import { Button } from "reactstrap";
 const AcademicMemberForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
+    const axiosCancelSource = axios.CancelToken.source();
+
+    const componentDidMount = () => {
+        return () => {
+            axiosCancelSource.cancel("Operation canceled by the user");
+        }
+    };
+    useEffect(componentDidMount, []);
 
     const placeholders = {
         name: "Name",
@@ -26,35 +35,10 @@ const AcademicMemberForm = props => {
         office: props.office,
         salary: props.academicMember.salary,
         dayOff: props.academicMember.dayOff,
-        password: props.academicMember.password
+        password: ""
     }
 
-    const validationSchemaAdd = Yup.object({
-        name: Yup.string()
-            .required("This field is required"),
-        email: Yup.string()
-            .email("Invalid email address")
-            .required("This field is required"),
-        department: Yup.string(),
-        office: Yup.string()
-            .required("This feild is required"),
-        salary: Yup.number()
-            .typeError("Salary must be a number")
-            .required("This field is required")
-            .positive("Salary must be a positive number")
-            .integer("Salary must be an integer"),
-        gender: Yup.string()
-            .required("This field is required")
-            .oneOf(["Male", "Female"], "Invalid gender"),
-        role: Yup.string()
-            .required("This field is required")
-            .oneOf(["Course Instructor", "Head of Department", "Teaching Assistant"], "Invalid role"),
-        dayOff: Yup.string()
-            .required("This field is required")
-            .oneOf(["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], "Invalid day off")
-    });
-
-    const validationSchemaUpdate = Yup.object({
+    const validationSchema = Yup.object({
         name: Yup.string()
             .required("This field is required"),
         email: Yup.string()
@@ -78,15 +62,13 @@ const AcademicMemberForm = props => {
             .required("This field is required")
             .oneOf(["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], "Invalid day off"),
         password: Yup.string()
-            .required("This field is required")
     });
 
-    const validationSchema = props.formType === "add" ? validationSchemaAdd : validationSchemaUpdate;
-
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-academic-member${props.formType === "add" ? "" : `/${props.academicMember.id}`}`,
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },

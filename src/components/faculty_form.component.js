@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import axios from "../axios";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import axiosInstance from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -7,6 +8,14 @@ import { Button } from "reactstrap";
 const FacultyForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
+    const axiosCancelSource = axios.CancelToken.source();
+
+    const componentDidMount = () => {
+        return () => {
+            axiosCancelSource.cancel("Operation canceled by the user");
+        }
+    };
+    useEffect(componentDidMount, []);
 
     const placeholders = {
         name: "Faculty name"
@@ -22,9 +31,10 @@ const FacultyForm = props => {
     });
 
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: props.formType === "add" ? "post" : "put",
             url: `/hr/${props.formType}-faculty${props.formType === "add" ? "" : `/${props.faculty.name}`}`,
+            cancelToken: axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
             },
@@ -71,7 +81,7 @@ const FacultyForm = props => {
                 >
                     {formikProps => (
                         <Form>
-                            <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="name">Faculty name</label>
                             <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">

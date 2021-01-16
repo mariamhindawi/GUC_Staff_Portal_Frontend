@@ -15,9 +15,9 @@ const FacultyListItem = (props) => {
                             </Link>
                         </td>
                         <td>
-                            <Link to={`${match.url}/delete/${props.faculty.name}`}>
-                                <button>Delete faculty</button>
-                            </Link>
+                            <button  onClick={() => props.toggleModal(props.faculty.name)}>
+                                Delete faculty
+                            </button>
                         </td>
                     </>
                 );

@@ -3,9 +3,9 @@ import CourseListItem from "./course_list_item.component";
 import Pagination from "././pagination.component";
 
 const CourseList = (props) => {
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
-
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -14,12 +14,12 @@ const CourseList = (props) => {
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const courseList = () => {
-    if (props.academics.length === 0) {
+    if (props.courses.length === 0) {
       return (<tr className="no-items">No Items</tr>)
     }
 
     return currentPosts.map((course, i) => {
-      return <CourseListItem course={course} department={props.departments[i]} key={course._id} />
+      return <CourseListItem course={course} department={props.departments[i]} role={props.role} key={course._id} toggleModal={props.toggleModal} />
     });
   };
 

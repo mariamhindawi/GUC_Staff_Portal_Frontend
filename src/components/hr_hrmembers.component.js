@@ -4,9 +4,8 @@ import axios from "axios";
 import axiosInstance from "../axios";
 import HrList from "./hr_list.component";
 import HrMemberForm from "./hr_member_form.component";
-import DeleteHrMember from "./delete_hr_member.component";
 import {
-    Col, Spinner
+    Col, Modal, Spinner
 } from "reactstrap";
 
 class HrHrMembers extends React.Component {
@@ -15,9 +14,15 @@ class HrHrMembers extends React.Component {
         this.state = {
             hrmembers: [],
             rooms: [],
+            deleteModalOpen: false,
+            hrMemberToDelete: "",
+            modalMessageStyle: "",
+            modalMessage: "",
             loading: true
         }
         this.fetchHrMembers = this.fetchHrMembers.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
+        this.deleteHrMember = this.deleteHrMember.bind(this);
     }
 
     async fetchHrMembers() {
@@ -59,26 +64,70 @@ class HrHrMembers extends React.Component {
     }
 
     getHrMember(hrMemberID) {
-        const hrmembers = this.state.hrmembers;
-        for (let i = 0; i < hrmembers.length; i++) {
-            if (hrmembers[i].id === hrMemberID)
-                return hrmembers[i];
+        const hrMembers = this.state.hrmembers;
+        const rooms = this.state.rooms;
+        for (let i = 0; i < hrMembers.length; i++) {
+            if (hrMembers[i].id === hrMemberID)
+                return { hrMember: hrMembers[i], office: rooms[i] };
         }
-        return { id: "", name: "", salary: "", gender: "", role: "", email: "" }
+        return { hrMember: { id: "", name: "", salary: "", gender: "", role: "", email: "" }, office: "" };
     };
 
-    getRoom(hrMemberID) {
-        const hrmembers = this.state.hrmembers;
-        const rooms = this.state.rooms;
-        for (let i = 0; i < hrmembers.length; i++) {
-            if (hrmembers[i].id === hrMemberID)
-                return rooms[i];
+    toggleModal(id) {
+        this.setState({ deleteModalOpen: !this.state.deleteModalOpen, hrMemberToDelete: id, modalMessage: "" });
+    }
+
+    async deleteHrMember(id) {
+        await axiosInstance.delete(`/hr/delete-hr-member/${id}`, {
+            cancelToken: this.axiosCancelSource.token,
+            headers: {
+                token: sessionStorage.getItem("token")
+            }
+        })
+            .then(async response => {
+                this.setState({
+                    modalMessageStyle: "form-success-message",
+                    modalMessage: response.data
+                });
+                await this.fetchHrMembers();
+            })
+            .catch(error => {
+                if (error.response) {
+                    this.setState({
+                        modalMessageStyle: "form-error-message",
+                        modalMessage: error.response.data
+                    });
+                    console.log(error.response);
+                }
+                else if (error.request) {
+                    console.log(error.request);
+                }
+                else {
+                    console.log(error.message);
+                }
+            });
+    }
+
+    renderModal() {
+        if (!this.state.modalMessage) {
+            return (
+                <>
+                    <div>Are you sure?</div>
+                    <button onClick={() => this.deleteHrMember(this.state.hrMemberToDelete)}>Yes</button>
+                    <button onClick={this.toggleModal}>No</button>
+                </>
+            );
         }
-        return { room: "" }
-    };
+        return (
+            <>
+                <br />
+                <div className={this.state.modalMessageStyle}>{this.state.modalMessage}</div>
+                <br />
+            </>
+        );
+    }
 
     render() {
-
         return (
             <div>
                 <Route exact path={`${this.props.match.path}`}
@@ -97,17 +146,21 @@ class HrHrMembers extends React.Component {
                                 </div>
                             );
                         }
-                        return (<HrList hrmembers={this.state.hrmembers} rooms={this.state.rooms} role="hr" />);
+                        return (
+                            <>
+                                <button>Add HR Member</button>
+                                <HrList hrmembers={this.state.hrmembers} rooms={this.state.rooms} role="hr" toggleModal={this.toggleModal} />
+                                <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
+                                    {this.renderModal()}
+                                </Modal>
+                            </>
+                        );
                     }} />
                 <Route exact path={`${this.props.match.path}/update/:id`}
-                    render={routeProps => (
-                        <HrMemberForm hrMember={this.getHrMember(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateHrMembers={this.fetchHrMembers} formType="update" />
-                    )} />
-                <Route exact path={`${this.props.match.path}/delete/:id`}
-                    render={routeProps => (
-                        <DeleteHrMember hrMember={this.getHrMember(routeProps.match.params.id)} updateHrMembers={this.fetchHrMembers} />
-                    )} />
-
+                    render={routeProps => {
+                        const { hrMember, office } = this.getHrMember(routeProps.match.params.id);
+                        return (<HrMemberForm hrMember={hrMember} office={office} updateHrMembers={this.fetchHrMembers} formType="update" />);
+                    }} />
             </div>
         )
     }

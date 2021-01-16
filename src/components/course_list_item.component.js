@@ -16,9 +16,9 @@ const CourseListItem = (props) => {
                             </Link>
                         </td>
                         <td>
-                            <Link to={`${match.url}/delete/${props.course.id}`}>
-                                <button>Delete course</button>
-                            </Link>
+                            <button onClick={() => props.toggleModal(props.course.id)}>
+                                Delete course
+                            </button>
                         </td>
                     </>
                 );
@@ -48,7 +48,6 @@ const CourseListItem = (props) => {
             <td>{props.course.name}</td>
             <td>{props.department}</td>
             <td>{props.course.courseCoordinator !== "UNASSIGNED" ? props.course.courseCoordinator : "-"}</td>
-            <td><Button className="rounded">View Course</Button></td>
             {customButtons()}
         </tr>
     )
