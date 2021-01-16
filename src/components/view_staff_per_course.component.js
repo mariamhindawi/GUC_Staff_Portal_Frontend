@@ -6,24 +6,19 @@ import axiosInstance from "../axios";
 import AcademicList from "./academic_list.component";
 import AcademicForm from "./academic_member_form.component";
 import DeleteAcademic from "./delete_academic_member.component";
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
-import othersProfile from "./others_profile.component";
 
-class HODacademics extends React.Component {
+class courseStaff extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             academics: [],
             departments: [],
-            dropDownOpen: false,
-            rooms: [],
-            courses: [],
-            selectedCourse: ""
+            rooms: []
         }
     }
 
     fetchAcademics() {
-        axiosInstance.get("/hod/view-staff", {
+        axiosInstance.get("/hod/view-all-staff-per-course/MATH101", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -50,39 +45,8 @@ class HODacademics extends React.Component {
             });
     }
 
-    toggle() {
-        this.setState({ dropDownOpen: !this.state.dropDownOpen });
-    }
-
-    fetchCourses() {
-        axiosInstance.get("/fe/get-courses-by-department", {
-            cancelToken: this.axiosCancelSource.token,
-            headers: {
-                token: sessionStorage.getItem("token")
-            }
-        })
-            .then(res => {
-                this.setState({
-                    courses: res.data.courses
-                });
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log(error.response);
-                }
-                else if (error.request) {
-                    console.log(error.request);
-                }
-                else {
-                    console.log(error.message);
-                }
-                console.log(error);
-            });
-    }
-
     componentDidMount() {
         this.axiosCancelSource = axios.CancelToken.source();
-        this.fetchCourses();
         this.fetchAcademics();
     }
 
@@ -122,23 +86,12 @@ class HODacademics extends React.Component {
     render() {
         return (
             <div>
-
-                <Route exact path={`${this.props.match.path}`}>
-                    <Dropdown isOpen={this.state.dropDownOpen} toggle={() => this.toggle()}>
-                        <DropdownToggle>
-                            {this.state.selectedCourse ? this.state.courses.filter(course => course._id === this.state.selectedCourse)[0].id : "filter by course"}
-                        </DropdownToggle>
-                        <DropdownMenu>
-                            {this.state.courses.map(course => <DropdownItem onClick={() => this.setState({ selectedCourse: course._id })}>{course.name}</DropdownItem>)}
-                        </DropdownMenu>
-                    </Dropdown>
-                    <AcademicList academics={this.state.academics.filter(academic => !this.state.selectedCourse || this.state.courses.filter(course => course._id === this.state.selectedCourse)[0].courseInstructors.includes(academic.id) || this.state.courses.filter(course => course._id === this.state.selectedCourse)[0].teachingAssistants.includes(academic.id))} departments={this.state.departments} rooms={this.state.rooms} role="hod" />
-                </Route>
-                <Route exact path={`${this.props.match.path}/view-profile/:id`}
+               <Route exact path={`${this.props.match.path}`}> <AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} role="ci" /> </Route>
+                {/* <Route exact path={`${this.props.match.path}/update/:id`}
                     render={routeProps => (
-                        <othersProfile academicMember={this.getAcademic(routeProps.match.params.id)}  />
+                        <AcademicForm academicMember={this.getAcademic(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} formType="update" />
                     )} />
-                {/* <Route exact path={`${this.props.match.path}/delete/:id`}
+                <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
                         <DeleteAcademic academicMember={this.getAcademic(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} />
                     )} /> */}
@@ -147,4 +100,4 @@ class HODacademics extends React.Component {
     }
 }
 
-export default withRouter(HODacademics);
+export default withRouter(courseStaff);

@@ -7,6 +7,8 @@ import HRfaculty from "./hr_faculty.component";
 import HRdepartments from "./hr_departments.component";
 import HRcourses from "./hr_courses.component";
 import CIcoverage from "./ci_coverage.component";
+import CiCourses from "./ci_courses.component";
+import CIacademics from "./ci_staff_members.component";
 
 class CiHomePage extends React.Component {
 
@@ -23,8 +25,8 @@ class CiHomePage extends React.Component {
                     <div>
                         <h1>Welcome</h1>
                         <Link to={`${this.props.match.url}/course-coverage`}>Course Coverage</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Link to={`${this.props.match.url}/academic-members`}>Academic Members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <Link to={`${this.props.match.url}/hr-members`}>Hr Members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Link to={`${this.props.match.url}/ci-courses`}>Courses</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Link to={`${this.props.match.url}/ci-staff`}>Staff</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/faculties`}>Faculties</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/departments`}>Departments</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/courses`}>Courses</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -32,8 +34,8 @@ class CiHomePage extends React.Component {
                     </div>
                     <div>
                         <Route path={`${this.props.match.path}/course-coverage`}> <CIcoverage /> </Route>
-                        <Route path={`${this.props.match.path}/academic-members`}> <HRacademics /> </Route>
-                        <Route path={`${this.props.match.path}/hr-members`}> <HRhrmembers /> </Route>
+                        <Route path={`${this.props.match.path}/ci-courses`}> <CiCourses /> </Route>
+                        <Route path={`${this.props.match.path}/ci-staff`}> <CIacademics /> </Route>
                         <Route path={`${this.props.match.path}/faculties`}> <HRfaculty /> </Route>
                         <Route path={`${this.props.match.path}/departments`}> <HRdepartments /> </Route>
                         <Route path={`${this.props.match.path}/courses`}> <HRcourses /> </Route>
