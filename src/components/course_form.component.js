@@ -44,7 +44,7 @@ const CourseForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
-                this.updateCourses();
+                props.updateCourses();
             })
             .catch(error => {
                 if (error.response) {
@@ -78,33 +78,33 @@ const CourseForm = props => {
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
-                {formikProps => (
-                    <Form>
-                        <label className="form-input-label col-sm-4" htmlFor="id">Room name</label>
-                        <Field className="rounded form-input-border col-sm-8" name="id" placeholder={placeholders.id}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="id" />
-                        </div>
-                        <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
-                        <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="name" />
-                        </div>
-                        <label className="form-input-label col-sm-4" htmlFor="department">Room name</label>
-                        <Field className="rounded form-input-border col-sm-8" name="department" placeholder={placeholders.department}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="department" />
-                        </div>
-                        <div className="form-button-div mb-2">
-                            <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add course" : "Update course"}</Button>
-                        </div>
-                        <div className={messageStyle}>{message}</div>
-                    </Form>
-                )}
-            </Formik>
+                    {formikProps => (
+                        <Form>
+                            <label className="form-input-label col-sm-4" htmlFor="id">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="id" placeholder={placeholders.id}
+                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="id" />
+                            </div>
+                            <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
+                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="name" />
+                            </div>
+                            <label className="form-input-label col-sm-4" htmlFor="department">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="department" placeholder={placeholders.department}
+                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="department" />
+                            </div>
+                            <div className="form-button-div mb-2">
+                                <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add course" : "Update course"}</Button>
+                            </div>
+                            <div className={messageStyle}>{message}</div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
     );

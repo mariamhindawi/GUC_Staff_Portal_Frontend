@@ -79,7 +79,7 @@ const DepartmentForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
-                this.updateDepartments();
+                props.updateDepartments();
             })
             .catch(error => {
                 if (error.response) {
@@ -115,22 +115,22 @@ const DepartmentForm = props => {
             >
                 {formikProps => (
                     <Form>
-                         <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                         <label className="form-input-label col-sm-4" htmlFor="name">Department name</label>
                         <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">
                             <ErrorMessage name="name" />
                         </div>
-                        <label className="form-input-label col-sm-4" htmlFor="faculty">Room name</label>
+                        <label className="form-input-label col-sm-4" htmlFor="faculty">Faculty</label>
                         <Field className="rounded form-input-border col-sm-8" name="faculty" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                            <option disabled value="">Faculty name</option>
+                            <option disabled value="">Faculty</option>
                             <option value="">UNASSIGNED</option>
                             {faculties}
                         </Field>
                         <div className="form-input-error-message">
                             <ErrorMessage name="faculty" />
                         </div>
-                        <label className="form-input-label col-sm-4" htmlFor="headOfDepartment">Room name</label>
+                        <label className="form-input-label col-sm-4" htmlFor="headOfDepartment">Head of Department</label>
                         <Field className="rounded form-input-border col-sm-8" name="headOfDepartment" placeholder={placeholders.headOfDepartment}
                             onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                         <div className="form-input-error-message">

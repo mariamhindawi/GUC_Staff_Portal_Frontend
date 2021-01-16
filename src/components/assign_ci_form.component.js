@@ -39,7 +39,6 @@ const AssignCiForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
-                this.updateAcademics();
             })
             .catch(error => {
                 if (error.response) {

@@ -7,7 +7,7 @@ import Sidebar from "./components/sidebar.component";
 import HrHomePage from "./components/hr_home.component";
 import HodHomePage from "./components/hod_home.component";
 import CiHomePage from "./components/ci_home.component";
-import CcHomePage from "./components/cc_home.component";
+import CCHome from "./components/cc_home.component";
 import TaHomePage from "./components/ta_home.component";
 
 function App() {
@@ -18,10 +18,10 @@ function App() {
       <Route path="/staff"> <Header /> </Route>
       <Route path="/staff"> <Sidebar /> </Route>
       <Route path="/staff/hr"> <HrHomePage /> </Route>
-      <Route path="/staff/hod"><HodHomePage /></Route>
-      <Route path="/staff/ci"><CiHomePage /></Route>
-      <Route path="/staff/ta"><TaHomePage /></Route>
-      <Route path="/staff/cc"><CcHomePage /></Route>
+      <Route path="/staff/hod"> <HodHomePage /> </Route>
+      <Route path="/staff/ci"> <CiHomePage /> </Route>
+      <Route path="/staff/ta"> <TaHomePage /> </Route>
+      <Route path="/staff/cc"> <CCHome /> </Route>
     </div>
   );
 }

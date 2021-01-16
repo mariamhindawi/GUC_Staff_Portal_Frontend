@@ -5,16 +5,23 @@ import axiosInstance from "../axios";
 import FacultyList from "../components/faculty_list.component";
 import FacultyForm from "./faculty_form.component";
 import DeleteFaculty from "./delete_faculty.component";
+import {
+    Col, Spinner
+} from "reactstrap";
 
-class HRfaculty extends React.Component {
+class HrFaculty extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            faculties: []
+            faculties: [],
+            loading: true
         }
+        this.fetchFaculties = this.fetchFaculties.bind(this);
     }
-    fetchFaculties() {
-        axiosInstance.get("/fe/get-faculties", {
+    
+    async fetchFaculties() {
+        this.setState({ loading: true });
+        await axiosInstance.get("/fe/get-faculties", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -37,6 +44,7 @@ class HRfaculty extends React.Component {
                 }
                 console.log(error);
             });
+        this.setState({ loading: false });
     }
 
     componentDidMount() {
@@ -60,18 +68,35 @@ class HRfaculty extends React.Component {
     render() {
         return (
             <div>
-                <Route exact path={`${this.props.match.path}`}> <FacultyList faculties={this.state.faculties} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}`}
+                    render={() => {
+                        if (this.state.loading) {
+                            return (
+                                <div className="container">
+                                    <div className="row mt-10">
+                                        <Col xs={{ offset: 6 }}>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <Spinner color="primary" />
+                                        </Col>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return (<FacultyList faculties={this.state.faculties} role="hr" />);
+                    }} />
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => (
-                        <FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties()} formType="update" />
+                        <FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} formType="update" />
                     )} />
                 <Route exact path={`${this.props.match.path}/delete/:name`}
                     render={routeProps => (
-                        <DeleteFaculty faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties()} />
+                        <DeleteFaculty faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} />
                     )} />
             </div>
         )
     }
 }
 
-export default  withRouter(HRfaculty);
+export default withRouter(HrFaculty);

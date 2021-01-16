@@ -5,18 +5,24 @@ import axiosInstance from "../axios";
 import CourseList from "./course_list.component";
 import DeleteCourse from "./delete_course.component";
 import CourseForm from "./course_form.component";
+import {
+    Col, Spinner
+} from "reactstrap";
 
 class HrCourses extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             courses: [],
-            departments: []
+            departments: [],
+            loading: true
         }
+        this.fetchCourses = this.fetchCourses.bind(this);
     }
 
-    fetchCourses() {
-        axiosInstance.get("/fe/get-courses", {
+    async fetchCourses() {
+        this.setState({ loading: true });
+        await axiosInstance.get("/fe/get-courses", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -40,6 +46,7 @@ class HrCourses extends React.Component {
                 }
                 console.log(error);
             });
+        this.setState({ loading: false });
     }
 
     componentDidMount() {
@@ -67,20 +74,37 @@ class HrCourses extends React.Component {
             if (courses[i].id === courseID)
                 return departments[i];
         }
-        return { department : "" }
+        return { department: "" }
     };
 
     render() {
         return (
             <div>
-                <Route exact path={`${this.props.match.path}`}> <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}`}
+                    render={() => {
+                        if (this.state.loading) {
+                            return (
+                                <div className="container">
+                                    <div className="row mt-10">
+                                        <Col xs={{ offset: 6 }}>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <Spinner color="primary" />
+                                        </Col>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" />
+                    }} />
                 <Route exact path={`${this.props.match.path}/update/:id`}
                     render={routeProps => (
-                        <CourseForm course={this.getCourse(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} updateCourses={this.fetchCourses()} formType="update" />
+                        <CourseForm course={this.getCourse(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} updateCourses={this.fetchCourses} formType="update" />
                     )} />
                 <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
-                        <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
+                        <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses} />
                     )} />
             </div>
         );

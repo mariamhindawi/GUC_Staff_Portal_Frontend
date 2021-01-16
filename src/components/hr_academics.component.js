@@ -5,20 +5,25 @@ import axiosInstance from "../axios";
 import AcademicList from "../components/academic_list.component";
 import AcademicForm from "./academic_member_form.component";
 import DeleteAcademic from "./delete_academic_member.component";
+import {
+    Col, Spinner
+} from "reactstrap";
 
-class HRacademics extends React.Component {
+class HrAcademics extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             academics: [],
             departments: [],
             rooms: [],
-            loading:true
+            loading: true
         }
+        this.fetchAcademics = this.fetchAcademics.bind(this);
     }
 
-    fetchAcademics() {
-        axiosInstance.get("/fe/get-academics", {
+    async fetchAcademics() {
+        this.setState({ loading: true });
+        await axiosInstance.get("/fe/get-academics", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -28,8 +33,7 @@ class HRacademics extends React.Component {
                 this.setState({
                     academics: res.data.academics,
                     departments: res.data.departments,
-                    rooms: res.data.rooms,
-                    loading:false
+                    rooms: res.data.rooms
                 });
             })
             .catch(error => {
@@ -44,6 +48,7 @@ class HRacademics extends React.Component {
                 }
                 console.log(error);
             });
+        this.setState({ loading: false });
     }
 
     componentDidMount() {
@@ -87,18 +92,35 @@ class HRacademics extends React.Component {
     render() {
         return (
             <div>
-               <Route exact path={`${this.props.match.path}`}> <AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}`}
+                    render={() => {
+                        if (this.state.loading) {
+                            return (
+                                <div className="container">
+                                    <div className="row mt-10">
+                                        <Col xs={{ offset: 6 }}>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <Spinner color="primary" />
+                                        </Col>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return (<AcademicList academics={this.state.academics} departments={this.state.departments} rooms={this.state.rooms} role="hr" />);
+                    }} />
                 <Route exact path={`${this.props.match.path}/update/:id`}
                     render={routeProps => (
-                        <AcademicForm academicMember={this.getAcademic(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} formType="update" />
+                        <AcademicForm academicMember={this.getAcademic(routeProps.match.params.id)} department={this.getDepartment(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateAcademics={this.fetchAcademics} formType="update" />
                     )} />
                 <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
-                        <DeleteAcademic academicMember={this.getAcademic(routeProps.match.params.id)} updateAcademics={this.fetchAcademics()} />
+                        <DeleteAcademic academicMember={this.getAcademic(routeProps.match.params.id)} updateAcademics={this.fetchAcademics} />
                     )} />
             </div>
-        )
+        );
     }
 }
 
-export default withRouter(HRacademics);
+export default withRouter(HrAcademics);

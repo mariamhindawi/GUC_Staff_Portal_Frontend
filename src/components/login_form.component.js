@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GUC from "../GUC_Building.jpg";
 import { Button } from "reactstrap";
-// import user_blacklist_model from "../../../GUC_Staff_Portal_Backend/models/user_blacklist_model";
+import jwt from "jsonwebtoken";
 
 const LoginForm = () => {
     const history = useHistory();
@@ -32,29 +32,22 @@ const LoginForm = () => {
         })
             .then(res => {
                 sessionStorage.setItem("token", res.headers["token"]);
-                sessionStorage.setItem("user",JSON.stringify(res.data   ));
-                console.log(sessionStorage.getItem("user"));
-                if (res.data.role==="Head of Department") {
+                const token = jwt.decode(res.headers["token"]);
+                if (token.role === "Head of Department") {
                     history.push("/staff/hod");
-                }else {
-                    if (res.data.role==="Course Instructor") {
-                        history.push("/staff/ci");
-                    }
-                    else {
-                        if (res.data.role==="Teaching Assistant") {
-                            history.push("/staff/ta");
-                        }
-                        else {
-                            if (res.data.role==="Course Coordinator") {
-                                history.push("/staff/cc")
-                            }
-                            else {
-                                history.push("/staff/hr");
-                            }
-                        }
-                    } 
                 }
-                
+                else if (token.role === "Course Instructor") {
+                    history.push("/staff/ci");
+                }
+                else if (token.role === "Teaching Assistant") {
+                    history.push("/staff/ta");
+                }
+                else if (token.role === "Course Coordinator") {
+                    history.push("/staff/cc")
+                }
+                else if (token.role === "HR") {
+                    history.push("/staff/hr");
+                }
             })
             .catch(error => {
                 if (error.response) {
@@ -67,7 +60,6 @@ const LoginForm = () => {
                 else {
                     console.log(error.message);
                 }
-                formikProps.setFieldValue("email", "", false);
                 formikProps.setFieldValue("password", "", false);
             });
     };

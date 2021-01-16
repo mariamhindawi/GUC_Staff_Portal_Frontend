@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import CoverageListItem from "./coverage_list_item.component";
 import Pagination from "././pagination.component";
 
@@ -15,12 +15,13 @@ const CoverageList = (props) => {
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = props.courses.slice(indexOfFirstPost, indexOfLastPost);
- // Change page
+  // Change page
   const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const coverageList = () => {
-    if (props.courses.length===0) {
-      return <CoverageListItem/>    }
+    if (props.courses.length === 0) {
+      return (<tr className="no-items">No Items</tr>)
+    }
     return currentPosts.map((course, i) => {
       return <CoverageListItem course={course} coverage={props.coverages[i]} key={course._id} />
     });
@@ -44,24 +45,24 @@ const CoverageList = (props) => {
     return (
       <div>
         <table className="table">
-        <thead className="table-head">
-          <tr className="table-row">
-            <th>Course ID</th>
-            <th>Course Name</th>
-            <th>Coverage</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {coverageList()}
-        </tbody>
-      </table>
-       <Pagination
-       postsPerPage={postsPerPage}
-       totalPosts={props.courses.length}
-       paginate={paginate}
-     />
-    </div>
+          <thead className="table-head">
+            <tr className="table-row">
+              <th>Course ID</th>
+              <th>Course Name</th>
+              <th>Coverage</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {coverageList()}
+          </tbody>
+        </table>
+        <Pagination
+          postsPerPage={postsPerPage}
+          totalPosts={props.courses.length}
+          paginate={paginate}
+        />
+      </div>
     );
   }
 }

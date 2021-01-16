@@ -1,24 +1,28 @@
-import React,{useState} from "react";
+import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
 import HrList from "./hr_list.component";
 import HrMemberForm from "./hr_member_form.component";
 import DeleteHrMember from "./delete_hr_member.component";
-import ModalExample from "./delete_modal.component";
+import {
+    Col, Spinner
+} from "reactstrap";
 
-class HRhrmembers extends React.Component {
+class HrHrMembers extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             hrmembers: [],
             rooms: [],
-            loading:true
+            loading: true
         }
+        this.fetchHrMembers = this.fetchHrMembers.bind(this);
     }
 
-    fetchHrMembers() {
-        axiosInstance.get("/fe/get-hr-members", {
+    async fetchHrMembers() {
+        this.setState({ loading: true });
+        await axiosInstance.get("/fe/get-hr-members", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -27,8 +31,7 @@ class HRhrmembers extends React.Component {
             .then(res => {
                 this.setState({
                     hrmembers: res.data.hrmembers,
-                    rooms: res.data.rooms,
-                    loading:false
+                    rooms: res.data.rooms
                 });
             })
             .catch(error => {
@@ -43,6 +46,7 @@ class HRhrmembers extends React.Component {
                 }
                 console.log(error);
             });
+        this.setState({ loading: false });
     }
 
     componentDidMount() {
@@ -74,22 +78,39 @@ class HRhrmembers extends React.Component {
     };
 
     render() {
-        
+
         return (
             <div>
-               <Route exact path={`${this.props.match.path}`}> <HrList hrmembers={this.state.hrmembers} rooms={this.state.rooms} role="hr" loading={this.state.loading}/> </Route>
+                <Route exact path={`${this.props.match.path}`}
+                    render={() => {
+                        if (this.state.loading) {
+                            return (
+                                <div className="container">
+                                    <div className="row mt-10">
+                                        <Col xs={{ offset: 6 }}>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <Spinner color="primary" />
+                                        </Col>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return (<HrList hrmembers={this.state.hrmembers} rooms={this.state.rooms} role="hr" />);
+                    }} />
                 <Route exact path={`${this.props.match.path}/update/:id`}
                     render={routeProps => (
-                        <HrMemberForm hrMember={this.getHrMember(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateHrMembers={this.fetchHrMembers()} formType="update" />
+                        <HrMemberForm hrMember={this.getHrMember(routeProps.match.params.id)} office={this.getRoom(routeProps.match.params.id)} updateHrMembers={this.fetchHrMembers} formType="update" />
                     )} />
                 <Route exact path={`${this.props.match.path}/delete/:id`}
                     render={routeProps => (
-                        <DeleteHrMember hrMember={this.getHrMember(routeProps.match.params.id)} updateHrMembers={this.fetchHrMembers()} />
+                        <DeleteHrMember hrMember={this.getHrMember(routeProps.match.params.id)} updateHrMembers={this.fetchHrMembers} />
                     )} />
-                    
+
             </div>
         )
     }
 }
 
-export default withRouter(HRhrmembers);
+export default withRouter(HrHrMembers);

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { Button } from "reactstrap";
 
 const AcademicListItem = (props) => {
     const match = useRouteMatch();
@@ -25,6 +24,7 @@ const AcademicListItem = (props) => {
             default: return <></>;
         }
     };
+
     return (
         <tr className="table-row">
             <td>{props.academic.id}</td>
@@ -34,13 +34,8 @@ const AcademicListItem = (props) => {
             <td>{props.academic.dayOff}</td>
             <td>{props.academic.email}</td>
             {customButtons()}
-            
         </tr>
     )
-    }
-    else{
-       return( <tr className="no-items">No Items</tr>)
-    }
 };
 
 export default AcademicListItem;

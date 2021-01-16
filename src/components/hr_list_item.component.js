@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { Button } from "reactstrap";
 
 const HrListItem = (props) => {
     const match = useRouteMatch();
@@ -35,10 +34,8 @@ const HrListItem = (props) => {
             {customButtons()}
         </tr>
     )
-  }
-  else{
-    return( <tr className="no-items">No Items</tr>)
-  }
+  
+ 
 };
 
 export default HrListItem;

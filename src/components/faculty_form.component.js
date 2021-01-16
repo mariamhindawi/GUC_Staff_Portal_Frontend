@@ -12,7 +12,7 @@ const FacultyForm = props => {
         name: "Faculty name"
     }
 
-    const initialValues = { 
+    const initialValues = {
         name: props.faculty.name
     }
 
@@ -35,7 +35,7 @@ const FacultyForm = props => {
             .then(response => {
                 setMessageStyle("form-success-message");
                 setMessage(response.data);
-                this.updateFaculties();
+                props.updateFaculties();
             })
             .catch(error => {
                 if (error.response) {
@@ -60,30 +60,30 @@ const FacultyForm = props => {
         e.target.placeholder = placeholders[e.target.name];
         formikProps.setFieldTouched(e.target.name);
     };
-    
+
     return (
         <div className="input-form add-room-form rounded-border container">
             <div className="pt-3 pb-3">
-                <Formik  className="row"
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                { formikProps => (
-                    <Form>
-                        <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
-                        <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="name"/>
-                        </div>
-                        <div className="form-button-div mb-2">
-                            <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</Button>
-                        </div>
-                        <div className={messageStyle}>{message}</div>
-                    </Form>
-                )}
-            </Formik>
+                <Formik className="row"
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={handleSubmit}
+                >
+                    {formikProps => (
+                        <Form>
+                            <label className="form-input-label col-sm-4" htmlFor="name">Room name</label>
+                            <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
+                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                            <div className="form-input-error-message">
+                                <ErrorMessage name="name" />
+                            </div>
+                            <div className="form-button-div mb-2">
+                                <Button type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add faculty" : "Update faculty"}</Button>
+                            </div>
+                            <div className={messageStyle}>{message}</div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
         </div>
     );

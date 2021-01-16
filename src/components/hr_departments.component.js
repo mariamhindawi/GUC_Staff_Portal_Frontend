@@ -5,20 +5,25 @@ import axiosInstance from "../axios";
 import DepartmentList from "../components/department_list.component";
 import DepartmentForm from "./department_form.component";
 import DeleteDepartment from "./delete_department.component";
+import {
+    Col, Spinner
+} from "reactstrap";
 
-class HRdepartments extends React.Component {
+class HrDepartments extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             departments: [],
             faculties: [],
             heads: [],
-            loading:true
+            loading: true
         }
+        this.fetchDepartments = this.fetchDepartments.bind(this);
     }
 
-    fetchDepartments() {
-        axiosInstance.get("/fe/get-departments", {
+    async fetchDepartments() {
+        this.setState({ loading: true });
+        await axiosInstance.get("/fe/get-departments", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -28,8 +33,7 @@ class HRdepartments extends React.Component {
                 this.setState({
                     departments: res.data.departments,
                     faculties: res.data.faculties,
-                    heads: res.data.heads,
-                    loading:false
+                    heads: res.data.heads
                 });
             })
             .catch(error => {
@@ -44,6 +48,7 @@ class HRdepartments extends React.Component {
                 }
                 console.log(error);
             });
+        this.setState({ loading: false });
     }
 
     componentDidMount() {
@@ -87,18 +92,35 @@ class HRdepartments extends React.Component {
     render() {
         return (
             <div>
-               <Route exact path={`${this.props.match.path}`}> <DepartmentList departments={this.state.departments} faculties={this.state.faculties} heads={this.state.heads} role="hr" /> </Route>
+                <Route exact path={`${this.props.match.path}`}
+                    render={() => {
+                        if (this.state.loading) {
+                            return (
+                                <div className="container">
+                                    <div className="row mt-10">
+                                        <Col xs={{ offset: 6 }}>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <Spinner color="primary" />
+                                        </Col>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return (<DepartmentList departments={this.state.departments} faculties={this.state.faculties} heads={this.state.heads} role="hr" />);
+                    }} />
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => (
-                        <DepartmentForm department={this.getDepartment(routeProps.match.params.name)} faculty={this.getFaculty(routeProps.match.params.id)} headOfDepartment={this.getHead(routeProps.match.params.name)} updateDepartments={this.fetchDepartments()} formType="update" />
+                        <DepartmentForm department={this.getDepartment(routeProps.match.params.name)} faculty={this.getFaculty(routeProps.match.params.id)} headOfDepartment={this.getHead(routeProps.match.params.name)} updateDepartments={this.fetchDepartments} formType="update" />
                     )} />
                 <Route exact path={`${this.props.match.path}/delete/:name`}
                     render={routeProps => (
-                        <DeleteDepartment department={this.getDepartment(routeProps.match.params.name)} updateDepartments={this.fetchDepartments()} />
+                        <DeleteDepartment department={this.getDepartment(routeProps.match.params.name)} updateDepartments={this.fetchDepartments} />
                     )} />
             </div>
         )
     }
 }
 
-export default withRouter(HRdepartments);
+export default withRouter(HrDepartments);

@@ -5,18 +5,23 @@ import axiosInstance from "../axios";
 import RoomList from "../components/room_list.component";
 import DeleteRoom from "./delete_room.component";
 import RoomForm from "./room_form.component";
+import {
+    Col, Spinner
+} from "reactstrap";
 
 class HrRooms extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             rooms: [],
-            loading:true
+            loading: true
         }
+        this.fetchRooms = this.fetchRooms.bind(this);
     }
 
-    fetchRooms() {
-        axiosInstance.get("/fe/get-rooms", {
+    async fetchRooms() {
+        this.setState({ loading: true });
+        await axiosInstance.get("/fe/get-rooms", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -25,7 +30,7 @@ class HrRooms extends React.Component {
             .then(res => {
                 this.setState({
                     rooms: res.data,
-                    loading:false
+                    loading: false
                 });
             })
             .catch(error => {
@@ -40,6 +45,7 @@ class HrRooms extends React.Component {
                 }
                 console.log(error);
             });
+        this.setState({ loading: false });
     }
 
     componentDidMount() {
@@ -63,14 +69,31 @@ class HrRooms extends React.Component {
     render() {
         return (
             <div>
-                <Route exact path={`${this.props.match.path}`}> <RoomList rooms={this.state.rooms} role="hr" loading={this.state.loading} /> </Route>
+                <Route exact path={`${this.props.match.path}`}
+                    render={() => {
+                        if (this.state.loading) {
+                            return (
+                                <div className="container">
+                                    <div className="row mt-10">
+                                        <Col xs={{ offset: 6 }}>
+                                            <br />
+                                            <br />
+                                            <br />
+                                            <Spinner color="primary" />
+                                        </Col>
+                                    </div>
+                                </div>
+                            );
+                        }
+                        return (<RoomList rooms={this.state.rooms} role="hr" />);
+                    }} />
                 <Route exact path={`${this.props.match.path}/update/:name`}
                     render={routeProps => (
-                        <RoomForm room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms()} formType="update" />
+                        <RoomForm room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms} formType="update" />
                     )} />
                 <Route exact path={`${this.props.match.path}/delete/:name`}
                     render={routeProps => (
-                        <DeleteRoom room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms()} />
+                        <DeleteRoom room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms} />
                     )} />
             </div>
         );

@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Link, withRouter } from "react-router-dom";
 import HrRooms from "./hr_rooms.component";
-import HRacademics from "./hr_academics.component";
-import HRhrmembers from "./hr_hrmembers.component";
-import HRfaculty from "./hr_faculty.component";
-import HRdepartments from "./hr_departments.component";
+import HrAcademics from "./hr_academics.component";
+import HrHrMembers from "./hr_hrmembers.component";
+import HrFaculty from "./hr_faculty.component";
+import HrDepartments from "./hr_departments.component";
 import HRcourses from "./hr_courses.component";
 import CIcoverage from "./ci_coverage.component";
 
@@ -32,10 +32,10 @@ class CiHomePage extends React.Component {
                     </div>
                     <div>
                         <Route path={`${this.props.match.path}/course-coverage`}> <CIcoverage /> </Route>
-                        <Route path={`${this.props.match.path}/academic-members`}> <HRacademics /> </Route>
-                        <Route path={`${this.props.match.path}/hr-members`}> <HRhrmembers /> </Route>
-                        <Route path={`${this.props.match.path}/faculties`}> <HRfaculty /> </Route>
-                        <Route path={`${this.props.match.path}/departments`}> <HRdepartments /> </Route>
+                        <Route path={`${this.props.match.path}/academic-members`}> <HrAcademics /> </Route>
+                        <Route path={`${this.props.match.path}/hr-members`}> <HrHrMembers /> </Route>
+                        <Route path={`${this.props.match.path}/faculties`}> <HrFaculty /> </Route>
+                        <Route path={`${this.props.match.path}/departments`}> <HrDepartments /> </Route>
                         <Route path={`${this.props.match.path}/courses`}> <HRcourses /> </Route>
                     </div>
                 </div>

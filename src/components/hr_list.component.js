@@ -1,51 +1,44 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import HrListItem from "././hr_list_item.component";
 import Pagination from "././pagination.component";
-import {
-  Col, Spinner,
-  Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
-} from "reactstrap";
-import { NavLink } from "react-router-dom";
 
 const HrList = (props) => {
+
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(5);
-
   // Get current posts
- const indexOfLastPost = currentPage * postsPerPage;
- const indexOfFirstPost = indexOfLastPost - postsPerPage;
- const currentPosts = props.hrmembers.slice(indexOfFirstPost, indexOfLastPost);
- // Change page
- const paginate = pageNumber => setCurrentPage(pageNumber);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = props.hrmembers.slice(indexOfFirstPost, indexOfLastPost);
+  // Change page
+  const paginate = pageNumber => setCurrentPage(pageNumber);
 
   const hrList = () => {
-    if (props.hrmembers.length===0) {
-      return <HrListItem/>    }
-
+    if (props.hrmembers.length === 0) {
+      return (<tr className="no-items">No Items</tr>)
+    }
 
     return currentPosts.map((hrmember, i) => {
       return <HrListItem hrmember={hrmember} room={props.rooms[i]} key={hrmember.id} />
     });
   };
-  if (props.loading) {
-    return (
-      <div className="container">
-        <div className="row mt-10">
-          <Col xs={{ offset: 6 }}>
-            <br />
-            <br />
-            <br />
-            <Spinner color="primary" />
-          </Col>
-        </div>
-      </div>
-    )
-  }
-  else {
 
-    return (
+  const customTableHeads = () => {
+    switch (props.role) {
+      case "hr":
+        return (
+          <>
+            <th />
+            <th />
+          </>
+        );
+      default: return <></>;
+    }
+  };
+
+  return (
     <div>
-        <table className="table">
+      <table className="table">
         <thead className="table-head">
           <tr className="table-row">
             <th>ID</th>
@@ -53,7 +46,7 @@ const HrList = (props) => {
             <th>Office</th>
             <th>Salary</th>
             <th>Email</th>
-            <th></th>
+            {customTableHeads()}
           </tr>
         </thead>
         <tbody>
@@ -61,12 +54,11 @@ const HrList = (props) => {
         </tbody>
       </table>
       <Pagination
-      postsPerPage={postsPerPage}
-      totalPosts={props.hrmembers.length}
-      paginate={paginate}
-    />
+        postsPerPage={postsPerPage}
+        totalPosts={props.hrmembers.length}
+        paginate={paginate}
+      />
     </div>
-    );
-  }
+  );
 }
 export default HrList;

@@ -24,7 +24,6 @@ const RoomListItem = (props) => {
             default: return <></>;
         }
     };
-if(!props.room){
 
     return (
         <tr className="table-row">
@@ -35,10 +34,6 @@ if(!props.room){
             {customButtons()}
         </tr>
     )
-}
-else{
-    return( <tr className="no-items">No Items</tr>)
-}
 };
 
 export default RoomListItem;

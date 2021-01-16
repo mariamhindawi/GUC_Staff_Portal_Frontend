@@ -2,9 +2,8 @@ import React from "react";
 import { Route, Link, withRouter } from "react-router-dom";
 import HODcourses from "./hod_courses.component";
 import HodCoverage from "./hod_coverage.component";
-import HRhrmembers from "./hr_hrmembers.component";
-import HRfaculty from "./hr_faculty.component";
-import HRdepartments from "./hr_departments.component";
+import HrFaculty from "./hr_faculty.component";
+import HrDepartments from "./hr_departments.component";
 import HRcourses from "./hr_courses.component";
 import HODacademics from "./hod_staff_members.component";
 
@@ -33,8 +32,8 @@ class HodHomePage extends React.Component {
                         <Route path={`${this.props.match.path}/hod-courses`}> <HODcourses /> </Route>
                         <Route path={`${this.props.match.path}/hod-coverage`}> <HodCoverage /> </Route>
                         <Route path={`${this.props.match.path}/hod-staff-members`}> <HODacademics /> </Route>
-                        <Route path={`${this.props.match.path}/faculties`}> <HRfaculty /> </Route>
-                        <Route path={`${this.props.match.path}/departments`}> <HRdepartments /> </Route>
+                        <Route path={`${this.props.match.path}/faculties`}> <HrFaculty /> </Route>
+                        <Route path={`${this.props.match.path}/departments`}> <HrDepartments /> </Route>
                         <Route path={`${this.props.match.path}/courses`}> <HRcourses /> </Route>
                     </div>
                 </div>

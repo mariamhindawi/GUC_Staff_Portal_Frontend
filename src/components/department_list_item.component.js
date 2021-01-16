@@ -33,10 +33,6 @@ const DepartmentListItem = (props) => {
             {customButtons()}
         </tr>
     )
-   }
-   else{
-    return( <tr className="no-items">No Items</tr>)
-   }
 };
 
 export default DepartmentListItem;
