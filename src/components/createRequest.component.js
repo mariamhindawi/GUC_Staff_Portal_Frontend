@@ -28,14 +28,14 @@ const LeaveRequestForm = props => {
     const toggle = () => setDropdownOpen(prevState => !prevState);
 
     const placeholders = {
-        day: "Room name",
+        day: "",
         reason: "Reason",
         document: "googledrive.com/uploadedProofDocument",
         duration: 60
     }
 
     const initialValues = {
-        day: "",
+        day: new Date(),
         reason: "",
         document: ""
     }

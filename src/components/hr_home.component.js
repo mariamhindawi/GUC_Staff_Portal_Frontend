@@ -28,6 +28,7 @@ class HrHomePage extends React.Component {
                     <Link to={`${this.props.match.url}/faculties`}>Faculties</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/departments`}>Departments</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <Link to={`${this.props.match.url}/courses`}>Courses</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Link to={`${this.props.match.url}/add-missing-record`}>Add missing record</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <br /><br />
                 </div>
                 <div>
@@ -37,6 +38,7 @@ class HrHomePage extends React.Component {
                     <Route path={`${this.props.match.path}/faculties`}> <HrFaculty /> </Route>
                     <Route path={`${this.props.match.path}/departments`}> <HrDepartments /> </Route>
                     <Route path={`${this.props.match.path}/courses`}> <HrCourses /> </Route>
+                    <Route path={`${this.props.match.path}/add-missing-record`}> <AddMissingHours /> </Route>
                 </div>
             </div>
         )   

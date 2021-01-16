@@ -20,9 +20,10 @@ function App() {
       <Route path="/staff/hr"> <HrHomePage /> </Route>
       <Route path="/staff/hod"> <HodHomePage /> </Route>
       <Route path="/staff/ci"> <CiHomePage /> </Route>
-      <Route path="/staff/ta"> <TaHomePage /> </Route>
+      <Route path="/staff/ta"> <TaHomePage />  </Route>
       <Route path="/staff/cc"> <CCHome /> </Route>
-     
+
+      <Route path="/staff/academic"> <GeneralRequestsPage /> </Route>
 
     </div>
   );

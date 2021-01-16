@@ -74,48 +74,48 @@ const LoginForm = () => {
     };
 
     return (
-       <div className="container">
+        <div className="container">
             <div id="login-container" className="container">
-            <div className="row">
-                <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
-                    <div className="card align-items-center rounded-border">
-                        <img className="card-img-top rounded-top-border" src={GUC}></img>
-                        <div className="card-body">
-                            <Formik
-                                initialValues={{ email: "", password: "" }}
-                                validationSchema={validationSchema}
-                                onSubmit={handleSubmit}
-                            >
-                                {formikProps => (
-                                    <Form>
-                                        <FontAwesomeIcon className="login-icon" icon="user" />
-                                        <Field className="bottom-border" name="email" placeholder={placeholders.email}
-                                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                                        <div className="form-input-error-message">
-                                            <ErrorMessage name="email" />
-                                        </div>
-                                        <br />
-                                        <label htmlFor="password">
-                                            <FontAwesomeIcon className="login-icon" icon="lock" />
-                                        </label>
-                                        <Field className="bottom-border" name="password" type="password" placeholder={placeholders.password}
-                                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                                        <div className="form-input-error-message">
-                                            <ErrorMessage name="password" />
-                                        </div>
-                                        <div className="text-center">
-                                            <Button id="login-button" className="rounded border-0" type="submit" disabled={formikProps.isSubmitting}>LOG IN</Button>
-                                            <div className="form-error-message">{errorMessage}</div>
-                                        </div>
-                                    </Form>
-                                )}
-                            </Formik>
+                <div className="row">
+                    <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
+                        <div className="card align-items-center rounded-border">
+                            <img className="card-img-top rounded-top-border" src={GUC}></img>
+                            <div className="card-body">
+                                <Formik
+                                    initialValues={{ email: "", password: "" }}
+                                    validationSchema={validationSchema}
+                                    onSubmit={handleSubmit}
+                                >
+                                    {formikProps => (
+                                        <Form>
+                                            <FontAwesomeIcon className="login-icon" icon="user" />
+                                            <Field className="bottom-border" name="email" placeholder={placeholders.email}
+                                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                                            <div className="form-input-error-message">
+                                                <ErrorMessage name="email" />
+                                            </div>
+                                            <br />
+                                            <label htmlFor="password">
+                                                <FontAwesomeIcon className="login-icon" icon="lock" />
+                                            </label>
+                                            <Field className="bottom-border" name="password" type="password" placeholder={placeholders.password}
+                                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
+                                            <div className="form-input-error-message">
+                                                <ErrorMessage name="password" />
+                                            </div>
+                                            <div className="text-center">
+                                                <Button id="login-button" className="rounded border-0" type="submit" disabled={formikProps.isSubmitting}>LOG IN</Button>
+                                                <div className="form-error-message">{errorMessage}</div>
+                                            </div>
+                                        </Form>
+                                    )}
+                                </Formik>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-       </div>
     );
 };
 
