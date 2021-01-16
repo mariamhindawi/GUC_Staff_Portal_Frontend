@@ -7,6 +7,7 @@ import HrHrMembers from "./hr_hrmembers.component";
 import HrFaculty from "./hr_faculty.component";
 import HrDepartments from "./hr_departments.component";
 import HrCourses from "./hr_courses.component";
+import AddMissingHours from "./AddMissingHours.component";
 
 class HrHomePage extends React.Component {
 
