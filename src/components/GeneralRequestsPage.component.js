@@ -12,7 +12,7 @@ import HODRequests from "./HODrequests.component";
 import CCRequests from './CCrequests.component'
 import CICourseSlots from './CI_viewCoursesSlots.component'
 
-const AcademicHomePageComponent = () => {
+const GeneralRequestsPageComponent = () => {
     const match = useRouteMatch()
     return <>
         <Route exact path={match.path}>
@@ -96,4 +96,4 @@ const AcademicHomePageComponent = () => {
     </>
 }
 
-export default AcademicHomePageComponent
+export default GeneralRequestsPageComponent

@@ -6,7 +6,11 @@ import HrHrMembers from "./hr_hrmembers.component";
 import HrFaculty from "./hr_faculty.component";
 import HrDepartments from "./hr_departments.component";
 import HRcourses from "./hr_courses.component";
-import  jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken"
+import Sidebar from "./sidebar.component";
+import CourseSlotForm from "./course_slot_form.component";
+import GeneralRequests from "./GeneralRequestsPage.component";
+import MySchedule from "./schedule.component";
 
 class CCHome extends React.Component {
 
@@ -17,30 +21,28 @@ class CCHome extends React.Component {
                 <div>Unauthorized Access</div>
             )
         }
-            return (
-                <div className="home-margin">
-                    <div>
-                        <h1>Welcome</h1>
-                        <Link to={`${this.props.match.url}/rooms`}>Rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        return (
+            <div className="home-margin">
+                <div>
+                    <h1>Welcome</h1>
+                    <Link to={`${this.props.match.url}/rooms`}>Rooms</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/academic-members`}>Academic Members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/hr-members`}>Hr Members</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/faculties`}>Faculties</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/departments`}>Departments</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <Link to={`${this.props.match.url}/courses`}>Courses</Link> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <br /><br />
-                    </div>
-                    <div>
-                        <Route path={`${this.props.match.path}/rooms`}> <HrRooms /> </Route>
-                        <Route path={`${this.props.match.path}/academic-members`}> <HrAcademics /> </Route>
-                        <Route path={`${this.props.match.path}/hr-members`}> <HrHrMembers /> </Route>
-                        <Route path={`${this.props.match.path}/faculties`}> <HrFaculty /> </Route>
-                        <Route path={`${this.props.match.path}/departments`}> <HrDepartments /> </Route>
-                        <Route path={`${this.props.match.path}/courses`}> <HRcourses /> </Route>
-                    </div>
                 </div>
-            )
-        }
-        
+                <div>
+                    <Route path={`${this.props.match.path}`}> <Sidebar /> </Route>
+                    <Route path={`${this.props.match.path}/requests`}> <GeneralRequests /> </Route>
+                    <Route path={`${this.props.match.path}/schedule`}> <MySchedule /> </Route>
+                    <Route path={`${this.props.match.path}/course-slots`}> <CourseSlotForm /> </Route>
+                </div>
+            </div>
+        )
     }
+
+}
 
 export default withRouter(CCHome);

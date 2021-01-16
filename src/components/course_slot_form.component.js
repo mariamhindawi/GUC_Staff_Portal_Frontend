@@ -11,50 +11,55 @@ const CourseSlotForm = props => {
     const [courses, setCourses] = useState([]);
     const axiosCancelSource = axios.CancelToken.source();
 
-    const fetchCourses = () => {
-        axiosInstance.get("/cc/get-courses-of-cc", {
-            cancelToken: axiosCancelSource.token,
-            headers: {
-                token: sessionStorage.getItem("token")
-            },
-        })
-            .then(response => {
-                const courses = response.data;
-                setCourses(courses.map((course) => {
-                    return <option value={course.id} key={course._id}>{course.id}</option>
-                }));
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log(error.response);
-                }
-                else if (error.request) {
-                    console.log(error.request);
-                }
-                else {
-                    console.log(error.message);
-                }
-            });
-    }
+    // const fetchCourses = () => {
+    //     axiosInstance.get("/cc/get-courses-of-cc", {
+    //         cancelToken: axiosCancelSource.token,
+    //         headers: {
+    //             token: sessionStorage.getItem("token")
+    //         },
+    //     })
+    //         .then(response => {
+    //             const courses = response.data;
+    //             setCourses(courses.map((course) => {
+    //                 return <option value={course.id} key={course._id}>{course.id}</option>
+    //             }));
+    //         })
+    //         .catch(error => {
+    //             if (error.response) {
+    //                 console.log(error.response);
+    //             }
+    //             else if (error.request) {
+    //                 console.log(error.request);
+    //             }
+    //             else {
+    //                 console.log(error.message);
+    //             }
+    //         });
+    // }
 
-    const componentDidMount = () => {
-        fetchCourses();
-        return () => {
-            axiosCancelSource.cancel("Operation canceled by the user");
-        }
-    };
-    useEffect(componentDidMount, []);
+    // const componentDidMount = () => {
+    //     fetchCourses();
+    //     return () => {
+    //         axiosCancelSource.cancel("Operation canceled by the user");
+    //     }
+    // };
+    // useEffect(componentDidMount, []);
 
     const placeholders = {
-        room: "Room"
+        room: "Room",
+        day: "Day",
+        course: "Course",
+        slotNumber: "Slot Number",
+        type: "Type"
+
     }
 
     const initialValues = {
-        day: props.courseSlot.day,
-        slotNumber: props.courseSlot.slotNumber,
-        room: props.courseSlot.room,
-        course: props.courseSlot.course,
-        type: props.courseSlot.type
+        day: "",
+        slotNumber: "",
+        room: "",
+        course: "",
+        type: ""
     }
 
     const validationSchema = Yup.object({
@@ -120,14 +125,14 @@ const CourseSlotForm = props => {
     return (
         <div className="input-form add-room-form rounded-border container">
             <div className="pt-3 pb-3">
-                <Formik  className="row"
+                <Formik className="row"
                     initialValues={initialValues}
                     validationSchema={validationSchema}
                     onSubmit={handleSubmit}
                 >
                     {formikProps => (
                         <Form>
-                            <label className="form-input-label col-sm-4" htmlFor="day">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="day">Day</label>
                             <Field className="rounded form-input-border col-sm-8" name="day" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                                 <option disabled value="">Day</option>
                                 <option value="Saturday">Saturday</option>
@@ -140,7 +145,7 @@ const CourseSlotForm = props => {
                             <div className="form-input-error-message">
                                 <ErrorMessage name="day" />
                             </div>
-                            <label className="form-input-label col-sm-4" htmlFor="slotNumber">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="slotNumber">Slot Number</label>
                             <Field className="rounded form-input-border col-sm-8" name="slotNumber" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                                 <option disabled value="">Slot Number</option>
                                 <option value="1">1</option>
@@ -152,21 +157,19 @@ const CourseSlotForm = props => {
                             <div className="form-input-error-message">
                                 <ErrorMessage name="slotNumber" />
                             </div>
-                            <label className="form-input-label col-sm-4" htmlFor="room">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="room">Room</label>
                             <Field className="rounded form-input-border col-sm-8" name="room" placeholder={placeholders.room}
                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">
                                 <ErrorMessage name="room" />
                             </div>
-                            <label className="form-input-label col-sm-4" htmlFor="course">Room name</label>
-                            <Field className="rounded form-input-border col-sm-8" name="course" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                                <option disabled value="">Course ID</option>
-                                {courses}
-                            </Field>
+                            <label className="form-input-label col-sm-4" htmlFor="course">Course</label>
+                            <Field className="rounded form-input-border col-sm-8" name="course" placeholder={placeholders.course}
+                                onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                             <div className="form-input-error-message">
                                 <ErrorMessage name="course" />
                             </div>
-                            <label className="form-input-label col-sm-4" htmlFor="type">Room name</label>
+                            <label className="form-input-label col-sm-4" htmlFor="type">Type</label>
                             <Field className="rounded form-input-border col-sm-8" name="type" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
                                 <option disabled value="">Type</option>
                                 <option value="Tutorial">Tutorial</option>
@@ -177,7 +180,7 @@ const CourseSlotForm = props => {
                                 <ErrorMessage name="type" />
                             </div>
                             <div className="form-button-div mb-2">
-                                <Button className="rounded bg-info" type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add Course SLot" : "Update Course Slot"}</Button>
+                                <Button type="submit" disabled={formikProps.isSubmitting}>Add Course Slot</Button>
                             </div>
                             <div className={messageStyle} >{message}</div>
                         </Form>

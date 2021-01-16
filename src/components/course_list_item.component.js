@@ -37,6 +37,26 @@ const CourseListItem = (props) => {
                         </td>
                     </>
                 );
+                case "ci":
+                return (
+                    <>
+                        <td>
+                            <Link to={`${match.url}/assign-ci/${props.course.id}`}>
+                                <button>Assign Course Coordinator</button>
+                            </Link>
+                        </td>
+                        <td>
+                            <Link to={`${match.url}/assign-ta/${props.course.id}`}>
+                                <button>Assign TA</button>
+                            </Link>
+                        </td>
+                        <td>
+                            <Link to={`${match.url}/delete-ta/${props.course.id}`}>
+                                <button>Delete TA</button>
+                            </Link>
+                        </td>
+                    </>
+                );
             default: return <></>;
         }
     };
