@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from 'reactstrap'
-import Axios from '../axios'
-import jwt from 'jsonwebtoken'
-import SlotTableComponent from './SlotTable.component'
+import React, { useState, useEffect } from "react"
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from "reactstrap"
+import Axios from "../axios"
+import jwt from "jsonwebtoken"
+import SlotTableComponent from "./SlotTable.component"
 
 const CICoursesSlotsComponent = () => {
     const [courses, setCourses] = useState([])
@@ -17,7 +17,7 @@ const CICoursesSlotsComponent = () => {
     const toggle = (id) => { setActive(id); setModalOpen(!modalOpen) }
 
     useEffect(() => {
-        Axios.get('/fe/get-my-courses', {
+        Axios.get("/fe/get-my-courses", {
             headers: {
                 token: sessionStorage.token
             }
@@ -26,7 +26,7 @@ const CICoursesSlotsComponent = () => {
 
     const getCourseSlots = (id) => {
         setCourse(id)
-        Axios.get('fe/course-slots', {
+        Axios.get("fe/course-slots", {
             headers: {
                 token: sessionStorage.token
             },
@@ -37,8 +37,8 @@ const CICoursesSlotsComponent = () => {
     }
     const handleSubmit = (event)=>{
         toggle("")
-        Axios('/ci/delete-academic-member-to-slot',{
-            method: 'DELETE',
+        Axios("/ci/delete-academic-member-to-slot",{
+            method: "DELETE",
             headers:{
                 token:sessionStorage.token
             },
@@ -47,7 +47,7 @@ const CICoursesSlotsComponent = () => {
                 room:slots.filter(slot=>slot._id===active)[0].room,
                 slotNumber: slots.filter(slot=>slot._id===active)[0].slotNumber
             }
-        }).then(()=>Axios.get('fe/course-slots', {
+        }).then(()=>Axios.get("fe/course-slots", {
             headers: {
                 token: sessionStorage.token
             },
@@ -60,17 +60,17 @@ const CICoursesSlotsComponent = () => {
     return <>
         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
             <DropdownToggle>
-                {course ? courses.filter(cou => cou.id === course)[0].name : 'Choose course'}
+                {course ? courses.filter(cou => cou.id === course)[0].name : "Choose course"}
             </DropdownToggle>
             <DropdownMenu>
                 {dropdownItems}
             </DropdownMenu>
         </Dropdown>
-        <SlotTableComponent slots={slots.filter(sl=>sl.staffMember!=='UNASSIGNED')} active={active} onClick={toggle} />
+        <SlotTableComponent slots={slots.filter(sl=>sl.staffMember!=="UNASSIGNED")} active={active} onClick={toggle} />
         <Modal isOpen={modalOpen} toggle={toggle}>
             <ModalBody>
                 {slots.filter(slot => slot._id === active).map(slot => {
-                    return <ul key={slot._id} className='unstyled'>
+                    return <ul key={slot._id} className="unstyled">
                         <li key={slot._id +"k1"}>Slot: {slot.slotNumber}</li>
                         <li key={slot._id+"k2"}>Day: {slot.day}</li>
                         <li key={slot._id+"k3"}>Course: {slot.course}</li>

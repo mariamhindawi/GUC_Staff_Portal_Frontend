@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from '../axios';
+import axios from "../axios";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { DropdownItem, DropdownToggle,DropdownMenu,Dropdown } from "reactstrap";
@@ -45,10 +45,10 @@ const HRAttendance = props => {
     
     const handleSubmit =  values => {
        axios({
-        method:'get',
-        url:'/hr/view-staff-attendance-records' ,
+        method:"get",
+        url:"/hr/view-staff-attendance-records" ,
         headers: {
-          'token': sessionStorage.token
+          "token": sessionStorage.token
       }, 
         params: {
           id: values.id,

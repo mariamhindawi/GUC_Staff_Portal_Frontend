@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from 'reactstrap';
-import Axios from '../axios'
-import RequestsTable from './requestsTable.component'
+import React, { useEffect, useState } from "react"
+import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from "reactstrap";
+import Axios from "../axios"
+import RequestsTable from "./requestsTable.component"
 
 const HODRequestsComponent = (props) => {
     const [leaveRequests, setLeaveRequests] = useState([]);
@@ -21,13 +21,13 @@ const HODRequestsComponent = (props) => {
     }, [])
     const acceptRequest = id => {
         Axios(`/hod/staff-requests/${id}/accept`, {
-            method: 'put',
-            'headers': {
-                'token': sessionStorage.token
+            method: "put",
+            "headers": {
+                "token": sessionStorage.token
             }
-        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get('/hod/staff-requests', {
-            'headers': {
-                'token': sessionStorage.token
+        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/hod/staff-requests", {
+            "headers": {
+                "token": sessionStorage.token
             }
         }
         ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))
@@ -44,16 +44,16 @@ const HODRequestsComponent = (props) => {
     const rejectRequest = () => {
         toggle()
         Axios(`/hod/staff-requests/${requestID}/reject`, {
-            method: 'put',
-            'headers': {
-                'token': sessionStorage.token
+            method: "put",
+            "headers": {
+                "token": sessionStorage.token
             },
             data: {
                 HODComment: message
             }
-        }).then(res => console.log("Request " + res.data.id + " rejected")).then(() => Axios.get('/hod/staff-requests', {
-            'headers': {
-                'token': sessionStorage.token
+        }).then(res => console.log("Request " + res.data.id + " rejected")).then(() => Axios.get("/hod/staff-requests", {
+            "headers": {
+                "token": sessionStorage.token
             }
         }
         ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))

@@ -19,7 +19,7 @@ const DayOffChangeComponent = ({ }) => {
     const validationSchema = Yup.object({
         dayoff: Yup.string()
             .required("This field is required")
-            .oneOf(['Saturday', 'Monday', 'Sunday', 'Tuesday', 'Wednesday', 'Thursday'], "Invalid day"),
+            .oneOf(["Saturday", "Monday", "Sunday", "Tuesday", "Wednesday", "Thursday"], "Invalid day"),
         reason: Yup.string()
     });
 

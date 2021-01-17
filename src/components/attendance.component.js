@@ -1,7 +1,7 @@
 import React from "react";
-import axios from '../axios'
+import axios from "../axios"
 import Record from "./attendance_item.component"
-import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
+import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from "reactstrap"
 
 
   export default class Attendance extends React.Component {
@@ -17,10 +17,10 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
 
     componentDidMount() {
         axios({
-          method:'get',
-          url:'/staff/view-attendance-records' ,
+          method:"get",
+          url:"/staff/view-attendance-records" ,
           headers: {
-            'token': sessionStorage.token
+            "token": sessionStorage.token
         }, 
           params: {
               month:this.state.month, year:this.state.year
@@ -40,10 +40,10 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
 
       componentDidUpdate() {
         axios({
-          method:'get',
-          url:'/staff/view-attendance-records' ,
+          method:"get",
+          url:"/staff/view-attendance-records" ,
           headers: {
-            'token': sessionStorage.token
+            "token": sessionStorage.token
         }, 
           params: {
               month:this.state.month, year:this.state.year

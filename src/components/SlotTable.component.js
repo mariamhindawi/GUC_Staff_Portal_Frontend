@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, CardHeader, CardTitle, Table } from 'reactstrap'
+import React from "react"
+import { Card, CardHeader, CardTitle, Table } from "reactstrap"
 
 const SlotTableComponent = ({slots, onClick, active})=>{
     
@@ -30,12 +30,12 @@ const SlotTableRow = ({ slotNumber, slots, chooseSlot, onClick, active}) => {
 
     return <tr className="table-schedule">
         <th className="table-row-schedule text-center">{slotNumber}</th>
-        <td>{slots.filter(slot => slot.day === 'Saturday').map(slot => <Card key={slot._id} onClick={()=>onClick(slot._id)} className={active===slot._id?"bg-primary":"bg-transparent"}><CardTitle>{slot.course}</CardTitle>{slot.room}</Card>)}</td>
-        <td>{slots.filter(slot => slot.day === 'Sunday').map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + ' | ' + slot.course}</Card>)}</td>
-        <td>{slots.filter(slot => slot.day === 'Monday').map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + ' | ' + slot.course}</Card>)}</td>
-        <td>{slots.filter(slot => slot.day === 'Tuesday').map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + ' | ' + slot.course}</Card>)}</td>
-        <td>{slots.filter(slot => slot.day === 'Wednesday').map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + ' | ' + slot.course}</Card>)}</td>
-        <td>{slots.filter(slot => slot.day === 'Thursday').map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + ' | ' + slot.course}</Card>)}</td>
+        <td>{slots.filter(slot => slot.day === "Saturday").map(slot => <Card key={slot._id} onClick={()=>onClick(slot._id)} className={active===slot._id?"bg-primary":"bg-transparent"}><CardTitle>{slot.course}</CardTitle>{slot.room}</Card>)}</td>
+        <td>{slots.filter(slot => slot.day === "Sunday").map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + " | " + slot.course}</Card>)}</td>
+        <td>{slots.filter(slot => slot.day === "Monday").map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + " | " + slot.course}</Card>)}</td>
+        <td>{slots.filter(slot => slot.day === "Tuesday").map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + " | " + slot.course}</Card>)}</td>
+        <td>{slots.filter(slot => slot.day === "Wednesday").map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + " | " + slot.course}</Card>)}</td>
+        <td>{slots.filter(slot => slot.day === "Thursday").map(slot => <Card key={slot._id} onClick={()=>{onClick(slot._id)}} className={active===slot._id?"bg-primary":"bg-transparent"}>{slot.room + " | " + slot.course}</Card>)}</td>
     </tr>
 }
 

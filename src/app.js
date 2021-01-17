@@ -1,27 +1,24 @@
 import React from "react";
-import { Route } from "react-router-dom";
-import Root from "./components/root.component";
-import LoginForm from "./components/login_form.component";
-import Header from "./components/header.component";
-import HrHomePage from "./components/hr_home.component";
-import HodHomePage from "./components/hod_home.component";
-import CiHomePage from "./components/ci_home.component";
-import CCHome from "./components/cc_home.component";
-import TaHomePage from "./components/ta_home.component";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-social/bootstrap-social.css";
+import "./components/fontawesome_icons.component.js";
+import "./App.css";
 
-function App() {
+import Root from "./components/home_components/root.component";
+import LoginForm from "./components/home_components/login_form.component";
+import StaffHome from "./components/home_components/staff_home.component";
+
+const App = () => {
   return (
-    <div>
-      <Route exact path="/"> <Root /> </Route>
-      <Route exact path="/login"> <LoginForm /> </Route>
-      <Route path="/staff"> <Header /> </Route>
-      <Route path="/staff/hr"> <HrHomePage /> </Route>
-      <Route path="/staff/hod"> <HodHomePage /> </Route>
-      <Route path="/staff/ci"> <CiHomePage /> </Route>
-      <Route path="/staff/ta"> <TaHomePage />  </Route>
-      <Route path="/staff/cc"> <CCHome /> </Route>
-
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path="/"> <Root /> </Route>
+        <Route exact path="/login"> <LoginForm /> </Route>
+        <Route path="/staff"> <StaffHome /> </Route>
+        <Route path="/"> <div>Page Not Found</div> </Route>
+      </Switch>
+    </Router>
   );
 }
 

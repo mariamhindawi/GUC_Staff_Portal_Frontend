@@ -1,7 +1,7 @@
 import React from "react";
-import axios from '../axios'
+import axios from "../axios"
 import HRHoursRecord from "./hr_hour_item.component"
-import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
+import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from "reactstrap"
 
 
   export default class HRHours extends React.Component {
@@ -17,10 +17,10 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
 
     componentDidMount() {
         axios({
-          method:'get',
-          url:'/hr/view-staff-missing-hours' ,
+          method:"get",
+          url:"/hr/view-staff-missing-hours" ,
           headers: {
-            'token': sessionStorage.token
+            "token": sessionStorage.token
         }, 
           params: {
             month:this.state.month,
@@ -40,10 +40,10 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from 'reactstrap'
 
       updateSelection() {
         axios({
-          method:'get',
-          url:'/hr/view-staff-missing-hours' ,
+          method:"get",
+          url:"/hr/view-staff-missing-hours" ,
           headers: {
-            'token': sessionStorage.token
+            "token": sessionStorage.token
         }, 
           params: {
                 month:this.state.month,

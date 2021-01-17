@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import jwt from 'jsonwebtoken'
+import jwt from "jsonwebtoken"
 
 export const DatePickerField = ({ ...props }) => {
     const { setFieldValue } = useFormikContext();
@@ -53,7 +53,7 @@ const ReplacementRequestComponent = ({ }) => {
             data: {
                 replacementID: values.replacement,
                 slot: slots.filter(slot => slot._id === active)[0].slotNumber,
-                day: `${values.day.getFullYear()}-${values.day.getMonth() < 9 ? '0' + (values.day.getMonth() + 1) : values.day.getMonth() + 1}-${values.day.getDate() < 10 ? '0' + (values.day.getDate()) : values.day.getDate()}`
+                day: `${values.day.getFullYear()}-${values.day.getMonth() < 9 ? "0" + (values.day.getMonth() + 1) : values.day.getMonth() + 1}-${values.day.getDate() < 10 ? "0" + (values.day.getDate()) : values.day.getDate()}`
             }
         })
             .then(response => {
@@ -84,7 +84,7 @@ const ReplacementRequestComponent = ({ }) => {
     };
 
     useEffect(() => {
-        Axios.get('academic/schedule', {
+        Axios.get("academic/schedule", {
             headers: {
                 token: sessionStorage.token
             }

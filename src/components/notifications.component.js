@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Card, CardFooter, CardText } from 'reactstrap'
-import Axios from '../axios'
+import React, { useEffect, useState } from "react"
+import { NavLink } from "react-router-dom"
+import { Card, CardFooter, CardText } from "reactstrap"
+import Axios from "../axios"
 
 const NotificationComponent = ({ notifications }) => {
     const [notis, setNotifications] = useState(notifications?notifications:[])
 
     useEffect(() => {
         if (notifications === undefined) {
-            Axios.get('/fe/academic/notifications', {
+            Axios.get("/fe/academic/notifications", {
                 headers: {
                     token: sessionStorage.token
                 }
             }).then(res => { console.log(res.data); setNotifications(res.data) })
         }
-        Axios('/fe/academic/mark-notifications-seen', {
-            method: 'PUT',
+        Axios("/fe/academic/mark-notifications-seen", {
+            method: "PUT",
             headers: {
                 token: sessionStorage.token
             },

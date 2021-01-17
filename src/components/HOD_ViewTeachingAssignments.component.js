@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody } from 'reactstrap'
-import Axios from '../axios'
-import jwt from 'jsonwebtoken'
-import SlotTableComponent from './SlotTable.component'
+import React, { useState, useEffect } from "react"
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody } from "reactstrap"
+import Axios from "../axios"
+import jwt from "jsonwebtoken"
+import SlotTableComponent from "./SlotTable.component"
 
 const ViewTeachingAssignmentsComponent = () => {
     const [courses, setCourses] = useState([])
@@ -21,7 +21,7 @@ const ViewTeachingAssignmentsComponent = () => {
             headers: {
                 token: sessionStorage.token
             }
-        }).then(() => Axios.get('/fe/get-courses-by-department', {
+        }).then(() => Axios.get("/fe/get-courses-by-department", {
             headers: {
                 token: sessionStorage.token
             }
@@ -29,7 +29,7 @@ const ViewTeachingAssignmentsComponent = () => {
     }, [])
 
     const getCourseSlots = (id) => {
-        Axios.get('fe/course-slots', {
+        Axios.get("fe/course-slots", {
             headers: {
                 token: sessionStorage.token
             },
@@ -44,7 +44,7 @@ const ViewTeachingAssignmentsComponent = () => {
     return <>
         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
             <DropdownToggle>
-                {course ? courses.filter(cou => cou.id === course)[0].name : 'Choose course'}
+                {course ? courses.filter(cou => cou.id === course)[0].name : "Choose course"}
             </DropdownToggle>
             <DropdownMenu>
                 {courses.map(course => <DropdownItem onClick={() => getCourseSlots(course.id)} key={course._id}>{course.name}</DropdownItem>)}
@@ -54,7 +54,7 @@ const ViewTeachingAssignmentsComponent = () => {
         <Modal isOpen={modalOpen} toggle={toggle}>
             <ModalBody>
                 {slots.filter(slot => slot._id === active).map(slot => {
-                    return <ul key="slot._id" className='unstyled'>
+                    return <ul key="slot._id" className="unstyled">
                         <li key="k1">Slot: {slot.slotNumber}</li>
                         <li key="k2">Day: {slot.day}</li>
                         <li key="k3">Course: {slot.course}</li>

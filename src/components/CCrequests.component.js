@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from 'reactstrap';
-import Axios from '../axios'
-import RequestsTable from './requestsTable.component'
+import React, { useEffect, useState } from "react"
+import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from "reactstrap";
+import Axios from "../axios"
+import RequestsTable from "./requestsTable.component"
 
 const CCRequestsComponent = (props) => {
     const [slotRequests, setSlotRequests] = useState([]);
@@ -21,13 +21,13 @@ const CCRequestsComponent = (props) => {
     },[])
     const acceptRequest = id => {
         Axios(`/cc/slot-linking-requests/${id}/accept`, {
-            method:'PUT',
-            'headers': {
-                'token': sessionStorage.token
+            method:"PUT",
+            "headers": {
+                "token": sessionStorage.token
             }
-        }).then(res=>console.log(res.data)).then(()=>Axios.get('/cc/slot-linking-requests', {
-            'headers': {
-                'token': sessionStorage.token
+        }).then(res=>console.log(res.data)).then(()=>Axios.get("/cc/slot-linking-requests", {
+            "headers": {
+                "token": sessionStorage.token
             }
         }
         ).then((res) => {setSlotRequests(res.data);setLoading(false)})).catch(error=>alert(error))
@@ -35,9 +35,9 @@ const CCRequestsComponent = (props) => {
     const rejectRequest =  ()=> {
         toggle()
         Axios(`/cc/slot-linking-requests/${requestID}/reject`, {
-            method:'PUT',
-            'headers': {
-                'token': sessionStorage.token
+            method:"PUT",
+            "headers": {
+                "token": sessionStorage.token
             },
             data: {
                 ccComment: message

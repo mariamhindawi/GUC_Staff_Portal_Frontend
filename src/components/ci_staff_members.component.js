@@ -2,7 +2,7 @@ import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../axios";
-import AcademicList from "./academic_list.component";
+import AcademicList from "./list_components/academic_list.component";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 
 class CIacademics extends React.Component {

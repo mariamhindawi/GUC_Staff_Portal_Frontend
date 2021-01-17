@@ -43,8 +43,8 @@ const RequestsTableComponent = ({ requests, cancelRequest, acceptRequest, reject
 const RequestsTableRow = ({ request, cancelRequest, acceptRequest, rejectRequest }) => {
     const [popoverOpen, setPopoverOpen] = useState(false);
     const toggle = () => setPopoverOpen(!popoverOpen);
-    let requestDetails = Object.keys(request).filter(key => key !== '__v' && key !== '_id').map(key => {
-        return <li key={request.id + key}>{key + ": " + (key === 'day' ? request[key].split('T')[0] : key==='slots'?request[key].map(slot=>slot.slotNumber):request[key])}</li>
+    let requestDetails = Object.keys(request).filter(key => key !== "__v" && key !== "_id").map(key => {
+        return <li key={request.id + key}>{key + ": " + (key === "day" ? request[key].split("T")[0] : key==="slots"?request[key].map(slot=>slot.slotNumber):request[key])}</li>
     })
 
     return <>
@@ -53,9 +53,9 @@ const RequestsTableRow = ({ request, cancelRequest, acceptRequest, rejectRequest
             <td>{request.type}</td>
             {cancelRequest ? null : <td>{request.requestedBy}</td>}
             {cancelRequest?<td>{request.status}</td>:null}
-            <td>{acceptRequest? request.reason : request.type === 'slotLinkingRequest' ? request.ccComment : request.HODComment}</td>
-            <td>{request.type !== 'slotLinkingRequest' && request.type !== 'dayOffChangeRequest' ? request.day.split("T")[0] : null}</td>
-            {cancelRequest && request.type !== 'slotLinkingRequest' && request.type !== 'dayOffChangeRequest' &&
+            <td>{acceptRequest? request.reason : request.type === "slotLinkingRequest" ? request.ccComment : request.HODComment}</td>
+            <td>{request.type !== "slotLinkingRequest" && request.type !== "dayOffChangeRequest" ? request.day.split("T")[0] : null}</td>
+            {cancelRequest && request.type !== "slotLinkingRequest" && request.type !== "dayOffChangeRequest" &&
                 new Date(request.day) > new Date() ||
                 cancelRequest && request.status === "Under review" ?
                 <td><Button className="bg-danger" onClick={() => cancelRequest(request.id)}>Cancel</Button></td> : <td></td>}

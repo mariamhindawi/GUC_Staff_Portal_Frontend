@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { Spinner } from 'reactstrap';
-import Axios from '../axios'
-import RequestsTable from './requestsTable.component'
+import React, { useEffect, useState } from "react"
+import { Spinner } from "reactstrap";
+import Axios from "../axios"
+import RequestsTable from "./requestsTable.component"
 
 const ViewReplacementComponent = (props) => {
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState([]);
 
     useEffect(() => {
-        Axios.get('/academic/replacement-requests', {
-            'headers': {
-                'token': sessionStorage.token
+        Axios.get("/academic/replacement-requests", {
+            "headers": {
+                "token": sessionStorage.token
             }
         }
         ).then((res) => { console.log(res.data);setRequests(res.data.forMe); setLoading(false) }).catch(error => alert(error))
     }, [])
     const acceptRequest = id => {
         Axios(`/academic/replacement-requests/${id}/accept`, {
-            method: 'put',
-            'headers': {
-                'token': sessionStorage.token
+            method: "put",
+            "headers": {
+                "token": sessionStorage.token
             }
-        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get('/academic/replacement-requests', {
-            'headers': {
-                'token': sessionStorage.token
+        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/academic/replacement-requests", {
+            "headers": {
+                "token": sessionStorage.token
             }
         }
         ).then((res) => { setRequests(res.data.forMe); setLoading(false) })).catch(error => alert(error))
@@ -31,13 +31,13 @@ const ViewReplacementComponent = (props) => {
 
     const rejectRequest = id => {
         Axios(`/academic/replacement-requests/${id}/reject`, {
-            method: 'put',
-            'headers': {
-                'token': sessionStorage.token
+            method: "put",
+            "headers": {
+                "token": sessionStorage.token
             }
-        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get('/academic/replacement-requests', {
-            'headers': {
-                'token': sessionStorage.token
+        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/academic/replacement-requests", {
+            "headers": {
+                "token": sessionStorage.token
             }
         }
         ).then((res) => { setRequests(res.data.forMe); setLoading(false) })).catch(error => alert(error))

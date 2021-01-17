@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Axios from "../axios";
-import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Table, Card, Button, Alert, Input } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Table, Card, Button, Alert, Input } from "reactstrap";
 import SlotTableComponent from "./SlotTable.component";
 
 const CIAssignSlots = props => {
@@ -24,7 +24,7 @@ const CIAssignSlots = props => {
 
     const chooseCourse = (id) => {
         setCourse(id)
-        Axios.get('fe/course-slots', {
+        Axios.get("fe/course-slots", {
             headers: {
                 token: sessionStorage.token
             },
@@ -38,8 +38,8 @@ const CIAssignSlots = props => {
     }
 
     const sendRequest = ()=>{
-        Axios('/ci/assign-academic-member-to-slot',{
-            method:'PUT',
+        Axios("/ci/assign-academic-member-to-slot",{
+            method:"PUT",
             headers:{
                 token:sessionStorage.token
             },
@@ -49,24 +49,24 @@ const CIAssignSlots = props => {
                 room:slots.filter(slot=>slot._id===active)[0].room,
                 slotNumber:slots.filter(slot=>slot._id===active)[0].slotNumber
             }
-        }).then(res=>{console.log(res.data);setAlert(('Success'))}).catch(res=>setError(res.data))
+        }).then(res=>{console.log(res.data);setAlert(("Success"))}).catch(res=>setError(res.data))
     }
 
     const dropdownCourses = courses.map(course => {
-        return <DropdownItem onClick={() => chooseCourse(course.id)} key={course._id}>{course.id + ': ' + course.name}</DropdownItem>
+        return <DropdownItem onClick={() => chooseCourse(course.id)} key={course._id}>{course.id + ": " + course.name}</DropdownItem>
     })
     if (slots)
         return <>
             <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>
-                    {course ? course : 'Select course'}
+                    {course ? course : "Select course"}
                 </DropdownToggle>
                 <DropdownMenu>
                     {dropdownCourses}
                 </DropdownMenu>
             </Dropdown>
             <h1>Choose a slot</h1>
-            <SlotTableComponent slots={slots.filter(slot=>slot.staffMember==='UNASSIGNED')} onClick={setActive} active={active}/>
+            <SlotTableComponent slots={slots.filter(slot=>slot.staffMember==="UNASSIGNED")} onClick={setActive} active={active}/>
             {active?<Input name="academicMember" value={academicMember} onChange={handleChange}></Input>:null}
             <Button type="submit" className={active?"bg-primary":""} onClick={sendRequest}>Assign to slot</Button>
             {alert?<Alert className="bg-success">{alert}</Alert>:null}
@@ -75,7 +75,7 @@ const CIAssignSlots = props => {
     else
         return <Dropdown isOpen={dropdownOpen} toggle={toggle}>
             <DropdownToggle caret>
-                {course ? course : 'Select course'}
+                {course ? course : "Select course"}
             </DropdownToggle>
             <DropdownMenu>
                 {dropdownCourses}

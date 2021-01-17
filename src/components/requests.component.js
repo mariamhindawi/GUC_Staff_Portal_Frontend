@@ -53,7 +53,7 @@ class requestsComponent extends React.Component {
                         <div className="col-1">
                         <Dropdown isOpen={this.state.dropdownOpen} toggle={() => this.toggleDropDown()}>
                             <DropdownToggle caret>
-                                {!this.state.filter ? 'Filter' : this.state.filter === 'Under review' ? 'Pending' : this.state.filter}
+                                {!this.state.filter ? "Filter" : this.state.filter === "Under review" ? "Pending" : this.state.filter}
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem onClick={() => { this.setState({ filter: "" }); console.log(this.state) }}>All</DropdownItem>

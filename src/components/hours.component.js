@@ -1,6 +1,6 @@
 import React from "react";
-import axios from '../axios'
-import { Col, Table, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from 'reactstrap'
+import axios from "../axios"
+import { Col, Table, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from "reactstrap"
 
 
 export default class Hours extends React.Component {
@@ -16,10 +16,10 @@ export default class Hours extends React.Component {
 
     componentDidMount() {
       axios({
-        method:'get',
-        url:'/staff/view-hours' ,
+        method:"get",
+        url:"/staff/view-hours" ,
         headers: {
-          'token': sessionStorage.token
+          "token": sessionStorage.token
       }, 
         params: {
             month:this.state.month, year:this.state.year
@@ -38,10 +38,10 @@ export default class Hours extends React.Component {
 
       componentDidUpdate() {
         axios({
-          method:'get',
-          url:'/staff/view-hours' ,
+          method:"get",
+          url:"/staff/view-hours" ,
           headers: {
-            'token': sessionStorage.token
+            "token": sessionStorage.token
         }, 
           params: {
               month:this.state.month,
