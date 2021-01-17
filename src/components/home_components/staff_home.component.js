@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch, useHistory, useRouteMatch } from "react-router-dom";
-
 import HrHomePage from "./hr_home.component";
 import HodHomePage from "./hod_home.component";
 import CiHomePage from "./ci_home.component";

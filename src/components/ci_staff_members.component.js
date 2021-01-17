@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../axios";
+import axiosInstance from "../others/axios_instance";
 import AcademicList from "./list_components/academic_list.component";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "reactstrap";
 

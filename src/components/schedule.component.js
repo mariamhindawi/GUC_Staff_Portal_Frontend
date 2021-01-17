@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-import axios from "../axios";
+import axios from "../others/axios_instance";
 import SlotTableComponent from "./SlotTable.component";
 import jwt from "jsonwebtoken"
 

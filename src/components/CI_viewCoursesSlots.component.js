@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from "reactstrap"
-import Axios from "../axios"
+import Axios from "../others/axios_instance"
 import jwt from "jsonwebtoken"
 import SlotTableComponent from "./SlotTable.component"
 

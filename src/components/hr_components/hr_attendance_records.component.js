@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Container, Label, Modal, ModalBody, Row, Table } from "reactstrap";
-import Axios from "../../axios";
+import Axios from "../../others/axios_instance";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";

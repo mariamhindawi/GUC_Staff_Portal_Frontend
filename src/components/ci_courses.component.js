@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../axios";
+import axiosInstance from "../others/axios_instance";
 import CourseList from "./list_components/course_list.component";
 import AssignCcForm from "./assign_cc_form.component";
 import AssignTaForm from "./assign_ta_form.component";

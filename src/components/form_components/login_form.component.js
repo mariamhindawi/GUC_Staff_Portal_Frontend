@@ -1,21 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import axios from "../../axios";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import jwt from "jsonwebtoken";
-import { Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import GUC from "../../GUC_Building.jpg";
+import FormImage from "../../images/guc_building.jpg";
 
 const LoginForm = () => {
 
     const history = useHistory();
     const [errorMessage, setErrorMessage] = useState("");
+    const axiosCancelSource = axios.CancelToken.source();
+
+    const componentDidMount = () => {
+        return () => {
+            axiosCancelSource.cancel("Operation canceled by the user");
+        }
+    };
+    useEffect(componentDidMount, []);
 
     if (sessionStorage.token) {
         history.push("/");
-        return <></>;    
+        return <></>;
     }
 
     const placeholders = {
@@ -32,9 +40,14 @@ const LoginForm = () => {
     });
 
     const handleSubmit = async (values, formikProps) => {
-        await axios.post("/staff/login", {
-            "email": values.email,
-            "password": values.password
+        await axiosInstance({
+            method: "post",
+            url: "/staff/login",
+            cancelToken: axiosCancelSource.token,
+            data: {
+                "email": values.email,
+                "password": values.password
+            }
         })
             .then(res => {
                 sessionStorage.setItem("token", res.headers["token"]);
@@ -80,12 +93,12 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="container">
-            <div id="login-container" className="container">
+        <div id="login-container">
+            <div className="container-fluid" id="login-form">
                 <div className="row">
                     <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
                         <div className="card align-items-center rounded-border">
-                            <img className="card-img-top rounded-top-border" src={GUC}></img>
+                            <img className="card-img-top rounded-top-border" src={FormImage}></img>
                             <div className="card-body">
                                 <Formik
                                     initialValues={{ email: "", password: "" }}
@@ -94,7 +107,9 @@ const LoginForm = () => {
                                 >
                                     {formikProps => (
                                         <Form>
-                                            <FontAwesomeIcon className="login-icon" icon="user" />
+                                            <label htmlFor="email">
+                                                <FontAwesomeIcon className="login-form-icon" icon="user" />
+                                            </label>
                                             <Field className="bottom-border" name="email" placeholder={placeholders.email}
                                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
                                             <div className="form-input-error-message">
@@ -102,7 +117,7 @@ const LoginForm = () => {
                                             </div>
                                             <br />
                                             <label htmlFor="password">
-                                                <FontAwesomeIcon className="login-icon" icon="lock" />
+                                                <FontAwesomeIcon className="login-form-icon" icon="lock" />
                                             </label>
                                             <Field className="bottom-border" name="password" type="password" placeholder={placeholders.password}
                                                 onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
@@ -110,7 +125,7 @@ const LoginForm = () => {
                                                 <ErrorMessage name="password" />
                                             </div>
                                             <div className="text-center">
-                                                <Button className="rounded border-0 login-button" type="submit" disabled={formikProps.isSubmitting}>LOG IN</Button>
+                                                <button type="submit" disabled={formikProps.isSubmitting}>LOG IN</button>
                                                 <div className="form-error-message">{errorMessage}</div>
                                             </div>
                                         </Form>

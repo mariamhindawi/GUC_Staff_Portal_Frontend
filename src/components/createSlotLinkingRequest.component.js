@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Axios from "../axios";
+import Axios from "../others/axios_instance";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Table, Card, Button, Alert } from "reactstrap";
 import SlotTableComponent from "./SlotTable.component";
 

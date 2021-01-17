@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
-
 import Header from "../navigation_components/header.component";
 import Sidebar from "../navigation_components/sidebar.component";
 import Profile from "../info_components/profile.component";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Spinner } from "reactstrap";
-import Axios from "../axios"
+import Axios from "../others/axios_instance"
 import RequestsTable from "./requestsTable.component"
 
 const ViewReplacementComponent = (props) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import axiosInstance from "../../axios";
+import axiosInstance from "../../others/axios_instance";
 import { Col, Spinner, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 class Profile extends React.Component {

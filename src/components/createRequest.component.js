@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "../axios";
+import axios from "../others/axios_instance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Button } from "reactstrap";

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useRouteMatch } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../axios";
+import axiosInstance from "../../others/axios_instance";
 import { NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem, Button } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import Logo from "../../logo192.png";
+import Logo from "../../images/guc_logo.png";
 import Notifications from "../notifications.component";
 
 const handleLogOut = () => {

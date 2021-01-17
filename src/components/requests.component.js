@@ -1,5 +1,5 @@
 import React from "react";
-import Axios from "../axios";
+import Axios from "../others/axios_instance";
 import { Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import RequestsTableComponent from "./requestsTable.component";

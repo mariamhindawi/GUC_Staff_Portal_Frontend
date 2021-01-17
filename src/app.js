@@ -2,9 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
-import "./components/fontawesome_icons.component.js";
 import "./App.css";
-
+import "./others/fontawesome_icons";
 import Root from "./components/home_components/root.component";
 import LoginForm from "./components/form_components/login_form.component";
 import StaffHome from "./components/home_components/staff_home.component";

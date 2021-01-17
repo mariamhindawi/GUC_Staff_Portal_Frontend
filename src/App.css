@@ -1,17 +1,12 @@
+@import "./css/login.css";
+@import "./css/buttons.css";
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
-
-
-/*
-#root {
-    height: 100vh;
-    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
-}
-*/
 
 .show {
     display: block;
@@ -58,7 +53,7 @@ input:-webkit-autofill:active {
 
 .form-error-message {
     height: 10px;
-    margin-left: 15px;
+    margin-top: 10px;
     font-weight: bold;
     font-size: 12px;
     color: red;
@@ -66,7 +61,7 @@ input:-webkit-autofill:active {
 
 .form-success-message {
     height: 10px;
-    margin-left: 0px;
+    margin-top: 10px;
     font-weight: bold;
     font-size: 12px;
     color: green;
@@ -194,47 +189,6 @@ tbody .table-row td:before {
     padding-left: 15px;
     margin-top: -40px;
     margin-bottom: 30px;
-}
-
-#login-container {
-    position: absolute;
-    top: 45%;
-    transform: translate(0, -50%);
-    -webkit-animation: login-container 1s ease;
-}
-
-@keyframes login-container {
-    0% {
-        top: 0%;
-    }
-    100% {
-        top: 45%;
-    }
-}
-
-#login-card-title {
-    margin-top: 5%;
-    font-size: 25px;
-    margin-bottom: 0;
-}
-
-.login-button {
-    margin-top: 10%;
-    padding: 7px;
-    width: 100%;
-    border: none;
-    color: black;
-    font-weight: bolder;
-    background: rgb(115, 149, 174);
-    background: linear-gradient(90deg, rgba(115, 149, 174, 1) 0%, rgba(136, 189, 188, 1) 25%, rgba(237, 193, 130, 1) 80%);
-}
-
-#login-button:hover {
-    color: white;
-}
-
-.login-icon {
-    margin-right: 5px;
 }
 
 .profile-container {
