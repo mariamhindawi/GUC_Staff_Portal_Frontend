@@ -6,7 +6,7 @@ import { NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownIt
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Logo from "../../logo192.png";
-import NotificationComponent from "../notifications.component";
+import Notifications from "../notifications.component";
 
 const handleLogOut = () => {
     sessionStorage.removeItem("token");
@@ -62,7 +62,7 @@ const Header = (props) => {
                         </DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem header className="d-flex justify-content-center">
-                                <NotificationComponent notifications={notifications.slice(0, 4)} />
+                                <Notifications notifications={notifications.slice(0, 4)} />
                                 <NavLink to={`${match.path}/notifications`}>
                                     <Button>
                                         View all notifications

@@ -6,7 +6,7 @@ import "./components/fontawesome_icons.component.js";
 import "./App.css";
 
 import Root from "./components/home_components/root.component";
-import LoginForm from "./components/home_components/login_form.component";
+import LoginForm from "./components/form_components/login_form.component";
 import StaffHome from "./components/home_components/staff_home.component";
 
 const App = () => {

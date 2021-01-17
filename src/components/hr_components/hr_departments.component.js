@@ -1,9 +1,8 @@
 import React from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../axios";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import DepartmentList from "../list_components/department_list.component";
 import DepartmentForm from "../form_components/department_form.component";
@@ -116,7 +115,7 @@ class HrDepartments extends React.Component {
             return (
                 <>
                     <div>Are you sure?</div>
-                    <Button classname="rounded bg-danger" onClick={() => this.deleteDepartment(this.state.departmentToDelete)}>Yes</Button>
+                    <Button className="rounded bg-danger" onClick={() => this.deleteDepartment(this.state.departmentToDelete)}>Yes</Button>
                     <Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
                 </>
             );
@@ -149,11 +148,12 @@ class HrDepartments extends React.Component {
                                 </div>
                             );
                         }
+                        
                         return (
                             <>
-                                <div className="row">
-                                <Button className="rounded bg-success float-button col-2 offset-8 mb-2">Add Department<FontAwesomeIcon className="ml-2" icon="plus"></FontAwesomeIcon></Button>
-                                </div>
+                                <Link to={`${this.props.match.url}/add`}>
+                                    <button>Add Department</button>
+                                </Link>
                                 <DepartmentList departments={this.state.departments} faculties={this.state.faculties}
                                     heads={this.state.heads} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
@@ -163,7 +163,7 @@ class HrDepartments extends React.Component {
                         );
                     }} />
                 <Route exact path={`${this.props.match.path}/add`}>
-                    <DepartmentForm department={{name: ""}} faculty="" headOfDepartment=""
+                    <DepartmentForm department={{ name: "" }} faculty="" headOfDepartment=""
                         updateDepartments={this.fetchDepartments} formType="add" />
                 </Route>
                 <Route exact path={`${this.props.match.path}/update/:name`}

@@ -110,7 +110,7 @@ const LoginForm = () => {
                                                 <ErrorMessage name="password" />
                                             </div>
                                             <div className="text-center">
-                                                <Button id="login-button" className="rounded border-0" type="submit" disabled={formikProps.isSubmitting}>LOG IN</Button>
+                                                <Button className="rounded border-0 login-button" type="submit" disabled={formikProps.isSubmitting}>LOG IN</Button>
                                                 <div className="form-error-message">{errorMessage}</div>
                                             </div>
                                         </Form>

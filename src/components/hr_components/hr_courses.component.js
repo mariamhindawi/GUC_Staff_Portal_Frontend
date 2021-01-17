@@ -150,9 +150,7 @@ class HrCourses extends React.Component {
                         return (
                             <>
                                 <Link to={`${this.props.match.url}/add`}>
-                                    <div className="row">
-                                        <Button className="rounded bg-success float-button col-2 offset-8 mb-2">Add Course<FontAwesomeIcon className="ml-2" icon="plus"></FontAwesomeIcon></Button>
-                                    </div>
+                                    <button>Add Course</button>
                                 </Link>
                                 <CourseList courses={this.state.courses} departments={this.state.departments} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>

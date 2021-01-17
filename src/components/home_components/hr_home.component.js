@@ -29,7 +29,9 @@ class HrHomePage extends React.Component {
                 <div className="home-margin">
                     <Switch>
                         <Route exact path={this.props.match.path}> <h1>Welcome</h1> </Route>
+                        <Route path={`${this.props.match.path}/notifications`}> <div>Notifications</div> </Route>
                         <Route path={`${this.props.match.path}/profile`}> <Profile /> </Route>
+                        <Route path={`${this.props.match.path}/reset-password`}> <div>Reset password</div> </Route>
                         <Route path={`${this.props.match.path}/academic-members`}> <HrAcademics /> </Route>
                         <Route path={`${this.props.match.path}/hr-members`}> <HrHrMembers /> </Route>
                         <Route path={`${this.props.match.path}/faculties`}> <HrFaculty /> </Route>

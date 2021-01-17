@@ -1,5 +1,6 @@
-import React from "react"
-import Axios from "../../axios"
+import React from "react";
+import axios from "axios";
+import axiosInstance from "../../axios";
 import { Col, Spinner, Button, Form, FormGroup, Label, Input } from "reactstrap";
 
 class Profile extends React.Component {
@@ -12,7 +13,7 @@ class Profile extends React.Component {
   }
 
   componentDidMount() {
-    Axios.get("/staff/view-profile", {
+    axiosInstance.get("/staff/view-profile", {
       headers: {
         token: sessionStorage.getItem("token")
       }

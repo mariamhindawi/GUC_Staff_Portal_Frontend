@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 import { Card, CardFooter, CardText } from "reactstrap"
 import Axios from "../axios"
 
-const NotificationComponent = ({ notifications }) => {
+const Notifications = ({ notifications }) => {
     const [notis, setNotifications] = useState(notifications?notifications:[])
 
     useEffect(() => {
@@ -40,4 +40,4 @@ const NotificationComponent = ({ notifications }) => {
     </>
 }
 
-export default NotificationComponent
+export default Notifications

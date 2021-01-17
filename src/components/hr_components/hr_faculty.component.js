@@ -147,9 +147,7 @@ class HrFaculty extends React.Component {
                         return (
                             <>
                                 <Link to={`${this.props.match.url}/add`}>
-                                    <div className="row">
-                                        <Button className="rounded bg-success float-button col-2 offset-8 mb-2">Add Faculty<FontAwesomeIcon className="ml-2" icon="plus"></FontAwesomeIcon></Button>
-                                    </div>
+                                    <button>Add Faculty</button>
                                 </Link>
                                 <FacultyList faculties={this.state.faculties} role="hr" toggleModal={this.toggleModal} />
                                 <Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>

@@ -4,30 +4,30 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import jwt from "jsonwebtoken";
 
 const Sidebar = (props) => {
-        const [barStyle, setBarStyle] = useState("show");
-        const [timesStyle, setTimesStyle] = useState("hide");
-        const [toggleWidth, setWidth] = useState("sidebar-closed");
+        const [barsVisibility, setBarsVisibility] = useState("show");
+        const [timesVisibility, setTimesVisibility] = useState("hide");
+        const [sidebarOpen, setSidebarOpen] = useState("");
         const match = useRouteMatch();
         const token = jwt.decode(sessionStorage.token);
 
         const openSidebar = () => {
-                setWidth("sidebar-open");
-                setBarStyle("hide");
-                setTimesStyle("show");
+                setSidebarOpen("sidebar-open");
+                setBarsVisibility("hide");
+                setTimesVisibility("show");
         }
 
         const closeSidebar = () => {
-                setWidth("sidebar-closed");
-                setBarStyle("show");
-                setTimesStyle("hide");
+                setSidebarOpen("");
+                setBarsVisibility("show");
+                setTimesVisibility("hide");
         }
 
         return (
-                <div className="sidebar" id={toggleWidth} onMouseOver={openSidebar} onMouseLeave={closeSidebar}>
-                        <span className="nav-icon text-white toggle" id={barStyle}>
+                <div className={`sidebar ${sidebarOpen}`} onMouseOver={openSidebar} onMouseLeave={closeSidebar}>
+                        <span className={`nav-icon text-white toggle ${barsVisibility}`}>
                                 <FontAwesomeIcon icon="bars" onClick={openSidebar} />
                         </span>
-                        <span className="nav-icon text-white toggle" id={timesStyle}>
+                        <span className={`nav-icon text-white toggle ${timesVisibility}`}>
                                 <FontAwesomeIcon icon="times" onClick={closeSidebar} />
                         </span>
 
@@ -60,7 +60,7 @@ const Sidebar = (props) => {
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Attendance Records</span>
                                 </Link>
-                        </> : null}
+                        </> : <></>}
 
                         {token.role !== "HR" ? <>
                                 <Link to={`${match.url}/requests`}>
@@ -71,7 +71,7 @@ const Sidebar = (props) => {
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Schedule</span>
                                 </Link>
-                        </> : null}
+                        </> : <></>}
 
                         {token.role === "Head of Department" ? <>
                                 <Link to={`${match.url}/hod-courses`}>
@@ -82,7 +82,7 @@ const Sidebar = (props) => {
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Staff members</span>
                                 </Link>
-                        </> : null}
+                        </> : <></>}
 
                         {token.role === "Course Instructor" ? <>
                                 <Link to={`${match.url}/ci-courses`}>
@@ -93,14 +93,14 @@ const Sidebar = (props) => {
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Staff members</span>
                                 </Link>
-                        </> : null}
+                        </> : <></>}
 
                         {token.role === "Course Coordinator" ? <>
                                 <Link to={`${match.url}/course-slots`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Course Slots</span>
                                 </Link>
-                        </> : null}
+                        </> : <></>}
                 </div>
         )
 }
