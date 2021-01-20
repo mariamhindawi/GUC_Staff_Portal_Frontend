@@ -1,64 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import jwt from "jsonwebtoken";
 
 const Sidebar = (props) => {
-        const [barsVisibility, setBarsVisibility] = useState("show");
-        const [timesVisibility, setTimesVisibility] = useState("hide");
-        const [sidebarOpen, setSidebarOpen] = useState("");
         const match = useRouteMatch();
         const token = jwt.decode(sessionStorage.token);
-
-        const openSidebar = () => {
-                setSidebarOpen("sidebar-open");
-                setBarsVisibility("hide");
-                setTimesVisibility("show");
-        }
-
-        const closeSidebar = () => {
-                setSidebarOpen("");
-                setBarsVisibility("show");
-                setTimesVisibility("hide");
-        }
-
+        
         return (
-                <div className={`sidebar ${sidebarOpen}`} onMouseOver={openSidebar} onMouseLeave={closeSidebar}>
-                        <span className={`nav-icon text-white toggle ${barsVisibility}`}>
-                                <FontAwesomeIcon icon="bars" onClick={openSidebar} />
-                        </span>
-                        <span className={`nav-icon text-white toggle ${timesVisibility}`}>
-                                <FontAwesomeIcon icon="times" onClick={closeSidebar} />
-                        </span>
+                <div className={`sidebar ${props.sidebarStyle}`}>
 
                         {token.role === "HR" ? <>
-                                <Link to={`${match.url}/academic-members`}>
-                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />
-                                        <span className="icon-text">Academics</span>
+                                <Link className="sidebar-link" to={`${match.url}/academic-members`}>
+                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />Academics
                                 </Link>
-                                <Link to={`${match.url}/hr-members`}>
-                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />
-                                        <span className="icon-text">HR Members</span>
+                                <Link className="sidebar-link" to={`${match.url}/hr-members`}>
+                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />HR Members
                                 </Link>
-                                <Link to={`${match.url}/courses`}>
-                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />
-                                        <span className="icon-text">Courses</span>
+                                <Link className="sidebar-link" to={`${match.url}/courses`}>
+                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />Courses
                                 </Link>
-                                <Link to={`${match.url}/departments`}>
-                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />
-                                        <span className="icon-text">Departments</span>
+                                <Link className="sidebar-link" to={`${match.url}/departments`}>
+                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />Departments
                                 </Link>
-                                <Link to={`${match.url}/faculties`}>
-                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />
-                                        <span className="icon-text">Faculties</span>
+                                <Link className="sidebar-link" to={`${match.url}/faculties`}>
+                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />Faculties
                                 </Link>
-                                <Link to={`${match.url}/rooms`}>
-                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />
-                                        <span className="icon-text">Rooms</span>
+                                <Link className="sidebar-link" to={`${match.url}/rooms`}>
+                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />Rooms
                                 </Link>
-                                <Link to={`${match.url}/attendance-records`}>
-                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />
-                                        <span className="icon-text">Attendance Records</span>
+                                <Link className="sidebar-link" to={`${match.url}/attendance-records`}>
+                                        <FontAwesomeIcon className="sidebar-icon" icon="user" />Attendance Records
                                 </Link>
                         </> : <></>}
 

@@ -1,0 +1,6 @@
+
+input:-webkit-autofill {
+    background-clip: text;
+    /* box-shadow: 0 0 0 30px white inset; */
+    /* -webkit-text-fill-color: navy; */
+}

@@ -1,0 +1,98 @@
+
+.navbar-staff-portal {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 40px;
+    z-index: 1;
+    background: linear-gradient(90deg, rgba(115, 149, 174, 1) 0%, rgba(136, 189, 188, 1) 25%, rgba(237, 193, 130, 1) 80%);
+}
+
+.navbar-link {
+    pointer-events: none;
+}
+
+.navbar-link:hover {
+    border-radius: 3px;
+    box-shadow: 0 0 5px 0 grey;
+}
+
+.sidebar-toggle {
+    width: 50px;
+}
+
+.sidebar-toggle:hover {
+    box-shadow: 0 0 10px 0 rgb(78, 78, 78);
+}
+
+.sidebar-toggle-icon {
+    pointer-events: all;
+    color: white;
+    font-size: 22px;
+}
+
+.sidebar-toggle-icon:active {
+    color: black;
+}
+
+.navbar-logo {
+    height: 20px;
+    width: 20px;
+    margin-left: 5px;
+    margin-top: 7px;
+}
+
+.navbar-icon {
+    pointer-events: all;
+    color: white;
+}
+
+.navbar-icon:active {
+    color: black;
+}
+
+.navbar-dropdown-menu {
+    width: 250px;
+}
+
+.navbar-dropdown-link:hover {
+    text-decoration: none;
+}
+
+.navbar-dropdown-button {
+    border-radius: 5px;
+}
+
+.navbar-dropdown-button:hover {
+    background-color: navajowhite;
+}
+
+.navbar-dropdown-button:active {
+    background-color: black;
+    color: white;
+    outline: none;
+}
+
+.dropdown-user-initial {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    background-color: black;
+    color: white;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.dropdown-user-name {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.dropdown-user-email {
+    color: lightslategrey;
+    font-size: small;
+    text-align: center;
+}

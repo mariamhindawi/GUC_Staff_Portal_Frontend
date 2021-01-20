@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
-import { Button } from "reactstrap";
+import DeleteButton from "../button_components/delete_button.component";
+import UpdateButton from "../button_components/edit_button.component";
 
 const AcademicListItem = (props) => {
     const match = useRouteMatch();
@@ -12,13 +13,11 @@ const AcademicListItem = (props) => {
                     <>
                         <td>
                             <Link to={`${match.url}/update/${props.academic.id}`}>
-                                <Button className="rounded bg-info">Update Academic</Button>
+                                <UpdateButton />
                             </Link>
                         </td>
                         <td>
-                            <Button className="rounded bg-danger" onClick={() => props.toggleModal(props.academic.id)}>
-                                Delete Academic
-                            </Button>
+                            <DeleteButton onClick={() => props.toggleModal(props.academic.id)}/>
                         </td>
                     </>
                 );

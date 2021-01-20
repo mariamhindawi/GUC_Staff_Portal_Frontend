@@ -1,26 +1,73 @@
+@import "./css/containers.css";
 @import "./css/login.css";
+@import "./css/navbar.css";
+@import "./css/sidebar.css";
 @import "./css/buttons.css";
+@import "./css/forms.css";
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
-}
-
-.show {
-    display: block;
-}
-
-.hide {
-    display: none;
-}
-
-.align-vertical-center {
+.spinner {
     position: absolute;
-    top: 50%;
-    transform: translate(0, -50%);
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
 }
+
+.profile-container {
+    position: relative;
+    overflow: hidden;
+    top: 15%;
+    border: #88bdbc 3px solid;
+    width: 60%;
+    margin-left: 20%;
+}
+
+.profile-list li {
+    list-style-type: none;
+}
+
+.profile-input {
+    outline: none;
+}
+
+#profile-edit-button-div {
+    float: right;
+}
+
+#profile-edit-button {
+    background: rgb(115, 149, 174);
+    background: linear-gradient(90deg, rgba(115, 149, 174, 1) 0%, rgba(136, 189, 188, 1) 25%, rgba(237, 193, 130, 1) 80%);
+    border: none;
+    color: black;
+    font-weight: bolder;
+}
+
+#profile-edit-button:hover {
+    color: white;
+}
+
+.form-input-border {
+    border: 2px rgba(136, 189, 188, 1) solid;
+    outline: none;
+}
+
+.form-input-label {
+    font-weight: bold;
+}
+
+.form-button {
+    border: none;
+    color: black;
+    font-weight: bolder;
+}
+
+.form-button-div {
+    float: right;
+}
+
+.form-button:hover {
+    color: white;
+}
+
 
 .rounded-border {
     border-radius: 20px;
@@ -35,11 +82,6 @@ input:-webkit-autofill:active {
     outline: none;
     border: none;
     border-bottom: 3px solid black;
-}
-
-.home-margin {
-    margin-left: 50px;
-    padding-top: 33px;
 }
 
 .form-input-error-message {
@@ -129,126 +171,9 @@ tbody .table-row td:before {
     margin-top: 20px;
 }
 
-.navbar-staff-portal {
-    position: fixed;
-    z-index: 1;
-    width: 100%;
-    background: rgb(115, 149, 174);
-    background: linear-gradient(90deg, rgba(115, 149, 174, 1) 0%, rgba(136, 189, 188, 1) 25%, rgba(237, 193, 130, 1) 80%);
-}
-
-.navbar-dropdown {
-    margin-right: 130px;
-}
-
-.sidebar {
-    margin-top: 40px;
-    width: 50px;
-    height: 100%;
-    position: fixed;
-    z-index: 1;
-    background: rgb(115, 149, 174);
-    background: linear-gradient(180deg, rgba(115, 149, 174, 1) 0%, rgba(136, 189, 188, 1) 25%, rgba(237, 193, 130, 1) 80%);
-    transition: 0.5s;
-    overflow-x: hidden;
-    padding-top: 50px;
-    white-space: nowrap;
-}
-
-.sidebar-open {
-    width: 170px;
-}
-
-.sidebar a {
-    padding: 8px 8px 8px 17px;
-    text-decoration: none;
-    font-size: 15px;
-    color: white;
-    display: block;
-    font-weight: bold;
-}
-
-.sidebar a:hover {
-    color: black;
-}
-
-.icon-text {
-    vertical-align: middle;
-}
-
-.sidebar-icon {
-    font-size: 20px;
-    padding-bottom: 3px;
-    margin-right: 20px;
-    vertical-align: middle;
-}
-
-.toggle {
-    font-size: 22px;
-    vertical-align: middle;
-    padding-left: 15px;
-    margin-top: -40px;
-    margin-bottom: 30px;
-}
-
-.profile-container {
-    position: relative;
-    overflow: hidden;
-    top: 15%;
-    border: #88bdbc 3px solid;
-    width: 60%;
-    margin-left: 20%;
-}
-
-.profile-list li {
-    list-style-type: none;
-}
-
-.profile-input {
-    outline: none;
-}
-
-#profile-edit-button-div {
-    float: right;
-}
-
-#profile-edit-button {
-    background: rgb(115, 149, 174);
-    background: linear-gradient(90deg, rgba(115, 149, 174, 1) 0%, rgba(136, 189, 188, 1) 25%, rgba(237, 193, 130, 1) 80%);
-    border: none;
-    color: black;
-    font-weight: bolder;
-}
-
-#profile-edit-button:hover {
-    color: white;
-}
-
-.form-input-border {
-    border: 2px rgba(136, 189, 188, 1) solid;
-    outline: none;
-}
-
-.form-input-label {
-    font-weight: bold;
-}
-
-.form-button {
-    border: none;
-    color: black;
-    font-weight: bolder;
-}
-
-.form-button-div {
-    float: right;
-}
-
-.form-button:hover {
-    color: white;
-}
-
 .input-form {
     border: #88bdbc 3px solid;
+    width: 50%;
 }
 
 .add-room-form {
@@ -313,27 +238,6 @@ tbody .table-row td:before {
     .profile-container {
         margin-left: 10%;
         width: 80%;
-    }
-}
-
-@media (max-width: 378px) {
-    .navbar-dropdown {
-        margin-right: 140px;
-    }
-    .sidebar-icon {
-        font-size: 16px;
-    }
-    .navbar-staff-portal {
-        font-size: 11px;
-        border: none;
-    }
-    #navbar-logo {
-        height: 14px;
-        width: 14px;
-    }
-    .sidebar,
-    #sidebar-closed {
-        margin-top: 32px;
     }
 }
 

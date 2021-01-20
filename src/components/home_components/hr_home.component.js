@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
-import Header from "../navigation_components/header.component";
+import Navbar from "../navigation_components/navbar.component";
 import Sidebar from "../navigation_components/sidebar.component";
 import Profile from "../info_components/profile.component";
 import HrAcademics from "../hr_components/hr_academics.component";
@@ -15,17 +15,16 @@ import AddMissingHours from "../hr_components/hr_attendance_records.component";
 class HrHomePage extends React.Component {
 
     render() {
-
         const token = jwt.decode(sessionStorage.token);
         if (token.role !== "HR") {
             return (<div>Unauthorized Access</div>);
         }
 
         return (
-            <>
-                <Header />
-                <Sidebar />
-                <div className="home-margin">
+            <div className="main-container">
+                <Navbar setSidebarStyle={this.props.setSidebarStyle} setHomeContainerStyle={this.props.setHomeContainerStyle} />
+                <Sidebar sidebarStyle={this.props.sidebarStyle} />
+                <div className={`home-container ${this.props.homeContainerStyle}`}>
                     <Switch>
                         <Route exact path={this.props.match.path}> <h1>Welcome</h1> </Route>
                         <Route path={`${this.props.match.path}/notifications`}> <div>Notifications</div> </Route>
@@ -41,7 +40,7 @@ class HrHomePage extends React.Component {
                         <Route path={this.props.match.path}> <div>Page Not Found</div> </Route>
                     </Switch>
                 </div>
-            </>
+            </div>
         )
     }
 }

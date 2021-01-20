@@ -1,17 +1,17 @@
 
-#login-container {
+.login-container {
     height: 100vh;
     background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
 }
 
-#login-form {
+.login-form {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
-    -webkit-animation: login-form 1s ease;
+    animation: login-form-animation 1.5s ease;
 }
 
-@keyframes login-form {
+@keyframes login-form-animation {
     0% {
         top: 0%;
     }
@@ -20,12 +20,6 @@
     }
 }
 
-#login-card-title {
-    margin-top: 5%;
-    font-size: 25px;
-    margin-bottom: 0;
-}
-
 .login-form-icon {
-    margin-right: 10px;
+    margin-right: 1vw;
 }

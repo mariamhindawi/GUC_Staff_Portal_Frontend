@@ -93,8 +93,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div id="login-container">
-            <div className="container-fluid" id="login-form">
+        <div className="login-container">
+            <div className="container-fluid login-form">
                 <div className="row">
                     <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
                         <div className="card align-items-center rounded-border">
