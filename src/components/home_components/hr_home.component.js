@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import Navbar from "../navigation_components/navbar.component";
 import Sidebar from "../navigation_components/sidebar.component";
@@ -37,7 +37,7 @@ const HrHomePage = (props) => {
                     <Route path={`${match.path}/courses`}> <HrCourses /> </Route>
                     <Route path={`${match.path}/rooms`}> <HrRooms /> </Route>
                     <Route path={`${match.path}/attendance-records`}> <AddMissingHours /> </Route>
-                    <Route path={match.path}> <div>Page Not Found</div> </Route>
+                    <Route path={match.path}> <Redirect to="/404" /> </Route>
                 </Switch>
             </div>
         </div>

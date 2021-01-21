@@ -38,8 +38,8 @@ const StaffHome = () => {
       <Route path={`${match.path}/hod`}> <HodHomePage /> </Route>
       <Route path={`${match.path}/ci`}> <CiHomePage /> </Route>
       <Route path={`${match.path}/cc`}> <CCHome /> </Route>
-      <Route path={`${match.path}/ta`}> <TaHomePage />  </Route>
-      <Route path={match.path}> <div>Page not found</div>  </Route>
+      <Route path={`${match.path}/ta`}> <TaHomePage /> </Route>
+      <Route path={match.path}> <Redirect to="/404" /> </Route>
     </Switch>
   );
 }

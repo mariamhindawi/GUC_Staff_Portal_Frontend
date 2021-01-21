@@ -4,6 +4,12 @@
 @import "./css/sidebar.css";
 @import "./css/buttons.css";
 @import "./css/forms.css";
+@import "./css/error_page.css";
+
+.error-page {
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .spinner {
     position: absolute;

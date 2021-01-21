@@ -6,7 +6,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import errorMessages from "../../others/error_messages";
-import FormImage from "../../images/guc_building.jpg";
+import formImage from "../../images/guc_building.jpg";
 
 const LoginForm = () => {
     if (sessionStorage.token) {
@@ -85,7 +85,7 @@ const LoginForm = () => {
                 <div className="row">
                     <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
                         <div className="card align-items-center rounded-border">
-                            <img className="card-img-top rounded-top-border" src={FormImage}></img>
+                            <img className="card-img-top rounded-top-border" src={formImage}></img>
                             <div className="card-body">
                                 <Formik
                                     initialValues={{ email: "", password: "" }}
@@ -125,6 +125,6 @@ const LoginForm = () => {
             </div>
         </div>
     );
-};
+}
 
 export default LoginForm;

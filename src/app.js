@@ -6,6 +6,7 @@ import "./App.css";
 import "./others/fontawesome_icons";
 import LoginForm from "./components/form_components/login_form.component";
 import StaffHome from "./components/home_components/staff_home.component";
+import PageNotFound from "./components/error_components/page_not_found.component";
 
 const App = () => {
   return (
@@ -13,7 +14,8 @@ const App = () => {
       <Route exact path="/"> <Redirect to={sessionStorage.token ? "/staff" : "/login"} /> </Route>
       <Route exact path="/login"> <LoginForm /> </Route>
       <Route path="/staff"> <StaffHome /> </Route>
-      <Route path="/"> <div>Page Not Found</div> </Route>
+      <Route exact path="/404"> <PageNotFound /> </Route>
+      <Route path="/"> <Redirect to="/404" /> </Route>
     </Switch>
   );
 }

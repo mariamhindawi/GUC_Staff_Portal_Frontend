@@ -1,16 +1,4 @@
 
-.edit-button:hover,
-.edit-button:focus,
-.edit-button:active {
-    background: lightblue !important;
-}
-
-.delete-button:hover,
-.delete-button:focus,
-.delete-button:active {
-    background: #ffcccb !important;
-}
-
 .login-button {
     margin-top: 10%;
     padding: 7px;
@@ -24,4 +12,16 @@
 
 .login-button:hover {
     color: white;
+}
+
+.edit-button:hover,
+.edit-button:focus,
+.edit-button:active {
+    background: lightblue !important;
+}
+
+.delete-button:hover,
+.delete-button:focus,
+.delete-button:active {
+    background: #ffcccb !important;
 }
