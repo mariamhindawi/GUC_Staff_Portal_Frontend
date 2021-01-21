@@ -72,6 +72,7 @@ const LoginForm = () => {
 
     const handleFocus = (e) => {
         e.target.placeholder = "";
+        setErrorMessage("");
     };
 
     const handleBlur = (e, formikProps) => {
@@ -80,8 +81,8 @@ const LoginForm = () => {
     };
 
     return (
-        <div className="login-container">
-            <div className="container-fluid login-form">
+        <div className="login-main-container">
+            <div className="container-fluid login-form-container">
                 <div className="row">
                     <div className="col-10 offset-1 col-sm-6 offset-sm-3 col-lg-4 offset-lg-4">
                         <div className="card align-items-center rounded-border">
@@ -112,7 +113,7 @@ const LoginForm = () => {
                                                 <ErrorMessage name="password" />
                                             </div>
                                             <div className="text-center">
-                                                <button type="submit" disabled={formikProps.isSubmitting}>LOG IN</button>
+                                                <button className="login-button" type="submit" disabled={formikProps.isSubmitting} onClick={() => {setErrorMessage()}}>LOG IN</button>
                                                 <div className="form-error-message">{errorMessage}</div>
                                             </div>
                                         </Form>

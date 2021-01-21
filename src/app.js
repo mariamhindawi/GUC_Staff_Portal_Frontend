@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
-import "./App.css";
+import "./css/App.css";
 import "./others/fontawesome_icons";
 import LoginForm from "./components/form_components/login_form.component";
 import StaffHome from "./components/home_components/staff_home.component";

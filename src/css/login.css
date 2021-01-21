@@ -1,14 +1,15 @@
 
-.login-container {
+.login-main-container {
     height: 100vh;
-    background: linear-gradient(90deg, rgba(115,149,174,1) 0%, rgba(136,189,188,1) 25%, rgba(237,193,130,1) 80%);
+    background: rgb(4,100,164);
+    background: linear-gradient(180deg, rgba(4,100,164,1) 0%, rgba(26,151,210,1) 25%, rgba(49,175,225,1) 50%, rgba(81,205,238,1) 75%, rgba(129,235,246,1) 100%);
 }
 
-.login-form {
+.login-form-container {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
-    animation: login-form-animation 1.5s ease;
+    animation: login-form-animation 1.5s 0.25s backwards ease;
 }
 
 @keyframes login-form-animation {
@@ -21,5 +22,36 @@
 }
 
 .login-form-icon {
+    color: rgb(28, 142, 248);
+    font-size: larger;
     margin-right: 1vw;
+}
+
+.login-button {
+    margin-top: 10%;
+    padding: 7px;
+    width: 100%;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-weight: bolder;
+    background: rgb(4,100,164);
+    background: linear-gradient(90deg, rgba(4,100,164,1) 0%, rgba(26,151,210,1) 25%, rgba(49,175,225,1) 50%, rgba(81,205,238,1) 75%, rgba(129,235,246,1) 100%);
+}
+
+.login-button:hover {
+    box-shadow: 0 0 4px 2px grey;
+}
+
+.login-button:focus {
+    outline: none;
+}
+
+.login-button:active {
+    transform: scale(0.98);
+    box-shadow: 0 0 4px 1px grey;
+}
+
+.login-button:disabled {
+    opacity: 0.6;
 }

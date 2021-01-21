@@ -8,7 +8,8 @@
     overflow-x: hidden;
     white-space: nowrap;
     transition: 0.5s;
-    background: linear-gradient(180deg, rgba(115, 149, 174, 1) 0%, rgba(136, 189, 188, 1) 25%, rgba(237, 193, 130, 1) 80%);
+    background: rgb(4,100,164);
+    background: linear-gradient(180deg, rgba(4,100,164,1) 0%, rgba(26,151,210,1) 25%, rgba(49,175,225,1) 50%, rgba(81,205,238,1) 75%, rgba(129,235,246,1) 100%);
 }
 
 .sidebar-none {
