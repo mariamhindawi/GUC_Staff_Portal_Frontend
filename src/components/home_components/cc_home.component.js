@@ -3,7 +3,7 @@ import { Route, Link, withRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
 
 import CourseSlotForm from "../form_components/course_slot_form.component";
-import GeneralRequests from "../GeneralRequestsPage.component";
+import GeneralRequests from "../todo/GeneralRequestsPage.component";
 import MySchedule from "../schedule.component";
 
 class CCHome extends React.Component {

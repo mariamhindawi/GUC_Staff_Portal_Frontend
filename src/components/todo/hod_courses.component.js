@@ -1,13 +1,12 @@
 import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../others/axios_instance";
-import CourseList from "./list_components/course_list.component";
-import AssignCcForm from "./assign_cc_form.component";
-import AssignTaForm from "./assign_ta_form.component";
-import DeleteTaForm from "./delete_ta_from_course.component";
+import axiosInstance from "../../others/axios_instance";
+import CourseList from "../list_components/course_list.component";
+import AssignCiForm from "./assign_ci_form.component";
+import DeleteCiForm from "./delete_ci_form.component";
 
-class CiCourses extends React.Component {
+class HodCourses extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -17,7 +16,7 @@ class CiCourses extends React.Component {
     }
 
     fetchCourses() {
-        axiosInstance.get("/fe/get-my-courses", {
+        axiosInstance.get("/fe/get-courses-by-department", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 token: sessionStorage.getItem("token")
@@ -68,25 +67,21 @@ class CiCourses extends React.Component {
             if (courses[i].id === courseID)
                 return departments[i];
         }
-        return { department: "" }
+        return { department : "" }
     };
 
     render() {
         return (
             <div>
-                <Route exact path={`${this.props.match.path}`}> <CourseList courses={this.state.courses} departments={this.state.departments} role="ci" /> </Route>
-                <Route exact path={`${this.props.match.path}/assign-cc/:id`}
+                <Route exact path={`${this.props.match.path}`}> <CourseList courses={this.state.courses} departments={this.state.departments} role="hod" /> </Route>
+                <Route exact path={`${this.props.match.path}/assign-ci/:id`}
                     render={routeProps => (
-                        <AssignCcForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
+                        <AssignCiForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
                     )} />
-                <Route exact path={`${this.props.match.path}/assign-ta/:id`}
+                <Route exact path={`${this.props.match.path}/delete-ci/:id`}
                     render={routeProps => (
-                        <AssignTaForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
-                    )} />
-                <Route exact path={`${this.props.match.path}/delete-ta/:id`}
-                    render={routeProps => (
-                        <DeleteTaForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
-                    )} />
+                        <DeleteCiForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
+                    )} />    
                 {/* <Route exact path={`${this.props.match.path}/delete/:name`}
                     render={routeProps => (
                         <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
@@ -96,4 +91,4 @@ class CiCourses extends React.Component {
     }
 }
 
-export default withRouter(CiCourses);
+export default withRouter(HodCourses);

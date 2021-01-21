@@ -7,7 +7,7 @@ import { Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, Dropd
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import errorMessages from "../../others/error_messages";
 import Logo from "../../images/guc_logo.png";
-import Notifications from "../notifications.component";
+import Notifications from "../todo/notifications.component";
 
 const CustomNavbar = (props) => {
     const [sidebarToggleOpen, setSidebarToggleOpen] = useState(false);

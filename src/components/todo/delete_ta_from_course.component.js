@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import axios from "../others/axios_instance";
+import axios from "../../others/axios_instance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
 
-const AssignTaForm = props => {
+const DeleteTaForm = props => {
     const [message, setMessage] = useState("");
     const [messageStyle, setMessageStyle] = useState("");
 
@@ -27,8 +27,8 @@ const AssignTaForm = props => {
 
     const handleSubmit = async values => {
         await axios({
-            method: "post",
-            url: `/ci/assign-ta-to-course/${values.teachingAssistant}/${values.course}`,
+            method: "delete",
+            url: `/ci/delete-ta-from-course/${values.teachingAssistant}/${values.course}`,
             headers: {
                 token: sessionStorage.getItem("token")
             }
@@ -61,8 +61,8 @@ const AssignTaForm = props => {
     };
 
     return (
-        <div className="input-form assign-ta-form rounded-border container">
-        <div className="pt-3 pb-3">
+        <div className="input-form delete-ta-form rounded-border container">
+            <div className="pt-3 pb-3"></div>
             <Formik className="row"
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -82,16 +82,15 @@ const AssignTaForm = props => {
                         <div className="form-input-error-message">
                             <ErrorMessage name="teachingAssistant" />
                         </div>
-                        <div className="form-button-div mb-2">
-                            <Button className="rounded bg-success" type="submit" disabled={formikProps.isSubmitting}>Assign Teaching Assistant</Button>
+                        <div>
+                            <Button className="rounded bg-success"type="submit" disabled={formikProps.isSubmitting}>Assign Teaching Assistant</Button>
                         </div>
                         <div className={messageStyle}>{message}</div>
                     </Form>
                 )}
             </Formik>
         </div>
-        </div>
     );
 };
 
-export default AssignTaForm;
+export default DeleteTaForm;

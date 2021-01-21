@@ -3,12 +3,12 @@ import { Route, Link, withRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 
-import CiCourses from "../ci_courses.component";
-import CIacademics from "../ci_staff_members.component";
+import CiCourses from "../todo/ci_courses.component";
+import CIacademics from "../todo/ci_staff_members.component";
 import CICourseSlots from "../CI_viewCoursesSlots.component"
 import CIAssignSlots from "../CI_assignSlots.component";
-import GeneralRequests from "../GeneralRequestsPage.component";
-import CIcoverage from "../ci_coverage.component";
+import GeneralRequests from "../todo/GeneralRequestsPage.component";
+import CIcoverage from "../todo/ci_coverage.component";
 
 class CiHomePage extends React.Component {
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { NavLink } from "react-router-dom"
 import { Card, CardFooter, CardText } from "reactstrap"
-import Axios from "../others/axios_instance"
+import Axios from "../../others/axios_instance"
 
 const Notifications = ({ notifications }) => {
     const [notis, setNotifications] = useState(notifications?notifications:[])

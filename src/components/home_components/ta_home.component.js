@@ -3,7 +3,7 @@ import { Route, Link, withRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
 
 import MySchedule from "../schedule.component"
-import GeneralRequests from "../GeneralRequestsPage.component";
+import GeneralRequests from "../todo/GeneralRequestsPage.component";
 
 
 class TaHomePage extends React.Component {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CourseListItem from "../list_item_components/course_list_item.component";
-import Pagination from "../pagination.component";
+import Pagination from "../todo/pagination.component";
 
 const CourseList = (props) => {
 

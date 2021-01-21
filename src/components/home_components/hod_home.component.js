@@ -3,10 +3,10 @@ import { Route, Link, withRouter } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
 
-import HODcourses from "../hod_courses.component";
-import HodCoverage from "../hod_coverage.component";
-import HODacademics from "../hod_staff_members.component";
-import GeneralRequests from "../GeneralRequestsPage.component"
+import HODcourses from "../todo/hod_courses.component";
+import HodCoverage from "../todo/hod_coverage.component";
+import HODacademics from "../todo/hod_staff_members.component";
+import GeneralRequests from "../todo/GeneralRequestsPage.component"
 import HODSlotAssignment from "../HOD_ViewTeachingAssignments.component"
 import MySchedule from "../schedule.component"; 
 

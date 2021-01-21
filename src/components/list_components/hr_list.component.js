@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import HrListItem from "../list_item_components/hr_list_item.component";
-import Pagination from "../pagination.component";
+import Pagination from "../todo/pagination.component";
 
 const HrList = (props) => {
 
