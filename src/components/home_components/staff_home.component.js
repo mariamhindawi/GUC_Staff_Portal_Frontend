@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import HrHomePage from "./hr_home.component";
-import HodHomePage from "./hod_home.component";
-import CiHomePage from "./ci_home.component";
-import CCHome from "./cc_home.component";
-import TaHomePage from "./ta_home.component";
+// import HodHomePage from "./hod_home.component";
+// import CiHomePage from "./ci_home.component";
+// import CCHome from "./cc_home.component";
+// import TaHomePage from "./ta_home.component";
 
 const StaffHome = () => {
   if (!sessionStorage.token) {
@@ -35,10 +35,10 @@ const StaffHome = () => {
           homeContainerStyle={homeContainerStyle} setHomeContainerStyle={setHomeContainerStyle}
         />
       </Route>
-      <Route path={`${match.path}/hod`}> <HodHomePage /> </Route>
+      {/* <Route path={`${match.path}/hod`}> <HodHomePage /> </Route>
       <Route path={`${match.path}/ci`}> <CiHomePage /> </Route>
       <Route path={`${match.path}/cc`}> <CCHome /> </Route>
-      <Route path={`${match.path}/ta`}> <TaHomePage /> </Route>
+      <Route path={`${match.path}/ta`}> <TaHomePage /> </Route> */}
       <Route path={match.path}> <Redirect to="/404" /> </Route>
     </Switch>
   );
