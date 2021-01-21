@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 const Sidebar = (props) => {
         const match = useRouteMatch();
         const token = jwt.decode(sessionStorage.token);
-        
+
         return (
                 <div className={`sidebar ${props.sidebarStyle}`}>
 
@@ -32,7 +32,7 @@ const Sidebar = (props) => {
                                 <Link className="sidebar-link" to={`${match.url}/attendance-records`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />Attendance Records
                                 </Link>
-                        </> : <></>}
+                        </> : null}
 
                         {token.role !== "HR" ? <>
                                 <Link to={`${match.url}/requests`}>
@@ -43,7 +43,7 @@ const Sidebar = (props) => {
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Schedule</span>
                                 </Link>
-                        </> : <></>}
+                        </> : null}
 
                         {token.role === "Head of Department" ? <>
                                 <Link to={`${match.url}/hod-courses`}>
@@ -54,7 +54,7 @@ const Sidebar = (props) => {
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Staff members</span>
                                 </Link>
-                        </> : <></>}
+                        </> : null}
 
                         {token.role === "Course Instructor" ? <>
                                 <Link to={`${match.url}/ci-courses`}>
@@ -65,14 +65,14 @@ const Sidebar = (props) => {
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Staff members</span>
                                 </Link>
-                        </> : <></>}
+                        </> : null}
 
                         {token.role === "Course Coordinator" ? <>
                                 <Link to={`${match.url}/course-slots`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Course Slots</span>
                                 </Link>
-                        </> : <></>}
+                        </> : null}
                 </div>
         )
 }

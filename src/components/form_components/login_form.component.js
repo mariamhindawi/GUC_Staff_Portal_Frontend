@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import jwt from "jsonwebtoken";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import errorMessages from "../../others/error_messages";
 import FormImage from "../../images/guc_building.jpg";
 
 const LoginForm = () => {
-
-    const history = useHistory();
+    if (sessionStorage.token) {
+        return <Redirect to="/staff" />;
+    }
+    
     const [errorMessage, setErrorMessage] = useState("");
+    const history = useHistory();
     const axiosCancelSource = axios.CancelToken.source();
 
-    const componentDidMount = () => {
-        return () => {
-            axiosCancelSource.cancel("Operation canceled by the user");
-        }
+    const requestsEffect = () => {
+        return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
     };
-    useEffect(componentDidMount, []);
+    useEffect(requestsEffect, []);
 
-    if (sessionStorage.token) {
-        history.push("/");
-        return <></>;
-    }
 
     const placeholders = {
         email: "Email",
@@ -51,35 +48,25 @@ const LoginForm = () => {
         })
             .then(res => {
                 sessionStorage.setItem("token", res.headers["token"]);
-                const token = jwt.decode(res.headers["token"]);
-                if (token.role === "Head of Department") {
-                    history.push("/staff/hod");
-                }
-                else if (token.role === "Course Instructor") {
-                    history.push("/staff/ci");
-                }
-                else if (token.role === "Teaching Assistant") {
-                    history.push("/staff/ta");
-                }
-                else if (token.role === "Course Coordinator") {
-                    history.push("/staff/cc")
-                }
-                else if (token.role === "HR") {
-                    history.push("/staff/hr");
-                }
+                history.push("/staff");
             })
             .catch(error => {
-                if (error.response) {
-                    setErrorMessage(error.response.data);
-                    console.log(error.response);
-                }
-                else if (error.request) {
-                    console.log(error.request);
+                if (axios.isCancel(error)) {
+                    console.log(`Request cancelled: ${error.message}`);
                 }
                 else {
-                    console.log(error.message);
+                    if (error.response) {
+                        setErrorMessage(error.response.data);
+                        console.log(error.response);
+                    }
+                    else if (error.request) {
+                        console.log(error.request);
+                    }
+                    else {
+                        console.log(error.message);
+                    }
+                    formikProps.setFieldValue("password", "", false);
                 }
-                formikProps.setFieldValue("password", "", false);
             });
     };
 

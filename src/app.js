@@ -1,23 +1,20 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
 import "./App.css";
 import "./others/fontawesome_icons";
-import Root from "./components/home_components/root.component";
 import LoginForm from "./components/form_components/login_form.component";
 import StaffHome from "./components/home_components/staff_home.component";
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/"> <Root /> </Route>
-        <Route exact path="/login"> <LoginForm /> </Route>
-        <Route path="/staff"> <StaffHome /> </Route>
-        <Route path="/"> <div>Page Not Found</div> </Route>
-      </Switch>
-    </Router>
+    <Switch>
+      <Route exact path="/"> <Redirect to={sessionStorage.token ? "/staff" : "/login"} /> </Route>
+      <Route exact path="/login"> <LoginForm /> </Route>
+      <Route path="/staff"> <StaffHome /> </Route>
+      <Route path="/"> <div>Page Not Found</div> </Route>
+    </Switch>
   );
 }
 

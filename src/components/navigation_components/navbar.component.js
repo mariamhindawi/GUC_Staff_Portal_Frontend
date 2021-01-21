@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import errorMessages from "../../others/error_messages";
 import Logo from "../../images/guc_logo.png";
 import Notifications from "../notifications.component";
 
 const CustomNavbar = (props) => {
     const [sidebarToggleOpen, setSidebarToggleOpen] = useState(false);
-    const [barsStyle, setBarsStyle] = useState("d-inline");
-    const [timesStyle, setTimesStyle] = useState("d-none");
+    const [barsToggleStyle, setBarsToggleStyle] = useState("d-inline");
+    const [timesToggleStyle, setTimesToggleStyle] = useState("d-none");
     const [notificationsOpen, setNotificationsOpen] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [userInfoOpen, setUserInfoOpen] = useState(false);
@@ -20,59 +21,14 @@ const CustomNavbar = (props) => {
     const match = useRouteMatch();
     const axiosCancelSource = axios.CancelToken.source();
 
-    const setLayoutStyles = () => {
-        if (window.innerWidth >= 1200) {
-            if (!sidebarToggleOpen) {
-                props.setSidebarStyle("sidebar-collapsed");
-                props.setHomeContainerStyle("home-container-sidebar-collapsed");
-                setBarsStyle("d-inline");
-                setTimesStyle("d-none");
-            }
-            else {
-                props.setSidebarStyle("sidebar-expanded");
-                props.setHomeContainerStyle("home-container-sidebar-expanded");
-                setBarsStyle("d-none");
-                setTimesStyle("d-inline");
-            }
-        }
-        else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
-            if (!sidebarToggleOpen) {
-                props.setSidebarStyle("sidebar-collapsed");
-                props.setHomeContainerStyle("home-container-sidebar-collapsed");
-                setBarsStyle("d-inline");
-                setTimesStyle("d-none");
-            }
-            else {
-                props.setSidebarStyle("sidebar-expanded");
-                props.setHomeContainerStyle("home-container-sidebar-collapsed");
-                setBarsStyle("d-none");
-                setTimesStyle("d-inline");
-            }
-        }
-        else if (window.innerWidth < 768) {
-            if (!sidebarToggleOpen) {
-                props.setSidebarStyle("sidebar-none");
-                props.setHomeContainerStyle("home-container-nosidebar");
-                setBarsStyle("d-inline");
-                setTimesStyle("d-none");
-            }
-            else {
-                props.setSidebarStyle("sidebar-expanded");
-                props.setHomeContainerStyle("home-container-nosidebar");
-                setBarsStyle("d-none");
-                setTimesStyle("d-inline");
-            }
-        }
-    }
-    useEffect(setLayoutStyles, [sidebarToggleOpen]);
-
-    const componentDidMount = () => {
-        window.addEventListener("resize", setLayoutStyles);
-
+    const userInfoEffect = () => {
         const token = jwt.decode(sessionStorage.token);
         setUserName(token.name);
         setUserEmail(token.email);
+    }
+    useEffect(userInfoEffect, []);
 
+    const notificationsEffect = () => {
         axiosInstance.get("/fe/academic/notifications", {
             cancelToken: axiosCancelSource.token,
             headers: {
@@ -81,14 +37,79 @@ const CustomNavbar = (props) => {
         })
             .then(res => {
                 setNotifications(res.data);
+            })
+            .catch(error => {
+                if (axios.isCancel(error)) {
+                    console.log(`Request cancelled: ${error.message}`);
+                }
+                else {
+                    if (error.response) {
+                        console.log(error.response);
+                    }
+                    else if (error.request) {
+                        console.log(error.request);
+                    }
+                    else {
+                        console.log(error.message);
+                    }
+                }
             });
 
-        return () => {
-            window.removeEventListener("resize", setLayoutStyles);
-            axiosCancelSource.cancel("Operation canceled by the user");
+        return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
+    }
+    useEffect(notificationsEffect, []);
+    
+    const setLayoutStyles = () => {
+        if (window.innerWidth >= 1200) {
+            if (!sidebarToggleOpen) {
+                props.setSidebarStyle("sidebar-collapsed");
+                props.setHomeContainerStyle("home-container-sidebar-collapsed");
+                setBarsToggleStyle("d-inline");
+                setTimesToggleStyle("d-none");
+            }
+            else {
+                props.setSidebarStyle("sidebar-expanded");
+                props.setHomeContainerStyle("home-container-sidebar-expanded");
+                setBarsToggleStyle("d-none");
+                setTimesToggleStyle("d-inline");
+            }
+        }
+        else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
+            if (!sidebarToggleOpen) {
+                props.setSidebarStyle("sidebar-collapsed");
+                props.setHomeContainerStyle("home-container-sidebar-collapsed");
+                setBarsToggleStyle("d-inline");
+                setTimesToggleStyle("d-none");
+            }
+            else {
+                props.setSidebarStyle("sidebar-expanded");
+                props.setHomeContainerStyle("home-container-sidebar-collapsed");
+                setBarsToggleStyle("d-none");
+                setTimesToggleStyle("d-inline");
+            }
+        }
+        else if (window.innerWidth < 768) {
+            if (!sidebarToggleOpen) {
+                props.setSidebarStyle("sidebar-none");
+                props.setHomeContainerStyle("home-container-nosidebar");
+                setBarsToggleStyle("d-inline");
+                setTimesToggleStyle("d-none");
+            }
+            else {
+                props.setSidebarStyle("sidebar-expanded");
+                props.setHomeContainerStyle("home-container-nosidebar");
+                setBarsToggleStyle("d-none");
+                setTimesToggleStyle("d-inline");
+            }
         }
     }
-    useEffect(componentDidMount, []);
+    useLayoutEffect(setLayoutStyles, [sidebarToggleOpen]);
+
+    const eventListenerEffect = () => {
+        window.addEventListener("resize", setLayoutStyles);
+        return () => { window.removeEventListener("resize", setLayoutStyles) }
+    }
+    useEffect(eventListenerEffect, []);
 
     const handleLogOut = () => {
         sessionStorage.removeItem("token");
@@ -103,10 +124,10 @@ const CustomNavbar = (props) => {
     return (
         <div className="d-flex justify-content-between navbar-staff-portal">
             <Nav>
-                <NavItem className={`nav-link navbar-link sidebar-toggle ${barsStyle}`}>
+                <NavItem className={`nav-link navbar-link sidebar-toggle ${barsToggleStyle}`}>
                     <FontAwesomeIcon className="sidebar-toggle-icon" icon="bars" onClick={toggleSidebar} />
                 </NavItem>
-                <NavItem className={`nav-link navbar-link sidebar-toggle ${timesStyle}`}>
+                <NavItem className={`nav-link navbar-link sidebar-toggle ${timesToggleStyle}`}>
                     <FontAwesomeIcon className="sidebar-toggle-icon" icon="times" onClick={toggleSidebar} />
                 </NavItem>
                 <img className="navbar-logo" src={Logo} alt="GUC logo"></img>

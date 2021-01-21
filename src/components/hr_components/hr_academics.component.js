@@ -1,14 +1,15 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Button, Modal } from "reactstrap";
+import errorMessages from "../../others/error_messages";
 import AcademicList from "../list_components/academic_list.component"
 import AcademicForm from "../form_components/academic_member_form.component";
 import AddButton from "../button_components/add_button.component";
 import Spinner from "../helper_components/spinner.component";
 
-class HrAcademics extends React.Component {
+class HrAcademics extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -38,22 +39,27 @@ class HrAcademics extends React.Component {
                 this.setState({
                     academics: res.data.academics,
                     departments: res.data.departments,
-                    rooms: res.data.rooms
+                    rooms: res.data.rooms,
+                    loading: false
                 });
             })
             .catch(error => {
-                if (error.response) {
-                    console.log(error.response);
-                }
-                else if (error.request) {
-                    console.log(error.request);
+                if (axios.isCancel(error)) {
+                    console.log(`Request cancelled: ${error.message}`);
                 }
                 else {
-                    console.log(error.message);
+                    if (error.response) {
+                        console.log(error.response);
+                    }
+                    else if (error.request) {
+                        console.log(error.request);
+                    }
+                    else {
+                        console.log(error.message);
+                    }
+                    this.setState({ loading: false });
                 }
-                console.log(error);
-            });
-        this.setState({ loading: false });
+            })
     }
 
     componentDidMount() {
@@ -62,7 +68,7 @@ class HrAcademics extends React.Component {
     }
 
     componentWillUnmount() {
-        this.axiosCancelSource.cancel("Operation canceled by the user");
+        this.axiosCancelSource.cancel(errorMessages.requestCancellation);
     }
 
     getAcademic(academicID) {
