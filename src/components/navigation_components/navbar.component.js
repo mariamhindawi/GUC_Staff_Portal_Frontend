@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import errorMessages from "../../others/error_messages";
 import Logo from "../../images/guc_logo.png";
 import Notifications from "../todo/notifications.component";
+import authTokenManager from "../../others/auth_token_manager";
 
 const CustomNavbar = (props) => {
     const [sidebarToggleOpen, setSidebarToggleOpen] = useState(false);
@@ -19,12 +20,13 @@ const CustomNavbar = (props) => {
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
     const match = useRouteMatch();
+    const history = useHistory();
     const axiosCancelSource = axios.CancelToken.source();
+    const authAccessToken = jwt.decode(authTokenManager.getAuthAccessToken());
 
     const userInfoEffect = () => {
-        const token = jwt.decode(sessionStorage.token);
-        setUserName(token.name);
-        setUserEmail(token.email);
+        setUserName(authAccessToken.name);
+        setUserEmail(authAccessToken.email);
     }
     useEffect(userInfoEffect, []);
 
@@ -32,7 +34,7 @@ const CustomNavbar = (props) => {
         axiosInstance.get("/fe/academic/notifications", {
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.token
+                token: authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -58,7 +60,7 @@ const CustomNavbar = (props) => {
         return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
     }
     useEffect(notificationsEffect, []);
-    
+
     const setLayoutStyles = () => {
         if (window.innerWidth >= 1200) {
             if (!sidebarToggleOpen) {
@@ -105,14 +107,32 @@ const CustomNavbar = (props) => {
     }
     useLayoutEffect(setLayoutStyles, [sidebarToggleOpen]);
 
-    const eventListenerEffect = () => {
+    const resizeEventListenerEffect = () => {
         window.addEventListener("resize", setLayoutStyles);
         return () => { window.removeEventListener("resize", setLayoutStyles) }
     }
-    useEffect(eventListenerEffect, []);
+    useEffect(resizeEventListenerEffect, []);
+
+    const syncLogout = (event) => {
+        if (event.key === "lastLogout") {
+            if (JSON.parse(event.newValue).id === authAccessToken.id) {
+                // TODO: send post request to "/logout"
+                authTokenManager.removeAuthAccessToken();
+                history.push("/");
+            }
+        }
+    }
+
+    const logoutEventListenerEffect = () => {
+        window.addEventListener("storage", syncLogout);
+        return () => { window.removeEventListener("storage", syncLogout) }
+    }
+    useEffect(logoutEventListenerEffect, []);
 
     const handleLogOut = () => {
-        sessionStorage.removeItem("token");
+        // TODO: send post request to "/logout"
+        authTokenManager.removeAuthAccessToken();
+        window.localStorage.setItem("lastLogout", JSON.stringify({ id: authAccessToken.id, date: Date.now() }));
     };
 
     const toggleSidebar = () => setSidebarToggleOpen(prevState => !prevState);

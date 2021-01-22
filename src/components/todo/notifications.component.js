@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react"
-import { NavLink } from "react-router-dom"
-import { Card, CardFooter, CardText } from "reactstrap"
-import Axios from "../../others/axios_instance"
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
+import { Card, CardFooter, CardText } from "reactstrap";
+import authTokenManager from "../../others/auth_token_manager";
 
 const Notifications = ({ notifications }) => {
     const [notis, setNotifications] = useState(notifications?notifications:[])
 
     useEffect(() => {
         if (notifications === undefined) {
-            Axios.get("/fe/academic/notifications", {
+            axiosInstance.get("/fe/academic/notifications", {
                 headers: {
-                    token: sessionStorage.token
+                    token: authTokenManager.getAuthAccessToken()
                 }
             }).then(res => { console.log(res.data); setNotifications(res.data) })
         }
-        Axios("/fe/academic/mark-notifications-seen", {
+        axiosInstance("/fe/academic/mark-notifications-seen", {
             method: "PUT",
             headers: {
-                token: sessionStorage.token
+                token: authTokenManager.getAuthAccessToken()
             },
             data: {
                 seenNotifications: notis
@@ -26,14 +28,14 @@ const Notifications = ({ notifications }) => {
     }, [])
 
     let Cards = notis.map((noti) => {
-        return <NavLink key={noti._id} to="/staff/home/requests"><Card className={noti.seen ? "bg-white p-2 m-1" : "bg-warning p-2 m-1"}>
+        return <Link key={noti._id} to="/staff/home/requests"><Card className={noti.seen ? "bg-white p-2 m-1" : "bg-warning p-2 m-1"}>
             <CardText>
                 {noti.message}
             </CardText>
             <CardFooter>
                 {noti.createdAt.replace("T", " ").split(".")[0]}
             </CardFooter>
-        </Card></NavLink>
+        </Card></Link>
     })
     return <>
         {Cards}

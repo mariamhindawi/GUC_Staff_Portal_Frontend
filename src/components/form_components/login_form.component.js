@@ -7,9 +7,10 @@ import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import errorMessages from "../../others/error_messages";
 import formImage from "../../images/guc_building.jpg";
+import authTokenManager from "../../others/auth_token_manager";
 
 const LoginForm = () => {
-    if (sessionStorage.token) {
+    if (authTokenManager.getAuthAccessToken()) {
         return <Redirect to="/staff" />;
     }
     
@@ -47,7 +48,7 @@ const LoginForm = () => {
             }
         })
             .then(res => {
-                sessionStorage.setItem("token", res.headers["token"]);
+                authTokenManager.setAuthAccessToken(res.headers["token"]);
                 history.push("/staff");
             })
             .catch(error => {

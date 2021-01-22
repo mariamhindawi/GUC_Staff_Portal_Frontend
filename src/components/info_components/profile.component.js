@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Col, Spinner, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import authTokenManager from "../../others/auth_token_manager";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class Profile extends React.Component {
   componentDidMount() {
     axiosInstance.get("/staff/view-profile", {
       headers: {
-        token: sessionStorage.getItem("token")
+        token: authTokenManager.getAuthAccessToken()
       }
     }).then(res => this.setState({ user: res.data.user, office: res.data.office }))
   }

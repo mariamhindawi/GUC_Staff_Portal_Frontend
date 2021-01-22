@@ -7,11 +7,12 @@ import "./others/fontawesome_icons";
 import LoginForm from "./components/form_components/login_form.component";
 import StaffHome from "./components/home_components/staff_home.component";
 import PageNotFound from "./components/error_components/page_not_found.component";
+import authTokenManager from "./others/auth_token_manager";
 
 const App = () => {
   return (
     <Switch>
-      <Route exact path="/"> <Redirect to={sessionStorage.token ? "/staff" : "/login"} /> </Route>
+      <Route exact path="/"> <Redirect to={authTokenManager.getAuthAccessToken() ? "/staff" : "/login"} /> </Route>
       <Route exact path="/login"> <LoginForm /> </Route>
       <Route path="/staff"> <StaffHome /> </Route>
       <Route exact path="/404"> <PageNotFound /> </Route>

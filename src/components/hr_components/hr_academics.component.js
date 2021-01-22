@@ -8,6 +8,7 @@ import AcademicList from "../list_components/academic_list.component"
 import AcademicForm from "../form_components/academic_member_form.component";
 import AddButton from "../button_components/add_button.component";
 import Spinner from "../helper_components/spinner.component";
+import authTokenManager from "../../others/auth_token_manager";
 
 class HrAcademics extends Component {
     constructor(props) {
@@ -32,7 +33,7 @@ class HrAcademics extends Component {
         await axiosInstance.get("/fe/get-academics", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                token: authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -90,7 +91,7 @@ class HrAcademics extends Component {
         await axiosInstance.delete(`/hr/delete-academic-member/${id}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                token: getAuthAccessToken()
             }
         })
             .then(async response => {

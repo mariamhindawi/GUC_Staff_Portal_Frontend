@@ -11,12 +11,13 @@ import HrDepartments from "../hr_components/hr_departments.component";
 import HrFaculty from "../hr_components/hr_faculty.component";
 import HrRooms from "../hr_components/hr_rooms.component";
 import AddMissingHours from "../hr_components/hr_attendance_records.component";
+import authTokenManager from "../../others/auth_token_manager";
 
 const HrHomePage = (props) => {
     const match = useRouteMatch();
-
-    const token = jwt.decode(sessionStorage.token);
-    if (token.role !== "HR") {
+    const authAccessToken = jwt.decode(authTokenManager.getAuthAccessToken());
+    
+    if (authAccessToken.role !== "HR") {
         return <div>Unauthorized Access</div>;
     }
 
