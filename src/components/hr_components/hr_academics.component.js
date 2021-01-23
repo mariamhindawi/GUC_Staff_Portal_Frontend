@@ -147,7 +147,7 @@ class HrAcademics extends Component {
                 <Route exact path={`${this.props.match.path}`}
                     render={() => {
                         if (this.state.loading) {
-                            return <div className="spinner"> <Spinner /> </div>;
+                            return <Spinner />;
                         }
                         
                         return (

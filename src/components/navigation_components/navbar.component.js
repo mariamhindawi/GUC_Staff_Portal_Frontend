@@ -116,11 +116,10 @@ const CustomNavbar = (props) => {
     useEffect(resizeEventListenerEffect, []);
 
     const syncLogout = (event) => {
-        if (event.key === "lastLogout") {
-            if (JSON.parse(event.newValue).id === authAccessToken.id) {
-                authTokenManager.removeAuthAccessToken();
-                history.push("/");
-            }
+        if (event.key === "gucLogout") {
+            // alert("Your session has ended. Please login again");
+            authTokenManager.removeAuthAccessToken();
+            history.push("/");
         }
     }
 
@@ -142,7 +141,6 @@ const CustomNavbar = (props) => {
             .then(response => {
                 alert(response.data);
                 authTokenManager.removeAuthAccessToken();
-                window.localStorage.setItem("lastLogout", JSON.stringify({ id: authAccessToken.id, date: Date.now() }));
                 history.push("/");
             })
             .catch(error => {
