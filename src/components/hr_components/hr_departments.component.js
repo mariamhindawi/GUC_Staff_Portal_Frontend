@@ -3,9 +3,9 @@ import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-
 import DepartmentList from "../list_components/department_list.component";
 import DepartmentForm from "../form_components/department_form.component";
+import authTokenManager from "../../others/auth_token_manager";
 
 class HrDepartments extends React.Component {
     constructor(props) {
@@ -30,7 +30,7 @@ class HrDepartments extends React.Component {
         await axiosInstance.get("/fe/get-departments", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -83,7 +83,7 @@ class HrDepartments extends React.Component {
         await axiosInstance.delete(`/hr/delete-department/${departmentName}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(async response => {

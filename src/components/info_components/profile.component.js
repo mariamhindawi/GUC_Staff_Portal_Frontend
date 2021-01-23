@@ -16,7 +16,7 @@ class Profile extends React.Component {
   componentDidMount() {
     axiosInstance.get("/staff/view-profile", {
       headers: {
-        token: authTokenManager.getAuthAccessToken()
+        "auth-access-token": authTokenManager.getAuthAccessToken()
       }
     }).then(res => this.setState({ user: res.data.user, office: res.data.office }))
   }

@@ -3,9 +3,9 @@ import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-
 import RoomList from "../list_components/room_list.component";
 import RoomForm from "../form_components/room_form.component";
+import authTokenManager from "../../others/auth_token_manager";
 
 
 class HrRooms extends React.Component {
@@ -29,7 +29,7 @@ class HrRooms extends React.Component {
         await axiosInstance.get("/fe/get-rooms", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -79,7 +79,7 @@ class HrRooms extends React.Component {
         await axiosInstance.delete(`/hr/delete-room/${roomName}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(async response => {

@@ -3,10 +3,9 @@ import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 import FacultyList from "../list_components/faculty_list.component";
 import FacultyForm from "../form_components/faculty_form.component";
+import authTokenManager from "../../others/auth_token_manager";
 
 
 class HrFaculty extends React.Component {
@@ -30,7 +29,7 @@ class HrFaculty extends React.Component {
         await axiosInstance.get("/fe/get-faculties", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -79,7 +78,7 @@ class HrFaculty extends React.Component {
         await axiosInstance.delete(`/hr/delete-faculty/${facultyName}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(async response => {

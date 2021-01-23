@@ -31,10 +31,12 @@ const CustomNavbar = (props) => {
     useEffect(userInfoEffect, []);
 
     const notificationsEffect = () => {
-        axiosInstance.get("/fe/academic/notifications", {
+        axiosInstance({
+            method: "get",
+            url: "/fe/academic/notifications",
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: authTokenManager.getAuthAccessToken()
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -116,7 +118,6 @@ const CustomNavbar = (props) => {
     const syncLogout = (event) => {
         if (event.key === "lastLogout") {
             if (JSON.parse(event.newValue).id === authAccessToken.id) {
-                // TODO: send post request to "/logout"
                 authTokenManager.removeAuthAccessToken();
                 history.push("/");
             }
@@ -129,10 +130,37 @@ const CustomNavbar = (props) => {
     }
     useEffect(logoutEventListenerEffect, []);
 
-    const handleLogOut = () => {
-        // TODO: send post request to "/logout"
-        authTokenManager.removeAuthAccessToken();
-        window.localStorage.setItem("lastLogout", JSON.stringify({ id: authAccessToken.id, date: Date.now() }));
+    const handleLogOut = async () => {
+        await axiosInstance({
+            method: "post",
+            url: "/staff/logout",
+            cancelToken: axiosCancelSource.token,
+            headers: {
+                "auth-access-token": authTokenManager.getAuthAccessToken()
+            }
+        })
+            .then(response => {
+                alert(response.data);
+                authTokenManager.removeAuthAccessToken();
+                window.localStorage.setItem("lastLogout", JSON.stringify({ id: authAccessToken.id, date: Date.now() }));
+                history.push("/");
+            })
+            .catch(error => {
+                if (axios.isCancel(error)) {
+                    console.log(`Request cancelled: ${error.message}`);
+                }
+                else {
+                    if (error.response) {
+                        console.log(error.response);
+                    }
+                    else if (error.request) {
+                        console.log(error.request);
+                    }
+                    else {
+                        console.log(error.message);
+                    }
+                }
+            });
     };
 
     const toggleSidebar = () => setSidebarToggleOpen(prevState => !prevState);

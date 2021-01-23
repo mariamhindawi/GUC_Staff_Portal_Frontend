@@ -12,14 +12,14 @@ const Notifications = ({ notifications }) => {
         if (notifications === undefined) {
             axiosInstance.get("/fe/academic/notifications", {
                 headers: {
-                    token: authTokenManager.getAuthAccessToken()
+                    "auth-access-token": authTokenManager.getAuthAccessToken()
                 }
             }).then(res => { console.log(res.data); setNotifications(res.data) })
         }
         axiosInstance("/fe/academic/mark-notifications-seen", {
             method: "PUT",
             headers: {
-                token: authTokenManager.getAuthAccessToken()
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 seenNotifications: notis

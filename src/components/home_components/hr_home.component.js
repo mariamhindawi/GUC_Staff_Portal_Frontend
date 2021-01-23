@@ -12,6 +12,7 @@ import HrFaculty from "../hr_components/hr_faculty.component";
 import HrRooms from "../hr_components/hr_rooms.component";
 import AddMissingHours from "../hr_components/hr_attendance_records.component";
 import authTokenManager from "../../others/auth_token_manager";
+import HrHomeMain from "../helper_components/hr_home_main.component";
 
 const HrHomePage = (props) => {
     const match = useRouteMatch();
@@ -27,7 +28,7 @@ const HrHomePage = (props) => {
             <Sidebar sidebarStyle={props.sidebarStyle} />
             <div className={`home-container ${props.homeContainerStyle}`}>
                 <Switch>
-                    <Route exact path={match.path}> <h1>Welcome</h1> </Route>
+                    <Route exact path={match.path}> <HrHomeMain /> </Route>
                     <Route path={`${match.path}/notifications`}> <div>Notifications</div> </Route>
                     <Route path={`${match.path}/profile`}> <Profile /> </Route>
                     <Route path={`${match.path}/reset-password`}> <div>Reset password</div> </Route>

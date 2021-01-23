@@ -5,6 +5,7 @@ import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "f
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import authTokenManager from "../../others/auth_token_manager";
 
 export const DatePickerField = ({ ...props }) => {
     const { setFieldValue } = useFormikContext();
@@ -88,7 +89,7 @@ const AddMissingHoursComponent = ({ }) => {
             method: "post",
             url: `/hr/add-missing-record`,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 missingRecordType: type,
@@ -114,7 +115,7 @@ const AddMissingHoursComponent = ({ }) => {
             })
             .then(Axios.get("fe/user-records", {
                 headers: {
-                    token: sessionStorage.token
+                    "auth-access-token": authTokenManager.getAuthAccessToken()
                 },
                 params: {
                     user: values.user,
@@ -147,7 +148,7 @@ const AddMissingHoursComponent = ({ }) => {
     const handleDateChoose = (values) => {
         Axios.get("fe/user-records", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             params: {
                 user: values.user,

@@ -33,7 +33,7 @@ class HrAcademics extends Component {
         await axiosInstance.get("/fe/get-academics", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: authTokenManager.getAuthAccessToken()
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -91,7 +91,7 @@ class HrAcademics extends Component {
         await axiosInstance.delete(`/hr/delete-academic-member/${id}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: getAuthAccessToken()
+                "auth-access-token": getAuthAccessToken()
             }
         })
             .then(async response => {

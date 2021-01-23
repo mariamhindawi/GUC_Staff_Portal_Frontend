@@ -3,9 +3,9 @@ import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-
 import HrList from "../list_components/hr_list.component";
 import HrMemberForm from "../form_components/hr_member_form.component";
+import authTokenManager from "../../others/auth_token_manager";
 
 class HrHrMembers extends React.Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class HrHrMembers extends React.Component {
         await axiosInstance.get("/fe/get-hr-members", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -80,7 +80,7 @@ class HrHrMembers extends React.Component {
         await axiosInstance.delete(`/hr/delete-hr-member/${id}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(async response => {

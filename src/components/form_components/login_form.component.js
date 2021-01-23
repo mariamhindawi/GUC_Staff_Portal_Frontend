@@ -47,8 +47,9 @@ const LoginForm = () => {
                 "password": values.password
             }
         })
-            .then(res => {
-                authTokenManager.setAuthAccessToken(res.headers["token"]);
+            .then(response => {
+                // TODO: redirect based on response
+                authTokenManager.setAuthAccessToken(response.headers["auth-access-token"]);
                 history.push("/staff");
             })
             .catch(error => {
