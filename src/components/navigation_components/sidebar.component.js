@@ -8,6 +8,7 @@ const Sidebar = (props) => {
         const match = useRouteMatch();
         const authAccessToken = jwt.decode(authTokenManager.getAuthAccessToken());
 
+        
         return (
                 <div className={`sidebar ${props.sidebarStyle}`}>
 

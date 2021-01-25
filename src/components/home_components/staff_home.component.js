@@ -9,13 +9,13 @@ import authTokenManager from "../../others/auth_token_manager";
 // import TaHomePage from "./ta_home.component";
 
 const StaffHome = () => {
-  const [sidebarStyle, setSidebarStyle] = useState("");
-  const [homeContainerStyle, setHomeContainerStyle] = useState("");
-  const match = useRouteMatch();
-
   if (!authTokenManager.getAuthAccessToken()) {
     return <Redirect to="/login" />;
   }
+
+  const [sidebarStyle, setSidebarStyle] = useState("");
+  const [homeContainerStyle, setHomeContainerStyle] = useState("");
+  const match = useRouteMatch();
   const authAccessToken = jwt.decode(authTokenManager.getAuthAccessToken());
   let userRole;
   switch (authAccessToken.role) {
@@ -26,6 +26,7 @@ const StaffHome = () => {
     case "Teaching Assistant": userRole = "ta"; break;
     default: userRole = "";
   }
+
 
   return (
     <Switch>

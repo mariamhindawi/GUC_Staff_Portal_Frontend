@@ -15,15 +15,20 @@ const authTokenManager = () => {
             })
             .catch(error => {
                 if (error.response) {
-                    console.log(error.response);
+                    if (error.response.data !== "No refresh token") {
+                        console.log(error.response.data);
+                        window.dispatchEvent(new Event("timeout"));
+                        window.localStorage.setItem("timeout", Date.now());
+                    }
                 }
                 else if (error.request) {
+                    removeAuthAccessToken();
                     console.log(error.request);
                 }
                 else {
+                    removeAuthAccessToken();
                     console.log(error.message);
                 }
-                removeAuthAccessToken();
             });
     }
 
@@ -36,18 +41,14 @@ const authTokenManager = () => {
         const decodedToken = jwt.decode(authAccessToken);
         const delay = new Date(1000 * decodedToken.exp - 5000) - new Date();
         refreshTimeoutId = window.setTimeout(refreshAccessToken, delay);
-        console.log(`New access token ${JSON.stringify(decodedToken)}`);
-        console.log(`Timer set for ${delay/1000} seconds from now`);
-    };
+    }
 
     const removeAuthAccessToken = () => {
         authAccessToken = null;
         if (refreshTimeoutId) {
             window.clearTimeout(refreshTimeoutId);
         }
-        window.localStorage.setItem("gucLogout", Date.now());
-        console.log(`Timer cleared`);
-    };
+    }
 
     return {
         initAuthAccessToken,

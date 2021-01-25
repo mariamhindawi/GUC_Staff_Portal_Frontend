@@ -10,7 +10,7 @@ import Logo from "../../images/guc_logo.png";
 import Notifications from "../todo/notifications.component";
 import authTokenManager from "../../others/auth_token_manager";
 
-const CustomNavbar = (props) => {
+const Navbar = (props) => {
     const [sidebarToggleOpen, setSidebarToggleOpen] = useState(false);
     const [barsToggleStyle, setBarsToggleStyle] = useState("d-inline");
     const [timesToggleStyle, setTimesToggleStyle] = useState("d-none");
@@ -23,6 +23,7 @@ const CustomNavbar = (props) => {
     const history = useHistory();
     const axiosCancelSource = axios.CancelToken.source();
     const authAccessToken = jwt.decode(authTokenManager.getAuthAccessToken());
+
 
     const userInfoEffect = () => {
         setUserName(authAccessToken.name);
@@ -115,19 +116,11 @@ const CustomNavbar = (props) => {
     }
     useEffect(resizeEventListenerEffect, []);
 
-    const syncLogout = (event) => {
-        if (event.key === "gucLogout") {
-            // alert("Your session has ended. Please login again");
-            authTokenManager.removeAuthAccessToken();
-            history.push("/");
-        }
-    }
+    const requestsEffect = () => {
+        return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
+    };
+    useEffect(requestsEffect, []);
 
-    const logoutEventListenerEffect = () => {
-        window.addEventListener("storage", syncLogout);
-        return () => { window.removeEventListener("storage", syncLogout) }
-    }
-    useEffect(logoutEventListenerEffect, []);
 
     const handleLogOut = async () => {
         await axiosInstance({
@@ -139,8 +132,10 @@ const CustomNavbar = (props) => {
             }
         })
             .then(response => {
+                // TODO: display message??
                 alert(response.data);
                 authTokenManager.removeAuthAccessToken();
+                window.localStorage.setItem("logout", Date.now());
                 history.push("/");
             })
             .catch(error => {
@@ -228,4 +223,4 @@ const CustomNavbar = (props) => {
     );
 }
 
-export default CustomNavbar;
+export default Navbar;

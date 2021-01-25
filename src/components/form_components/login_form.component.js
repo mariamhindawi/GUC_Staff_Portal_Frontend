@@ -10,13 +10,10 @@ import formImage from "../../images/guc_building.jpg";
 import authTokenManager from "../../others/auth_token_manager";
 
 const LoginForm = () => {
-    if (authTokenManager.getAuthAccessToken()) {
-        return <Redirect to="/staff" />;
-    }
-    
     const [errorMessage, setErrorMessage] = useState("");
     const history = useHistory();
     const axiosCancelSource = axios.CancelToken.source();
+
 
     const requestsEffect = () => {
         return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
@@ -82,6 +79,11 @@ const LoginForm = () => {
         formikProps.setFieldTouched(e.target.name);
     };
 
+
+    if (authTokenManager.getAuthAccessToken()) {
+        return <Redirect to="/staff" />;
+    }
+
     return (
         <div className="login-main-container">
             <div className="container-fluid login-form-container">
@@ -115,7 +117,7 @@ const LoginForm = () => {
                                                 <ErrorMessage name="password" />
                                             </div>
                                             <div className="text-center">
-                                                <button className="login-button" type="submit" disabled={formikProps.isSubmitting} onClick={() => {setErrorMessage()}}>LOG IN</button>
+                                                <button className="login-button" type="submit" disabled={formikProps.isSubmitting} onClick={() => { setErrorMessage() }}>LOG IN</button>
                                                 <div className="form-error-message">{errorMessage}</div>
                                             </div>
                                         </Form>
