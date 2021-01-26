@@ -19,38 +19,38 @@ const App = () => {
   }
   useEffect(() => { initAccessToken() }, []);
 
-  const syncTabs = (event) => {
-    if (event.type === "timeout") {
+
+  const syncTimeout = () => {
+    // TODO: display message??
+    alert("Session expired. Please sign in again");
+    authTokenManager.removeAuthAccessToken();
+    history.push("/");
+  }
+  
+  const syncTabs = event => {
+    if (event.key === "logout") {
       // TODO: display message??
-      alert("Session expired. Please sign in again");
+      // alert("Logged out");
       authTokenManager.removeAuthAccessToken();
       history.push("/");
     }
-    else if (event.type === "storage") {
-      if (event.key === "logout") {
-        // TODO: display message??
-        // alert("Logged out");
-        authTokenManager.removeAuthAccessToken();
-        history.push("/");
-      }
-      else if (event.key === "timeout") {
-        // TODO: display message??
-        // alert("Session expired. Please sign in again");
-        authTokenManager.removeAuthAccessToken();
-        history.push("/");
-      }
+    else if (event.key === "timeout") {
+      // TODO: display message??
+      // alert("Session expired. Please sign in again");
+      authTokenManager.removeAuthAccessToken();
+      history.push("/");
     }
   }
 
-  const logoutEventListenerEffect = () => {
-    window.addEventListener("timeout", syncTabs);
+  const eventListnersEffect = () => {
+    window.addEventListener("timeout", syncTimeout);
     window.addEventListener("storage", syncTabs);
     return () => {
-      window.removeEventListener("timeout", syncTabs);
+      window.removeEventListener("timeout", syncTimeout);
       window.removeEventListener("storage", syncTabs)
     }
   }
-  useEffect(logoutEventListenerEffect, []);
+  useEffect(eventListnersEffect, []);
 
 
   if (loading) {

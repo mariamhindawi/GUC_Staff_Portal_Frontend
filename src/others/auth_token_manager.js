@@ -15,7 +15,7 @@ const authTokenManager = () => {
             })
             .catch(error => {
                 if (error.response) {
-                    if (error.response.data !== "No refresh token") {
+                    if (error.response.data === "Invalid refresh token") {
                         console.log(error.response.data);
                         window.dispatchEvent(new Event("timeout"));
                         window.localStorage.setItem("timeout", Date.now());

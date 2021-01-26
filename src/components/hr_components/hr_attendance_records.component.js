@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Container, Label, Modal, ModalBody, Row, Table } from "reactstrap";
-import Axios from "../../others/axios_instance";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
@@ -85,9 +86,9 @@ const AddMissingHoursComponent = ({ }) => {
     const handleSubmit = values => {
         toggle()
         const type=!record ? "fullDay" : record.signInTime ? "signOut" : "signIn"
-        Axios({
+        axiosInstance({
             method: "post",
-            url: `/hr/add-missing-record`,
+            url: `/staff/hr/add-missing-record`,
             headers: {
                 "auth-access-token": authTokenManager.getAuthAccessToken()
             },
@@ -113,7 +114,7 @@ const AddMissingHoursComponent = ({ }) => {
                 document.getElementById("room-form-error-message").innerHTML = response.data;
                 console.log(response.data);
             })
-            .then(Axios.get("fe/user-records", {
+            .then(axiosInstance.get("/fe/user-records", {
                 headers: {
                     "auth-access-token": authTokenManager.getAuthAccessToken()
                 },
@@ -146,7 +147,7 @@ const AddMissingHoursComponent = ({ }) => {
     };
 
     const handleDateChoose = (values) => {
-        Axios.get("fe/user-records", {
+        axiosInstance.get("/fe/user-records", {
             headers: {
                 "auth-access-token": authTokenManager.getAuthAccessToken()
             },

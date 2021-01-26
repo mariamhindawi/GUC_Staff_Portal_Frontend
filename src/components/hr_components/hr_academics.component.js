@@ -88,7 +88,7 @@ class HrAcademics extends Component {
     };
 
     async deleteAcademic(id) {
-        await axiosInstance.delete(`/hr/delete-academic-member/${id}`, {
+        await axiosInstance.delete(`/staff/hr/delete-academic-member/${id}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 "auth-access-token": getAuthAccessToken()

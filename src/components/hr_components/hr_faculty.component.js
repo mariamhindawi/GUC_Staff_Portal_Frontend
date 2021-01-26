@@ -75,7 +75,7 @@ class HrFaculty extends React.Component {
     }
 
     async deleteFaculty(facultyName) {
-        await axiosInstance.delete(`/hr/delete-faculty/${facultyName}`, {
+        await axiosInstance.delete(`/staff/hr/delete-faculty/${facultyName}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 "auth-access-token": authTokenManager.getAuthAccessToken()

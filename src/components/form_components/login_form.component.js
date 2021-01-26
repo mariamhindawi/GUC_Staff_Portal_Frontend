@@ -15,10 +15,10 @@ const LoginForm = () => {
     const axiosCancelSource = axios.CancelToken.source();
 
 
-    const requestsEffect = () => {
+    const cancellingRequestsEffect = () => {
         return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
     };
-    useEffect(requestsEffect, []);
+    useEffect(cancellingRequestsEffect, []);
 
 
     const placeholders = {

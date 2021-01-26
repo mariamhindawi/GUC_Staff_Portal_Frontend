@@ -116,10 +116,10 @@ const Navbar = (props) => {
     }
     useEffect(resizeEventListenerEffect, []);
 
-    const requestsEffect = () => {
+    const cancellingRequestsEffect = () => {
         return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
     };
-    useEffect(requestsEffect, []);
+    useEffect(cancellingRequestsEffect, []);
 
 
     const handleLogOut = async () => {

@@ -76,7 +76,7 @@ class HrRooms extends React.Component {
     }
 
     async deleteRoom(roomName) {
-        await axiosInstance.delete(`/hr/delete-room/${roomName}`, {
+        await axiosInstance.delete(`/staff/hr/delete-room/${roomName}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 "auth-access-token": authTokenManager.getAuthAccessToken()

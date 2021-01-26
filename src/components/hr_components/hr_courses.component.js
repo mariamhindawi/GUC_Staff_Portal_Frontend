@@ -78,7 +78,7 @@ class HrCourses extends React.Component {
     }
 
     async deleteCourse(courseId) {
-        await axiosInstance.delete(`/hr/delete-course/${courseId}`, {
+        await axiosInstance.delete(`/staff/hr/delete-course/${courseId}`, {
             cancelToken: this.axiosCancelSource.token,
             headers: {
                 "auth-access-token": authTokenManager.getAuthAccessToken()
