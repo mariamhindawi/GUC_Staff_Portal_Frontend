@@ -43,7 +43,7 @@ const CourseForm = props => {
             url: `/hr/${props.formType}-course${props.formType === "add" ? "" : `/${props.course.id}`}`,
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 id: values.id,

@@ -19,7 +19,7 @@ class HodCourses extends React.Component {
         axiosInstance.get("/fe/get-courses-by-department", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {

@@ -70,7 +70,7 @@ const AcademicMemberForm = props => {
             url: `/hr/${props.formType}-academic-member${props.formType === "add" ? "" : `/${props.academicMember.id}`}`,
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 name: values.name,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Axios from "../others/axios_instance";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Table, Card, Button, Alert, Input } from "reactstrap";
 import SlotTableComponent from "./SlotTable.component";
 
@@ -14,9 +15,9 @@ const CIAssignSlots = props => {
     const [academicMember,setAcademicMember]=useState("")
 
     useEffect(() => {
-        Axios.get("fe/get-my-courses", {
+        axiosInstance.get("fe/get-my-courses", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => setCourses(res.data))
     }, [])
@@ -24,9 +25,9 @@ const CIAssignSlots = props => {
 
     const chooseCourse = (id) => {
         setCourse(id)
-        Axios.get("fe/course-slots", {
+        axiosInstance.get("fe/course-slots", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             params: {
                 id: id
@@ -38,10 +39,10 @@ const CIAssignSlots = props => {
     }
 
     const sendRequest = ()=>{
-        Axios("/ci/assign-academic-member-to-slot",{
+        axiosInstance("/ci/assign-academic-member-to-slot",{
             method:"PUT",
             headers:{
-                token:sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data:{
                 id:academicMember,

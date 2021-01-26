@@ -47,7 +47,7 @@ const RoomForm = props => {
             url: `/hr/${props.formType}-room${props.formType === "add" ? "" : `/${props.room.name}`}`,
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 name: values.name,

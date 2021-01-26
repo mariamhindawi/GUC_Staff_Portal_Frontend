@@ -64,14 +64,14 @@ const GeneralRequestsPageComponent = () => {
                     </Col>
                 </Row>
                 <Row>
-                    {jwt.decode(sessionStorage.token).role === "Head of Department" ?
+                    {localStorage.userRole === "Head of Department" ?
                         <Col md={{ size: 4, offset: 4 }}>
                             <Link to={match.path + "/view-staff-requests"}>
                                 <Card className="m-2 p-2">
                                     <CardHeader>View Staff Requests</CardHeader>
                                 </Card>
                             </Link>
-                        </Col> : jwt.decode(sessionStorage.token).role === "Course Coordinator" ?
+                        </Col> : localStorage.userRole === "Course Coordinator" ?
                             <Col md={{ size: 4, offset: 4 }}>
                                 <Link to={match.path + "/view-slot-linking-requests"}>
                                     <Card className="m-2 p-2">
@@ -90,8 +90,8 @@ const GeneralRequestsPageComponent = () => {
         <Route exact path={match.path + "/send-replacement-request"} component={ReplacementRequest} />
         <Route exact path={match.path + "/send-slot-linking-request"} component={SendSlotLinking} />
         <Route exact path={match.path + "/change-day-off-request"} component={ChangeDayOff} />
-        {jwt.decode(sessionStorage.token).role === "Head of Department" ? <Route exact path={match.path + "/view-staff-requests"} component={HODRequests} /> :
-            jwt.decode(sessionStorage.token).role === "Course Coordinator" ? <Route exact path={match.path + "/view-slot-linking-requests"} component={CCRequests} /> : null}
+        {localStorage.userRole === "Head of Department" ? <Route exact path={match.path + "/view-staff-requests"} component={HODRequests} /> :
+            localStorage.userRole === "Course Coordinator" ? <Route exact path={match.path + "/view-slot-linking-requests"} component={CCRequests} /> : null}
 
     </>
 }

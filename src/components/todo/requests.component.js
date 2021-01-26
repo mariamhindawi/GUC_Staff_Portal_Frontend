@@ -22,7 +22,7 @@ class requestsComponent extends React.Component {
     componentDidMount() {
         Axios.get("/academic/all-requests/All", {
             headers: {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => this.setState({ requests: res.data, loading: false })).catch(error => alert(error))
     }
@@ -34,12 +34,12 @@ class requestsComponent extends React.Component {
         Axios.delete(`/academic/cancel-request/${id}`,
             {
                 headers: {
-                    "token": sessionStorage.token
+                    "auth-access-token": authTokenManager.getAuthAccessToken()
                 }
             }).then(res => alert(res.data)).then(() => {
                 Axios.get("/academic/all-requests/All", {
                     headers: {
-                        "token": sessionStorage.token
+                        "auth-access-token": authTokenManager.getAuthAccessToken()
                     }
                 }).then(res => { console.log(res); this.setState({ requests: res.data, loading: false }) })
             }).catch(error => alert(error))

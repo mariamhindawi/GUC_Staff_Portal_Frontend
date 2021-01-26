@@ -1,13 +1,12 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
-import jwt from "jsonwebtoken";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
 import { Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import errorMessages from "../../others/error_messages";
 import Logo from "../../images/guc_logo.png";
-import Notifications from "../todo/notifications.component";
+import Notifications from "../general_staff_components/notifications.component";
 import authTokenManager from "../../others/auth_token_manager";
 
 const Navbar = (props) => {
@@ -22,12 +21,11 @@ const Navbar = (props) => {
     const match = useRouteMatch();
     const history = useHistory();
     const axiosCancelSource = axios.CancelToken.source();
-    const authAccessToken = jwt.decode(authTokenManager.getAuthAccessToken());
 
 
     const userInfoEffect = () => {
-        setUserName(authAccessToken.name);
-        setUserEmail(authAccessToken.email);
+        setUserName(localStorage.userName);
+        setUserEmail(localStorage.userEmail);
     }
     useEffect(userInfoEffect, []);
 
@@ -65,7 +63,7 @@ const Navbar = (props) => {
     useEffect(notificationsEffect, []);
 
     const setLayoutStyles = () => {
-        if (window.innerWidth >= 1200) {
+        if (innerWidth >= 1200) {
             if (!sidebarToggleOpen) {
                 props.setSidebarStyle("sidebar-collapsed");
                 props.setHomeContainerStyle("home-container-sidebar-collapsed");
@@ -79,7 +77,7 @@ const Navbar = (props) => {
                 setTimesToggleStyle("d-inline");
             }
         }
-        else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
+        else if (innerWidth >= 768 && innerWidth < 1200) {
             if (!sidebarToggleOpen) {
                 props.setSidebarStyle("sidebar-collapsed");
                 props.setHomeContainerStyle("home-container-sidebar-collapsed");
@@ -93,7 +91,7 @@ const Navbar = (props) => {
                 setTimesToggleStyle("d-inline");
             }
         }
-        else if (window.innerWidth < 768) {
+        else if (innerWidth < 768) {
             if (!sidebarToggleOpen) {
                 props.setSidebarStyle("sidebar-none");
                 props.setHomeContainerStyle("home-container-nosidebar");
@@ -111,8 +109,8 @@ const Navbar = (props) => {
     useLayoutEffect(setLayoutStyles, [sidebarToggleOpen]);
 
     const resizeEventListenerEffect = () => {
-        window.addEventListener("resize", setLayoutStyles);
-        return () => { window.removeEventListener("resize", setLayoutStyles) }
+        addEventListener("resize", setLayoutStyles);
+        return () => { removeEventListener("resize", setLayoutStyles) }
     }
     useEffect(resizeEventListenerEffect, []);
 
@@ -135,7 +133,8 @@ const Navbar = (props) => {
                 // TODO: display message??
                 alert(response.data);
                 authTokenManager.removeAuthAccessToken();
-                window.localStorage.setItem("logout", Date.now());
+                localStorage.clear();
+                localStorage.setItem("logout", Date.now());
                 history.push("/");
             })
             .catch(error => {

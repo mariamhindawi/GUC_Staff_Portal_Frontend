@@ -20,7 +20,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from "reactstrap"
           method:"get",
           url:"/staff/view-attendance-records" ,
           headers: {
-            "token": sessionStorage.token
+            "auth-access-token": authTokenManager.getAuthAccessToken()
         }, 
           params: {
               month:this.state.month, year:this.state.year
@@ -43,7 +43,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from "reactstrap"
           method:"get",
           url:"/staff/view-attendance-records" ,
           headers: {
-            "token": sessionStorage.token
+            "auth-access-token": authTokenManager.getAuthAccessToken()
         }, 
           params: {
               month:this.state.month, year:this.state.year

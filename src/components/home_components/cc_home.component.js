@@ -1,20 +1,15 @@
 import React from "react";
 import { Route, Link, withRouter } from "react-router-dom";
-import jwt from "jsonwebtoken";
-
 import CourseSlotForm from "../form_components/course_slot_form.component";
 import GeneralRequests from "../todo/GeneralRequestsPage.component";
-import MySchedule from "../schedule.component";
+import MySchedule from "../todo/schedule.component";
 
 class CCHome extends React.Component {
 
     render() {
 
-        const token = jwt.decode(sessionStorage.token);
-        if (token.role !== "Course Coordinator") {
-            return (
-                <div>Unauthorized Access</div>
-            )
+        if (localStorage.userRole !== "Course Coordinator") {
+            return <ForbiddenAccess />;
         }
 
         return (

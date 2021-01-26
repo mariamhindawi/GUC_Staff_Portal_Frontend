@@ -17,8 +17,9 @@ const authTokenManager = () => {
                 if (error.response) {
                     if (error.response.data === "Invalid refresh token") {
                         console.log(error.response.data);
-                        window.dispatchEvent(new Event("timeout"));
-                        window.localStorage.setItem("timeout", Date.now());
+                        localStorage.clear();
+                        dispatchEvent(new Event("timeout"));
+                        localStorage.setItem("timeout", Date.now());
                     }
                 }
                 else if (error.request) {
@@ -40,13 +41,26 @@ const authTokenManager = () => {
         authAccessToken = accessToken;
         const decodedToken = jwt.decode(authAccessToken);
         const delay = new Date(1000 * decodedToken.exp - 5000) - new Date();
-        refreshTimeoutId = window.setTimeout(refreshAccessToken, delay);
+        refreshTimeoutId = setTimeout(refreshAccessToken, delay);
+        
+        localStorage.userId = decodedToken.id;
+        localStorage.userName = decodedToken.name;
+        localStorage.userEmail = decodedToken.email;
+        localStorage.userRole = decodedToken.role;
+        switch (decodedToken.role) {
+            case "HR": localStorage.userRolePath = "hr"; break;
+            case "Head of Department": localStorage.userRolePath = "hod"; break;
+            case "Course Instructor": localStorage.userRolePath = "ci"; break;
+            case "Course Coordinator": localStorage.userRolePath = "cc"; break;
+            case "Teaching Assistant": localStorage.userRolePath = "ta"; break;
+            default: localStorage.userRolePath = "";
+        }
     }
 
     const removeAuthAccessToken = () => {
         authAccessToken = null;
         if (refreshTimeoutId) {
-            window.clearTimeout(refreshTimeoutId);
+            clearTimeout(refreshTimeoutId);
         }
     }
 

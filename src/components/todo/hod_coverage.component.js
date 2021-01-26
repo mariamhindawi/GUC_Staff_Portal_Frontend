@@ -15,7 +15,7 @@ class HODcoverage extends React.Component {
     componentDidMount() {
         axios.get("/hod/view-coverage", {
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {

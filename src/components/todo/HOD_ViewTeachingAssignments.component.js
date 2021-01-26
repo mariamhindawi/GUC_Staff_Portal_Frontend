@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react"
-import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody } from "reactstrap"
-import Axios from "../others/axios_instance"
-import jwt from "jsonwebtoken"
-import SlotTableComponent from "./SlotTable.component"
+import React, { useState, useEffect } from "react";
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody } from "reactstrap";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
+import SlotTableComponent from "./SlotTable.component";
 
 const ViewTeachingAssignmentsComponent = () => {
     const [courses, setCourses] = useState([])
@@ -17,21 +17,21 @@ const ViewTeachingAssignmentsComponent = () => {
     const toggle = (id)=>{setActive(id);setModalOpen(!modalOpen)}
 
     useEffect(() => {
-        Axios.get("/fe/get-academic-department", {
+        axiosInstance.get("/fe/get-academic-department", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
-        }).then(() => Axios.get("/fe/get-courses-by-department", {
+        }).then(() => axiosInstance.get("/fe/get-courses-by-department", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })).then(res => setCourses(res.data.courses))
     }, [])
 
     const getCourseSlots = (id) => {
-        Axios.get("fe/course-slots", {
+        axiosInstance.get("fe/course-slots", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             params: {
                 id: id

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Axios from "../others/axios_instance";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Table, Card, Button, Alert } from "reactstrap";
 import SlotTableComponent from "./SlotTable.component";
 
@@ -13,9 +14,9 @@ const SlotLinkingForm = props => {
     const [error,setError]=useState("")
 
     useEffect(() => {
-        Axios.get("fe/get-my-courses", {
+        axiosInstance.get("fe/get-my-courses", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => setCourses(res.data))
     }, [])
@@ -23,9 +24,9 @@ const SlotLinkingForm = props => {
 
     const chooseCourse = (id) => {
         setCourse(id)
-        Axios.get("fe/course-slots", {
+        axiosInstance.get("fe/course-slots", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             params: {
                 id: id
@@ -34,10 +35,10 @@ const SlotLinkingForm = props => {
     }
 
     const sendRequest = ()=>{
-        Axios("/academic/send-slot-linking-request",{
+        axiosInstance("/academic/send-slot-linking-request",{
             method:"POST",
             headers:{
-                token:sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data:{
                 day:slots.filter(slot=>slot._id===active)[0].day,

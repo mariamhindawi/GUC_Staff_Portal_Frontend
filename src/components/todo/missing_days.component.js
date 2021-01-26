@@ -18,7 +18,7 @@ export default class MissingDays extends React.Component {
         method:"get",
         url:"/staff/view-missing-days" ,
         headers: {
-          "token": sessionStorage.token
+          "auth-access-token": authTokenManager.getAuthAccessToken()
       }, 
         params: {
             month:this.state.month, year:this.state.year
@@ -40,7 +40,7 @@ export default class MissingDays extends React.Component {
           method:"get",
           url:"/staff/view-missing-days" ,
           headers: {
-            "token": sessionStorage.token
+            "auth-access-token": authTokenManager.getAuthAccessToken()
         }, 
           params: {
               month:this.state.month, year:this.state.year

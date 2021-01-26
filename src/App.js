@@ -26,7 +26,7 @@ const App = () => {
     authTokenManager.removeAuthAccessToken();
     history.push("/");
   }
-  
+
   const syncTabs = event => {
     if (event.key === "logout") {
       // TODO: display message??
@@ -43,11 +43,11 @@ const App = () => {
   }
 
   const eventListnersEffect = () => {
-    window.addEventListener("timeout", syncTimeout);
-    window.addEventListener("storage", syncTabs);
+    addEventListener("timeout", syncTimeout);
+    addEventListener("storage", syncTabs);
     return () => {
-      window.removeEventListener("timeout", syncTimeout);
-      window.removeEventListener("storage", syncTabs)
+      removeEventListener("timeout", syncTimeout);
+      removeEventListener("storage", syncTabs)
     }
   }
   useEffect(eventListnersEffect, []);

@@ -14,7 +14,7 @@ const CCRequestsComponent = (props) => {
     useEffect(() => {
         Axios.get("/cc/slot-linking-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => {console.log(res.data);setSlotRequests(res.data);setLoading(false)}).catch(error=>alert(error))
@@ -23,11 +23,11 @@ const CCRequestsComponent = (props) => {
         Axios(`/cc/slot-linking-requests/${id}/accept`, {
             method:"PUT",
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res=>console.log(res.data)).then(()=>Axios.get("/cc/slot-linking-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => {setSlotRequests(res.data);setLoading(false)})).catch(error=>alert(error))
@@ -37,14 +37,14 @@ const CCRequestsComponent = (props) => {
         Axios(`/cc/slot-linking-requests/${requestID}/reject`, {
             method:"PUT",
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 ccComment: message
             }
         }).then(res=>alert(res.data)).then(()=>Axios.get("/cc/slot-linking-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => {setSlotRequests(res.data);setLoading(false)})).catch(error=>alert(error))

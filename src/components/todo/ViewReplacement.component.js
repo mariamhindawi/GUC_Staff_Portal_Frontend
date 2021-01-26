@@ -10,7 +10,7 @@ const ViewReplacementComponent = (props) => {
     useEffect(() => {
         Axios.get("/academic/replacement-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { console.log(res.data);setRequests(res.data.forMe); setLoading(false) }).catch(error => alert(error))
@@ -19,11 +19,11 @@ const ViewReplacementComponent = (props) => {
         Axios(`/academic/replacement-requests/${id}/accept`, {
             method: "put",
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/academic/replacement-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setRequests(res.data.forMe); setLoading(false) })).catch(error => alert(error))
@@ -33,11 +33,11 @@ const ViewReplacementComponent = (props) => {
         Axios(`/academic/replacement-requests/${id}/reject`, {
             method: "put",
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/academic/replacement-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setRequests(res.data.forMe); setLoading(false) })).catch(error => alert(error))

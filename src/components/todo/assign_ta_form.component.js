@@ -30,7 +30,7 @@ const AssignTaForm = props => {
             method: "post",
             url: `/ci/assign-ta-to-course/${values.teachingAssistant}/${values.course}`,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(response => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import axiosInstance from "../others/axios_instance";
+import axiosInstance from "../../others/axios_instance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -40,7 +40,7 @@ const AssignCiForm = props => {
             url: "/hod/assign-course-instructor",
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 course: values.course,

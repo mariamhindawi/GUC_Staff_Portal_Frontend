@@ -21,7 +21,7 @@ class courseStaff extends React.Component {
         axiosInstance.get("/hod/view-all-staff-per-course/MATH101", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {

@@ -48,7 +48,7 @@ const ReplacementRequestComponent = ({ }) => {
             method: "post",
             url: `/academic/send-replacement-request`,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 replacementID: values.replacement,
@@ -86,13 +86,13 @@ const ReplacementRequestComponent = ({ }) => {
     useEffect(() => {
         Axios.get("academic/schedule", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => setSlots(res.data))
     }, [])
 
     return (<>
-        <SlotTableComponent slots={slots.filter(slot=>slot.staffMember===jwt.decode(sessionStorage.token).id)} active={active} onClick={setActive} />
+        <SlotTableComponent slots={slots.filter(slot=>slot.staffMember===localStorage.userId)} active={active} onClick={setActive} />
         <Formik
             validationSchema={validationSchema}
             onSubmit={handleSubmit}

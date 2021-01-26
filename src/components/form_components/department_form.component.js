@@ -15,7 +15,7 @@ const DepartmentForm = props => {
         axiosInstance.get("/fe/get-faculties", {
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
         })
             .then(response => {
@@ -69,7 +69,7 @@ const DepartmentForm = props => {
             url: `/hr/${props.formType}-department${props.formType === "add" ? "" : `/${props.department.name}`}`,
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 name: values.name,

@@ -20,7 +20,7 @@ class HRacademics extends React.Component {
         axiosInstance.get("/fe/get-slots", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {

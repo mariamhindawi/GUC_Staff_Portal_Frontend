@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
-import axios from "../others/axios_instance";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import SlotTableComponent from "./SlotTable.component";
-import jwt from "jsonwebtoken"
 
 const ScheduleComponent = () => {
     const [slots, setSlots] = useState([])
@@ -12,9 +12,9 @@ const ScheduleComponent = () => {
 
 
     useEffect(() => {
-        axios.get("/academic/schedule", {
+        axiosInstance.get("/academic/schedule", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => setSlots(res.data))
     }, [])
@@ -34,7 +34,7 @@ const ScheduleComponent = () => {
                         <li key="k2">Day: {slot.day}</li>
                         <li key="k3">Course: {slot.course}</li>
                         <li key="k4">Room: {slot.room}</li>
-                        {jwt.decode(sessionStorage.token).id !== slot.staffMember ?<li key="k5">Academic Member: {slot.staffMember}</li>:null}
+                        {localStorage.userId !== slot.staffMember ?<li key="k5">Academic Member: {slot.staffMember}</li>:null}
                     </ul>
                 })}
             </ModalBody>

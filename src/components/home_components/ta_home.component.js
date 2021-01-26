@@ -1,8 +1,6 @@
 import React from "react";
 import { Route, Link, withRouter } from "react-router-dom";
-import jwt from "jsonwebtoken";
-
-import MySchedule from "../schedule.component"
+import MySchedule from "../todo/schedule.component";
 import GeneralRequests from "../todo/GeneralRequestsPage.component";
 
 
@@ -10,12 +8,10 @@ class TaHomePage extends React.Component {
 
     render() {
 
-        const token = jwt.decode(sessionStorage.token);
-        if (token.role !== "Teaching Assistant") {
-            return (
-                <div>Unauthorized Access</div>
-            )
+        if (localStorage.userRole !== "Teaching Assistant") {
+            return <ForbiddenAccess />;
         }
+        
         return (
             <div className="home-margin">
                 <div>

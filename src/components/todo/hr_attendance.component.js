@@ -48,7 +48,7 @@ const HRAttendance = props => {
         method:"get",
         url:"/hr/view-staff-attendance-records" ,
         headers: {
-          "token": sessionStorage.token
+          "auth-access-token": authTokenManager.getAuthAccessToken()
       }, 
         params: {
           id: values.id,

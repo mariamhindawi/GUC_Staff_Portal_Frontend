@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Label } from "reactstrap";
-import Axios from "../others/axios_instance";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik"
 
@@ -24,11 +25,11 @@ const DayOffChangeComponent = ({ }) => {
     });
 
     const handleSubmit = values => {
-        Axios({
+        axiosInstance({
             method: "post",
             url: `/academic/change-day-off-request`,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 dayOff: values.dayoff,

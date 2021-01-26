@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "../others/axios_instance";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -26,11 +27,11 @@ const DeleteCiForm = props => {
     });
 
     const handleSubmit = async values => {
-        await axios({
+        await axiosInstance({
             method: "delete",
             url: "/hod/delete-course-instructor",
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 course: values.course,

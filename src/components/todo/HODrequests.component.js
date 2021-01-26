@@ -14,7 +14,7 @@ const HODRequestsComponent = (props) => {
     useEffect(() => {
         Axios.get("/hod/staff-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { console.log(res.data);setLeaveRequests(res.data); setLoading(false) }).catch(error => alert(error))
@@ -23,11 +23,11 @@ const HODRequestsComponent = (props) => {
         Axios(`/hod/staff-requests/${id}/accept`, {
             method: "put",
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/hod/staff-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))
@@ -46,14 +46,14 @@ const HODRequestsComponent = (props) => {
         Axios(`/hod/staff-requests/${requestID}/reject`, {
             method: "put",
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 HODComment: message
             }
         }).then(res => console.log("Request " + res.data.id + " rejected")).then(() => Axios.get("/hod/staff-requests", {
             "headers": {
-                "token": sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))

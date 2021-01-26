@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "../others/axios_instance";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Button } from "reactstrap";
@@ -55,11 +56,11 @@ const LeaveRequestForm = props => {
     });
 
     const handleSubmit = values => {
-        axios({
+        axiosInstance({
             method: "post",
             url: `/academic/send-leave-request`,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 "type": request === "Compensation Leave" ? "compensationRequest" : request.substring(0, 1).toLowerCase() + request.substring(1, request.length).replace(" ", ""),

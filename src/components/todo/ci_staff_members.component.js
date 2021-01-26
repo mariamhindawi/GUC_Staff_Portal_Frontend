@@ -26,7 +26,7 @@ class CIacademics extends React.Component {
         axiosInstance.get("/fe/get-ci-courses", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
@@ -52,7 +52,7 @@ class CIacademics extends React.Component {
         axiosInstance.get("/ci/view-staff", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {

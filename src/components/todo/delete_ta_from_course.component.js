@@ -30,7 +30,7 @@ const DeleteTaForm = props => {
             method: "delete",
             url: `/ci/delete-ta-from-course/${values.teachingAssistant}/${values.course}`,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(response => {

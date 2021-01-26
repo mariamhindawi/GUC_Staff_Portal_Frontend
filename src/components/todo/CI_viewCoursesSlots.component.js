@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react"
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from "reactstrap"
-import Axios from "../others/axios_instance"
-import jwt from "jsonwebtoken"
-import SlotTableComponent from "./SlotTable.component"
+import React, { useState, useEffect } from "react";
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from "reactstrap";
+import axios from "axios";
+import axiosInstance from "../../others/axios_instance";
+import SlotTableComponent from "./SlotTable.component";
 
 const CICoursesSlotsComponent = () => {
     const [courses, setCourses] = useState([])
@@ -17,18 +17,18 @@ const CICoursesSlotsComponent = () => {
     const toggle = (id) => { setActive(id); setModalOpen(!modalOpen) }
 
     useEffect(() => {
-        Axios.get("/fe/get-my-courses", {
+        axiosInstance.get("/fe/get-my-courses", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         }).then(res => setCourses(res.data))
     }, [])
 
     const getCourseSlots = (id) => {
         setCourse(id)
-        Axios.get("fe/course-slots", {
+        axiosInstance.get("fe/course-slots", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             params: {
                 id: id
@@ -37,19 +37,19 @@ const CICoursesSlotsComponent = () => {
     }
     const handleSubmit = (event)=>{
         toggle("")
-        Axios("/ci/delete-academic-member-to-slot",{
+        axiosInstance("/ci/delete-academic-member-to-slot",{
             method: "DELETE",
             headers:{
-                token:sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data:{
                 day:slots.filter(slot=>slot._id===active)[0].day,
                 room:slots.filter(slot=>slot._id===active)[0].room,
                 slotNumber: slots.filter(slot=>slot._id===active)[0].slotNumber
             }
-        }).then(()=>Axios.get("fe/course-slots", {
+        }).then(()=>axiosInstance.get("fe/course-slots", {
             headers: {
-                token: sessionStorage.token
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             params: {
                 id: course

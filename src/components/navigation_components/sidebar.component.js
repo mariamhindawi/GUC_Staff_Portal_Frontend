@@ -1,18 +1,14 @@
 import React from "react";
 import { Link, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import jwt from "jsonwebtoken";
-import authTokenManager from "../../others/auth_token_manager";
 
 const Sidebar = (props) => {
         const match = useRouteMatch();
-        const authAccessToken = jwt.decode(authTokenManager.getAuthAccessToken());
-
         
         return (
                 <div className={`sidebar ${props.sidebarStyle}`}>
 
-                        {authAccessToken.role === "HR" ? <>
+                        {localStorage.userRole === "HR" ? <>
                                 <Link className="sidebar-link" to={`${match.url}/academic-members`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />Academics
                                 </Link>
@@ -36,7 +32,7 @@ const Sidebar = (props) => {
                                 </Link>
                         </> : null}
 
-                        {authAccessToken.role !== "HR" ? <>
+                        {localStorage.userRole !== "HR" ? <>
                                 <Link to={`${match.url}/requests`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Requests</span>
@@ -47,7 +43,7 @@ const Sidebar = (props) => {
                                 </Link>
                         </> : null}
 
-                        {authAccessToken.role === "Head of Department" ? <>
+                        {localStorage.userRole === "Head of Department" ? <>
                                 <Link to={`${match.url}/hod-courses`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Courses</span>
@@ -58,7 +54,7 @@ const Sidebar = (props) => {
                                 </Link>
                         </> : null}
 
-                        {authAccessToken.role === "Course Instructor" ? <>
+                        {localStorage.userRole === "Course Instructor" ? <>
                                 <Link to={`${match.url}/ci-courses`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Courses</span>
@@ -69,7 +65,7 @@ const Sidebar = (props) => {
                                 </Link>
                         </> : null}
 
-                        {authAccessToken.role === "Course Coordinator" ? <>
+                        {localStorage.userRole === "Course Coordinator" ? <>
                                 <Link to={`${match.url}/course-slots`}>
                                         <FontAwesomeIcon className="sidebar-icon" icon="user" />
                                         <span className="icon-text">Course Slots</span>

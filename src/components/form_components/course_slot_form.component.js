@@ -15,7 +15,7 @@ const CourseSlotForm = props => {
     //     axiosInstance.get("/cc/get-courses-of-cc", {
     //         cancelToken: axiosCancelSource.token,
     //         headers: {
-    //             token: sessionStorage.getItem("token")
+    //             "auth-access-token": authTokenManager.getAuthAccessToken()
     //         },
     //     })
     //         .then(response => {
@@ -84,7 +84,7 @@ const CourseSlotForm = props => {
             url: `/cc/${props.formType}-course-slot${props.formType === "add" ? "" : `${props.courseSlot.day}/${props.courseSlot.slotNumber}/${props.courseSlot.room}/${props.courseSlot.course}`}`,
             cancelToken: axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             },
             data: {
                 day: values.day,

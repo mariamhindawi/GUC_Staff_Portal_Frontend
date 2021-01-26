@@ -1,14 +1,12 @@
 import React from "react";
 import { Route, Link, withRouter } from "react-router-dom";
-import jwt from "jsonwebtoken";
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
-
 import HODcourses from "../todo/hod_courses.component";
 import HodCoverage from "../todo/hod_coverage.component";
 import HODacademics from "../todo/hod_staff_members.component";
 import GeneralRequests from "../todo/GeneralRequestsPage.component"
-import HODSlotAssignment from "../HOD_ViewTeachingAssignments.component"
-import MySchedule from "../schedule.component"; 
+import HODSlotAssignment from "../todo/HOD_ViewTeachingAssignments.component"
+import MySchedule from "../todo/schedule.component"; 
 
 
 
@@ -16,11 +14,8 @@ class HodHomePage extends React.Component {
 
     render() {
 
-        const token = jwt.decode(sessionStorage.token);
-        if (token.role !== "Head of Department") {
-            return (
-                <div>Unauthorized Access</div>
-            )
+        if (localStorage.userRole !== "Head of Department") {
+            return <ForbiddenAccess />;
         }
 
         return (

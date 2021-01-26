@@ -20,7 +20,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from "reactstrap"
           method:"get",
           url:"/hr/view-staff-missing-hours" ,
           headers: {
-            "token": sessionStorage.token
+            "auth-access-token": authTokenManager.getAuthAccessToken()
         }, 
           params: {
             month:this.state.month,
@@ -43,7 +43,7 @@ import {Dropdown, DropdownItem, DropdownToggle, DropdownMenu} from "reactstrap"
           method:"get",
           url:"/hr/view-staff-missing-hours" ,
           headers: {
-            "token": sessionStorage.token
+            "auth-access-token": authTokenManager.getAuthAccessToken()
         }, 
           params: {
                 month:this.state.month,

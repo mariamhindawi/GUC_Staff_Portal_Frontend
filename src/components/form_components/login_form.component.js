@@ -14,7 +14,6 @@ const LoginForm = () => {
     const history = useHistory();
     const axiosCancelSource = axios.CancelToken.source();
 
-
     const cancellingRequestsEffect = () => {
         return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
     };
@@ -45,7 +44,8 @@ const LoginForm = () => {
             }
         })
             .then(response => {
-                // TODO: redirect based on response
+                localStorage.clear();
+                localStorage.userFirstLogin = response.data.firstLogin;
                 authTokenManager.setAuthAccessToken(response.headers["auth-access-token"]);
                 history.push("/staff");
             })

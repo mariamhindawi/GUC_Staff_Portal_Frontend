@@ -14,7 +14,7 @@ class CIcoverage extends React.Component {
     componentDidMount() {
         axios.get("/ci/view-coverage", {
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {

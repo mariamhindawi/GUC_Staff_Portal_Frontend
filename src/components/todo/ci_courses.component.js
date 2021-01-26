@@ -20,7 +20,7 @@ class CiCourses extends React.Component {
         axiosInstance.get("/fe/get-my-courses", {
             cancelToken: this.axiosCancelSource.token,
             headers: {
-                token: sessionStorage.getItem("token")
+                "auth-access-token": authTokenManager.getAuthAccessToken()
             }
         })
             .then(res => {
