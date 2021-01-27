@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const PageNotFound = () => {
+function PageNotFound() {
     return (
         <div className="error-page-container">
             <div className="circles">

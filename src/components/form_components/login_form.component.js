@@ -9,13 +9,13 @@ import errorMessages from "../../others/error_messages";
 import formImage from "../../images/guc_building.jpg";
 import authTokenManager from "../../others/auth_token_manager";
 
-const LoginForm = () => {
+function LoginForm() {
     const [errorMessage, setErrorMessage] = useState("");
     const history = useHistory();
     const axiosCancelSource = axios.CancelToken.source();
 
     const cancellingRequestsEffect = () => {
-        return () => { axiosCancelSource.cancel(errorMessages.requestCancellation) }
+        return () => { axiosCancelSource.cancel(errorMessages.requestCancellation); };
     };
     useEffect(cancellingRequestsEffect, []);
 
@@ -23,7 +23,7 @@ const LoginForm = () => {
     const placeholders = {
         email: "Email",
         password: "Password"
-    }
+    };
 
     const validationSchema = Yup.object({
         email: Yup.string()
@@ -75,7 +75,7 @@ const LoginForm = () => {
     };
 
     const handleBlur = (e, formikProps) => {
-        e.target.placeholder = placeholders[e.target.name]
+        e.target.placeholder = placeholders[e.target.name];
         formikProps.setFieldTouched(e.target.name);
     };
 
@@ -117,7 +117,7 @@ const LoginForm = () => {
                                                 <ErrorMessage name="password" />
                                             </div>
                                             <div className="text-center">
-                                                <button className="login-button" type="submit" disabled={formikProps.isSubmitting} onClick={() => { setErrorMessage() }}>LOG IN</button>
+                                                <button className="login-button" type="submit" disabled={formikProps.isSubmitting} onClick={() => { setErrorMessage(); } }>LOG IN</button>
                                                 <div className="form-error-message">{errorMessage}</div>
                                             </div>
                                         </Form>
