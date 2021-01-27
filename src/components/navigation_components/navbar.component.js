@@ -7,6 +7,7 @@ import axiosInstance from "../../others/axios_instance";
 import errorMessages from "../../others/error_messages";
 import Logo from "../../images/guc_logo.png";
 import authTokenManager from "../../others/auth_token_manager";
+import { useUserContext } from "../../contexts/user.context";
 import Notifications from "../general_staff_components/notifications.component";
 
 function Navbar(props) {
@@ -18,14 +19,15 @@ function Navbar(props) {
 	const [userInfoOpen, setUserInfoOpen] = useState(false);
 	const [userName, setUserName] = useState("");
 	const [userEmail, setUserEmail] = useState("");
+	const user = useUserContext();
 	const match = useRouteMatch();
 	const history = useHistory();
 	const axiosCancelSource = axios.CancelToken.source();
 
 
 	const userInfoEffect = () => {
-		setUserName(localStorage.userName);
-		setUserEmail(localStorage.userEmail);
+		setUserName(user.name);
+		setUserEmail(user.email);
 	};
 	useEffect(userInfoEffect, []);
 
@@ -61,6 +63,12 @@ function Navbar(props) {
 		return () => { axiosCancelSource.cancel(errorMessages.requestCancellation); };
 	};
 	useEffect(notificationsEffect, []);
+
+	const resizeEventListenerEffect = () => {
+		addEventListener("resize", setLayoutStyles);
+		return () => { removeEventListener("resize", setLayoutStyles); };
+	};
+	useEffect(resizeEventListenerEffect, []);
 
 	const setLayoutStyles = () => {
 		if (innerWidth >= 1200) {
@@ -108,18 +116,6 @@ function Navbar(props) {
 	};
 	useLayoutEffect(setLayoutStyles, [sidebarToggleOpen]);
 
-	const resizeEventListenerEffect = () => {
-		addEventListener("resize", setLayoutStyles);
-		return () => { removeEventListener("resize", setLayoutStyles); };
-	};
-	useEffect(resizeEventListenerEffect, []);
-
-	const cancellingRequestsEffect = () => {
-		return () => { axiosCancelSource.cancel(errorMessages.requestCancellation); };
-	};
-	useEffect(cancellingRequestsEffect, []);
-
-
 	const handleLogOut = async () => {
 		await axiosInstance({
 			method: "post",
@@ -133,7 +129,6 @@ function Navbar(props) {
 				// TODO: display message??
 				alert(response.data);
 				authTokenManager.removeAuthAccessToken();
-				localStorage.clear();
 				localStorage.setItem("logout", Date.now());
 				history.push("/");
 			})
@@ -161,6 +156,7 @@ function Navbar(props) {
 
 	const toggleUserInfo = () => setUserInfoOpen(prevState => !prevState);
 
+
 	return (
 		<div className="d-flex justify-content-between navbar-staff-portal">
 			<Nav>
@@ -186,7 +182,7 @@ function Navbar(props) {
 						<DropdownItem disabled>
 							<Notifications notifications={notifications.slice(0, 4)} />
 						</DropdownItem>
-						<Link to={`${match.path}/notifications`} className="navbar-dropdown-link">
+						<Link className="navbar-dropdown-link" to={`${match.path}/${user.rolePath}/notifications`}>
 							<DropdownItem className="navbar-dropdown-button"><FontAwesomeIcon icon="envelope" />&nbsp;&nbsp;View all notifications</DropdownItem>
 						</Link>
 					</DropdownMenu>
@@ -204,17 +200,17 @@ function Navbar(props) {
 						<span className="d-flex justify-content-center dropdown-user-name">{userName}</span>
 						<span className="d-flex justify-content-center dropdown-user-email">{userEmail}</span>
 						<DropdownItem divider />
-						<Link to={`${match.path}/profile`} className="navbar-dropdown-link">
+						<Link className="navbar-dropdown-link" to={`${match.path}/${user.rolePath}/profile`}>
 							<DropdownItem className="navbar-dropdown-button"><FontAwesomeIcon icon="address-card" />&nbsp;&nbsp;View Profile</DropdownItem>
 						</Link>
 						<DropdownItem divider />
-						<Link to={`${match.path}/reset-password`} className="navbar-dropdown-link">
+						<Link className="navbar-dropdown-link" to={`${match.path}/${user.rolePath}/reset-password`}>
 							<DropdownItem className="navbar-dropdown-button"><FontAwesomeIcon icon="key" />&nbsp;&nbsp;Reset Password</DropdownItem>
 						</Link>
 						<DropdownItem divider />
-						<Link to="/" onClick={handleLogOut} className="navbar-dropdown-link">
+						<span className="navbar-dropdown-link" onClick={handleLogOut}>
 							<DropdownItem className="navbar-dropdown-button"><FontAwesomeIcon icon="sign-out-alt" />&nbsp;&nbsp;Log out</DropdownItem>
-						</Link>
+						</span>
 					</DropdownMenu>
 				</UncontrolledDropdown>
 			</Nav>
