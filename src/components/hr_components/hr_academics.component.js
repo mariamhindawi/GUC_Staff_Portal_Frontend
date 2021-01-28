@@ -30,7 +30,7 @@ class HrAcademics extends Component {
 
 	async fetchAcademics() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/fe/get-academics", {
+		await axiosInstance.get("/staff/fe/get-academics", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()

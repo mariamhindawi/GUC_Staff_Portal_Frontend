@@ -27,7 +27,7 @@ class HrCourses extends React.Component {
 
 	async fetchCourses() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/fe/get-courses", {
+		await axiosInstance.get("/staff/fe/get-courses", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()

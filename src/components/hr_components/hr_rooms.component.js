@@ -26,7 +26,7 @@ class HrRooms extends React.Component {
 
 	async fetchRooms() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/fe/get-rooms", {
+		await axiosInstance.get("/staff/fe/get-rooms", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()

@@ -26,7 +26,7 @@ class HrHrMembers extends React.Component {
 
 	async fetchHrMembers() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/fe/get-hr-members", {
+		await axiosInstance.get("/staff/fe/get-hr-members", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()

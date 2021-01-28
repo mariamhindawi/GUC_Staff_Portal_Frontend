@@ -27,7 +27,7 @@ class HrDepartments extends React.Component {
 
 	async fetchDepartments() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/fe/get-departments", {
+		await axiosInstance.get("/staff/fe/get-departments", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()

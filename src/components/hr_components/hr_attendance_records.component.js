@@ -114,7 +114,7 @@ const AddMissingHoursComponent = ({ }) => {
 				document.getElementById("room-form-error-message").innerHTML = response.data;
 				console.log(response.data);
 			})
-			.then(axiosInstance.get("/fe/user-records", {
+			.then(axiosInstance.get("/staff/fe/user-records", {
 				headers: {
 					"auth-access-token": authTokenManager.getAuthAccessToken()
 				},
@@ -147,7 +147,7 @@ const AddMissingHoursComponent = ({ }) => {
 	};
 
 	const handleDateChoose = (values) => {
-		axiosInstance.get("/fe/user-records", {
+		axiosInstance.get("/staff/fe/user-records", {
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()
 			},

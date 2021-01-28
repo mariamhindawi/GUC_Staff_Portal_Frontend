@@ -10,13 +10,13 @@ const Notifications = ({ notifications }) => {
 
 	useEffect(() => {
 		if (notifications === undefined) {
-			axiosInstance.get("/fe/academic/notifications", {
+			axiosInstance.get("/staff/fe/academic/notifications", {
 				headers: {
 					"auth-access-token": authTokenManager.getAuthAccessToken()
 				}
 			}).then(res => { console.log(res.data); setNotifications(res.data); });
 		}
-		axiosInstance("/fe/academic/mark-notifications-seen", {
+		axiosInstance("/staff/fe/academic/mark-notifications-seen", {
 			method: "PUT",
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()
