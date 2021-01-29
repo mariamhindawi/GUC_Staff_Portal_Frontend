@@ -18,8 +18,8 @@ const authTokenManager = () => {
 				if (error.response) {
 					if (error.response.data === "Invalid refresh token") {
 						console.log(error.response.data);
-						dispatchEvent(new Event("timeout"));
-						localStorage.setItem("timeout", Date.now());
+						dispatchEvent(new Event("session-timeout"));
+						localStorage.setItem("session-timeout", Date.now());
 					}
 				}
 				else if (error.request) {
@@ -48,8 +48,10 @@ const authTokenManager = () => {
 
 	const removeAuthAccessToken = () => {
 		authAccessToken = null;
+		decodedAuthAccessToken = null;
 		if (refreshTimeoutId) {
 			clearTimeout(refreshTimeoutId);
+			refreshTimeoutId = null;
 		}
 	};
 

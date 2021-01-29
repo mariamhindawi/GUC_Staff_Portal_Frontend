@@ -14,14 +14,19 @@ function LoginForm() {
 	const axiosCancelSource = axios.CancelToken.source();
 
 
-	const cancellingRequestsEffect = () => {
+	const cancelRequests = () => {
 		return () => { axiosCancelSource.cancel(errorMessages.requestCancellation); };
 	};
-	useEffect(cancellingRequestsEffect, []);
+	useEffect(cancelRequests, []);
 
 	const placeholders = {
 		email: "Email",
 		password: "Password"
+	};
+
+	const initialValues = {
+		email: "",
+		password: ""
 	};
 
 	const validationSchema = Yup.object({
@@ -44,6 +49,7 @@ function LoginForm() {
 		})
 			.then(response => {
 				authTokenManager.setAuthAccessToken(response.headers["auth-access-token"]);
+				localStorage.setItem("login", Date.now());
 				dispatchEvent(new Event("login"));
 			})
 			.catch(error => {
@@ -52,7 +58,8 @@ function LoginForm() {
 				}
 				else {
 					if (error.response) {
-						formikProps.setFieldValue("password", "", false);
+						formikProps.setFieldValue("password", "");
+						formikProps.setFieldTouched("password", false, false);
 						setErrorMessage(error.response.data);
 						console.log(error.response);
 					}
@@ -90,10 +97,9 @@ function LoginForm() {
 							<img className="card-img-top rounded-top-border" src={formImage}></img>
 							<div className="card-body">
 								<Formik
-									initialValues={{ email: "", password: "" }}
+									initialValues={initialValues}
 									validationSchema={validationSchema}
-									onSubmit={handleSubmit}
-								>
+									onSubmit={handleSubmit}>
 									{formikProps => (
 										<Form>
 											<label htmlFor="email">
@@ -105,16 +111,18 @@ function LoginForm() {
 												<ErrorMessage name="email" />
 											</div>
 											<br />
+
 											<label htmlFor="password">
 												<FontAwesomeIcon className="login-form-icon" icon="lock" />
 											</label>
-											<Field className="bottom-border" name="password" type="password" placeholder={placeholders.password}
+											<Field className="bottom-border" type="password" name="password" placeholder={placeholders.password}
 												onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
 											<div className="form-input-error-message">
 												<ErrorMessage name="password" />
 											</div>
+
 											<div className="text-center">
-												<button className="login-button" type="submit" disabled={formikProps.isSubmitting} onClick={() => { setErrorMessage(); }}>LOG IN</button>
+												<button className="login-button" type="submit" disabled={formikProps.isSubmitting} onClick={() => { setErrorMessage(""); }}>LOG IN</button>
 												<div className="form-error-message">{errorMessage}</div>
 											</div>
 										</Form>

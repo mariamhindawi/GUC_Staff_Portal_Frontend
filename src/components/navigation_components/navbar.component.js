@@ -11,30 +11,20 @@ import { useUserContext } from "../../contexts/user.context";
 import Notifications from "../general_staff_components/notifications.component";
 
 function Navbar(props) {
-	const [sidebarToggleOpen, setSidebarToggleOpen] = useState(false);
-	const [barsToggleStyle, setBarsToggleStyle] = useState("d-inline");
-	const [timesToggleStyle, setTimesToggleStyle] = useState("d-none");
+	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [notificationsOpen, setNotificationsOpen] = useState(false);
-	const [notifications, setNotifications] = useState([]);
 	const [userInfoOpen, setUserInfoOpen] = useState(false);
-	const [userName, setUserName] = useState("");
-	const [userEmail, setUserEmail] = useState("");
+	const [notifications, setNotifications] = useState([]);
 	const user = useUserContext();
 	const match = useRouteMatch();
 	const history = useHistory();
 	const axiosCancelSource = axios.CancelToken.source();
 
 
-	const userInfoEffect = () => {
-		setUserName(user.name);
-		setUserEmail(user.email);
-	};
-	useEffect(userInfoEffect, []);
-
-	const notificationsEffect = () => {
+	const fetchNotifications = () => {
 		axiosInstance({
 			method: "get",
-			url: "/fe/academic/notifications",
+			url: "/staff/fe/academic/notifications",
 			cancelToken: axiosCancelSource.token,
 			headers: {
 				"auth-access-token": authTokenManager.getAuthAccessToken()
@@ -62,59 +52,47 @@ function Navbar(props) {
 
 		return () => { axiosCancelSource.cancel(errorMessages.requestCancellation); };
 	};
-	useEffect(notificationsEffect, []);
+	useEffect(fetchNotifications, []);
 
-	const resizeEventListenerEffect = () => {
+	const setupEventListeners = () => {
 		addEventListener("resize", setLayoutStyles);
 		return () => { removeEventListener("resize", setLayoutStyles); };
 	};
-	useEffect(resizeEventListenerEffect, []);
+	useEffect(setupEventListeners, []);
 
 	const setLayoutStyles = () => {
 		if (innerWidth >= 1200) {
-			if (!sidebarToggleOpen) {
+			if (!sidebarOpen) {
 				props.setSidebarStyle("sidebar-collapsed");
 				props.setHomeContainerStyle("home-container-sidebar-collapsed");
-				setBarsToggleStyle("d-inline");
-				setTimesToggleStyle("d-none");
 			}
 			else {
 				props.setSidebarStyle("sidebar-expanded");
 				props.setHomeContainerStyle("home-container-sidebar-expanded");
-				setBarsToggleStyle("d-none");
-				setTimesToggleStyle("d-inline");
 			}
 		}
 		else if (innerWidth >= 768 && innerWidth < 1200) {
-			if (!sidebarToggleOpen) {
+			if (!sidebarOpen) {
 				props.setSidebarStyle("sidebar-collapsed");
 				props.setHomeContainerStyle("home-container-sidebar-collapsed");
-				setBarsToggleStyle("d-inline");
-				setTimesToggleStyle("d-none");
 			}
 			else {
 				props.setSidebarStyle("sidebar-expanded");
 				props.setHomeContainerStyle("home-container-sidebar-collapsed");
-				setBarsToggleStyle("d-none");
-				setTimesToggleStyle("d-inline");
 			}
 		}
 		else if (innerWidth < 768) {
-			if (!sidebarToggleOpen) {
+			if (!sidebarOpen) {
 				props.setSidebarStyle("sidebar-none");
 				props.setHomeContainerStyle("home-container-nosidebar");
-				setBarsToggleStyle("d-inline");
-				setTimesToggleStyle("d-none");
 			}
 			else {
 				props.setSidebarStyle("sidebar-expanded");
 				props.setHomeContainerStyle("home-container-nosidebar");
-				setBarsToggleStyle("d-none");
-				setTimesToggleStyle("d-inline");
 			}
 		}
 	};
-	useLayoutEffect(setLayoutStyles, [sidebarToggleOpen]);
+	useLayoutEffect(setLayoutStyles, [sidebarOpen]);
 
 	const handleLogOut = async () => {
 		await axiosInstance({
@@ -126,11 +104,10 @@ function Navbar(props) {
 			}
 		})
 			.then(response => {
-				// TODO: display message??
 				alert(response.data);
 				authTokenManager.removeAuthAccessToken();
 				localStorage.setItem("logout", Date.now());
-				history.push("/");
+				history.push("/login");
 			})
 			.catch(error => {
 				if (axios.isCancel(error)) {
@@ -150,7 +127,7 @@ function Navbar(props) {
 			});
 	};
 
-	const toggleSidebar = () => setSidebarToggleOpen(prevState => !prevState);
+	const toggleSidebar = () => setSidebarOpen(prevState => !prevState);
 
 	const toggleNotifications = () => setNotificationsOpen(prevState => !prevState);
 
@@ -160,10 +137,10 @@ function Navbar(props) {
 	return (
 		<div className="d-flex justify-content-between navbar-staff-portal">
 			<Nav>
-				<NavItem className={`nav-link navbar-link sidebar-toggle ${barsToggleStyle}`}>
+				<NavItem className={`nav-link navbar-link sidebar-toggle ${sidebarOpen ? "d-none" : "d-inline"}`}>
 					<FontAwesomeIcon className="sidebar-toggle-icon" icon="bars" onClick={toggleSidebar} />
 				</NavItem>
-				<NavItem className={`nav-link navbar-link sidebar-toggle ${timesToggleStyle}`}>
+				<NavItem className={`nav-link navbar-link sidebar-toggle ${sidebarOpen ? "d-inline" : "d-none"}`}>
 					<FontAwesomeIcon className="sidebar-toggle-icon" icon="times" onClick={toggleSidebar} />
 				</NavItem>
 				<img className="navbar-logo" src={Logo} alt="GUC logo"></img>
@@ -194,11 +171,11 @@ function Navbar(props) {
 					<DropdownMenu className="navbar-dropdown-menu" right>
 						<span className="d-flex justify-content-center">
 							<label className="dropdown-user-initial">
-								{userName.charAt(0).toUpperCase()}
+								{user.name.charAt(0).toUpperCase()}
 							</label>
 						</span>
-						<span className="d-flex justify-content-center dropdown-user-name">{userName}</span>
-						<span className="d-flex justify-content-center dropdown-user-email">{userEmail}</span>
+						<span className="d-flex justify-content-center dropdown-user-name">{user.name}</span>
+						<span className="d-flex justify-content-center dropdown-user-email">{user.email}</span>
 						<DropdownItem divider />
 						<Link className="navbar-dropdown-link" to={`${match.path}/${user.rolePath}/profile`}>
 							<DropdownItem className="navbar-dropdown-button"><FontAwesomeIcon icon="address-card" />&nbsp;&nbsp;View Profile</DropdownItem>

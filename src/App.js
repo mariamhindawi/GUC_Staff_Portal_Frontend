@@ -16,7 +16,8 @@ function App() {
 	const history = useHistory();
 
 
-	const initEffect = async () => {
+	const initAuthToken = async () => {
+		setLoading(true);
 		await authTokenManager.initAuthAccessToken();
 		const authAccessToken = authTokenManager.getAuthAccessToken();
 		if (authAccessToken) {
@@ -24,19 +25,19 @@ function App() {
 		}
 		setLoading(false);
 	};
-	useEffect(initEffect, []);
+	useEffect(initAuthToken, []);
 
-	const eventListnersEffect = () => {
-		addEventListener("login", login);
-		addEventListener("timeout", syncTimeout);
+	const setupEventListeners = () => {
+		addEventListener("login", handleLogin);
+		addEventListener("session-timeout", handleTimeout);
 		addEventListener("storage", syncTabs);
 		return () => {
-			removeEventListener("login", login);
-			removeEventListener("timeout", syncTimeout);
+			removeEventListener("login", handleLogin);
+			removeEventListener("session-timeout", handleTimeout);
 			removeEventListener("storage", syncTabs);
 		};
 	};
-	useEffect(eventListnersEffect, []);
+	useEffect(setupEventListeners, []);
 
 	const initUser = () => {
 		const decodedAuthAccessToken = authTokenManager.getDecodedAuthAccessToken();
@@ -60,27 +61,34 @@ function App() {
 		setUser(user);
 	};
 
-	const login = () => {
+	const handleLogin = () => {
 		initUser();
 		history.push("/staff");
-	}
-
-	const syncTimeout = () => {
-		// TODO: display message??
-		alert("Session expired. Please sign in again");
-		authTokenManager.removeAuthAccessToken();
-		history.push("/");
 	};
 
-	const syncTabs = event => {
-		if (event.key === "logout") {
-			// TODO: display message??
+	const handleTimeout = () => {
+		alert("Session expired. Please sign in again");
+		authTokenManager.removeAuthAccessToken();
+		history.push("/login");
+	};
+
+	const syncTabs = async event => {
+		if (event.key === "login") {
+			// alert("Session expired. Please sign in again");
+			await initAuthToken();
+			history.push("/staff");
+		}
+		else if (event.key === "reset-password") {
+			// alert("Session expired. Please sign in again");
+			authTokenManager.removeAuthAccessToken();
+			history.push("/");
+		}
+		else if (event.key === "logout") {
 			// alert("Logged out");
 			authTokenManager.removeAuthAccessToken();
 			history.push("/");
 		}
-		else if (event.key === "timeout") {
-			// TODO: display message??
+		else if (event.key === "session-timeout") {
 			// alert("Session expired. Please sign in again");
 			authTokenManager.removeAuthAccessToken();
 			history.push("/");
