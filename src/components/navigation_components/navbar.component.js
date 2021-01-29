@@ -2,11 +2,11 @@ import React, { useEffect, useLayoutEffect, useState } from "react";
 import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { Nav, NavItem, UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo from "../../images/guc_logo.png";
 import axios from "axios";
 import axiosInstance from "../../others/axios_instance";
-import errorMessages from "../../others/error_messages";
-import Logo from "../../images/guc_logo.png";
 import authTokenManager from "../../others/auth_token_manager";
+import errorMessages from "../../others/error_messages";
 import { useUserContext } from "../../contexts/user.context";
 import Notifications from "../general_staff_components/notifications.component";
 
