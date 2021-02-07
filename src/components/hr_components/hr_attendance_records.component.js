@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Button, Container, Label, Modal, ModalBody, Row, Table } from "reactstrap";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import authTokenManager from "../../others/auth_token_manager";
+import AuthTokenManager from "../../others/AuthTokenManager";
 
 export const DatePickerField = ({ ...props }) => {
 	const { setFieldValue } = useFormikContext();
@@ -90,7 +90,7 @@ const AddMissingHoursComponent = ({ }) => {
 			method: "post",
 			url: `/staff/hr/add-missing-record`,
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			},
 			data: {
 				missingRecordType: type,
@@ -116,7 +116,7 @@ const AddMissingHoursComponent = ({ }) => {
 			})
 			.then(axiosInstance.get("/staff/fe/user-records", {
 				headers: {
-					"auth-access-token": authTokenManager.getAuthAccessToken()
+					"auth-access-token": AuthTokenManager.getAuthAccessToken()
 				},
 				params: {
 					user: values.user,
@@ -149,7 +149,7 @@ const AddMissingHoursComponent = ({ }) => {
 	const handleDateChoose = (values) => {
 		axiosInstance.get("/staff/fe/user-records", {
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			},
 			params: {
 				user: values.user,

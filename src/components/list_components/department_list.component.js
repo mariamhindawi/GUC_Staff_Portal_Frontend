@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DepartmentListItem from "../list_item_components/department_list_item.component";
-import Pagination from "../todo/pagination.component";
+import Pagination from "../helper_components/Pagination";
 
 const DepartmentList = (props) => {
 

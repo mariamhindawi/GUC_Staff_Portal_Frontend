@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from "reactstrap";
-import Axios from "../../others/axios_instance"
+import Axios from "../../others/AxiosInstance"
 import RequestsTable from "./requestsTable.component"
 
 const HODRequestsComponent = (props) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import Axios from "../../others/axios_instance";
+import Axios from "../../others/AxiosInstance";
 import { Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import RequestsTableComponent from "./requestsTable.component";
@@ -67,12 +67,12 @@ class requestsComponent extends React.Component {
                         </Dropdown>
                         </div>
                         <div className="col-3 offset-7">
-                        <NavLink to="/staff/home/send-leave-request">                        
+                        <NavLink to="/staff/home/send-leave-request">
                             <Button className="bg-success">Create a new request <FontAwesomeIcon className="ml-1" icon="plus"></FontAwesomeIcon></Button>
-                        </NavLink>     
+                        </NavLink>
                         </div>
-                            </div>      
-                            <br></br>         
+                            </div>
+                            <br></br>
                     <div className="row">
                         <div className="col-12">
                             <RequestsTableComponent requests={requests} cancelRequest={this.cancelRequest} />

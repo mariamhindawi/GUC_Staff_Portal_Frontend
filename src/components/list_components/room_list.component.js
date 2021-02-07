@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import RoomListItem from "../list_item_components/room_list_item.component";
-import Pagination from "../todo/pagination.component";
+import Pagination from "../helper_components/Pagination";
 
 const RoomList = (props) => {
 

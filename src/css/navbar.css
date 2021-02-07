@@ -1,99 +1,132 @@
-
 .navbar-staff-portal {
-    position: fixed;
-    top: 0;
-    width: 100vw;
-    height: 40px;
-    z-index: 1;
-    background: rgb(4,100,164);
-    background: linear-gradient(90deg, rgba(4,100,164,1) 0%, rgba(26,151,210,1) 25%, rgba(49,175,225,1) 50%, rgba(81,205,238,1) 75%, rgba(129,235,246,1) 100%);
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 40px;
+  z-index: 1;
+  background: rgb(4, 100, 164);
+  background: linear-gradient(
+    90deg,
+    rgba(4, 100, 164, 1) 0%,
+    rgba(26, 151, 210, 1) 25%,
+    rgba(49, 175, 225, 1) 50%,
+    rgba(81, 205, 238, 1) 75%,
+    rgba(129, 235, 246, 1) 100%
+  );
 }
 
-.navbar-link {
-    pointer-events: none;
+.navbar-item {
+  pointer-events: none;
+  background-color: transparent;
+  border: none;
 }
 
-.navbar-link:hover {
-    border-radius: 3px;
-    box-shadow: 0 0 5px 0 grey;
+.navbar-item:hover,
+.navbar-item:focus-visible {
+  border-radius: 3px;
+  box-shadow: 0 0 5px 0 grey;
 }
 
-.sidebar-toggle {
-    width: 50px;
+.navbar-item:focus {
+  outline: none;
 }
 
-.sidebar-toggle:hover {
-    box-shadow: 0 0 10px 0 rgb(78, 78, 78);
-}
-
-.sidebar-toggle-icon {
-    pointer-events: all;
-    color: white;
-    font-size: 22px;
-}
-
-.sidebar-toggle-icon:active {
-    color: black;
-}
-
-.navbar-logo {
-    height: 20px;
-    width: 20px;
-    margin-left: 5px;
-    margin-top: 7px;
+.navbar-item:after {
+  display: none;
 }
 
 .navbar-icon {
-    pointer-events: all;
-    color: white;
+  pointer-events: all;
+  color: white;
 }
 
-.navbar-icon:active {
-    color: black;
+.navbar-icon:hover {
+  cursor: pointer;
+}
+
+.navbar-icon:not(:disabled):not(.disabled):active {
+  color: black;
+}
+
+.sidebar-toggle {
+  width: 50px;
+}
+
+.sidebar-toggle:hover,
+.sidebar-toggle:focus-visible {
+  box-shadow: 0 0 10px 0 rgb(78, 78, 78);
+}
+
+.sidebar-toggle-icon {
+  pointer-events: all;
+  cursor: pointer;
+  color: white;
+  font-size: 22px;
+}
+
+.sidebar-toggle-icon:not(:disabled):not(.disabled):active {
+  color: black;
+}
+
+.navbar-logo {
+  height: 20px;
+  width: 20px;
+  margin-left: 5px;
+  margin-top: 7px;
 }
 
 .navbar-dropdown-menu {
-    width: 250px;
+  width: 250px;
 }
 
-.navbar-dropdown-link:hover {
-    text-decoration: none;
+.navbar-dropdown-link {
+  color: black;
+  border-radius: 5px;
 }
 
-.navbar-dropdown-button {
-    border-radius: 5px;
+.navbar-dropdown-link:hover,
+.navbar-dropdown-link:focus-visible {
+  color: black;
+  text-decoration: none;
+  background-color: rgba(129, 235, 246, 1);
 }
 
-.navbar-dropdown-button:hover {
-    background-color: rgba(129,235,246,1);
+.navbar-dropdown-link:focus {
+  outline: none;
 }
 
-.navbar-dropdown-button:active {
-    background-color: black;
-    color: white;
-    outline: none;
+.navbar-dropdown-link:active {
+  color: white;
+  background-color: black;
+  outline: none;
+}
+
+.dropdown-notifications {
+  pointer-events: none;
 }
 
 .dropdown-user-initial {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 2em;
-    height: 2em;
-    border-radius: 50%;
-    background-color: black;
-    color: white;
-    font-size: x-large;
-    font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  background-color: black;
+  color: white;
+  font-size: x-large;
+  font-weight: bold;
 }
 
 .dropdown-user-name {
-    margin-top: 10px;
-    text-align: center;
+  margin-top: 10px;
+  text-align: center;
 }
 
 .dropdown-user-email {
-    color: lightslategrey;
-    font-size: small;
-    text-align: center;
+  color: lightslategrey;
+  font-size: small;
+  text-align: center;
 }

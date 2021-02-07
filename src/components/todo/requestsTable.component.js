@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Button, Table, Popover, PopoverBody, PopoverHeader, List } from "reactstrap"
-import Pagination from "././pagination.component";
+import Pagination from "../helper_components/Pagination";
 
 const RequestsTableComponent = ({ requests, cancelRequest, acceptRequest, rejectRequest }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +31,7 @@ const RequestsTableComponent = ({ requests, cancelRequest, acceptRequest, reject
         <tbody>
             {requestRows}
         </tbody>
-      
+
     </table>
       <Pagination
       postsPerPage={postsPerPage}

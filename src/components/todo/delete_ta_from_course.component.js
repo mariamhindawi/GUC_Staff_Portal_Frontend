@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "../../others/axios_instance";
+import axios from "../../others/AxiosInstance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -22,7 +22,7 @@ const DeleteTaForm = props => {
         course: Yup.string()
             .required("This field is required"),
         teachingAssistant: Yup.string()
-            .required("This field is required")    
+            .required("This field is required")
     });
 
     const handleSubmit = async values => {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { Button } from "reactstrap";
@@ -23,7 +23,7 @@ const AssignCcForm = props => {
         course: Yup.string()
             .required("This field is required"),
         courseCoordinator: Yup.string()
-            .required("This field is required")    
+            .required("This field is required")
     });
 
     const handleSubmit = async values => {

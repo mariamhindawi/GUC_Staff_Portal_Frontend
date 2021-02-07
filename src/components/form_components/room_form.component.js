@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button } from "reactstrap";
@@ -22,7 +22,7 @@ const RoomForm = props => {
         capacity: "Capacity"
     }
 
-    const initialValues = { 
+    const initialValues = {
         name: props.room.name,
         capacity: props.room.capacity,
         type: props.room.type
@@ -83,7 +83,7 @@ const RoomForm = props => {
         e.target.placeholder = placeholders[e.target.name];
         formikProps.setFieldTouched(e.target.name);
     };
-    
+
     return (
         <div className="input-form add-room-form rounded-border container">
              <div className="pt-3 pb-3">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody } from "reactstrap";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import SlotTableComponent from "./SlotTable.component";
 
 const ViewTeachingAssignmentsComponent = () => {

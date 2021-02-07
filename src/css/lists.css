@@ -1,0 +1,80 @@
+.list-add-button {
+  float: right;
+  margin-right: 5%;
+}
+
+.list-container {
+  clear: right;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 85%;
+  padding-top: 20px;
+}
+
+.list {
+  width: 90%;
+  border: #019be2 3px solid;
+  border-collapse: separate;
+  border-radius: 10px;
+  border-spacing: 0;
+}
+
+.list tr {
+  height: 50px;
+}
+
+.list tr:nth-child(even) {
+  background-color: rgba(136, 189, 188, 0.1);
+}
+
+.list tr th {
+  border-bottom: #019be2 3px solid;
+  background: rgba(136, 189, 188, 0.5);
+  font-weight: bold;
+  text-align: center;
+}
+
+.list tr th:first-child {
+  border-top-left-radius: 5px;
+}
+
+.list tr th:last-child {
+  border-top-right-radius: 5px;
+}
+
+.list tr td {
+  padding: 5px;
+  text-align: center;
+}
+
+.list-pagination {
+  position: absolute;
+  bottom: 0;
+}
+
+@media (max-width: 768px) {
+  /* Force table to not be like tables anymore */
+  .table,
+  .table-head,
+  .table tbody,
+  .table-row td,
+  .table-row {
+    display: block;
+  }
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .table-head .table-row {
+    display: none;
+  }
+  .table-row {
+    border-bottom: #88bdbc 3px solid;
+  }
+  .table-row:last-child {
+    border-bottom: none;
+  }
+  .table-row td,
+  .table-row th {
+    border: none;
+    text-align: center;
+  }
+}

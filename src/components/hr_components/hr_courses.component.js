@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
 import CourseList from "../list_components/course_list.component";
 import CourseForm from "../form_components/course_form.component";
-import authTokenManager from "../../others/auth_token_manager";
+import AuthTokenManager from "../../others/AuthTokenManager";
 
 
 class HrCourses extends React.Component {
@@ -30,7 +30,7 @@ class HrCourses extends React.Component {
 		await axiosInstance.get("/staff/fe/get-courses", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			}
 		})
 			.then(res => {
@@ -81,7 +81,7 @@ class HrCourses extends React.Component {
 		await axiosInstance.delete(`/staff/hr/delete-course/${courseId}`, {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			}
 		})
 			.then(async response => {

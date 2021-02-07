@@ -1,12 +1,21 @@
+.edit-button {
+  border: none;
+}
 
 .edit-button:hover,
 .edit-button:focus,
-.edit-button:active {
-    background: lightblue !important;
+.edit-button:not(:disabled):not(.disabled):active {
+  background: lightblue;
+  box-shadow: none;
+}
+
+.delete-button {
+  border: none;
 }
 
 .delete-button:hover,
 .delete-button:focus,
-.delete-button:active {
-    background: #ffcccb !important;
+.delete-button:not(:disabled):not(.disabled):active {
+  background: #ffcccb;
+  box-shadow: none;
 }

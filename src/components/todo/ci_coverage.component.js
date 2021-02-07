@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "../../others/axios_instance";
+import axios from "../../others/AxiosInstance";
 import CoverageList from "../list_components/coverage_list.component";
 
 class CIcoverage extends React.Component {

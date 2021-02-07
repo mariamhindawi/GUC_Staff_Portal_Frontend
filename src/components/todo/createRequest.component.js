@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik";
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Button } from "reactstrap";
@@ -100,7 +100,7 @@ const LeaveRequestForm = props => {
     return (
         <div className="add-request-form rounded-border container">
            <div className="pt-3 pb-3">
-    
+
                 <label className="form-input-label col-sm-4">Request Type</label>
             <Dropdown className="col-sm-8 bg-info"  isOpen={dropdownOpen} toggle={toggle}>
                 <DropdownToggle caret>
@@ -151,7 +151,7 @@ const LeaveRequestForm = props => {
                 ) : null}
                 </Formik>
            </div>
-            
+
         </div>
     );
 };

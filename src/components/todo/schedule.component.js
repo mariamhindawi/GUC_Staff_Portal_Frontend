@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import SlotTableComponent from "./SlotTable.component";
 
 const ScheduleComponent = () => {

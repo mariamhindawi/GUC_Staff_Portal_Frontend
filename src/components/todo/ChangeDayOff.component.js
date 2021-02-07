@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Label } from "reactstrap";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import * as Yup from "yup";
 import { Formik, Field, Form, ErrorMessage, useField, useFormikContext } from "formik"
 

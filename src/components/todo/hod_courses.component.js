@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import CourseList from "../list_components/course_list.component";
 import AssignCiForm from "./assign_ci_form.component";
 import DeleteCiForm from "./delete_ci_form.component";
@@ -81,7 +81,7 @@ class HodCourses extends React.Component {
                 <Route exact path={`${this.props.match.path}/delete-ci/:id`}
                     render={routeProps => (
                         <DeleteCiForm course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />
-                    )} />    
+                    )} />
                 {/* <Route exact path={`${this.props.match.path}/delete/:name`}
                     render={routeProps => (
                         <DeleteCourse course={this.getCourse(routeProps.match.params.id)} updateCourses={this.fetchCourses()} />

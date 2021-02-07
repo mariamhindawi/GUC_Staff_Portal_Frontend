@@ -1,0 +1,44 @@
+.modal-close-button {
+  float: right;
+  width: 2em;
+  height: 2em;
+  background: none;
+  border: none;
+  border-radius: 3px;
+  margin: 3px;
+  transition: 0.25s;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+  outline: none;
+  background: rgb(245, 245, 245);
+}
+
+.modal-close-button:not(:disabled):not(.disabled):active {
+  box-shadow: 0 0 0 3px lightgrey;
+}
+
+.delete-modal-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 110px;
+}
+
+.delete-modal-body {
+  height: 50px;
+  margin-left: -0.5px;
+  margin-right: -0.5px;
+}
+
+.delete-modal-button {
+  border-radius: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.delete-modal-button:focus,
+.delete-modal-button:not(:disabled):not(.disabled):active:focus {
+  box-shadow: none;
+}

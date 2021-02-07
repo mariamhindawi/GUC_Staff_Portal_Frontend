@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
 import HrList from "../list_components/hr_list.component";
 import HrMemberForm from "../form_components/hr_member_form.component";
-import authTokenManager from "../../others/auth_token_manager";
+import AuthTokenManager from "../../others/AuthTokenManager";
 
 class HrHrMembers extends React.Component {
 	constructor(props) {
@@ -29,7 +29,7 @@ class HrHrMembers extends React.Component {
 		await axiosInstance.get("/staff/fe/get-hr-members", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			}
 		})
 			.then(res => {
@@ -80,7 +80,7 @@ class HrHrMembers extends React.Component {
 		await axiosInstance.delete(`/staff/hr/delete-hr-member/${id}`, {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			}
 		})
 			.then(async response => {

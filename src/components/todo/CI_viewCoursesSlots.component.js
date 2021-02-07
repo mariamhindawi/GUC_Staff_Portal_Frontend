@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from "reactstrap";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import SlotTableComponent from "./SlotTable.component";
 
 const CICoursesSlotsComponent = () => {

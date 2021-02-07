@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../others/axios_instance";
+import axiosInstance from "../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
 import RoomList from "../list_components/room_list.component";
 import RoomForm from "../form_components/room_form.component";
-import authTokenManager from "../../others/auth_token_manager";
+import AuthTokenManager from "../../others/AuthTokenManager";
 
 
 class HrRooms extends React.Component {
@@ -29,7 +29,7 @@ class HrRooms extends React.Component {
 		await axiosInstance.get("/staff/fe/get-rooms", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			}
 		})
 			.then(res => {
@@ -79,7 +79,7 @@ class HrRooms extends React.Component {
 		await axiosInstance.delete(`/staff/hr/delete-room/${roomName}`, {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
-				"auth-access-token": authTokenManager.getAuthAccessToken()
+				"auth-access-token": AuthTokenManager.getAuthAccessToken()
 			}
 		})
 			.then(async response => {
