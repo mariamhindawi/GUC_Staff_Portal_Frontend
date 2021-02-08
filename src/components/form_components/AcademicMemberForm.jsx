@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -6,11 +6,13 @@ import * as Yup from "yup";
 import { Button } from "react-bootstrap";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
-import ErrorMessages from "../../others/ErrorMessages";
+import useAxiosCancel from "../../hooks/AxiosCancel";
 
 const AcademicMemberForm = props => {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
   const axiosCancelSource = Axios.CancelToken.source();
+
+  useAxiosCancel(axiosCancelSource);
 
   const placeholders = {
     name: "Name",
@@ -105,9 +107,6 @@ const AcademicMemberForm = props => {
     e.target.placeholder = placeholders[e.target.name];
     formikProps.setFieldTouched(e.target.name);
   };
-  const cancelRequests = () => (
-    () => { axiosCancelSource.cancel(ErrorMessages.requestCancellation); }
-  );
   const renderPassword = formikProps => (
     <>
       <label className="form-input-label col-sm-4" htmlFor="password">
@@ -126,8 +125,6 @@ const AcademicMemberForm = props => {
       </div>
     </>
   );
-
-  useEffect(cancelRequests, []);
 
   return (
     <div className="input-form add-room-form rounded-border container">
@@ -315,7 +312,7 @@ AcademicMemberForm.defaultProps = {
     office: "",
     dayOff: "",
   },
-  updateAcademics: () => {},
+  updateAcademics: () => { },
 };
 
 export default AcademicMemberForm;

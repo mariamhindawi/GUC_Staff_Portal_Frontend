@@ -3,7 +3,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import ErrorMessages from "../../../others/ErrorMessages";
+import useAxiosCancel from "../../../hooks/AxiosCancel";
 import HrViewAcademics from "./HrViewAcademics";
 import HrAddAcademic from "./HrAddAcademic";
 import HrUpdateAcademic from "./HrUpdateAcademic";
@@ -26,12 +26,16 @@ function HrAcademics() {
     })
       .then(res => {
         setAcademics(res.data);
+        setInitialLoading(false);
+        setLoading(false);
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
           console.log(`Request cancelled: ${error.message}`);
         }
         else if (error.response) {
+          setInitialLoading(false);
+          setLoading(false);
           console.log(error.response);
         }
         else if (error.request) {
@@ -40,15 +44,10 @@ function HrAcademics() {
         else {
           console.log(error.message);
         }
-      })
-      .finally(() => {
-        setInitialLoading(false);
-        setLoading(false);
       });
-    return () => { axiosCancelSource.cancel(ErrorMessages.requestCancellation); };
   };
-
   useEffect(fetchAcademics, []);
+  useAxiosCancel(axiosCancelSource);
 
   if (initialIsLoading) {
     return <Spinner />;

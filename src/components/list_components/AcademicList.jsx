@@ -39,6 +39,9 @@ const AcademicList = props => {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
+  useLayoutEffect(setLayout, [currentPage]);
+  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+
   const customTableHeads = () => {
     switch (user.role) {
       case "HR": return (
@@ -69,9 +72,6 @@ const AcademicList = props => {
       />
     ));
   };
-
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
 
   return (
     <>

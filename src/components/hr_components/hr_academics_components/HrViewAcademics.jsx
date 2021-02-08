@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useRouteMatch } from "react-router-dom";
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import ErrorMessages from "../../../others/ErrorMessages";
+import useAxiosCancel from "../../../hooks/AxiosCancel";
 import AddButton from "../../button_components/AddButton";
 import Spinner from "../../helper_components/Spinner";
 import AcademicList from "../../list_components/AcademicList";
@@ -17,6 +17,8 @@ function HrViewAcademics(props) {
   const [deleteModalMessage, setDeleteModalMessage] = useState({ messageText: "", messageStyle: "" });
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
+
+  useAxiosCancel(axiosCancelSource);
 
   const deleteAcademic = async academicId => {
     setDeleteModalState("submitting");
@@ -31,6 +33,7 @@ function HrViewAcademics(props) {
           messageText: response.data,
           messageStyle: "success",
         });
+        setDeleteModalState("submitted");
         props.updateAcademics();
       })
       .catch(error => {
@@ -42,6 +45,7 @@ function HrViewAcademics(props) {
             messageText: error.response.data,
             messageStyle: "danger",
           });
+          setDeleteModalState("submitted");
           console.log(error.response);
         }
         else if (error.request) {
@@ -50,14 +54,8 @@ function HrViewAcademics(props) {
         else {
           console.log(error.message);
         }
-      })
-      .finally(() => {
-        setDeleteModalState("submitted");
       });
   };
-  const cancelRequests = () => (
-    () => { axiosCancelSource.cancel(ErrorMessages.requestCancellation); }
-  );
   const toggleDeleteModal = academicID => {
     if (academicID) {
       setAcademicToDelete(academicID);
@@ -69,8 +67,6 @@ function HrViewAcademics(props) {
     setDeleteModalState("will submit");
     setDeleteModalMessage({ messageText: "", messageStyle: "" });
   };
-
-  useEffect(cancelRequests, []);
 
   return (
     <>

@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
-import ErrorMessages from "../../others/ErrorMessages";
+import useAxiosCancel from "../../hooks/AxiosCancel";
 
 const ResetPasswordForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const history = useHistory();
   const axiosCancelSource = Axios.CancelToken.source();
+
+  useAxiosCancel(axiosCancelSource);
 
   const placeholders = {
     oldPassword: "Old password",
@@ -91,11 +93,6 @@ const ResetPasswordForm = () => {
     e.target.placeholder = placeholders[e.target.name];
     formikProps.setFieldTouched(e.target.name);
   };
-  const cancelRequests = () => (
-    () => { axiosCancelSource.cancel(ErrorMessages.requestCancellation); }
-  );
-
-  useEffect(cancelRequests, []);
 
   return (
     <Formik

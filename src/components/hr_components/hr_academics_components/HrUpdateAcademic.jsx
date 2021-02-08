@@ -16,7 +16,6 @@ function HrUpdateAcademic(props) {
     }
     return null;
   };
-
   const removeFromPath = (path, number) => {
     const splitPath = path.split("/");
     if (number < splitPath.length) {

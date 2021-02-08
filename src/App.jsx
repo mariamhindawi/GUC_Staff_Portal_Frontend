@@ -86,7 +86,6 @@ function App() {
       window.removeEventListener("storage", syncTabs);
     };
   };
-
   useEffect(initAuthToken, []);
   useEffect(setupEventListeners, []);
 

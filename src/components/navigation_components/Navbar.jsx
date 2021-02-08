@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
-import ErrorMessages from "../../others/ErrorMessages";
+import useAxiosCancel from "../../hooks/AxiosCancel";
 import Logo from "../../images/guc_logo.png";
 import { useUserContext } from "../../contexts/UserContext";
 import Notifications from "../general_staff_components/Notifications";
@@ -81,9 +81,12 @@ function Navbar(props) {
           console.log(error.message);
         }
       });
-
-    return () => { axiosCancelSource.cancel(ErrorMessages.requestCancellation); };
   };
+  useLayoutEffect(setLayout, [sidebarIsOpen]);
+  useEffect(setupEventListeners, [sidebarIsOpen]);
+  useEffect(fetchNotifications, []);
+  useAxiosCancel(axiosCancelSource);
+
   const handleLogOut = async () => {
     await AxiosInstance({
       method: "post",
@@ -115,10 +118,6 @@ function Navbar(props) {
       });
   };
   const toggleSidebar = () => setSidebarOpen(prevState => !prevState);
-
-  useLayoutEffect(setLayout, [sidebarIsOpen]);
-  useEffect(setupEventListeners, [sidebarIsOpen]);
-  useEffect(fetchNotifications, []);
 
   return (
     <div className="navbar-staff-portal">
