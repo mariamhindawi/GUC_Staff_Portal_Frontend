@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Pagination as BootstrapPagination } from "react-bootstrap";
 
 function Pagination(props) {
-  const numberOfPages = Math.ceil(props.numberOfItems / props.itemsPerPage);
+  const numberOfPages = Math.ceil(props.numberOfItems / props.itemsPerPage) || 1;
   const previusPage = props.currentPage === 1 ? 1 : props.currentPage - 1;
   const nextPage = props.currentPage === numberOfPages ? numberOfPages : props.currentPage + 1;
 
@@ -15,6 +15,7 @@ function Pagination(props) {
           key={i}
           active={props.currentPage === i}
           onClick={() => { props.setCurrentPage(i); }}
+          as="button"
         >
           {i}
         </BootstrapPagination.Item>
@@ -29,6 +30,7 @@ function Pagination(props) {
           key={i}
           active={props.currentPage === i}
           onClick={() => { props.setCurrentPage(i); }}
+          as="button"
         >
           {i}
         </BootstrapPagination.Item>
@@ -46,6 +48,7 @@ function Pagination(props) {
           key={page}
           active={props.currentPage === page}
           onClick={() => { props.setCurrentPage(page); }}
+          as="button"
         >
           {page}
         </BootstrapPagination.Item>
@@ -62,6 +65,7 @@ function Pagination(props) {
           key={page}
           active={props.currentPage === page}
           onClick={() => { props.setCurrentPage(page); }}
+          as="button"
         >
           {page}
         </BootstrapPagination.Item>
@@ -76,6 +80,7 @@ function Pagination(props) {
       key={-2}
       disabled={props.currentPage === 1}
       onClick={() => { props.setCurrentPage(1); }}
+      as="button"
     />
   );
   const prev = (
@@ -83,6 +88,7 @@ function Pagination(props) {
       key={-1}
       disabled={props.currentPage === 1}
       onClick={() => { props.setCurrentPage(previusPage); }}
+      as="button"
     />
   );
   const next = (
@@ -90,6 +96,7 @@ function Pagination(props) {
       key={numberOfPages + 2}
       disabled={props.currentPage === numberOfPages}
       onClick={() => { props.setCurrentPage(nextPage); }}
+      as="button"
     />
   );
   const last = (
@@ -97,6 +104,7 @@ function Pagination(props) {
       key={numberOfPages + 3}
       disabled={props.currentPage === numberOfPages}
       onClick={() => { props.setCurrentPage(numberOfPages); }}
+      as="button"
     />
   );
   items.unshift(prev);
@@ -105,7 +113,7 @@ function Pagination(props) {
   items.push(last);
 
   return (
-    <BootstrapPagination className={props.className}>
+    <BootstrapPagination className={props.className} size={props.size}>
       {items}
     </BootstrapPagination>
   );
@@ -117,10 +125,12 @@ Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
   className: PropTypes.string,
+  size: PropTypes.oneOf(["", "sm", "lg"]),
 };
 
 Pagination.defaultProps = {
   className: "",
+  size: "",
 };
 
 export default Pagination;

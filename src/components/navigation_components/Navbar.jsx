@@ -19,6 +19,42 @@ function Navbar(props) {
   const history = useHistory();
   const axiosCancelSource = Axios.CancelToken.source();
 
+  const setLayout = () => {
+    if (window.innerWidth >= 1200) {
+      if (!sidebarIsOpen) {
+        props.setSidebarStyle("sidebar-collapsed");
+        props.setHomeContainerStyle("home-container-sidebar-collapsed");
+      }
+      else {
+        props.setSidebarStyle("sidebar-expanded");
+        props.setHomeContainerStyle("home-container-sidebar-expanded");
+      }
+    }
+    else if (window.innerWidth >= 768) {
+      if (!sidebarIsOpen) {
+        props.setSidebarStyle("sidebar-collapsed");
+        props.setHomeContainerStyle("home-container-sidebar-collapsed");
+      }
+      else {
+        props.setSidebarStyle("sidebar-expanded");
+        props.setHomeContainerStyle("home-container-sidebar-collapsed");
+      }
+    }
+    else if (window.innerWidth < 768) {
+      if (!sidebarIsOpen) {
+        props.setSidebarStyle("sidebar-none");
+        props.setHomeContainerStyle("home-container-nosidebar");
+      }
+      else {
+        props.setSidebarStyle("sidebar-expanded");
+        props.setHomeContainerStyle("home-container-nosidebar");
+      }
+    }
+  };
+  const setupEventListeners = () => {
+    window.addEventListener("resize", setLayout);
+    return () => { window.removeEventListener("resize", setLayout); };
+  };
   const fetchNotifications = () => {
     AxiosInstance({
       method: "get",
@@ -47,42 +83,6 @@ function Navbar(props) {
       });
 
     return () => { axiosCancelSource.cancel(ErrorMessages.requestCancellation); };
-  };
-  const setLayoutStyles = () => {
-    if (window.innerWidth >= 1200) {
-      if (!sidebarIsOpen) {
-        props.setSidebarStyle("sidebar-collapsed");
-        props.setHomeContainerStyle("home-container-sidebar-collapsed");
-      }
-      else {
-        props.setSidebarStyle("sidebar-expanded");
-        props.setHomeContainerStyle("home-container-sidebar-expanded");
-      }
-    }
-    else if (window.innerWidth >= 768 && window.innerWidth < 1200) {
-      if (!sidebarIsOpen) {
-        props.setSidebarStyle("sidebar-collapsed");
-        props.setHomeContainerStyle("home-container-sidebar-collapsed");
-      }
-      else {
-        props.setSidebarStyle("sidebar-expanded");
-        props.setHomeContainerStyle("home-container-sidebar-collapsed");
-      }
-    }
-    else if (window.innerWidth < 768) {
-      if (!sidebarIsOpen) {
-        props.setSidebarStyle("sidebar-none");
-        props.setHomeContainerStyle("home-container-nosidebar");
-      }
-      else {
-        props.setSidebarStyle("sidebar-expanded");
-        props.setHomeContainerStyle("home-container-nosidebar");
-      }
-    }
-  };
-  const setupEventListeners = () => {
-    window.addEventListener("resize", setLayoutStyles);
-    return () => { window.removeEventListener("resize", setLayoutStyles); };
   };
   const handleLogOut = async () => {
     await AxiosInstance({
@@ -116,9 +116,9 @@ function Navbar(props) {
   };
   const toggleSidebar = () => setSidebarOpen(prevState => !prevState);
 
+  useLayoutEffect(setLayout, [sidebarIsOpen]);
+  useEffect(setupEventListeners, [sidebarIsOpen]);
   useEffect(fetchNotifications, []);
-  useEffect(setupEventListeners, []);
-  useLayoutEffect(setLayoutStyles, [sidebarIsOpen]);
 
   return (
     <div className="navbar-staff-portal">

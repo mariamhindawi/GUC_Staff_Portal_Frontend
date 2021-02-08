@@ -74,14 +74,16 @@ function HrViewAcademics(props) {
 
   return (
     <>
-      { props.isLoading && <Spinner /> }
+      { props.isLoading && <Spinner />}
 
       {
         !props.isLoading && (
           <div className="view-container">
-            <Link className="list-add-button" to={`${match.url}/add`} tabIndex={-1}>
-              <AddButton buttonText="Add Academic Member" />
-            </Link>
+            <span className="d-flex justify-content-end">
+              <Link to={`${match.url}/add`} tabIndex={-1}>
+                <AddButton buttonText="Add Academic Member" />
+              </Link>
+            </span>
             <AcademicList academics={props.academics} toggleDeleteModal={toggleDeleteModal} />
           </div>
         )

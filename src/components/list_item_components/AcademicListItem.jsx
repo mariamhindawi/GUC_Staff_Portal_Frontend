@@ -9,11 +9,14 @@ const AcademicListItem = props => {
   const user = useUserContext();
   const match = useRouteMatch();
 
-  const customButtons = () => {
+  const customData = () => {
     switch (user.role) {
       case "HR":
         return (
           <>
+            <td>{props.academic.salary}</td>
+            <td>{props.academic.annualLeaveBalance}</td>
+            <td>{props.academic.accidentalLeaveBalance}</td>
             <td>
               <Link to={`${match.url}/update/${props.academic.id}`} tabIndex={-1}>
                 <UpdateButton />
@@ -32,11 +35,13 @@ const AcademicListItem = props => {
     <tr>
       <td>{props.academic.id}</td>
       <td>{props.academic.name}</td>
+      <td>{props.academic.email}</td>
+      <td>{props.academic.gender}</td>
       <td>{props.academic.department !== "UNASSIGNED" ? props.academic.department : "-"}</td>
+      <td>{props.academic.role}</td>
       <td>{props.academic.office}</td>
       <td>{props.academic.dayOff}</td>
-      <td>{props.academic.email}</td>
-      {customButtons()}
+      {customData()}
     </tr>
   );
 };
@@ -47,11 +52,13 @@ AcademicListItem.propTypes = {
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
-    salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    salary: PropTypes.number,
     role: PropTypes.string,
     department: PropTypes.string,
     dayOff: PropTypes.string,
     office: PropTypes.string,
+    annualLeaveBalance: PropTypes.number,
+    accidentalLeaveBalance: PropTypes.number,
   }).isRequired,
   toggleDeleteModal: PropTypes.func,
 };

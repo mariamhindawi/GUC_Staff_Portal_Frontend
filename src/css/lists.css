@@ -1,80 +1,84 @@
-.list-add-button {
-  float: right;
-  margin-right: 5%;
-}
-
 .list-container {
-  clear: right;
-  display: flex;
-  justify-content: center;
   width: 100%;
-  height: 85%;
-  padding-top: 20px;
+  height: calc(100vh - 170px);
+  margin-top: 15px;
+  overflow-x: scroll;
 }
 
 .list {
-  width: 90%;
-  border: #019be2 3px solid;
+  table-layout: fixed;
+  width: 100%;
+  height: 100%;
+  border: rgb(0, 83, 138) 3px solid;
   border-collapse: separate;
   border-radius: 10px;
   border-spacing: 0;
 }
 
-.list tr {
-  height: 50px;
+.list-last-page {
+  height: auto;
 }
 
 .list tr:nth-child(even) {
-  background-color: rgba(136, 189, 188, 0.1);
+  background-color: rgba(0, 217, 241, 0.1);
 }
 
 .list tr th {
-  border-bottom: #019be2 3px solid;
-  background: rgba(136, 189, 188, 0.5);
+  padding-left: 5px;
+  background-color: rgba(26, 151, 210, 1);
+  color: white;
   font-weight: bold;
-  text-align: center;
 }
 
 .list tr th:first-child {
-  border-top-left-radius: 5px;
+  border-top-left-radius: 7px;
 }
 
 .list tr th:last-child {
-  border-top-right-radius: 5px;
+  border-top-right-radius: 7px;
 }
 
 .list tr td {
   padding: 5px;
-  text-align: center;
+  word-wrap: break-word;
+}
+
+.list tr td.no-items {
+  font-size: large;
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .list-pagination {
   position: absolute;
   bottom: 0;
+  margin-bottom: 15px;
 }
 
-@media (max-width: 768px) {
-  /* Force table to not be like tables anymore */
-  .table,
-  .table-head,
-  .table tbody,
-  .table-row td,
-  .table-row {
-    display: block;
-  }
-  /* Hide table headers (but not display: none;, for accessibility) */
-  .table-head .table-row {
-    display: none;
-  }
-  .table-row {
-    border-bottom: #88bdbc 3px solid;
-  }
-  .table-row:last-child {
-    border-bottom: none;
-  }
-  .table-row td,
-  .table-row th {
-    border: none;
-    text-align: center;
-  }
+.list-pagination .page-item:not(.disabled) .page-link {
+  color: rgba(26, 151, 210, 1);
+  z-index: 1;
+}
+
+.list-pagination .page-item:not(.disabled) .page-link:hover {
+  background-color: rgba(26, 152, 210 , 0.1);
+  z-index: 2;
+}
+
+.list-pagination .page-item:not(.disabled) .page-link:focus {
+  box-shadow: none;
+  z-index: 1;
+}
+
+.list-pagination .page-item:not(.disabled):not(.active) .page-link:focus-visible,
+.list-pagination .page-item:not(.disabled):not(.active) .page-link:active {
+  box-shadow: 0 0 5px -0px rgba(26, 151, 210, 1);
+  z-index: 2;
+}
+
+.list-pagination .page-item:not(.disabled).active .page-link {
+  color: white;
+  background-color: rgba(26, 151, 210, 1);
+  border-color: rgba(26, 151, 210, 1);
+  z-index: 3;
 }
