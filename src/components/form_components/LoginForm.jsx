@@ -93,10 +93,9 @@ function LoginForm() {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <div className="form-input-error-message">
+          <span className="error-message mb-2">
             <ErrorMessage name="email" />
-          </div>
-          <br />
+          </span>
 
           <label htmlFor="password">
             <FontAwesomeIcon className="login-form-icon" icon="lock" />
@@ -109,21 +108,20 @@ function LoginForm() {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <div className="form-input-error-message">
+          <span className="error-message mb-3">
             <ErrorMessage name="password" />
-          </div>
+          </span>
 
-          <div className="text-center">
-            <button
-              className="login-button"
-              type="submit"
-              disabled={formikProps.isSubmitting}
-              onClick={() => { setErrorMessage(""); }}
-            >
-              LOG IN
-            </button>
-            <div className="form-error-message">{errorMessage}</div>
-          </div>
+          <button
+            className="login-button"
+            type="submit"
+            disabled={formikProps.isSubmitting}
+            onClick={() => { setErrorMessage(""); }}
+          >
+            LOG IN
+          </button>
+
+          <span className="error-message justify-content-center mt-2">{errorMessage}</span>
         </Form>
       )}
     </Formik>

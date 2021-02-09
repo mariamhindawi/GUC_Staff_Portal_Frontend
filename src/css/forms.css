@@ -4,77 +4,30 @@ input {
 
 input:-webkit-autofill {
   background-clip: text;
-  /* box-shadow: 0 0 0 30px white inset; */
   /* -webkit-text-fill-color: navy; */
 }
 
-.form-input-border {
-  border: 2px rgba(136, 189, 188, 1) solid;
-  outline: none;
+.form-container {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
 }
 
-.form-input-label {
-  font-weight: bold;
+.form-card {
+  border: solid;
+  border-radius: 10px;
+  width: 80%;
+  padding: 15px;
 }
 
-.form-button {
-  border: none;
-  color: black;
-  font-weight: bolder;
+.form-card label {
+
 }
 
-.form-button-div {
-  float: right;
+.form-card input {
+
 }
 
-.form-button:hover {
-  color: white;
-}
+.form-card select {
 
-.form-input-error-message {
-  height: 20px;
-  margin-left: 15px;
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-size: 12px;
-  color: red;
-}
-
-.form-error-message {
-  height: 10px;
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 12px;
-  color: red;
-}
-
-.form-success-message {
-  height: 10px;
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: 12px;
-  color: green;
-}
-
-.input-form {
-  border: #88bdbc 3px solid;
-  width: 50%;
-}
-
-@media (max-width: 322px) {
-  .form-input-error-message {
-    height: 20px;
-    margin-left: 0px;
-    font-weight: bold;
-    font-size: 12px;
-    color: red;
-  }
-}
-
-.add-form {
-  position: absolute;
-  top: 40%;
-  border: #88bdbc 3px solid;
-  width: 60%;
-  margin-left: 20%;
 }

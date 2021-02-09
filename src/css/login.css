@@ -27,6 +27,13 @@
   }
 }
 
+.login-form-card {
+  max-height: 95vh;
+  align-items: center;
+  border-radius: 20px;
+  overflow-y: auto;
+}
+
 .login-form-icon {
   color: rgb(28, 142, 248);
   font-size: larger;
@@ -40,7 +47,6 @@
 }
 
 .login-button {
-  margin-top: 10%;
   padding: 7px;
   width: 100%;
   border: none;

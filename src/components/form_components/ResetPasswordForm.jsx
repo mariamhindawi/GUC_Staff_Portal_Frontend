@@ -113,9 +113,9 @@ const ResetPasswordForm = () => {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <div className="form-input-error-message">
+          <span className="error-message">
             <ErrorMessage name="oldPassword" />
-          </div>
+          </span>
 
           <label htmlFor="newPassword">
             New Password
@@ -128,9 +128,9 @@ const ResetPasswordForm = () => {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <div className="form-input-error-message">
+          <span className="error-message">
             <ErrorMessage name="newPassword" />
-          </div>
+          </span>
 
           <label htmlFor="confirmedNewPassword">
             Confirmed New Password
@@ -143,21 +143,19 @@ const ResetPasswordForm = () => {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <div className="form-input-error-message">
+          <span className="error-message">
             <ErrorMessage name="confirmedNewPassword" />
-          </div>
+          </span>
 
-          <div className="">
-            <button
-              className=""
-              type="submit"
-              disabled={formikProps.isSubmitting}
-              onClick={() => { setErrorMessage(""); }}
-            >
-              Reset Password
-            </button>
-            <div className="form-error-message">{errorMessage}</div>
-          </div>
+          <button
+            type="submit"
+            disabled={formikProps.isSubmitting}
+            onClick={() => { setErrorMessage(""); }}
+          >
+            Reset Password
+          </button>
+
+          <span className="error-message">{errorMessage}</span>
         </Form>
       )}
     </Formik>

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Button } from "react-bootstrap";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
@@ -41,7 +40,7 @@ const AcademicMemberForm = props => {
       .required("This field is required"),
     department: Yup.string(),
     office: Yup.string()
-      .required("This feild is required"),
+      .required("This field is required"),
     salary: Yup.number()
       .typeError("Salary must be a number")
       .required("This field is required")
@@ -81,7 +80,7 @@ const AcademicMemberForm = props => {
       },
     })
       .then(response => {
-        setMessage({ messageText: response.data, messageStyle: "form-success-message" });
+        setMessage({ messageText: response.data, messageStyle: "success-message" });
         props.updateAcademics();
       })
       .catch(error => {
@@ -89,7 +88,7 @@ const AcademicMemberForm = props => {
           console.log(`Request cancelled: ${error.message}`);
         }
         else if (error.response) {
-          setMessage({ messageText: error.response.data, messageStyle: "form-error-message" });
+          setMessage({ messageText: error.response.data, messageStyle: "error-message" });
           console.log(error.response);
         }
         else if (error.request) {
@@ -109,68 +108,63 @@ const AcademicMemberForm = props => {
   };
   const renderPassword = formikProps => (
     <>
-      <label className="form-input-label col-sm-4" htmlFor="password">
+      <label htmlFor="password">
         Password
       </label>
       <Field
-        className="rounded form-input-border col-sm-8"
         name="password"
         type="password"
         placeholder={placeholders.password}
         onFocus={e => handleFocus(e)}
         onBlur={e => handleBlur(e, formikProps)}
       />
-      <div className="form-input-error-message">
+      <span className="error-message">
         <ErrorMessage name="password" />
-      </div>
+      </span>
     </>
   );
 
   return (
-    <div className="input-form add-room-form rounded-border container">
-      <div className="pt-3 pb-3">
+    <div className="form-container">
+      <div className="form-card">
         <Formik
-          className="row"
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {formikProps => (
             <Form>
-              <label className="form-input-label col-sm-4" htmlFor="name">
+              <label htmlFor="name">
                 Name
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 name="name"
                 placeholder={placeholders.name}
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="name" />
-              </div>
+              </span>
 
-              <label className="form-input-label col-sm-4" htmlFor="email">
+              <label htmlFor="email">
                 Email
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 name="email"
                 type="email"
                 placeholder={placeholders.email}
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="email" />
-              </div>
+              </span>
 
-              <label className="form-input-label col-sm-4" htmlFor="gender">
+              <label htmlFor="gender">
                 Gender
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 as="select"
                 name="gender"
                 onFocus={e => handleFocus(e)}
@@ -180,15 +174,14 @@ const AcademicMemberForm = props => {
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </Field>
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="gender" />
-              </div>
+              </span>
 
-              <label className="form-input-label col-sm-4" htmlFor="role">
+              <label htmlFor="role">
                 Role
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 as="select"
                 name="role"
                 onFocus={e => handleFocus(e)}
@@ -199,57 +192,53 @@ const AcademicMemberForm = props => {
                 <option value="Head of Department">Head of Department</option>
                 <option value="Teaching Assistant">Teaching Assistant</option>
               </Field>
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="role" />
-              </div>
+              </span>
 
-              <label className="form-input-label col-sm-4" htmlFor="department">
+              <label htmlFor="department">
                 Department
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 name="department"
                 placeholder={placeholders.department}
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="department" />
-              </div>
+              </span>
 
-              <label className="form-input-label col-sm-4" htmlFor="office">
+              <label htmlFor="office">
                 Office
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 name="office"
                 placeholder={placeholders.office}
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="office" />
-              </div>
+              </span>
 
-              <label className="form-input-label col-sm-4" htmlFor="salray">
+              <label htmlFor="salray">
                 Salary
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 name="salary"
                 placeholder={placeholders.salary}
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="salary" />
-              </div>
+              </span>
 
-              <label className="form-input-label col-sm-4" htmlFor="dayOff">
+              <label htmlFor="dayOff">
                 Day Off
               </label>
               <Field
-                className="rounded form-input-border col-sm-8"
                 as="select"
                 name="dayOff"
                 onFocus={e => handleFocus(e)}
@@ -263,19 +252,21 @@ const AcademicMemberForm = props => {
                 <option value="Wednesday">Wednesday</option>
                 <option value="Thursday">Thursday</option>
               </Field>
-              <div className="form-input-error-message">
+              <span className="error-message">
                 <ErrorMessage name="dayOff" />
-              </div>
+              </span>
 
               {props.formType === "update" && renderPassword(formikProps)}
 
-              <div className="form-button-div mb-2">
-                <Button type="submit" disabled={formikProps.isSubmitting}>
-                  {props.formType === "add" ? "Add academic member" : "Update academic member"}
-                </Button>
-              </div>
+              <button
+                type="submit"
+                disabled={formikProps.isSubmitting}
+                onClick={() => { setMessage({ messageText: "", messageStyle: "" }); }}
+              >
+                {props.formType === "add" ? "Add academic member" : "Update academic member"}
+              </button>
 
-              <div className={message.messageStyle}>{message.messageText}</div>
+              <span className={message.messageStyle}>{message.messageText}</span>
             </Form>
           )}
         </Formik>
