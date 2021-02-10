@@ -1,12 +1,12 @@
+@import "./messages.css";
+@import "./buttons.css";
+@import "./modals.css";
+@import "./error_page.css";
 @import "./login.css";
 @import "./general.css";
 @import "./navbar.css";
 @import "./sidebar.css";
-@import "./buttons.css";
 @import "./forms.css";
-@import "./error_page.css";
-@import "./modals.css";
-@import "./messages.css";
 @import "./lists.css";
 
 .profile-container {

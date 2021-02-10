@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
+import FormButton from "../button_components/FormButton";
 
 const AcademicMemberForm = props => {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
@@ -14,12 +15,12 @@ const AcademicMemberForm = props => {
   useAxiosCancel(axiosCancelSource);
 
   const placeholders = {
-    name: "Name",
-    email: "Email",
-    department: "Department",
-    office: "Office",
-    salary: "Salary",
-    password: "Password",
+    name: "Full Name",
+    email: "Email Address",
+    department: "Department Name",
+    office: "Room Name",
+    salary: "Salary in EGP",
+    password: "New Password",
   };
   const initialValues = {
     name: props.academic.name,
@@ -118,7 +119,7 @@ const AcademicMemberForm = props => {
         onFocus={e => handleFocus(e)}
         onBlur={e => handleBlur(e, formikProps)}
       />
-      <span className="error-message">
+      <span className="form-input-message error-message">
         <ErrorMessage name="password" />
       </span>
     </>
@@ -134,6 +135,10 @@ const AcademicMemberForm = props => {
         >
           {formikProps => (
             <Form>
+              <div className="form-title">
+                {props.formType === "add" ? "Add Academic" : `Update Academic "${props.academic.id}"`}
+              </div>
+
               <label htmlFor="name">
                 Name
               </label>
@@ -143,7 +148,7 @@ const AcademicMemberForm = props => {
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="name" />
               </span>
 
@@ -157,7 +162,7 @@ const AcademicMemberForm = props => {
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="email" />
               </span>
 
@@ -165,16 +170,17 @@ const AcademicMemberForm = props => {
                 Gender
               </label>
               <Field
+                className={formikProps.values.gender === "" ? "disabled-selected" : ""}
                 as="select"
                 name="gender"
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               >
-                <option disabled value="">Gender</option>
+                <option disabled value="">Choose Gender</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </Field>
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="gender" />
               </span>
 
@@ -182,17 +188,18 @@ const AcademicMemberForm = props => {
                 Role
               </label>
               <Field
+                className={formikProps.values.role === "" ? "disabled-selected" : ""}
                 as="select"
                 name="role"
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               >
-                <option disabled value="">Role</option>
+                <option disabled value="">Choose Role</option>
                 <option value="Course Instructor">Course Instructor</option>
                 <option value="Head of Department">Head of Department</option>
                 <option value="Teaching Assistant">Teaching Assistant</option>
               </Field>
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="role" />
               </span>
 
@@ -205,7 +212,7 @@ const AcademicMemberForm = props => {
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="department" />
               </span>
 
@@ -218,7 +225,7 @@ const AcademicMemberForm = props => {
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="office" />
               </span>
 
@@ -231,7 +238,7 @@ const AcademicMemberForm = props => {
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="salary" />
               </span>
 
@@ -239,12 +246,13 @@ const AcademicMemberForm = props => {
                 Day Off
               </label>
               <Field
+                className={formikProps.values.dayOff === "" ? "disabled-selected" : ""}
                 as="select"
                 name="dayOff"
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               >
-                <option disabled value="">Day Off</option>
+                <option disabled value="">Choose Day Off</option>
                 <option value="Saturday">Saturday</option>
                 <option value="Sunday">Sunday</option>
                 <option value="Monday">Monday</option>
@@ -252,21 +260,23 @@ const AcademicMemberForm = props => {
                 <option value="Wednesday">Wednesday</option>
                 <option value="Thursday">Thursday</option>
               </Field>
-              <span className="error-message">
+              <span className="form-input-message error-message">
                 <ErrorMessage name="dayOff" />
               </span>
 
               {props.formType === "update" && renderPassword(formikProps)}
 
-              <button
-                type="submit"
-                disabled={formikProps.isSubmitting}
-                onClick={() => { setMessage({ messageText: "", messageStyle: "" }); }}
-              >
-                {props.formType === "add" ? "Add academic member" : "Update academic member"}
-              </button>
+              <div className="form-submit">
+                <span className={`form-message ${message.messageStyle}`}>{message.messageText}</span>
 
-              <span className={message.messageStyle}>{message.messageText}</span>
+                <FormButton
+                  isSubmiting={formikProps.isSubmitting}
+                  onClick={() => { setMessage({ messageText: "", messageStyle: "" }); }}
+                >
+                  {props.formType === "add" && (formikProps.isSubmitting ? "Saving" : "Save")}
+                  {props.formType === "update" && (formikProps.isSubmitting ? "Saving changes" : "Save changes")}
+                </FormButton>
+              </div>
             </Form>
           )}
         </Formik>
@@ -276,7 +286,7 @@ const AcademicMemberForm = props => {
 };
 
 AcademicMemberForm.propTypes = {
-  formType: PropTypes.string.isRequired,
+  formType: PropTypes.oneOf(["add", "update"]).isRequired,
   academic: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,

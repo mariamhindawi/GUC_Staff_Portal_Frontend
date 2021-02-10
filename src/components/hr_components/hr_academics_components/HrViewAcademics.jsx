@@ -77,7 +77,7 @@ function HrViewAcademics(props) {
           <div className="view-container">
             <span className="d-flex justify-content-end">
               <Link to={`${match.url}/add`} tabIndex={-1}>
-                <AddButton buttonText="Add Academic Member" />
+                <AddButton>Add Academic Member</AddButton>
               </Link>
             </span>
             <AcademicList academics={props.academics} toggleDeleteModal={toggleDeleteModal} />

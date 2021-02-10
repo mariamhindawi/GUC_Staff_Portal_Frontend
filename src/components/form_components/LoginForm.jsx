@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import { Spinner } from "react-bootstrap";
 import Axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -93,7 +94,7 @@ function LoginForm() {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <span className="error-message mb-2">
+          <span className="login-input-message error-message mb-2">
             <ErrorMessage name="email" />
           </span>
 
@@ -108,7 +109,7 @@ function LoginForm() {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <span className="error-message mb-3">
+          <span className="login-input-message error-message mb-3">
             <ErrorMessage name="password" />
           </span>
 
@@ -118,10 +119,12 @@ function LoginForm() {
             disabled={formikProps.isSubmitting}
             onClick={() => { setErrorMessage(""); }}
           >
-            LOG IN
+            {formikProps.isSubmitting ? "LOGGING IN" : "LOG IN"}
+            {formikProps.isSubmitting
+              && <Spinner className="ml-2" variant="light" animation="border" size="sm" as="span" />}
           </button>
 
-          <span className="error-message justify-content-center mt-2">{errorMessage}</span>
+          <span className="error-message justify-content-center mt-1">{errorMessage}</span>
         </Form>
       )}
     </Formik>

@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
+import FormButton from "../button_components/FormButton";
 
 const ResetPasswordForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -15,9 +16,9 @@ const ResetPasswordForm = () => {
   useAxiosCancel(axiosCancelSource);
 
   const placeholders = {
-    oldPassword: "Old password",
-    newPassword: "New password",
-    confirmedNewPassword: "Confirm new password",
+    oldPassword: "Enter old password",
+    newPassword: "Enter new password",
+    confirmedNewPassword: "Re-enter new password",
   };
   const initialValues = {
     oldPassword: "",
@@ -113,7 +114,7 @@ const ResetPasswordForm = () => {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <span className="error-message">
+          <span className="form-input-message error-message">
             <ErrorMessage name="oldPassword" />
           </span>
 
@@ -128,12 +129,12 @@ const ResetPasswordForm = () => {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <span className="error-message">
+          <span className="form-input-message error-message">
             <ErrorMessage name="newPassword" />
           </span>
 
           <label htmlFor="confirmedNewPassword">
-            Confirmed New Password
+            Confirm New Password
           </label>
           <Field
             className=""
@@ -143,19 +144,22 @@ const ResetPasswordForm = () => {
             onFocus={e => handleFocus(e)}
             onBlur={e => handleBlur(e, formikProps)}
           />
-          <span className="error-message">
+          <span className="form-input-message error-message">
             <ErrorMessage name="confirmedNewPassword" />
           </span>
 
-          <button
-            type="submit"
-            disabled={formikProps.isSubmitting}
-            onClick={() => { setErrorMessage(""); }}
-          >
-            Reset Password
-          </button>
+          <div className="form-submit">
+            <span className="form-message error-message">{errorMessage}</span>
 
-          <span className="error-message">{errorMessage}</span>
+            <FormButton
+              variant="info"
+              type="submit"
+              isSubmiting={formikProps.isSubmitting}
+              onClick={() => { setErrorMessage(""); }}
+            >
+              {formikProps.isSubmitting ? "Saving changes" : "Save changes"}
+            </FormButton>
+          </div>
         </Form>
       )}
     </Formik>

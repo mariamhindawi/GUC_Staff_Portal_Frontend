@@ -37,13 +37,18 @@
 .login-form-icon {
   color: rgb(28, 142, 248);
   font-size: larger;
-  margin-right: 1vw;
+  margin-right: 10px;
 }
 
-.login-input {
+.login-form-card input {
   outline: none;
   border: none;
   border-bottom: 3px solid black;
+  width: calc(100% - 27px);
+}
+
+.login-input-message {
+  margin-left: 27px;
 }
 
 .login-button {

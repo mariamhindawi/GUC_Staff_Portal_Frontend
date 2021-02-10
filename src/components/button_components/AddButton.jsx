@@ -6,19 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function AddButton(props) {
   return (
     <Button variant="success" onClick={props.onClick}>
-      {props.buttonText}
+      {props.children}
       <FontAwesomeIcon className="ml-2" icon="plus" />
     </Button>
   );
 }
 
 AddButton.propTypes = {
-  buttonText: PropTypes.string,
+  children: PropTypes.node,
   onClick: PropTypes.func,
 };
 
 AddButton.defaultProps = {
-  buttonText: "Add",
+  children: "Add",
   onClick: () => {},
 };
 
