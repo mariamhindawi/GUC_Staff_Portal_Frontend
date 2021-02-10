@@ -21,11 +21,11 @@ function DeleteModal(props) {
       <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
         <span>
           <button className="modal-close-button" type="button" onClick={() => { props.toggle(); }}>
-            <FontAwesomeIcon className="" icon="times" />
+            <FontAwesomeIcon icon="times" />
           </button>
         </span>
         <Modal.Body>
-          <Alert className="mb-4 text-center" variant={props.message.messageStyle}>
+          <Alert className="text-center" variant={props.message.messageStyle}>
             {props.message.messageText}
           </Alert>
         </Modal.Body>
@@ -33,7 +33,7 @@ function DeleteModal(props) {
     );
   }
   return (
-    <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
+    <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus>
       <Modal.Header className="delete-modal-header">
         <Alert className="align-center-vertical" variant="danger">
           {`Are you sure you want to delete "${props.itemToDelete}" ?`}

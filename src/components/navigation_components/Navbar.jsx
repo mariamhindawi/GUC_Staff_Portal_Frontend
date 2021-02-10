@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 import { Nav, Dropdown } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
@@ -16,7 +16,6 @@ function Navbar(props) {
   const [notifications, setNotifications] = useState([]);
   const user = useUserContext();
   const match = useRouteMatch();
-  const history = useHistory();
   const axiosCancelSource = Axios.CancelToken.source();
 
   const setLayout = () => {
@@ -96,11 +95,8 @@ function Navbar(props) {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
-      .then(response => {
-        alert(response.data);
-        AuthTokenManager.removeAuthAccessToken();
-        localStorage.setItem("logout", Date.now());
-        history.push("/login");
+      .then(() => {
+        window.dispatchEvent(new Event("logout"));
       })
       .catch(error => {
         if (Axios.isCancel(error)) {

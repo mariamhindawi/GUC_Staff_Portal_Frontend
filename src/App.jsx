@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { Alert, Modal } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
 import "./css/app.css";
@@ -12,6 +14,8 @@ import PageNotFound from "./components/error_components/PageNotFound";
 
 function App() {
   const [isLoading, setLoading] = useState(true);
+  const [alertModalIsOpen, setAlertModalOpen] = useState(false);
+  const [alertModalMessage, setAlertModalMessage] = useState("");
   const setUser = useSetUserContext();
   const history = useHistory();
 
@@ -48,58 +52,106 @@ function App() {
   const handleLogin = () => {
     initUser();
     history.push("/staff");
+    localStorage.setItem("login", Date.now());
   };
-  const handleTimeout = () => {
-    alert("Session expired. Please sign in again");
+  const handleLogout = () => {
     AuthTokenManager.removeAuthAccessToken();
     history.push("/login");
+    setAlertModalMessage("Logged out successfully");
+    setAlertModalOpen(true);
+    localStorage.setItem("logout", Date.now());
+  };
+  const handleTimeout = () => {
+    AuthTokenManager.removeAuthAccessToken();
+    history.push("/login");
+    setAlertModalMessage("Session expired. Please log in again");
+    setAlertModalOpen(true);
+    localStorage.setItem("session-timeout", Date.now());
+  };
+  const handleResetPassword = () => {
+    AuthTokenManager.removeAuthAccessToken();
+    history.push("/login");
+    setAlertModalMessage("Password reset successfully. Please log in again");
+    setAlertModalOpen(true);
+    localStorage.setItem("reset-password", Date.now());
   };
   const syncTabs = async event => {
     if (event.key === "login") {
-      // alert("Session expired. Please sign in again");
+      setAlertModalOpen(false);
+      setAlertModalMessage("");
       await initAuthToken();
       history.push("/staff");
     }
-    else if (event.key === "reset-password") {
-      // alert("Session expired. Please sign in again");
-      AuthTokenManager.removeAuthAccessToken();
-      history.push("/login");
-    }
     else if (event.key === "logout") {
-      // alert("Logged out");
       AuthTokenManager.removeAuthAccessToken();
       history.push("/login");
+      setAlertModalMessage("Logged out successfully");
+      setAlertModalOpen(true);
     }
     else if (event.key === "session-timeout") {
-      // alert("Session expired. Please sign in again");
       AuthTokenManager.removeAuthAccessToken();
       history.push("/login");
+      setAlertModalMessage("Session expired. Please log in again");
+      setAlertModalOpen(true);
+    }
+    else if (event.key === "reset-password") {
+      AuthTokenManager.removeAuthAccessToken();
+      history.push("/login");
+      setAlertModalMessage("Password reset successfully. Please log in again");
+      setAlertModalOpen(true);
     }
   };
   const setupEventListeners = () => {
     window.addEventListener("login", handleLogin);
+    window.addEventListener("logout", handleLogout);
     window.addEventListener("session-timeout", handleTimeout);
+    window.addEventListener("reset-password", handleResetPassword);
     window.addEventListener("storage", syncTabs);
     return () => {
       window.removeEventListener("login", handleLogin);
+      window.removeEventListener("logout", handleLogout);
       window.removeEventListener("session-timeout", handleTimeout);
+      window.removeEventListener("reset-password", handleResetPassword);
       window.removeEventListener("storage", syncTabs);
     };
   };
   useEffect(initAuthToken, []);
   useEffect(setupEventListeners, []);
 
+  const toggleAlertModal = () => { setAlertModalOpen(prevState => !prevState); };
+  const resetAlertModal = () => { setAlertModalMessage(""); };
+
   if (isLoading) {
     return <div />;
   }
   return (
-    <Switch>
-      <Route exact path="/"><Redirect to={AuthTokenManager.getAuthAccessToken() ? "/staff" : "/login"} /></Route>
-      <Route exact path="/login"><Login /></Route>
-      <Route path="/staff"><StaffHome /></Route>
-      <Route exact path="/404"><PageNotFound /></Route>
-      <Route path="/"><Redirect to="/404" /></Route>
-    </Switch>
+    <>
+      <Switch>
+        <Route exact path="/"><Redirect to={AuthTokenManager.getAuthAccessToken() ? "/staff" : "/login"} /></Route>
+        <Route exact path="/login"><Login /></Route>
+        <Route path="/staff"><StaffHome /></Route>
+        <Route exact path="/404"><PageNotFound /></Route>
+        <Route path="/"><Redirect to="/404" /></Route>
+      </Switch>
+
+      <Modal
+        show={alertModalIsOpen}
+        onHide={toggleAlertModal}
+        onExited={resetAlertModal}
+        restoreFocus={false}
+      >
+        <span>
+          <button className="modal-close-button" type="button" onClick={toggleAlertModal}>
+            <FontAwesomeIcon icon="times" />
+          </button>
+        </span>
+        <Modal.Body>
+          <Alert className="text-center" variant="primary">
+            {alertModalMessage}
+          </Alert>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 }
 

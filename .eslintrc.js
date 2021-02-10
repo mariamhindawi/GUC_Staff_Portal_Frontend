@@ -19,7 +19,6 @@ module.exports = {
   ],
   rules: {
     "no-console": "off",
-    "no-alert": "off",
     "linebreak-style": "off",
     "no-plusplus": "off",
     "quote-props": ["error", "consistent-as-needed"],

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import Axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -10,7 +9,6 @@ import FormButton from "../button_components/FormButton";
 
 const ResetPasswordForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const history = useHistory();
   const axiosCancelSource = Axios.CancelToken.source();
 
   useAxiosCancel(axiosCancelSource);
@@ -58,11 +56,8 @@ const ResetPasswordForm = () => {
         confirmedNewPassword: values.confirmedNewPassword,
       },
     })
-      .then(response => {
-        alert(`${response.data}\nPlease Login again`);
-        AuthTokenManager.removeAuthAccessToken();
-        localStorage.setItem("reset-password", Date.now());
-        history.push("/login");
+      .then(() => {
+        window.dispatchEvent(new Event("reset-password"));
       })
       .catch(error => {
         if (Axios.isCancel(error)) {

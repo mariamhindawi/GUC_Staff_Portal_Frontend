@@ -1,32 +1,32 @@
 import React from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../others/AxiosInstance";
+import axiosInstance from "../../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-import FacultyList from "../list_components/faculty_list.component";
-import FacultyForm from "../form_components/faculty_form.component";
-import AuthTokenManager from "../../others/AuthTokenManager";
+import RoomList from "../../list_components/room_list.component";
+import RoomForm from "../../form_components/room_form.component";
+import AuthTokenManager from "../../../others/AuthTokenManager";
 
 
-class HrFaculty extends React.Component {
+class HrRooms extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			faculties: [],
+			rooms: [],
 			deleteModalOpen: false,
-			facultyToDelete: "",
+			roomToDelete: "",
 			modalMessageStyle: "",
 			modalMessage: "",
 			loading: true
 		};
-		this.fetchFaculties = this.fetchFaculties.bind(this);
+		this.fetchRooms = this.fetchRooms.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
-		this.deleteFaculty = this.deleteFaculty.bind(this);
+		this.deleteRoom = this.deleteRoom.bind(this);
 	}
 
-	async fetchFaculties() {
+	async fetchRooms() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/staff/fe/get-faculties", {
+		await axiosInstance.get("/staff/fe/get-rooms", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": AuthTokenManager.getAuthAccessToken()
@@ -34,7 +34,8 @@ class HrFaculty extends React.Component {
 		})
 			.then(res => {
 				this.setState({
-					faculties: res.data
+					rooms: res.data,
+					loading: false
 				});
 			})
 			.catch(error => {
@@ -54,28 +55,28 @@ class HrFaculty extends React.Component {
 
 	componentDidMount() {
 		this.axiosCancelSource = axios.CancelToken.source();
-		this.fetchFaculties();
+		this.fetchRooms();
 	}
 
 	componentWillUnmount() {
 		this.axiosCancelSource.cancel("Operation canceled by the user");
 	}
 
-	getFaculty(facultyName) {
-		const faculties = this.state.faculties;
-		for (let i = 0; i < faculties.length; i++) {
-			if (faculties[i].name === facultyName)
-				return faculties[i];
+	getRoom(roomName) {
+		const rooms = this.state.rooms;
+		for (let i = 0; i < rooms.length; i++) {
+			if (rooms[i].name === roomName)
+				return rooms[i];
 		}
-		return { name: "" };
+		return { name: "", capacity: "", type: "" };
 	};
 
-	toggleModal(facultyName) {
-		this.setState({ deleteModalOpen: !this.state.deleteModalOpen, facultyToDelete: facultyName, modalMessage: "" });
+	toggleModal(roomName) {
+		this.setState({ deleteModalOpen: !this.state.deleteModalOpen, roomToDelete: roomName, modalMessage: "" });
 	}
 
-	async deleteFaculty(facultyName) {
-		await axiosInstance.delete(`/staff/hr/delete-faculty/${facultyName}`, {
+	async deleteRoom(roomName) {
+		await axiosInstance.delete(`/staff/hr/delete-room/${roomName}`, {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": AuthTokenManager.getAuthAccessToken()
@@ -86,7 +87,7 @@ class HrFaculty extends React.Component {
 					modalMessageStyle: "form-success-message",
 					modalMessage: response.data
 				});
-				await this.fetchFaculties();
+				await this.fetchRooms();
 			})
 			.catch(error => {
 				if (error.response) {
@@ -110,7 +111,7 @@ class HrFaculty extends React.Component {
 			return (
 				<>
 					<div>Are you sure?</div>
-					<Button className="rounded bg-danger" onClick={() => this.deleteFaculty(this.state.facultyToDelete)}>Yes</Button>
+					<Button className="rounded bg-danger" onClick={() => this.deleteRoom(this.state.roomToDelete)}>Yes</Button>
 					<Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
 				</>
 			);
@@ -126,7 +127,7 @@ class HrFaculty extends React.Component {
 
 	render() {
 		return (
-			<>
+			<div>
 				<Route exact path={`${this.props.match.path}`}
 					render={() => {
 						if (this.state.loading) {
@@ -146,9 +147,9 @@ class HrFaculty extends React.Component {
 						return (
 							<>
 								<Link to={`${this.props.match.url}/add`}>
-									<button>Add Faculty</button>
+									<button>Add Room</button>
 								</Link>
-								<FacultyList faculties={this.state.faculties} role="hr" toggleModal={this.toggleModal} />
+								<RoomList rooms={this.state.rooms} role="hr" toggleModal={this.toggleModal} />
 								<Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
 									{this.renderModal()}
 								</Modal>
@@ -156,15 +157,15 @@ class HrFaculty extends React.Component {
 						);
 					}} />
 				<Route exact path={`${this.props.match.path}/add`}>
-					<FacultyForm faculty={{ name: "" }} updateFaculties={this.fetchFaculties} formType="add" />
+					<RoomForm room={{ name: "", capacity: "", type: "" }} updateRooms={this.fetchRooms} formType="add" />
 				</Route>
 				<Route exact path={`${this.props.match.path}/update/:name`}
-					render={routeProps => {
-						return (<FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} formType="update" />);
-					}} />
-			</>
+					render={routeProps => (
+						<RoomForm room={this.getRoom(routeProps.match.params.name)} updateRooms={this.fetchRooms} formType="update" />
+					)} />
+			</div>
 		);
 	}
 }
 
-export default withRouter(HrFaculty);
+export default withRouter(HrRooms);

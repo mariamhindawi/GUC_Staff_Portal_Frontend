@@ -39,8 +39,7 @@ const AuthTokenManager = () => {
         if (error.response) {
           if (error.response.data === "Invalid refresh token") {
             console.log(error.response.data);
-            dispatchEvent(new Event("session-timeout"));
-            localStorage.setItem("session-timeout", Date.now());
+            window.dispatchEvent(new Event("session-timeout"));
           }
         }
         else if (error.request) {

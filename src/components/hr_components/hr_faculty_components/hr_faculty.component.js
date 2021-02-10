@@ -1,33 +1,32 @@
 import React from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../others/AxiosInstance";
+import axiosInstance from "../../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-import CourseList from "../list_components/course_list.component";
-import CourseForm from "../form_components/course_form.component";
-import AuthTokenManager from "../../others/AuthTokenManager";
+import FacultyList from "../../list_components/faculty_list.component";
+import FacultyForm from "../../form_components/faculty_form.component";
+import AuthTokenManager from "../../../others/AuthTokenManager";
 
 
-class HrCourses extends React.Component {
+class HrFaculty extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			courses: [],
-			departments: [],
+			faculties: [],
 			deleteModalOpen: false,
-			courseToDelete: "",
+			facultyToDelete: "",
 			modalMessageStyle: "",
 			modalMessage: "",
 			loading: true
 		};
-		this.fetchCourses = this.fetchCourses.bind(this);
+		this.fetchFaculties = this.fetchFaculties.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
-		this.deleteCourse = this.deleteCourse.bind(this);
+		this.deleteFaculty = this.deleteFaculty.bind(this);
 	}
 
-	async fetchCourses() {
+	async fetchFaculties() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/staff/fe/get-courses", {
+		await axiosInstance.get("/staff/fe/get-faculties", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": AuthTokenManager.getAuthAccessToken()
@@ -35,8 +34,7 @@ class HrCourses extends React.Component {
 		})
 			.then(res => {
 				this.setState({
-					courses: res.data.courses,
-					departments: res.data.departments
+					faculties: res.data
 				});
 			})
 			.catch(error => {
@@ -56,29 +54,28 @@ class HrCourses extends React.Component {
 
 	componentDidMount() {
 		this.axiosCancelSource = axios.CancelToken.source();
-		this.fetchCourses();
+		this.fetchFaculties();
 	}
 
 	componentWillUnmount() {
 		this.axiosCancelSource.cancel("Operation canceled by the user");
 	}
 
-	getCourse(courseId) {
-		const courses = this.state.courses;
-		const departments = this.state.departments;
-		for (let i = 0; i < courses.length; i++) {
-			if (courses[i].id === courseId)
-				return { course: courses[i], department: departments[i] };
+	getFaculty(facultyName) {
+		const faculties = this.state.faculties;
+		for (let i = 0; i < faculties.length; i++) {
+			if (faculties[i].name === facultyName)
+				return faculties[i];
 		}
-		return { course: { id: "", name: "", department: "" }, department: "" };
+		return { name: "" };
 	};
 
-	toggleModal(courseId) {
-		this.setState({ deleteModalOpen: !this.state.deleteModalOpen, courseToDelete: courseId, modalMessage: "" });
+	toggleModal(facultyName) {
+		this.setState({ deleteModalOpen: !this.state.deleteModalOpen, facultyToDelete: facultyName, modalMessage: "" });
 	}
 
-	async deleteCourse(courseId) {
-		await axiosInstance.delete(`/staff/hr/delete-course/${courseId}`, {
+	async deleteFaculty(facultyName) {
+		await axiosInstance.delete(`/staff/hr/delete-faculty/${facultyName}`, {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": AuthTokenManager.getAuthAccessToken()
@@ -89,7 +86,7 @@ class HrCourses extends React.Component {
 					modalMessageStyle: "form-success-message",
 					modalMessage: response.data
 				});
-				await this.fetchCourses();
+				await this.fetchFaculties();
 			})
 			.catch(error => {
 				if (error.response) {
@@ -113,7 +110,7 @@ class HrCourses extends React.Component {
 			return (
 				<>
 					<div>Are you sure?</div>
-					<Button className="rounded bg-danger" onClick={() => this.deleteCourse(this.state.courseToDelete)}>Yes</Button>
+					<Button className="rounded bg-danger" onClick={() => this.deleteFaculty(this.state.facultyToDelete)}>Yes</Button>
 					<Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
 				</>
 			);
@@ -149,9 +146,9 @@ class HrCourses extends React.Component {
 						return (
 							<>
 								<Link to={`${this.props.match.url}/add`}>
-									<button>Add Course</button>
+									<button>Add Faculty</button>
 								</Link>
-								<CourseList courses={this.state.courses} departments={this.state.departments} role="hr" toggleModal={this.toggleModal} />
+								<FacultyList faculties={this.state.faculties} role="hr" toggleModal={this.toggleModal} />
 								<Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
 									{this.renderModal()}
 								</Modal>
@@ -159,17 +156,15 @@ class HrCourses extends React.Component {
 						);
 					}} />
 				<Route exact path={`${this.props.match.path}/add`}>
-					<CourseForm course={{ id: "", name: "" }} department=""
-						updateCourses={this.fetchCourses} formType="add" />
+					<FacultyForm faculty={{ name: "" }} updateFaculties={this.fetchFaculties} formType="add" />
 				</Route>
-				<Route exact path={`${this.props.match.path}/update/:id`}
+				<Route exact path={`${this.props.match.path}/update/:name`}
 					render={routeProps => {
-						const { course, department } = this.getCourse(routeProps.match.params.id);
-						return (<CourseForm course={course} department={department} updateCourses={this.fetchCourses} formType="update" />);
+						return (<FacultyForm faculty={this.getFaculty(routeProps.match.params.name)} updateFaculties={this.fetchFaculties} formType="update" />);
 					}} />
 			</>
 		);
 	}
 }
 
-export default withRouter(HrCourses);
+export default withRouter(HrFaculty);

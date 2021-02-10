@@ -43,8 +43,7 @@ function LoginForm() {
     })
       .then(response => {
         AuthTokenManager.setAuthAccessToken(response.headers["auth-access-token"]);
-        localStorage.setItem("login", Date.now());
-        dispatchEvent(new Event("login"));
+        window.dispatchEvent(new Event("login"));
       })
       .catch(error => {
         if (Axios.isCancel(error)) {

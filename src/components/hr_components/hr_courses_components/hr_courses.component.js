@@ -1,33 +1,33 @@
 import React from "react";
 import { Link, Route, withRouter } from "react-router-dom";
 import axios from "axios";
-import axiosInstance from "../../others/AxiosInstance";
+import axiosInstance from "../../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
-import DepartmentList from "../list_components/department_list.component";
-import DepartmentForm from "../form_components/department_form.component";
-import AuthTokenManager from "../../others/AuthTokenManager";
+import CourseList from "../../list_components/course_list.component";
+import CourseForm from "../../form_components/course_form.component";
+import AuthTokenManager from "../../../others/AuthTokenManager";
 
-class HrDepartments extends React.Component {
+
+class HrCourses extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			courses: [],
 			departments: [],
-			faculties: [],
-			heads: [],
 			deleteModalOpen: false,
-			departmentToDelete: "",
+			courseToDelete: "",
 			modalMessageStyle: "",
 			modalMessage: "",
 			loading: true
 		};
-		this.fetchDepartments = this.fetchDepartments.bind(this);
+		this.fetchCourses = this.fetchCourses.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
-		this.deleteDepartment = this.deleteDepartment.bind(this);
+		this.deleteCourse = this.deleteCourse.bind(this);
 	}
 
-	async fetchDepartments() {
+	async fetchCourses() {
 		this.setState({ loading: true });
-		await axiosInstance.get("/staff/fe/get-departments", {
+		await axiosInstance.get("/staff/fe/get-courses", {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": AuthTokenManager.getAuthAccessToken()
@@ -35,9 +35,8 @@ class HrDepartments extends React.Component {
 		})
 			.then(res => {
 				this.setState({
-					departments: res.data.departments,
-					faculties: res.data.faculties,
-					heads: res.data.heads
+					courses: res.data.courses,
+					departments: res.data.departments
 				});
 			})
 			.catch(error => {
@@ -57,30 +56,29 @@ class HrDepartments extends React.Component {
 
 	componentDidMount() {
 		this.axiosCancelSource = axios.CancelToken.source();
-		this.fetchDepartments();
+		this.fetchCourses();
 	}
 
 	componentWillUnmount() {
 		this.axiosCancelSource.cancel("Operation canceled by the user");
 	}
 
-	getDepartment(departmentName) {
+	getCourse(courseId) {
+		const courses = this.state.courses;
 		const departments = this.state.departments;
-		const faculties = this.state.faculties;
-		const heads = this.state.heads;
-		for (let i = 0; i < departments.length; i++) {
-			if (departments[i].name === departmentName)
-				return { department: departments[i], faculty: faculties[i], headOfDepartment: heads[i] };
+		for (let i = 0; i < courses.length; i++) {
+			if (courses[i].id === courseId)
+				return { course: courses[i], department: departments[i] };
 		}
-		return { department: { name: "" }, faculty: "", headOfDepartment: "" };
+		return { course: { id: "", name: "", department: "" }, department: "" };
 	};
 
-	toggleModal(departmentName) {
-		this.setState({ deleteModalOpen: !this.state.deleteModalOpen, departmentToDelete: departmentName, modalMessage: "" });
+	toggleModal(courseId) {
+		this.setState({ deleteModalOpen: !this.state.deleteModalOpen, courseToDelete: courseId, modalMessage: "" });
 	}
 
-	async deleteDepartment(departmentName) {
-		await axiosInstance.delete(`/staff/hr/delete-department/${departmentName}`, {
+	async deleteCourse(courseId) {
+		await axiosInstance.delete(`/staff/hr/delete-course/${courseId}`, {
 			cancelToken: this.axiosCancelSource.token,
 			headers: {
 				"auth-access-token": AuthTokenManager.getAuthAccessToken()
@@ -91,7 +89,7 @@ class HrDepartments extends React.Component {
 					modalMessageStyle: "form-success-message",
 					modalMessage: response.data
 				});
-				await this.fetchDepartments();
+				await this.fetchCourses();
 			})
 			.catch(error => {
 				if (error.response) {
@@ -115,7 +113,7 @@ class HrDepartments extends React.Component {
 			return (
 				<>
 					<div>Are you sure?</div>
-					<Button className="rounded bg-danger" onClick={() => this.deleteDepartment(this.state.departmentToDelete)}>Yes</Button>
+					<Button className="rounded bg-danger" onClick={() => this.deleteCourse(this.state.courseToDelete)}>Yes</Button>
 					<Button className="rounded bg-secondary" onClick={this.toggleModal}>No</Button>
 				</>
 			);
@@ -131,7 +129,7 @@ class HrDepartments extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<>
 				<Route exact path={`${this.props.match.path}`}
 					render={() => {
 						if (this.state.loading) {
@@ -148,14 +146,12 @@ class HrDepartments extends React.Component {
 								</div>
 							);
 						}
-
 						return (
 							<>
 								<Link to={`${this.props.match.url}/add`}>
-									<button>Add Department</button>
+									<button>Add Course</button>
 								</Link>
-								<DepartmentList departments={this.state.departments} faculties={this.state.faculties}
-									heads={this.state.heads} role="hr" toggleModal={this.toggleModal} />
+								<CourseList courses={this.state.courses} departments={this.state.departments} role="hr" toggleModal={this.toggleModal} />
 								<Modal isOpen={this.state.deleteModalOpen} toggle={this.toggleModal}>
 									{this.renderModal()}
 								</Modal>
@@ -163,17 +159,17 @@ class HrDepartments extends React.Component {
 						);
 					}} />
 				<Route exact path={`${this.props.match.path}/add`}>
-					<DepartmentForm department={{ name: "" }} faculty="" headOfDepartment=""
-						updateDepartments={this.fetchDepartments} formType="add" />
+					<CourseForm course={{ id: "", name: "" }} department=""
+						updateCourses={this.fetchCourses} formType="add" />
 				</Route>
-				<Route exact path={`${this.props.match.path}/update/:name`}
+				<Route exact path={`${this.props.match.path}/update/:id`}
 					render={routeProps => {
-						const { department, faculty, headOfDepartment } = this.getDepartment(routeProps.match.params.name);
-						return (<DepartmentForm department={department} faculty={faculty} headOfDepartment={headOfDepartment} updateDepartments={this.fetchDepartments} formType="update" />);
+						const { course, department } = this.getCourse(routeProps.match.params.id);
+						return (<CourseForm course={course} department={department} updateCourses={this.fetchCourses} formType="update" />);
 					}} />
-			</div>
+			</>
 		);
 	}
 }
 
-export default withRouter(HrDepartments);
+export default withRouter(HrCourses);
