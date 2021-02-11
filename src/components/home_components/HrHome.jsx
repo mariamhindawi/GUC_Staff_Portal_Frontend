@@ -7,7 +7,7 @@ import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
 import HrAcademics from "../hr_components/hr_academics_components/HrAcademics";
-import HrHrMembers from "../hr_components/hr_hrmembers_components/hr_hrmembers.component";
+import HrHrMembers from "../hr_components/hr_hrmembers_components/HrHrmembers";
 import HrCourses from "../hr_components/hr_courses_components/hr_courses.component";
 import HrDepartments from "../hr_components/hr_departments_components/hr_departments.component";
 import HrFaculty from "../hr_components/hr_faculty_components/hr_faculty.component";

@@ -1,44 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, useRouteMatch } from "react-router-dom";
-import { Alert, Modal } from "react-bootstrap";
+import { useRouteMatch } from "react-router-dom";
+import { getItem, removeFromPath } from "../../../others/Helpers";
+import GoBackModal from "../../helper_components/GoBackModal";
 import AcademicMemberForm from "../../form_components/AcademicMemberForm";
 
 function HrUpdateAcademic(props) {
   const match = useRouteMatch();
+  const academic = getItem(props.academics, match.params.id);
 
-  const getAcademic = academicID => {
-    const { academics } = props;
-    for (let i = 0; i < academics.length; i++) {
-      if (academics[i].id === academicID) {
-        return academics[i];
-      }
-    }
-    return null;
-  };
-  const removeFromPath = (path, number) => {
-    const splitPath = path.split("/");
-    if (number < splitPath.length) {
-      splitPath.length -= number;
-      return splitPath.join("/");
-    }
-    return "";
-  };
-
-  const academic = getAcademic(match.params.id);
   if (!academic) {
-    return (
-      <Modal backdrop="static" show>
-        <Modal.Body>
-          <Alert className="d-flex justify-content-between" variant="info">
-            Incorrect user ID
-            <Alert.Link as={Link} to={removeFromPath(match.path, 2)}>
-              Go back
-            </Alert.Link>
-          </Alert>
-        </Modal.Body>
-      </Modal>
-    );
+    return <GoBackModal message="Incorrect Acadeimc Member ID" link={removeFromPath(match.path, 2)} />;
   }
   return (
     <AcademicMemberForm formType="update" academic={academic} updateAcademics={props.updateAcademics} />
@@ -51,11 +23,13 @@ HrUpdateAcademic.propTypes = {
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
-    salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    salary: PropTypes.number,
     role: PropTypes.string,
-    departments: PropTypes.string,
-    rooms: PropTypes.string,
+    department: PropTypes.string,
     dayOff: PropTypes.string,
+    office: PropTypes.string,
+    annualLeaveBalance: PropTypes.number,
+    accidentalLeaveBalance: PropTypes.number,
   })).isRequired,
   updateAcademics: PropTypes.func.isRequired,
 };

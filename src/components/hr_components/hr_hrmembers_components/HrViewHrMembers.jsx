@@ -8,10 +8,10 @@ import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
 import AddButton from "../../button_components/AddButton";
 import DeleteModal from "../../helper_components/DeleteModal";
-import AcademicList from "../../list_components/AcademicList";
+import HrList from "../../list_components/HrList";
 
-function HrViewAcademics(props) {
-  const [academicToDelete, setAcademicToDelete] = useState("");
+function HrViewHrMembers(props) {
+  const [hrMemberToDelete, setHrMemberToDelete] = useState("");
   const [deleteModalIsOpen, setDeleteModalOpen] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState("will submit");
   const [deleteModalMessage, setDeleteModalMessage] = useState({ messageText: "", messageStyle: "" });
@@ -20,9 +20,9 @@ function HrViewAcademics(props) {
 
   useAxiosCancel(axiosCancelSource);
 
-  const deleteAcademic = async academicId => {
+  const deleteHrMember = async hrMemberId => {
     setDeleteModalState("submitting");
-    await AxiosInstance.delete(`/staff/hr/delete-academic-member/${academicId}`, {
+    await AxiosInstance.delete(`/staff/hr/delete-hr-member/${hrMemberId}`, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -34,7 +34,7 @@ function HrViewAcademics(props) {
           messageStyle: "success",
         });
         setDeleteModalState("submitted");
-        props.updateAcademics();
+        props.updateHrMembers();
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
@@ -56,14 +56,14 @@ function HrViewAcademics(props) {
         }
       });
   };
-  const toggleDeleteModal = academicID => {
-    if (academicID) {
-      setAcademicToDelete(academicID);
+  const toggleDeleteModal = hrMemberID => {
+    if (hrMemberID) {
+      setHrMemberToDelete(hrMemberID);
     }
     setDeleteModalOpen(prevState => !prevState);
   };
   const resetDeleteModal = () => {
-    setAcademicToDelete("");
+    setHrMemberToDelete("");
     setDeleteModalState("will submit");
     setDeleteModalMessage({ messageText: "", messageStyle: "" });
   };
@@ -77,10 +77,10 @@ function HrViewAcademics(props) {
           <div className="view-container">
             <span className="d-flex justify-content-end">
               <Link to={`${match.url}/add`} tabIndex={-1}>
-                <AddButton>Add Academic Member</AddButton>
+                <AddButton>Add HR Member</AddButton>
               </Link>
             </span>
-            <AcademicList academics={props.academics} toggleDeleteModal={toggleDeleteModal} />
+            <HrList hrMembers={props.hrMembers} toggleDeleteModal={toggleDeleteModal} />
           </div>
         )
       }
@@ -89,8 +89,8 @@ function HrViewAcademics(props) {
         isOpen={deleteModalIsOpen}
         state={deleteModalState}
         message={deleteModalMessage}
-        itemToDelete={academicToDelete}
-        deleteItem={deleteAcademic}
+        itemToDelete={hrMemberToDelete}
+        deleteItem={deleteHrMember}
         toggle={toggleDeleteModal}
         reset={resetDeleteModal}
       />
@@ -98,22 +98,20 @@ function HrViewAcademics(props) {
   );
 }
 
-HrViewAcademics.propTypes = {
+HrViewHrMembers.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  academics: PropTypes.arrayOf(PropTypes.shape({
+  hrMembers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
     salary: PropTypes.number,
-    role: PropTypes.string,
-    department: PropTypes.string,
     dayOff: PropTypes.string,
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   })).isRequired,
-  updateAcademics: PropTypes.func.isRequired,
+  updateHrMembers: PropTypes.func.isRequired,
 };
 
-export default HrViewAcademics;
+export default HrViewHrMembers;

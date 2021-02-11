@@ -8,7 +8,7 @@ import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
 import FormButton from "../button_components/FormButton";
 
-const AcademicMemberForm = props => {
+function HrMemberForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
   const axiosCancelSource = Axios.CancelToken.source();
 
@@ -17,20 +17,16 @@ const AcademicMemberForm = props => {
   const placeholders = {
     name: "Full Name",
     email: "Email Address",
-    department: "Department Name",
     office: "Room Name",
     salary: "Salary in EGP",
     password: "New Password",
   };
   const initialValues = {
-    name: props.academic.name,
-    email: props.academic.email,
-    gender: props.academic.gender,
-    role: props.academic.role,
-    department: props.academic.department,
-    office: props.academic.office,
-    salary: props.academic.salary,
-    dayOff: props.academic.dayOff,
+    name: props.hrMember.name,
+    email: props.hrMember.email,
+    gender: props.hrMember.gender,
+    office: props.hrMember.office,
+    salary: props.hrMember.salary,
     password: "",
   };
   const validationSchema = Yup.object({
@@ -39,23 +35,16 @@ const AcademicMemberForm = props => {
     email: Yup.string()
       .email("Invalid email address")
       .required("This field is required"),
-    department: Yup.string(),
+    gender: Yup.string()
+      .required("This field is required")
+      .oneOf(["Male", "Female"], "Invalid gender"),
     office: Yup.string()
-      .required("This field is required"),
+      .required("This feild is required"),
     salary: Yup.number()
       .typeError("Salary must be a number")
       .required("This field is required")
       .positive("Salary must be a positive number")
       .integer("Salary must be an integer"),
-    gender: Yup.string()
-      .required("This field is required")
-      .oneOf(["Male", "Female"], "Invalid gender"),
-    role: Yup.string()
-      .required("This field is required")
-      .oneOf(["Course Instructor", "Head of Department", "Teaching Assistant"], "Invalid role"),
-    dayOff: Yup.string()
-      .required("This field is required")
-      .oneOf(["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], "Invalid day off"),
     password: Yup.string(),
   });
 
@@ -63,7 +52,7 @@ const AcademicMemberForm = props => {
     setMessage({ messageText: "", messageStyle: "" });
     await AxiosInstance({
       method: props.formType === "add" ? "post" : "put",
-      url: `/staff/hr/${props.formType}-academic-member${props.formType === "add" ? "" : `/${props.academic.id}`}`,
+      url: `/staff/hr/${props.formType}-hr-member${props.formType === "add" ? "" : `/${props.hrMember.id}`}`,
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -72,17 +61,14 @@ const AcademicMemberForm = props => {
         name: values.name,
         email: values.email,
         gender: values.gender,
-        role: values.role,
-        department: values.department,
         office: values.office,
         salary: values.salary,
-        dayOff: values.dayOff,
         password: values.password,
       },
     })
       .then(response => {
         setMessage({ messageText: response.data, messageStyle: "success-message" });
-        props.updateAcademics();
+        props.updateHrMembers();
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
@@ -136,7 +122,7 @@ const AcademicMemberForm = props => {
           {formikProps => (
             <Form>
               <div className="form-title">
-                {props.formType === "add" ? "Add Academic" : `Update Academic "${props.academic.id}"`}
+                {props.formType === "add" ? "Add HR Member" : `Update HR Member "${props.hrMember.id}"`}
               </div>
 
               <label htmlFor="name">
@@ -184,38 +170,6 @@ const AcademicMemberForm = props => {
                 <ErrorMessage name="gender" />
               </span>
 
-              <label htmlFor="role">
-                Role
-              </label>
-              <Field
-                className={formikProps.values.role === "" ? "disabled-selected" : ""}
-                as="select"
-                name="role"
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              >
-                <option disabled value="">Choose Role</option>
-                <option value="Course Instructor">Course Instructor</option>
-                <option value="Head of Department">Head of Department</option>
-                <option value="Teaching Assistant">Teaching Assistant</option>
-              </Field>
-              <span className="form-input-message error-message">
-                <ErrorMessage name="role" />
-              </span>
-
-              <label htmlFor="department">
-                Department
-              </label>
-              <Field
-                name="department"
-                placeholder={placeholders.department}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="department" />
-              </span>
-
               <label htmlFor="office">
                 Office
               </label>
@@ -242,28 +196,6 @@ const AcademicMemberForm = props => {
                 <ErrorMessage name="salary" />
               </span>
 
-              <label htmlFor="dayOff">
-                Day Off
-              </label>
-              <Field
-                className={formikProps.values.dayOff === "" ? "disabled-selected" : ""}
-                as="select"
-                name="dayOff"
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              >
-                <option disabled value="">Choose Day Off</option>
-                <option value="Saturday">Saturday</option>
-                <option value="Sunday">Sunday</option>
-                <option value="Monday">Monday</option>
-                <option value="Tuesday">Tuesday</option>
-                <option value="Wednesday">Wednesday</option>
-                <option value="Thursday">Thursday</option>
-              </Field>
-              <span className="form-input-message error-message">
-                <ErrorMessage name="dayOff" />
-              </span>
-
               {props.formType === "update" && renderPassword(formikProps)}
 
               <div className="form-submit">
@@ -283,38 +215,33 @@ const AcademicMemberForm = props => {
       </div>
     </div>
   );
-};
+}
 
-AcademicMemberForm.propTypes = {
+HrMemberForm.propTypes = {
   formType: PropTypes.oneOf(["add", "update"]).isRequired,
-  academic: PropTypes.shape({
+  hrMember: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
     salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    role: PropTypes.string,
-    department: PropTypes.string,
     dayOff: PropTypes.string,
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   }),
-  updateAcademics: PropTypes.func.isRequired,
+  updateHrMembers: PropTypes.func.isRequired,
 };
 
-AcademicMemberForm.defaultProps = {
-  academic: {
+HrMemberForm.defaultProps = {
+  hrMember: {
     id: "",
     name: "",
     email: "",
     gender: "",
     salary: "",
-    role: "",
-    department: "",
     office: "",
-    dayOff: "",
   },
 };
 
-export default AcademicMemberForm;
+export default HrMemberForm;

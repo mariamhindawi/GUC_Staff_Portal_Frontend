@@ -5,27 +5,27 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import HrViewAcademics from "./HrViewAcademics";
-import HrAddAcademic from "./HrAddAcademic";
-import HrUpdateAcademic from "./HrUpdateAcademic";
+import HrViewHrMembers from "./HrViewHrMembers";
+import HrAddHrMember from "./HrAddHrMember";
+import HrUpdateHrMember from "./HrUpdateHrMember";
 
-function HrAcademics() {
-  const [academics, setAcademics] = useState([]);
+function HrHrMembers() {
+  const [hrMembers, setHrMembers] = useState([]);
   const [initialIsLoading, setInitialLoading] = useState(true);
   const [isLoading, setLoading] = useState(true);
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
 
-  const fetchAcademics = async () => {
+  const fetchHrMembers = async () => {
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/view-academic-members", {
+    await AxiosInstance.get("/staff/hr/view-hr-members", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
       .then(response => {
-        setAcademics(response.data);
+        setHrMembers(response.data);
         setInitialLoading(false);
         setLoading(false);
       })
@@ -46,7 +46,7 @@ function HrAcademics() {
         }
       });
   };
-  useEffect(fetchAcademics, []);
+  useEffect(fetchHrMembers, []);
   useAxiosCancel(axiosCancelSource);
 
   if (initialIsLoading) {
@@ -55,22 +55,22 @@ function HrAcademics() {
   return (
     <Switch>
       <Route exact path={`${match.path}`}>
-        <HrViewAcademics
+        <HrViewHrMembers
           isLoading={isLoading}
-          academics={academics}
-          updateAcademics={fetchAcademics}
+          hrMembers={hrMembers}
+          updateHrMembers={fetchHrMembers}
         />
       </Route>
 
       <Route exact path={`${match.path}/add`}>
-        <HrAddAcademic updateAcademics={fetchAcademics} />
+        <HrAddHrMember updateHrMembers={fetchHrMembers} />
       </Route>
 
       <Route exact path={`${match.path}/update/:id`}>
-        <HrUpdateAcademic academics={academics} updateAcademics={fetchAcademics} />
+        <HrUpdateHrMember hrMembers={hrMembers} updateHrMembers={fetchHrMembers} />
       </Route>
     </Switch>
   );
 }
 
-export default HrAcademics;
+export default HrHrMembers;

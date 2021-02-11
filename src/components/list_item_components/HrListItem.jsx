@@ -5,7 +5,7 @@ import DeleteButton from "../button_components/DeleteButton";
 import UpdateButton from "../button_components/UpdateButton";
 import { useUserContext } from "../../contexts/UserContext";
 
-function AcademicListItem(props) {
+function HrListItem(props) {
   const user = useUserContext();
   const match = useRouteMatch();
 
@@ -14,16 +14,16 @@ function AcademicListItem(props) {
       case "HR":
         return (
           <>
-            <td>{props.academic.salary}</td>
-            <td>{props.academic.annualLeaveBalance}</td>
-            <td>{props.academic.accidentalLeaveBalance}</td>
+            <td>{props.hrMember.salary}</td>
+            <td>{props.hrMember.annualLeaveBalance}</td>
+            <td>{props.hrMember.accidentalLeaveBalance}</td>
             <td>
-              <Link to={`${match.url}/update/${props.academic.id}`} tabIndex={-1}>
+              <Link to={`${match.url}/update/${props.hrMember.id}`} tabIndex={-1}>
                 <UpdateButton />
               </Link>
             </td>
             <td>
-              <DeleteButton onClick={() => { props.toggleDeleteModal(props.academic.id); }} />
+              <DeleteButton onClick={() => { props.toggleDeleteModal(props.hrMember.id); }} />
             </td>
           </>
         );
@@ -33,34 +33,29 @@ function AcademicListItem(props) {
 
   return (
     <tr>
-      <td>{props.academic.id}</td>
-      <td>{props.academic.name}</td>
-      <td>{props.academic.email}</td>
-      <td>{props.academic.gender}</td>
-      <td>{props.academic.department !== "UNASSIGNED" ? props.academic.department : "-"}</td>
-      <td>{props.academic.role}</td>
-      <td>{props.academic.office}</td>
-      <td>{props.academic.dayOff}</td>
+      <td>{props.hrMember.id}</td>
+      <td>{props.hrMember.name}</td>
+      <td>{props.hrMember.email}</td>
+      <td>{props.hrMember.gender}</td>
+      <td>{props.hrMember.office}</td>
       {customData()}
     </tr>
   );
 }
 
-AcademicListItem.propTypes = {
-  academic: PropTypes.shape({
+HrListItem.propTypes = {
+  hrMember: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
-    salary: PropTypes.number,
-    role: PropTypes.string,
-    department: PropTypes.string,
+    salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     dayOff: PropTypes.string,
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
-  }).isRequired,
+  })).isRequired,
   toggleDeleteModal: PropTypes.func.isRequired,
 };
 
-export default AcademicListItem;
+export default HrListItem;

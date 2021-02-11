@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
-import AcademicListItem from "../list_item_components/AcademicListItem";
+import HrListItem from "../list_item_components/HrListItem";
 import Pagination from "../helper_components/Pagination";
 import { useUserContext } from "../../contexts/UserContext";
 
-function AcademicList(props) {
+function HrList(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(7);
   const [listStyle, setListStyle] = useState("");
@@ -23,12 +23,12 @@ function AcademicList(props) {
     newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
     setItemsPerPage(newItemsPerPage);
 
-    const lastPage = Math.ceil(props.academics.length / newItemsPerPage) || 1;
+    const lastPage = Math.ceil(props.hrMembers.length / newItemsPerPage) || 1;
     const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
     setCurrentPage(newCurrentPage);
 
-    if (props.academics.length === 0
-        || (newCurrentPage === lastPage && props.academics.length % newItemsPerPage !== 0)) {
+    if (props.hrMembers.length === 0
+      || (newCurrentPage === lastPage && props.hrMembers.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
     }
     else {
@@ -56,18 +56,18 @@ function AcademicList(props) {
       default: return null;
     }
   };
-  const academicList = () => {
+  const hrList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = props.academics.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = props.hrMembers.slice(indexOfFirstItem, indexOfLastItem);
 
-    if (props.academics.length === 0) {
-      return <tr><td className="no-items">No academic members</td></tr>;
+    if (props.hrMembers.length === 0) {
+      return <tr><td className="no-items">No HR members</td></tr>;
     }
-    return currentItems.map(academic => (
-      <AcademicListItem
-        key={academic.id}
-        academic={academic}
+    return currentItems.map(hrMember => (
+      <HrListItem
+        key={hrMember.id}
+        hrMember={hrMember}
         toggleDeleteModal={props.toggleDeleteModal}
       />
     ));
@@ -83,15 +83,12 @@ function AcademicList(props) {
               <th style={{ width: "250px" }}>Name</th>
               <th style={{ width: "350px" }}>Email</th>
               <th style={{ width: "120px" }}>Gender</th>
-              <th style={{ width: "180px" }}>Department</th>
-              <th style={{ width: "220px" }}>Role</th>
               <th style={{ width: "150px" }}>Office</th>
-              <th style={{ width: "150px" }}>Day Off</th>
               {customTableHeads()}
             </tr>
           </thead>
           <tbody>
-            {academicList()}
+            {hrList()}
           </tbody>
         </table>
       </div>
@@ -99,7 +96,7 @@ function AcademicList(props) {
       <Pagination
         size={paginationSize}
         className="list-pagination"
-        numberOfItems={props.academics.length}
+        numberOfItems={props.hrMembers.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -108,15 +105,13 @@ function AcademicList(props) {
   );
 }
 
-AcademicList.propTypes = {
-  academics: PropTypes.arrayOf(PropTypes.shape({
+HrList.propTypes = {
+  hrMembers: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
     salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    role: PropTypes.string,
-    department: PropTypes.string,
     dayOff: PropTypes.string,
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,
@@ -125,4 +120,4 @@ AcademicList.propTypes = {
   toggleDeleteModal: PropTypes.func.isRequired,
 };
 
-export default AcademicList;
+export default HrList;
