@@ -1,8 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { useUserContext } from "../../contexts/UserContext";
 import AcademicListItem from "../list_item_components/AcademicListItem";
 import Pagination from "../helper_components/Pagination";
-import { useUserContext } from "../../contexts/UserContext";
 
 function AcademicList(props) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -28,7 +28,7 @@ function AcademicList(props) {
     setCurrentPage(newCurrentPage);
 
     if (props.academics.length === 0
-        || (newCurrentPage === lastPage && props.academics.length % newItemsPerPage !== 0)) {
+      || (newCurrentPage === lastPage && props.academics.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
     }
     else {
@@ -114,7 +114,7 @@ AcademicList.propTypes = {
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
-    salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    salary: PropTypes.number,
     role: PropTypes.string,
     department: PropTypes.string,
     dayOff: PropTypes.string,

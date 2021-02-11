@@ -1,6 +1,6 @@
-const getItem = (items, itemID) => {
+const getItem = (items, itemIdName, itemId) => {
   for (let i = 0; i < items.length; i++) {
-    if (items[i].id === itemID) {
+    if (items[i][itemIdName] === itemId) {
       return items[i];
     }
   }

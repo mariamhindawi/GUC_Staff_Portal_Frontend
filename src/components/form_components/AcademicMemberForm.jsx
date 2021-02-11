@@ -11,7 +11,6 @@ import FormButton from "../button_components/FormButton";
 const AcademicMemberForm = props => {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
   const axiosCancelSource = Axios.CancelToken.source();
-
   useAxiosCancel(axiosCancelSource);
 
   const placeholders = {
@@ -102,6 +101,7 @@ const AcademicMemberForm = props => {
   };
   const handleFocus = e => {
     e.target.placeholder = "";
+    setMessage({ messageText: "", messageStyle: "" });
   };
   const handleBlur = (e, formikProps) => {
     e.target.placeholder = placeholders[e.target.name];

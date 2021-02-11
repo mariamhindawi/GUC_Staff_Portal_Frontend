@@ -7,7 +7,7 @@ import HrMemberForm from "../../form_components/HrMemberForm";
 
 function HrUpdateHrMember(props) {
   const match = useRouteMatch();
-  const hrMember = getItem(props.hrMembers, match.params.id);
+  const hrMember = getItem(props.hrMembers, "id", match.params.id);
 
   if (!hrMember) {
     return <GoBackModal message="Incorrect HR Member ID" link={removeFromPath(match.path, 2)} />;

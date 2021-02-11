@@ -4,7 +4,7 @@ import axios from "axios";
 import axiosInstance from "../../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
 import CourseList from "../../list_components/course_list.component";
-import CourseForm from "../../form_components/course_form.component";
+import CourseForm from "../../form_components/CourseForm";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 
 

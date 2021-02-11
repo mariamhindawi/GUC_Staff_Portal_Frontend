@@ -10,8 +10,8 @@ import HrAcademics from "../hr_components/hr_academics_components/HrAcademics";
 import HrHrMembers from "../hr_components/hr_hrmembers_components/HrHrmembers";
 import HrCourses from "../hr_components/hr_courses_components/hr_courses.component";
 import HrDepartments from "../hr_components/hr_departments_components/hr_departments.component";
-import HrFaculty from "../hr_components/hr_faculty_components/hr_faculty.component";
-import HrRooms from "../hr_components/hr_rooms_components/hr_rooms.component";
+import HrFaculties from "../hr_components/hr_faculty_components/HrFaculties";
+import HrRooms from "../hr_components/hr_rooms_components/HrRooms";
 import AddMissingHours from "../hr_components/hr_attendance_records.component";
 import ForbiddenAccess from "../error_components/ForbiddenAccess";
 
@@ -29,12 +29,12 @@ function HrHome(props) {
         <Route path={`${match.path}/notifications`}><Notifications /></Route>
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
-        <Route path={`${match.path}/academic-members`}><HrAcademics /></Route>
         <Route path={`${match.path}/hr-members`}><HrHrMembers /></Route>
-        <Route path={`${match.path}/faculties`}><HrFaculty /></Route>
+        <Route path={`${match.path}/academic-members`}><HrAcademics /></Route>
+        <Route path={`${match.path}/rooms`}><HrRooms /></Route>
+        <Route path={`${match.path}/faculties`}><HrFaculties /></Route>
         <Route path={`${match.path}/departments`}><HrDepartments /></Route>
         <Route path={`${match.path}/courses`}><HrCourses /></Route>
-        <Route path={`${match.path}/rooms`}><HrRooms /></Route>
         <Route path={`${match.path}/attendance-records`}><AddMissingHours /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>

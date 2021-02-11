@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useUserContext } from "../../contexts/UserContext";
-import HrListItem from "../list_item_components/HrListItem";
+import RoomListItem from "../list_item_components/RoomListItem";
 import Pagination from "../helper_components/Pagination";
 
-function HrList(props) {
+function RoomList(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(7);
   const [listStyle, setListStyle] = useState("");
@@ -23,12 +23,12 @@ function HrList(props) {
     newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
     setItemsPerPage(newItemsPerPage);
 
-    const lastPage = Math.ceil(props.hrMembers.length / newItemsPerPage) || 1;
+    const lastPage = Math.ceil(props.rooms.length / newItemsPerPage) || 1;
     const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
     setCurrentPage(newCurrentPage);
 
-    if (props.hrMembers.length === 0
-      || (newCurrentPage === lastPage && props.hrMembers.length % newItemsPerPage !== 0)) {
+    if (props.rooms.length === 0
+      || (newCurrentPage === lastPage && props.rooms.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
     }
     else {
@@ -46,9 +46,6 @@ function HrList(props) {
     switch (user.role) {
       case "HR": return (
         <>
-          <th style={{ width: "150px" }}>Salary</th>
-          <th style={{ width: "150px" }}>Annual Leave Balance</th>
-          <th style={{ width: "150px" }}>Accidental Leave Balance</th>
           <th style={{ width: "70px" }}> </th>
           <th style={{ width: "70px" }}> </th>
         </>
@@ -56,18 +53,18 @@ function HrList(props) {
       default: return null;
     }
   };
-  const hrList = () => {
+  const roomList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = props.hrMembers.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = props.rooms.slice(indexOfFirstItem, indexOfLastItem);
 
-    if (props.hrMembers.length === 0) {
-      return <tr><td className="no-items">No HR members</td></tr>;
+    if (props.rooms.length === 0) {
+      return <tr><td className="no-items">No Rooms</td></tr>;
     }
-    return currentItems.map(hrMember => (
-      <HrListItem
-        key={hrMember.id}
-        hrMember={hrMember}
+    return currentItems.map(room => (
+      <RoomListItem
+        key={room._id}
+        room={room}
         toggleDeleteModal={props.toggleDeleteModal}
       />
     ));
@@ -79,16 +76,15 @@ function HrList(props) {
         <table className={`list ${listStyle}`}>
           <thead>
             <tr>
-              <th style={{ width: "100px" }}>ID</th>
-              <th style={{ width: "250px" }}>Name</th>
-              <th style={{ width: "350px" }}>Email</th>
-              <th style={{ width: "120px" }}>Gender</th>
-              <th style={{ width: "150px" }}>Office</th>
+              <th style={{ width: "150px" }}>Name</th>
+              <th style={{ width: "200px" }}>Type</th>
+              <th style={{ width: "100px" }}>Capacity</th>
+              <th style={{ width: "100px" }}>Remaining Capacity</th>
               {customTableHeads()}
             </tr>
           </thead>
           <tbody>
-            {hrList()}
+            {roomList()}
           </tbody>
         </table>
       </div>
@@ -96,7 +92,7 @@ function HrList(props) {
       <Pagination
         size={paginationSize}
         className="list-pagination"
-        numberOfItems={props.hrMembers.length}
+        numberOfItems={props.rooms.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -105,19 +101,15 @@ function HrList(props) {
   );
 }
 
-HrList.propTypes = {
-  hrMembers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+RoomList.propTypes = {
+  rooms: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
-    email: PropTypes.string,
-    gender: PropTypes.string,
-    salary: PropTypes.number,
-    dayOff: PropTypes.string,
-    office: PropTypes.string,
-    annualLeaveBalance: PropTypes.number,
-    accidentalLeaveBalance: PropTypes.number,
+    type: PropTypes.string,
+    capacity: PropTypes.number,
+    remainingCapacity: PropTypes.number,
   })).isRequired,
   toggleDeleteModal: PropTypes.func.isRequired,
 };
 
-export default HrList;
+export default RoomList;

@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     "no-console": "off",
     "linebreak-style": "off",
+    "no-underscore-dangle": "off",
     "no-plusplus": "off",
     "quote-props": ["error", "consistent-as-needed"],
     "quotes": ["error", "double"],

@@ -7,7 +7,7 @@ import AcademicMemberForm from "../../form_components/AcademicMemberForm";
 
 function HrUpdateAcademic(props) {
   const match = useRouteMatch();
-  const academic = getItem(props.academics, match.params.id);
+  const academic = getItem(props.academics, "id", match.params.id);
 
   if (!academic) {
     return <GoBackModal message="Incorrect Acadeimc Member ID" link={removeFromPath(match.path, 2)} />;

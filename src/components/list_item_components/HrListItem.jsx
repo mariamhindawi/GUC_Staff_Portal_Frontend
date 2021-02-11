@@ -49,7 +49,7 @@ HrListItem.propTypes = {
     name: PropTypes.string,
     email: PropTypes.string,
     gender: PropTypes.string,
-    salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    salary: PropTypes.number,
     dayOff: PropTypes.string,
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,

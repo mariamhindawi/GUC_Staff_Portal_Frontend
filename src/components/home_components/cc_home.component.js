@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Link, withRouter } from "react-router-dom";
-import CourseSlotForm from "../form_components/course_slot_form.component";
+import CourseSlotForm from "../todo/course_slot_form.component";
 import GeneralRequests from "../todo/GeneralRequestsPage.component";
 import MySchedule from "../todo/schedule.component";
 

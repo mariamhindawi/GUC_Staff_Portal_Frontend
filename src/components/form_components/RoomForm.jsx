@@ -8,66 +8,51 @@ import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
 import FormButton from "../button_components/FormButton";
 
-function HrMemberForm(props) {
+function RoomForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
   const placeholders = {
-    name: "Full Name",
-    email: "Email Address",
-    office: "Room Name",
-    salary: "Salary in EGP",
-    password: "New Password",
+    name: "Room Name",
+    capacity: "Room Capacity",
   };
   const initialValues = {
-    name: props.hrMember.name,
-    email: props.hrMember.email,
-    gender: props.hrMember.gender,
-    office: props.hrMember.office,
-    salary: props.hrMember.salary,
-    password: "",
+    name: props.room.name,
+    type: props.room.type,
+    capacity: props.room.capacity,
   };
   const validationSchema = Yup.object({
     name: Yup.string()
       .required("This field is required"),
-    email: Yup.string()
-      .email("Invalid email address")
-      .required("This field is required"),
-    gender: Yup.string()
+    type: Yup.string()
       .required("This field is required")
-      .oneOf(["Male", "Female"], "Invalid gender"),
-    office: Yup.string()
-      .required("This feild is required"),
-    salary: Yup.number()
-      .typeError("Salary must be a number")
+      .oneOf(["Office", "Tutorial", "Lab", "Lecture"], "Invalid room type"),
+    capacity: Yup.number()
+      .typeError("Capacity must be a number")
       .required("This field is required")
-      .positive("Salary must be a positive number")
-      .integer("Salary must be an integer"),
-    password: Yup.string(),
+      .positive("Capacity must be a positive number")
+      .integer("Capacity must be an integer"),
   });
 
   const handleSubmit = async values => {
     setMessage({ messageText: "", messageStyle: "" });
     await AxiosInstance({
       method: props.formType === "add" ? "post" : "put",
-      url: `/staff/hr/${props.formType}-hr-member${props.formType === "add" ? "" : `/${props.hrMember.id}`}`,
+      url: `/staff/hr/${props.formType}-room${props.formType === "add" ? "" : `/${props.room.name}`}`,
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
       data: {
         name: values.name,
-        email: values.email,
-        gender: values.gender,
-        office: values.office,
-        salary: values.salary,
-        password: values.password,
+        capacity: values.capacity,
+        type: values.type,
       },
     })
       .then(response => {
         setMessage({ messageText: response.data, messageStyle: "success-message" });
-        props.updateHrMembers();
+        props.updateRooms();
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
@@ -93,23 +78,6 @@ function HrMemberForm(props) {
     e.target.placeholder = placeholders[e.target.name];
     formikProps.setFieldTouched(e.target.name);
   };
-  const renderPassword = formikProps => (
-    <>
-      <label htmlFor="password">
-        Password
-      </label>
-      <Field
-        name="password"
-        type="password"
-        placeholder={placeholders.password}
-        onFocus={e => handleFocus(e)}
-        onBlur={e => handleBlur(e, formikProps)}
-      />
-      <span className="form-input-message error-message">
-        <ErrorMessage name="password" />
-      </span>
-    </>
-  );
 
   return (
     <div className="form-container">
@@ -122,7 +90,7 @@ function HrMemberForm(props) {
           {formikProps => (
             <Form>
               <div className="form-title">
-                {props.formType === "add" ? "Add HR Member" : `Update HR Member "${props.hrMember.id}"`}
+                {props.formType === "add" ? "Add Room" : `Update Room "${props.room.name}"`}
               </div>
 
               <label htmlFor="name">
@@ -138,65 +106,38 @@ function HrMemberForm(props) {
                 <ErrorMessage name="name" />
               </span>
 
-              <label htmlFor="email">
-                Email
+              <label htmlFor="type">
+                Type
               </label>
               <Field
-                name="email"
-                type="email"
-                placeholder={placeholders.email}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="email" />
-              </span>
-
-              <label htmlFor="gender">
-                Gender
-              </label>
-              <Field
-                className={formikProps.values.gender === "" ? "disabled-selected" : ""}
+                className={formikProps.values.type === "" ? "disabled-selected" : ""}
                 as="select"
-                name="gender"
+                name="type"
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               >
-                <option disabled value="">Choose Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
+                <option disabled value="">Room Type</option>
+                <option value="Office">Office</option>
+                <option value="Tutorial">Tutorial Room</option>
+                <option value="Lab">Lab</option>
+                <option value="Lecture">Lecture Hall</option>
               </Field>
               <span className="form-input-message error-message">
-                <ErrorMessage name="gender" />
+                <ErrorMessage name="type" />
               </span>
 
-              <label htmlFor="office">
-                Office
+              <label htmlFor="capacity">
+                Capacity
               </label>
               <Field
-                name="office"
-                placeholder={placeholders.office}
+                name="capacity"
+                placeholder={placeholders.capacity}
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
               />
               <span className="form-input-message error-message">
-                <ErrorMessage name="office" />
+                <ErrorMessage name="capacity" />
               </span>
-
-              <label htmlFor="salray">
-                Salary
-              </label>
-              <Field
-                name="salary"
-                placeholder={placeholders.salary}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="salary" />
-              </span>
-
-              {props.formType === "update" && renderPassword(formikProps)}
 
               <div className="form-submit">
                 <span className={`form-message ${message.messageStyle}`}>{message.messageText}</span>
@@ -217,31 +158,22 @@ function HrMemberForm(props) {
   );
 }
 
-HrMemberForm.propTypes = {
+RoomForm.propTypes = {
   formType: PropTypes.oneOf(["add", "update"]).isRequired,
-  hrMember: PropTypes.shape({
-    id: PropTypes.string,
+  room: PropTypes.shape({
     name: PropTypes.string,
-    email: PropTypes.string,
-    gender: PropTypes.string,
-    salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    dayOff: PropTypes.string,
-    office: PropTypes.string,
-    annualLeaveBalance: PropTypes.number,
-    accidentalLeaveBalance: PropTypes.number,
+    type: PropTypes.string,
+    capacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }),
-  updateHrMembers: PropTypes.func.isRequired,
+  updateRooms: PropTypes.func.isRequired,
 };
 
-HrMemberForm.defaultProps = {
-  hrMember: {
-    id: "",
+RoomForm.defaultProps = {
+  room: {
     name: "",
-    email: "",
-    gender: "",
-    salary: "",
-    office: "",
+    type: "",
+    capacity: "",
   },
 };
 
-export default HrMemberForm;
+export default RoomForm;

@@ -4,7 +4,7 @@ import axios from "axios";
 import axiosInstance from "../../../others/AxiosInstance";
 import { Button, Col, Modal, Spinner } from "reactstrap";
 import DepartmentList from "../../list_components/department_list.component";
-import DepartmentForm from "../../form_components/department_form.component";
+import DepartmentForm from "../../form_components/DepartmentForm";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 
 class HrDepartments extends React.Component {
