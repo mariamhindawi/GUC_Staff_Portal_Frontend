@@ -50,7 +50,6 @@ HrListItem.propTypes = {
     email: PropTypes.string,
     gender: PropTypes.string,
     salary: PropTypes.number,
-    dayOff: PropTypes.string,
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,

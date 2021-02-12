@@ -2,7 +2,7 @@ import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/AxiosInstance";
-import CourseList from "../list_components/course_list.component";
+import CourseList from "../list_components/CourseList";
 import AssignCiForm from "./assign_ci_form.component";
 import DeleteCiForm from "./delete_ci_form.component";
 

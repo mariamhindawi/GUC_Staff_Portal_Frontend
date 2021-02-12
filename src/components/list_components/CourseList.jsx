@@ -1,10 +1,10 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useUserContext } from "../../contexts/UserContext";
-import DepartmentListItem from "../list_item_components/DepartmentListItem";
+import CourseListItem from "../list_item_components/CourseListItem";
 import Pagination from "../helper_components/Pagination";
 
-function DepartmentList(props) {
+function CourseList(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(7);
   const [listStyle, setListStyle] = useState("");
@@ -23,12 +23,12 @@ function DepartmentList(props) {
     newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
     setItemsPerPage(newItemsPerPage);
 
-    const lastPage = Math.ceil(props.departments.length / newItemsPerPage) || 1;
+    const lastPage = Math.ceil(props.courses.length / newItemsPerPage) || 1;
     const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
     setCurrentPage(newCurrentPage);
 
-    if (props.departments.length === 0
-      || (newCurrentPage === lastPage && props.departments.length % newItemsPerPage !== 0)) {
+    if (props.courses.length === 0
+      || (newCurrentPage === lastPage && props.courses.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
     }
     else {
@@ -53,18 +53,18 @@ function DepartmentList(props) {
       default: return null;
     }
   };
-  const departmentList = () => {
+  const courseList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = props.departments.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = props.courses.slice(indexOfFirstItem, indexOfLastItem);
 
-    if (props.departments.length === 0) {
-      return <tr><td className="no-items">No Departments</td></tr>;
+    if (props.courses.length === 0) {
+      return <tr><td className="no-items">No Courses</td></tr>;
     }
-    return currentItems.map(department => (
-      <DepartmentListItem
-        key={department._id}
-        department={department}
+    return currentItems.map(course => (
+      <CourseListItem
+        key={course._id}
+        course={course}
         toggleDeleteModal={props.toggleDeleteModal}
       />
     ));
@@ -76,14 +76,17 @@ function DepartmentList(props) {
         <table className={`list ${listStyle}`}>
           <thead>
             <tr>
-              <th style={{ width: "200px" }}>Name</th>
-              <th style={{ width: "200px" }}>Faculty</th>
-              <th style={{ width: "150px" }}>Head of Department</th>
+              <th style={{ width: "200px" }}>Course ID</th>
+              <th style={{ width: "300px" }}>Course name</th>
+              <th style={{ width: "200px" }}>Department</th>
+              <th style={{ width: "200px" }}>Course Instructors</th>
+              <th style={{ width: "200px" }}>Teaching Assistants</th>
+              <th style={{ width: "170px" }}>Course Coordinator</th>
               {customTableHeads()}
             </tr>
           </thead>
           <tbody>
-            {departmentList()}
+            {courseList()}
           </tbody>
         </table>
       </div>
@@ -91,7 +94,7 @@ function DepartmentList(props) {
       <Pagination
         size={paginationSize}
         className="list-pagination"
-        numberOfItems={props.departments.length}
+        numberOfItems={props.courses.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -100,14 +103,17 @@ function DepartmentList(props) {
   );
 }
 
-DepartmentList.propTypes = {
-  departments: PropTypes.arrayOf(PropTypes.shape({
+CourseList.propTypes = {
+  courses: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
+    id: PropTypes.string,
     name: PropTypes.string,
-    faculty: PropTypes.string,
-    headOfDepartment: PropTypes.string,
+    department: PropTypes.string,
+    courseInstructors: PropTypes.arrayOf(PropTypes.string),
+    teachingAssistants: PropTypes.arrayOf(PropTypes.string),
+    courseCoordinator: PropTypes.string,
   })).isRequired,
   toggleDeleteModal: PropTypes.func.isRequired,
 };
 
-export default DepartmentList;
+export default CourseList;

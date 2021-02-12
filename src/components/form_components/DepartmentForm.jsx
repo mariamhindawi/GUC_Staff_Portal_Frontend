@@ -184,7 +184,6 @@ function DepartmentForm(props) {
 DepartmentForm.propTypes = {
   formType: PropTypes.oneOf(["add", "update"]).isRequired,
   department: PropTypes.shape({
-    _id: PropTypes.string,
     name: PropTypes.string,
     faculty: PropTypes.string,
     headOfDepartment: PropTypes.string,
@@ -194,7 +193,6 @@ DepartmentForm.propTypes = {
 
 DepartmentForm.defaultProps = {
   department: {
-    _id: "",
     name: "",
     faculty: "",
     headOfDepartment: "",

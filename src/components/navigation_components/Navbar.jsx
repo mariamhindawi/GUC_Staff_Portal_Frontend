@@ -132,7 +132,7 @@ function Navbar(props) {
           <Dropdown.Toggle className="nav-link navbar-item" as="button">
             <FontAwesomeIcon className="navbar-icon" icon="bell" />
           </Dropdown.Toggle>
-          <Dropdown.Menu className="navbar-dropdown-menu">
+          <Dropdown.Menu className="navbar-dropdown-menu" align="right">
             <Dropdown.Item className="dropdown-notifications" as="span" tabIndex={0}>
               {
                 notifications.length !== 0
@@ -151,7 +151,7 @@ function Navbar(props) {
           <Dropdown.Toggle className="nav-link navbar-item" as="button">
             <FontAwesomeIcon className="navbar-icon" icon="user" />
           </Dropdown.Toggle>
-          <Dropdown.Menu className="navbar-dropdown-menu">
+          <Dropdown.Menu className="navbar-dropdown-menu" align="right">
             <span className="d-flex justify-content-center">
               <label className="dropdown-user-initial">
                 {user.name.charAt(0).toUpperCase()}

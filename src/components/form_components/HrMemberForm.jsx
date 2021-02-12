@@ -225,10 +225,7 @@ HrMemberForm.propTypes = {
     email: PropTypes.string,
     gender: PropTypes.string,
     salary: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    dayOff: PropTypes.string,
     office: PropTypes.string,
-    annualLeaveBalance: PropTypes.number,
-    accidentalLeaveBalance: PropTypes.number,
   }),
   updateHrMembers: PropTypes.func.isRequired,
 };

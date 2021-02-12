@@ -5,7 +5,7 @@
   top: 0;
   width: 100vw;
   height: 40px;
-  z-index: 5;
+  z-index: 10;
   background: rgb(4, 100, 164);
   background: linear-gradient(
     90deg,

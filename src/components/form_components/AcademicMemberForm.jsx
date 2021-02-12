@@ -297,8 +297,6 @@ AcademicMemberForm.propTypes = {
     department: PropTypes.string,
     dayOff: PropTypes.string,
     office: PropTypes.string,
-    annualLeaveBalance: PropTypes.number,
-    accidentalLeaveBalance: PropTypes.number,
   }),
   updateAcademics: PropTypes.func.isRequired,
 };

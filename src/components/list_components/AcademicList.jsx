@@ -79,11 +79,11 @@ function AcademicList(props) {
         <table className={`list ${listStyle}`}>
           <thead>
             <tr>
-              <th style={{ width: "100px" }}>ID</th>
+              <th style={{ width: "150px" }}>ID</th>
               <th style={{ width: "250px" }}>Name</th>
               <th style={{ width: "350px" }}>Email</th>
               <th style={{ width: "120px" }}>Gender</th>
-              <th style={{ width: "180px" }}>Department</th>
+              <th style={{ width: "200px" }}>Department</th>
               <th style={{ width: "220px" }}>Role</th>
               <th style={{ width: "150px" }}>Office</th>
               <th style={{ width: "150px" }}>Day Off</th>

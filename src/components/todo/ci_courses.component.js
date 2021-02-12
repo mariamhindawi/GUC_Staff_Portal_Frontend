@@ -2,7 +2,7 @@ import React from "react";
 import { Route, withRouter } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../../others/AxiosInstance";
-import CourseList from "../list_components/course_list.component";
+import CourseList from "../list_components/CourseList";
 import AssignCcForm from "./assign_cc_form.component";
 import AssignTaForm from "./assign_ta_form.component";
 import DeleteTaForm from "./delete_ta_from_course.component";
