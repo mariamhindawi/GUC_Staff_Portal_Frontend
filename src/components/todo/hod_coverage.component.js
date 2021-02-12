@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "../../others/AxiosInstance";
-import CoverageList from "../list_components/coverage_list.component";
+import CoverageList from "./coverage_list.component";
 
 class HODcoverage extends React.Component {
     constructor(props) {

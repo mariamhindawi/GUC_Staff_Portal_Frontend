@@ -115,6 +115,7 @@ function FacultyForm(props) {
 FacultyForm.propTypes = {
   formType: PropTypes.oneOf(["add", "update"]).isRequired,
   faculty: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
   }),
   updateFaculties: PropTypes.func.isRequired,
@@ -122,6 +123,7 @@ FacultyForm.propTypes = {
 
 FacultyForm.defaultProps = {
   faculty: {
+    _id: "",
     name: "",
   },
 };

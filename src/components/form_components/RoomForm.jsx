@@ -161,6 +161,7 @@ function RoomForm(props) {
 RoomForm.propTypes = {
   formType: PropTypes.oneOf(["add", "update"]).isRequired,
   room: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     type: PropTypes.string,
     capacity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -170,6 +171,7 @@ RoomForm.propTypes = {
 
 RoomForm.defaultProps = {
   room: {
+    _id: "",
     name: "",
     type: "",
     capacity: "",

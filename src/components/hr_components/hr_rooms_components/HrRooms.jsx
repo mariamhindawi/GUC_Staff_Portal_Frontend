@@ -15,10 +15,11 @@ function HrRooms() {
   const [isLoading, setLoading] = useState(true);
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
+  useAxiosCancel(axiosCancelSource);
 
   const fetchRooms = async () => {
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/view-rooms", {
+    await AxiosInstance.get("/staff/hr/get-rooms", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -47,7 +48,6 @@ function HrRooms() {
       });
   };
   useEffect(fetchRooms, []);
-  useAxiosCancel(axiosCancelSource);
 
   if (initialIsLoading) {
     return <Spinner />;

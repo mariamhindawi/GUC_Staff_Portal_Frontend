@@ -15,10 +15,11 @@ function HrHrMembers() {
   const [isLoading, setLoading] = useState(true);
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
+  useAxiosCancel(axiosCancelSource);
 
   const fetchHrMembers = async () => {
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/view-hr-members", {
+    await AxiosInstance.get("/staff/hr/get-hr-members", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -47,7 +48,6 @@ function HrHrMembers() {
       });
   };
   useEffect(fetchHrMembers, []);
-  useAxiosCancel(axiosCancelSource);
 
   if (initialIsLoading) {
     return <Spinner />;

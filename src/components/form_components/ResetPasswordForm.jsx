@@ -10,7 +10,6 @@ import FormButton from "../button_components/FormButton";
 const ResetPasswordForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const axiosCancelSource = Axios.CancelToken.source();
-
   useAxiosCancel(axiosCancelSource);
 
   const placeholders = {

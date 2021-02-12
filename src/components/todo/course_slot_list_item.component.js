@@ -33,7 +33,7 @@ const CourseSlotListItem = (props) => {
             <td>{props.room}</td>
             <td>{props.slot.type}</td>
             {customButtons()}
-            
+
         </tr>
     )
 };

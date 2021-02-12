@@ -1,152 +1,204 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import axiosInstance from "../../others/AxiosInstance";
+import PropTypes from "prop-types";
+import Axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Button } from "reactstrap";
+import AxiosInstance from "../../others/AxiosInstance";
+import AuthTokenManager from "../../others/AuthTokenManager";
+import useAxiosCancel from "../../hooks/AxiosCancel";
+import FormButton from "../button_components/FormButton";
 
-const DepartmentForm = props => {
-    const [message, setMessage] = useState("");
-    const [messageStyle, setMessageStyle] = useState("");
-    const [faculties, setFaculties] = useState([]);
-    const axiosCancelSource = axios.CancelToken.source();
+function DepartmentForm(props) {
+  const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
+  const [faculties, setFaculties] = useState([]);
+  const axiosCancelSource = Axios.CancelToken.source();
+  useAxiosCancel(axiosCancelSource);
 
-    const fetchFaculties = () => {
-        axiosInstance.get("/fe/get-faculties", {
-            cancelToken: axiosCancelSource.token,
-            headers: {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
-            },
-        })
-            .then(response => {
-                const faculties = response.data;
-                setFaculties(faculties.map((faculty) => {
-                    return <option value={faculty.name} key={faculty._id}>{faculty.name}</option>
-                }));
-            })
-            .catch(error => {
-                if (error.response) {
-                    console.log(error.response);
-                }
-                else if (error.request) {
-                    console.log(error.request);
-                }
-                else {
-                    console.log(error.message);
-                }
-            });
-    }
-
-    const componentDidMount = () => {
-        fetchFaculties();
-        return () => {
-            axiosCancelSource.cancel("Operation canceled by the user");
+  const fetchFaculties = () => {
+    AxiosInstance.get("/staff/hr/get-faculties", {
+      cancelToken: axiosCancelSource.token,
+      headers: {
+        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
+      },
+    })
+      .then(response => {
+        setFaculties(response.data.map(faculty => (
+          <option value={faculty.name} key={faculty._id}>{faculty.name}</option>
+        )));
+      })
+      .catch(error => {
+        if (Axios.isCancel(error)) {
+          console.log(`Request cancelled: ${error.message}`);
         }
-    };
-    useEffect(componentDidMount, []);
+        else if (error.response) {
+          console.log(error.response);
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+      });
+  };
+  useEffect(fetchFaculties, []);
 
-    const placeholders = {
-        name: "Department name",
-        headOfDepartment: "Head of Department"
-    }
+  const placeholders = {
+    name: "Department Name",
+    headOfDepartment: "Head of Department ID",
+  };
+  const initialValues = {
+    name: props.department.name,
+    faculty: props.department.faculty,
+    headOfDepartment: props.department.headOfDepartment,
+  };
+  const validationSchema = Yup.object({
+    name: Yup.string()
+      .required("This field is required"),
+    faculty: Yup.string()
+      .required("This field is required"),
+    headOfDepartment: Yup.string(),
+  });
 
-    const initialValues = {
-        name: props.department.name,
-        faculty: props.faculty,
-        headOfDepartment: props.headOfDepartment
-    }
+  const handleSubmit = async values => {
+    setMessage({ messageText: "", messageStyle: "" });
+    await AxiosInstance({
+      method: props.formType === "add" ? "post" : "put",
+      url: `/staff/hr/${props.formType}-department${props.formType === "add" ? "" : `/${props.department.name}`}`,
+      cancelToken: axiosCancelSource.token,
+      headers: {
+        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
+      },
+      data: {
+        name: values.name,
+        faculty: values.faculty !== "UNASSIGNED" ? values.faculty : "",
+        headOfDepartment: values.headOfDepartment !== "UNASSIGNED" ? values.headOfDepartment : "",
+      },
+    })
+      .then(response => {
+        setMessage({ messageText: response.data, messageStyle: "success-message" });
+        props.updateDepartments();
+      })
+      .catch(error => {
+        if (Axios.isCancel(error)) {
+          console.log(`Request cancelled: ${error.message}`);
+        }
+        else if (error.response) {
+          setMessage({ messageText: error.response.data, messageStyle: "error-message" });
+          console.log(error.response);
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+      });
+  };
+  const handleFocus = e => {
+    e.target.placeholder = "";
+    setMessage({ messageText: "", messageStyle: "" });
+  };
+  const handleBlur = (e, formikProps) => {
+    e.target.placeholder = placeholders[e.target.name];
+    formikProps.setFieldTouched(e.target.name);
+  };
 
-    const validationSchema = Yup.object({
-        name: Yup.string()
-            .required("This field is required"),
-        faculty: Yup.string(),
-        headOfDepartment: Yup.string()
-    });
+  return (
+    <div className="form-container">
+      <div className="form-card">
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {formikProps => (
+            <Form>
+              <div className="form-title">
+                {props.formType === "add" ? "Add Department" : `Update Department "${props.department.name}"`}
+              </div>
 
-    const handleSubmit = async values => {
-        await axiosInstance({
-            method: props.formType === "add" ? "post" : "put",
-            url: `/hr/${props.formType}-department${props.formType === "add" ? "" : `/${props.department.name}`}`,
-            cancelToken: axiosCancelSource.token,
-            headers: {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
-            },
-            data: {
-                name: values.name,
-                faculty: values.faculty,
-                headOfDepartment: values.headOfDepartment !== "UNASSIGNED" ? values.headOfDepartment : ""
-            }
-        })
-            .then(response => {
-                setMessageStyle("form-success-message");
-                setMessage(response.data);
-                props.updateDepartments();
-            })
-            .catch(error => {
-                if (error.response) {
-                    setMessageStyle("form-error-message");
-                    setMessage(error.response.data);
-                    console.log(error.response);
-                }
-                else if (error.request) {
-                    console.log(error.request);
-                }
-                else {
-                    console.log(error.message);
-                }
-            });
-    };
+              <label htmlFor="name">
+                Name
+              </label>
+              <Field
+                name="name"
+                placeholder={placeholders.name}
+                onFocus={e => handleFocus(e)}
+                onBlur={e => handleBlur(e, formikProps)}
+              />
+              <span className="form-input-message error-message">
+                <ErrorMessage name="name" />
+              </span>
 
-    const handleFocus = (e) => {
-        e.target.placeholder = "";
-    };
+              <label htmlFor="faculty">
+                Faculty
+              </label>
+              <Field
+                className={formikProps.values.type === "" ? "disabled-selected" : ""}
+                as="select"
+                name="faculty"
+                onFocus={e => handleFocus(e)}
+                onBlur={e => handleBlur(e, formikProps)}
+              >
+                <option disabled value="">Choose Faculty</option>
+                <option value="UNASSIGNED">UNASSIGNED</option>
+                {faculties}
+              </Field>
+              <span className="form-input-message error-message">
+                <ErrorMessage name="faculty" />
+              </span>
 
-    const handleBlur = (e, formikProps) => {
-        e.target.placeholder = placeholders[e.target.name];
-        formikProps.setFieldTouched(e.target.name);
-    };
+              <label htmlFor="headOfDepartment">
+                Head of Department
+              </label>
+              <Field
+                name="headOfDepartment"
+                placeholder={placeholders.headOfDepartment}
+                onFocus={e => handleFocus(e)}
+                onBlur={e => handleBlur(e, formikProps)}
+              />
+              <span className="form-input-message error-message">
+                <ErrorMessage name="headOfDepartment" />
+              </span>
 
-    return (
-        <div className="input-form department-form rounded-border container">
-            <div className="pt-3 pb-3">
-                <Formik  className="row"
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={handleSubmit}
-            >
-                {formikProps => (
-                    <Form>
-                         <label className="form-input-label col-sm-4" htmlFor="name">Department name</label>
-                        <Field className="rounded form-input-border col-sm-8" name="name" placeholder={placeholders.name}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="name" />
-                        </div>
-                        <label className="form-input-label col-sm-4" htmlFor="faculty">Faculty</label>
-                        <Field className="rounded form-input-border col-sm-8" name="faculty" as="select" onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)}>
-                            <option disabled value="">Faculty</option>
-                            <option value="">UNASSIGNED</option>
-                            {faculties}
-                        </Field>
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="faculty" />
-                        </div>
-                        <label className="form-input-label col-sm-4" htmlFor="headOfDepartment">Head of Department</label>
-                        <Field className="rounded form-input-border col-sm-8" name="headOfDepartment" placeholder={placeholders.headOfDepartment}
-                            onFocus={(e) => handleFocus(e)} onBlur={(e) => handleBlur(e, formikProps)} />
-                        <div className="form-input-error-message">
-                            <ErrorMessage name="headOfDepartment" />
-                        </div>
-                        <div className="form-button-div mb-2">
-                            <Button className="rounded bg-info"type="submit" disabled={formikProps.isSubmitting}>{props.formType === "add" ? "Add department" : "Update department"}</Button>
-                        </div>
-                        <div className={messageStyle}>{message}</div>
-                    </Form>
-                )}
-            </Formik>
-            </div>
-        </div>
-    );
+              <div className="form-submit">
+                <span className={`form-message ${message.messageStyle}`}>{message.messageText}</span>
+
+                <FormButton
+                  isSubmiting={formikProps.isSubmitting}
+                  onClick={() => { setMessage({ messageText: "", messageStyle: "" }); }}
+                >
+                  {props.formType === "add" && (formikProps.isSubmitting ? "Saving" : "Save")}
+                  {props.formType === "update" && (formikProps.isSubmitting ? "Saving changes" : "Save changes")}
+                </FormButton>
+              </div>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+  );
+}
+
+DepartmentForm.propTypes = {
+  formType: PropTypes.oneOf(["add", "update"]).isRequired,
+  department: PropTypes.shape({
+    _id: PropTypes.string,
+    name: PropTypes.string,
+    faculty: PropTypes.string,
+    headOfDepartment: PropTypes.string,
+  }),
+  updateDepartments: PropTypes.func.isRequired,
+};
+
+DepartmentForm.defaultProps = {
+  department: {
+    _id: "",
+    name: "",
+    faculty: "",
+    headOfDepartment: "",
+  },
 };
 
 export default DepartmentForm;

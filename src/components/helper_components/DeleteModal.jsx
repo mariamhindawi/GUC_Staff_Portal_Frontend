@@ -33,7 +33,7 @@ function DeleteModal(props) {
     );
   }
   return (
-    <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus>
+    <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
       <Modal.Header className="delete-modal-header">
         <Alert className="align-center-vertical" variant="danger">
           {`Are you sure you want to delete "${props.itemToDelete}" ?`}

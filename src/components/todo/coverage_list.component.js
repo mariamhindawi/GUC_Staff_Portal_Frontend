@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CoverageListItem from "../list_item_components/coverage_list_item.component";
+import CoverageListItem from "./coverage_list_item.component";
 import Pagination from "../helper_components/Pagination";
 
 const CoverageList = (props) => {

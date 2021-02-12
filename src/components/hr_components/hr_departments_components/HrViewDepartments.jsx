@@ -8,10 +8,10 @@ import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
 import AddButton from "../../button_components/AddButton";
 import DeleteModal from "../../helper_components/DeleteModal";
-import HrList from "../../list_components/HrList";
+import DepartmentList from "../../list_components/DepartmentList";
 
-function HrViewHrMembers(props) {
-  const [hrMemberToDelete, setHrMemberToDelete] = useState("");
+function HrViewDepartments(props) {
+  const [departmentToDelete, setDepartmentToDelete] = useState("");
   const [deleteModalIsOpen, setDeleteModalOpen] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState("will submit");
   const [deleteModalMessage, setDeleteModalMessage] = useState({ messageText: "", messageStyle: "" });
@@ -19,9 +19,9 @@ function HrViewHrMembers(props) {
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const deleteHrMember = async hrMemberId => {
+  const deleteDepartment = async departmentName => {
     setDeleteModalState("submitting");
-    await AxiosInstance.delete(`/staff/hr/delete-hr-member/${hrMemberId}`, {
+    await AxiosInstance.delete(`/staff/hr/delete-department/${departmentName}`, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -33,7 +33,7 @@ function HrViewHrMembers(props) {
           messageStyle: "success",
         });
         setDeleteModalState("submitted");
-        props.updateHrMembers();
+        props.updateDepartments();
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
@@ -55,14 +55,14 @@ function HrViewHrMembers(props) {
         }
       });
   };
-  const toggleDeleteModal = hrMemberID => {
-    if (hrMemberID) {
-      setHrMemberToDelete(hrMemberID);
+  const toggleDeleteModal = departmentName => {
+    if (departmentName) {
+      setDepartmentToDelete(departmentName);
     }
     setDeleteModalOpen(prevState => !prevState);
   };
   const resetDeleteModal = () => {
-    setHrMemberToDelete("");
+    setDepartmentToDelete("");
     setDeleteModalState("will submit");
     setDeleteModalMessage({ messageText: "", messageStyle: "" });
   };
@@ -76,10 +76,10 @@ function HrViewHrMembers(props) {
           <div className="view-container">
             <span className="d-flex justify-content-end">
               <Link to={`${match.url}/add`} tabIndex={-1}>
-                <AddButton>Add HR Member</AddButton>
+                <AddButton>Add Department</AddButton>
               </Link>
             </span>
-            <HrList hrMembers={props.hrMembers} toggleDeleteModal={toggleDeleteModal} />
+            <DepartmentList departments={props.departments} toggleDeleteModal={toggleDeleteModal} />
           </div>
         )
       }
@@ -88,8 +88,8 @@ function HrViewHrMembers(props) {
         isOpen={deleteModalIsOpen}
         state={deleteModalState}
         message={deleteModalMessage}
-        itemToDelete={hrMemberToDelete}
-        deleteItem={deleteHrMember}
+        itemToDelete={departmentToDelete}
+        deleteItem={deleteDepartment}
         toggle={toggleDeleteModal}
         reset={resetDeleteModal}
       />
@@ -97,20 +97,15 @@ function HrViewHrMembers(props) {
   );
 }
 
-HrViewHrMembers.propTypes = {
+HrViewDepartments.propTypes = {
   isLoading: PropTypes.bool.isRequired,
-  hrMembers: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
+  departments: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
-    email: PropTypes.string,
-    gender: PropTypes.string,
-    salary: PropTypes.number,
-    dayOff: PropTypes.string,
-    office: PropTypes.string,
-    annualLeaveBalance: PropTypes.number,
-    accidentalLeaveBalance: PropTypes.number,
+    faculty: PropTypes.string,
+    headOfDepartment: PropTypes.string,
   })).isRequired,
-  updateHrMembers: PropTypes.func.isRequired,
+  updateDepartments: PropTypes.func.isRequired,
 };
 
-export default HrViewHrMembers;
+export default HrViewDepartments;

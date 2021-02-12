@@ -17,6 +17,7 @@ function Navbar(props) {
   const user = useUserContext();
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
+  useAxiosCancel(axiosCancelSource);
 
   const setLayout = () => {
     if (window.innerWidth >= 1200) {
@@ -84,7 +85,6 @@ function Navbar(props) {
   useLayoutEffect(setLayout, [sidebarIsOpen]);
   useEffect(setupEventListeners, [sidebarIsOpen]);
   useEffect(fetchNotifications, []);
-  useAxiosCancel(axiosCancelSource);
 
   const handleLogOut = async () => {
     await AxiosInstance({

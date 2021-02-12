@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import CourseSlotListItem from "./course_slot_list_item.component";
-import Pagination from "../pagination.component";
+import Pagination from "../helper_components/Pagination";
 import {
   Col, Spinner,
   Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, FormText
@@ -57,7 +57,7 @@ const CourseSlotList = (props) => {
         <tbody>
           {courseSlotList()}
         </tbody>
-        
+
       </table>
     <Pagination
     postsPerPage={postsPerPage}
@@ -65,7 +65,7 @@ const CourseSlotList = (props) => {
     paginate={paginate}
   />
   </div>
-      
+
     );
   }
 }

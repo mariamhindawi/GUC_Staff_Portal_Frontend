@@ -62,7 +62,7 @@ function HrList(props) {
     const currentItems = props.hrMembers.slice(indexOfFirstItem, indexOfLastItem);
 
     if (props.hrMembers.length === 0) {
-      return <tr><td className="no-items">No HR members</td></tr>;
+      return <tr><td className="no-items">No HR Members</td></tr>;
     }
     return currentItems.map(hrMember => (
       <HrListItem

@@ -15,10 +15,11 @@ function HrFaculties() {
   const [isLoading, setLoading] = useState(true);
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
+  useAxiosCancel(axiosCancelSource);
 
   const fetchFaculties = async () => {
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/view-faculties", {
+    await AxiosInstance.get("/staff/hr/get-faculties", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -47,7 +48,6 @@ function HrFaculties() {
       });
   };
   useEffect(fetchFaculties, []);
-  useAxiosCancel(axiosCancelSource);
 
   if (initialIsLoading) {
     return <Spinner />;

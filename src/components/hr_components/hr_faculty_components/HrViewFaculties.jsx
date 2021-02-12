@@ -17,7 +17,6 @@ function HrViewFaculties(props) {
   const [deleteModalMessage, setDeleteModalMessage] = useState({ messageText: "", messageStyle: "" });
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
-
   useAxiosCancel(axiosCancelSource);
 
   const deleteFaculty = async facultyName => {
