@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
-import "./css/app.css";
+import "./css/App.css";
 import "./others/FontawesomeIcons";
 import AuthTokenManager from "./others/AuthTokenManager";
 import { useSetUserContext } from "./contexts/UserContext";

@@ -1,8 +1,9 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faUser, faLock, faHome, faBell, faSignOutAlt, faKey, faAddressCard, faBars, faTimes,
-  faPlus, faEdit, faTrashAlt, faEnvelope, faEnvelopeOpen, faSave
+  faPlus, faEdit, faTrashAlt, faEnvelope, faEnvelopeOpen, faSave, faEye
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(faUser, faLock, faHome, faBell, faSignOutAlt, faKey, faAddressCard,
-  faBars, faTimes, faPlus, faEdit, faTrashAlt, faEnvelope, faEnvelopeOpen, faSave);
+  faBars, faTimes, faPlus, faEdit, faTrashAlt, faEnvelope, faEnvelopeOpen, faSave,
+  faEye);
