@@ -6,105 +6,108 @@ input:-webkit-autofill {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100%;
-  padding-top: 30px;
-  padding-right: 30px;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
 }
 
 .profile-card {
   display: flex;
   text-align: center;
   width: 100%;
+  height: 100%;
   animation: profile-card-animation 1s 0s ease;
 }
-  @keyframes profile-card-animation {
-    0% {
-      transform: translateY(-25%);
-      opacity: 0;
-    }
-    95% {
-      transform: translateY(0);
-      opacity: 0.95;
-    }
-    100% {
-      opacity: 1;
-    }
+@keyframes profile-card-animation {
+  0% {
+    transform: translateY(-25%);
+    opacity: 0;
   }
-  .profile-photo-card {
-    border-right: 5px solid #5bc0de;
-    width: 35%;
-    display: flex;
-    flex-direction: column;
-   align-items: center;
-   margin-right: 5%;
+  95% {
+    transform: translateY(0);
+    opacity: 0.95;
   }
-  .profile-photo{
-    padding-top: 20px;
+  100% {
+    opacity: 1;
   }
-  .profile-photo img{
-    border-radius: 50%;
-    padding: 5px;
-    border: 5px solid #5bc0de;
-  }
-  .profile-name{
-    font-size: 22px;
-    font-weight: bold;
-  }
-  .profile-role{
-    font-size: 18px;
-    font-weight: bold;
-    color: #5bc0de;
-  }
+}
+.profile-photo-card {
+  border-right: 5px solid #5bc0de;
+  width: 35%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5%;
+}
+.profile-photo {
+  padding-top: 20px;
+}
+.profile-photo img {
+  border-radius: 50%;
+  padding: 5px;
+  border: 5px solid #5bc0de;
+}
+.profile-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+.profile-role {
+  font-size: 18px;
+  font-weight: bold;
+  color: #5bc0de;
+}
 .profile-info-card {
   width: 65%;
+  height: 100%;
 }
-.profile-tab-info{
+.profile-tab-info {
+  width: 100%;
+  height: 100%;
   text-align: start;
   display: flex;
   flex-direction: column;
   padding-top: 50px;
-  height: 420px;
+  overflow-y: auto;
 }
-.profile-tab-info span{
+.profile-tab-info span {
   margin-bottom: 8px;
   font-size: large;
 }
 .profile-salary-button {
-
   font-weight: bold;
   width: fit-content;
 }
-.profile-tab a{
- color: #5bc0de;
- font-weight: bold;
+.profile-tab a {
+  color: #5bc0de;
+  font-weight: bold;
 }
-@media  (max-width:768px){
-  .profile-card{
+@media (max-width: 768px) {
+  .profile-card {
     padding-left: 30px;
     flex-direction: column;
   }
-  .profile-photo-card{
+  .profile-photo-card {
     border-right: none;
     border-bottom: 5px solid #5bc0de;
     width: 100%;
     margin-bottom: 20px;
-
   }
-  .profile-info-card{
+  .profile-info-card {
     width: 100%;
   }
 }
-@media (max-width:400px){
-  .profile-tab-info span{
+@media (max-width: 400px) {
+  .profile-tab-info span {
     font-size: smaller;
   }
-  .profile-tab a{
+  .profile-tab a {
     font-size: 12px;
   }
-  .profile-salary-button{
+  .profile-salary-button {
     font-size: smaller;
   }
-  .profile-tab-info{
+  .profile-tab-info {
     height: 350px;
   }
 }
