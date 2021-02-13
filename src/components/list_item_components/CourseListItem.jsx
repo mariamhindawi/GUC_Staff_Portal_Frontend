@@ -41,7 +41,7 @@ function CourseListItem(props) {
     <tr className="table-row">
       <td>{props.course.id}</td>
       <td>{props.course.name}</td>
-      <td>{props.course.department}</td>
+      <td>{props.course.department !== "UNASSIGNED" ? props.course.department : "-"}</td>
       <td>
         <Dropdown>
           <Dropdown.Toggle className="list-dropdown-button" variant="light">

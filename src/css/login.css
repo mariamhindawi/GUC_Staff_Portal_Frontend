@@ -51,7 +51,7 @@
   margin-left: 27px;
 }
 
-.login-button {
+.login-form-card button[type="submit"] {
   padding: 7px;
   width: 100%;
   border: none;
@@ -69,19 +69,19 @@
   );
 }
 
-.login-button:hover {
+.login-form-card button[type="submit"]:hover {
   box-shadow: 0 0 4px 2px grey;
 }
 
-.login-button:focus {
+.login-form-card button[type="submit"]:focus {
   outline: none;
 }
 
-.login-button:not(:disabled):not(.disabled):active {
+.login-form-card button[type="submit"]:not(:disabled):not(.disabled):active {
   transform: scale(0.98);
   box-shadow: 0 0 4px 1px grey;
 }
 
-.login-button:disabled {
+.login-form-card button[type="submit"]:disabled {
   opacity: 0.6;
 }

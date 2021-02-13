@@ -86,7 +86,8 @@ function LoginForm() {
             <FontAwesomeIcon className="login-form-icon" icon="user" />
           </label>
           <Field
-            className="login-input"
+            type="email"
+            id="email"
             name="email"
             placeholder={placeholders.email}
             onFocus={e => handleFocus(e)}
@@ -100,8 +101,8 @@ function LoginForm() {
             <FontAwesomeIcon className="login-form-icon" icon="lock" />
           </label>
           <Field
-            className="login-input"
             type="password"
+            id="password"
             name="password"
             placeholder={placeholders.password}
             onFocus={e => handleFocus(e)}
@@ -112,7 +113,6 @@ function LoginForm() {
           </span>
 
           <button
-            className="login-button"
             type="submit"
             disabled={formikProps.isSubmitting}
             onClick={() => { setErrorMessage(""); }}

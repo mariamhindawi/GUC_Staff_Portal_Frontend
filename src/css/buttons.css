@@ -19,3 +19,25 @@
   background: #ffcccb;
   box-shadow: none;
 }
+
+
+.form-submit button {
+  background-color: rgb(100, 148, 237);
+  border-color: rgb(100, 148, 237);
+}
+
+.form-submit button:hover {
+  background-color: rgb(70, 125, 226);
+  border-color: rgb(70, 125, 226);
+}
+
+.form-submit button:focus {
+  background-color: rgb(70, 125, 226);
+  border-color: rgb(70, 125, 226);
+  box-shadow: 0 0 0 0.2rem rgb(100 148 237 / 50%);
+}
+
+.form-submit button:not(:disabled):not(.disabled):active {
+  background-color: rgb(62, 106, 189);
+  border-color: rgb(62, 106, 189);
+}

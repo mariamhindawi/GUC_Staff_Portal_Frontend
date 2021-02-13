@@ -7,6 +7,7 @@ import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
 import FormButton from "../button_components/FormButton";
+import RadioButton from "../helper_components/RadioButton";
 
 function HrMemberForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
@@ -99,8 +100,9 @@ function HrMemberForm(props) {
         Password
       </label>
       <Field
-        name="password"
         type="password"
+        id="password"
+        name="password"
         placeholder={placeholders.password}
         onFocus={e => handleFocus(e)}
         onBlur={e => handleBlur(e, formikProps)}
@@ -129,6 +131,8 @@ function HrMemberForm(props) {
                 Name
               </label>
               <Field
+                type="text"
+                id="name"
                 name="name"
                 placeholder={placeholders.name}
                 onFocus={e => handleFocus(e)}
@@ -142,8 +146,9 @@ function HrMemberForm(props) {
                 Email
               </label>
               <Field
-                name="email"
                 type="email"
+                id="email"
+                name="email"
                 placeholder={placeholders.email}
                 onFocus={e => handleFocus(e)}
                 onBlur={e => handleBlur(e, formikProps)}
@@ -155,17 +160,18 @@ function HrMemberForm(props) {
               <label htmlFor="gender">
                 Gender
               </label>
-              <Field
-                className={formikProps.values.gender === "" ? "disabled-selected" : ""}
-                as="select"
-                name="gender"
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              >
-                <option disabled value="">Choose Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </Field>
+              <div className="gender-radio-group" id="gender">
+                <div>
+                  <RadioButton name="gender" value="Male" onFocus={e => handleFocus(e)}>
+                    Male
+                  </RadioButton>
+                </div>
+                <div>
+                  <RadioButton name="gender" value="Female" onFocus={e => handleFocus(e)}>
+                    Female
+                  </RadioButton>
+                </div>
+              </div>
               <span className="form-input-message error-message">
                 <ErrorMessage name="gender" />
               </span>
@@ -174,6 +180,8 @@ function HrMemberForm(props) {
                 Office
               </label>
               <Field
+                type="text"
+                id="office"
                 name="office"
                 placeholder={placeholders.office}
                 onFocus={e => handleFocus(e)}
@@ -183,10 +191,12 @@ function HrMemberForm(props) {
                 <ErrorMessage name="office" />
               </span>
 
-              <label htmlFor="salray">
+              <label htmlFor="salary">
                 Salary
               </label>
               <Field
+                type="text"
+                id="salary"
                 name="salary"
                 placeholder={placeholders.salary}
                 onFocus={e => handleFocus(e)}

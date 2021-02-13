@@ -6,10 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function FormButton(props) {
   return (
     <Button
-      variant="info"
       type="submit"
-      onClick={props.onClick}
       disabled={props.isSubmiting}
+      onClick={props.onClick}
     >
       {props.children}
       {props.isSubmiting

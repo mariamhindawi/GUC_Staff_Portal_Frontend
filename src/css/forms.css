@@ -2,6 +2,62 @@ input:-webkit-autofill {
   background-clip: text;
 }
 
+.radio-input {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  color: unset;
+}
+
+.radio-input:focus {
+  outline: none;
+}
+
+.radio-input .radio-button {
+  display: grid;
+  place-items: center;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 0.1em solid currentColor;
+  margin-right: 0.3em;
+}
+
+.radio-input .radio-button::before {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  box-shadow: inset 0.5em 0.5em currentColor;
+  border-radius: 50%;
+  transition: 180ms ease-in-out;
+  transform: scale(0);
+}
+
+.radio-input[aria-checked="true"] .radio-button::before {
+  transform: scale(1);
+}
+
+.radio-input:focus .radio-button {
+  box-shadow: 0 0 0 0.05em #fff, 0 0 0.15em 0.1em currentColor;
+}
+
+.radio-input .radio-label {
+  cursor: pointer;
+  width: fit-content;
+  color: black;
+  font-size: medium;
+  font-weight: normal;
+  transition: 180ms ease-in-out;
+  opacity: 0.8;
+}
+
+.radio-input:focus .radio-label,
+.radio-input:active .radio-label {
+  transform: scale(1.05);
+  opacity: 1;
+}
+
 .form-container {
   display: flex;
   justify-content: center;
@@ -52,34 +108,27 @@ input:-webkit-autofill {
   margin-bottom: 0;
 }
 
-.form-card input {
-  width: 80%;
-  border: none;
-  border-bottom: solid lightblue;
-  height: 50px;
-  transition: 0.35s;
-}
-
-.form-card input:focus {
-  outline: none;
-  border-color: black;
-}
-
+.form-card input[type="text"],
+.form-card input[type="email"],
+.form-card input[type="password"],
 .form-card select {
   width: 80%;
-  border: none;
-  border-bottom: solid lightblue;
   height: 50px;
+  border: none;
+  border-bottom: solid cornflowerblue;
   transition: 0.35s;
+}
+
+.form-card input[type="text"]:focus,
+.form-card input[type="email"]:focus,
+.form-card input[type="password"]:focus,
+.form-card select:focus {
+  outline: none;
+  border-color: black;
 }
 
 .form-card select:hover {
   cursor: pointer;
-}
-
-.form-card select:focus {
-  outline: none;
-  border-color: black;
 }
 
 .form-card select.disabled-selected {
@@ -95,18 +144,18 @@ input:-webkit-autofill {
   background-color: rgb(200, 200, 200);
 }
 
-
-.form-input-message {
+.form-card .gender-radio-group {
+  display: flex;
+  justify-content: space-between;
   width: 80%;
+  margin-top: 15px;
   margin-left: 10%;
-  margin-bottom: 15px;
+  color: cornflowerblue;
 }
 
-.form-message {
-  margin-left: 10%;
+.form-card .gender-radio-group div {
+  width: 50%;
   text-align: left;
-  max-width: 45%;
-  height: 30px;
 }
 
 .form-submit {

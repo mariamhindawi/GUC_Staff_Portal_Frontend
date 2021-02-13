@@ -84,6 +84,8 @@ function FacultyForm(props) {
                 Name
               </label>
               <Field
+                type="text"
+                id="name"
                 name="name"
                 placeholder={placeholders.name}
                 onFocus={e => handleFocus(e)}

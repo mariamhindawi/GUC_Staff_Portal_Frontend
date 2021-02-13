@@ -93,6 +93,8 @@ function CourseForm(props) {
                 ID
               </label>
               <Field
+                type="text"
+                id="id"
                 name="id"
                 placeholder={placeholders.id}
                 onFocus={e => handleFocus(e)}
@@ -106,6 +108,8 @@ function CourseForm(props) {
                 Name
               </label>
               <Field
+                type="text"
+                id="name"
                 name="name"
                 placeholder={placeholders.name}
                 onFocus={e => handleFocus(e)}
@@ -119,6 +123,8 @@ function CourseForm(props) {
                 Department
               </label>
               <Field
+                type="text"
+                id="department"
                 name="department"
                 placeholder={placeholders.department}
                 onFocus={e => handleFocus(e)}

@@ -122,6 +122,8 @@ function DepartmentForm(props) {
                 Name
               </label>
               <Field
+                type="text"
+                id="name"
                 name="name"
                 placeholder={placeholders.name}
                 onFocus={e => handleFocus(e)}
@@ -137,9 +139,9 @@ function DepartmentForm(props) {
               <Field
                 className={formikProps.values.type === "" ? "disabled-selected" : ""}
                 as="select"
+                id="faculty"
                 name="faculty"
                 onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
               >
                 <option disabled value="">Choose Faculty</option>
                 <option value="UNASSIGNED">UNASSIGNED</option>
@@ -153,6 +155,8 @@ function DepartmentForm(props) {
                 Head of Department
               </label>
               <Field
+                type="text"
+                id="headOfDepartment"
                 name="headOfDepartment"
                 placeholder={placeholders.headOfDepartment}
                 onFocus={e => handleFocus(e)}

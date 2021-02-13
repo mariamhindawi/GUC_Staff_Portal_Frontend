@@ -97,6 +97,8 @@ function RoomForm(props) {
                 Name
               </label>
               <Field
+                type="text"
+                id="name"
                 name="name"
                 placeholder={placeholders.name}
                 onFocus={e => handleFocus(e)}
@@ -112,9 +114,9 @@ function RoomForm(props) {
               <Field
                 className={formikProps.values.type === "" ? "disabled-selected" : ""}
                 as="select"
+                id="type"
                 name="type"
                 onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
               >
                 <option disabled value="">Room Type</option>
                 <option value="Office">Office</option>
@@ -130,6 +132,8 @@ function RoomForm(props) {
                 Capacity
               </label>
               <Field
+                type="text"
+                id="capacity"
                 name="capacity"
                 placeholder={placeholders.capacity}
                 onFocus={e => handleFocus(e)}

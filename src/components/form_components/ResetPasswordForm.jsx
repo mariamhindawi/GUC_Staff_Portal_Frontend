@@ -101,8 +101,8 @@ const ResetPasswordForm = () => {
             Old Password
           </label>
           <Field
-            className=""
             type="password"
+            id="oldPassword"
             name="oldPassword"
             placeholder={placeholders.oldPassword}
             onFocus={e => handleFocus(e)}
@@ -116,8 +116,8 @@ const ResetPasswordForm = () => {
             New Password
           </label>
           <Field
-            className=""
             type="password"
+            id="newPassword"
             name="newPassword"
             placeholder={placeholders.newPassword}
             onFocus={e => handleFocus(e)}
@@ -131,8 +131,8 @@ const ResetPasswordForm = () => {
             Confirm New Password
           </label>
           <Field
-            className=""
             type="password"
+            id="confirmedNewPassword"
             name="confirmedNewPassword"
             placeholder={placeholders.confirmedNewPassword}
             onFocus={e => handleFocus(e)}
@@ -146,8 +146,6 @@ const ResetPasswordForm = () => {
             <span className="form-message error-message">{errorMessage}</span>
 
             <FormButton
-              variant="info"
-              type="submit"
               isSubmiting={formikProps.isSubmitting}
               onClick={() => { setErrorMessage(""); }}
             >

@@ -44,7 +44,7 @@ function HrListItem(props) {
 }
 
 HrListItem.propTypes = {
-  hrMember: PropTypes.arrayOf(PropTypes.shape({
+  hrMember: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     email: PropTypes.string,
@@ -53,7 +53,7 @@ HrListItem.propTypes = {
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
-  })).isRequired,
+  }).isRequired,
   toggleDeleteModal: PropTypes.func.isRequired,
 };
 
