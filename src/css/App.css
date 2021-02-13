@@ -8,44 +8,8 @@
 @import "./sidebar.css";
 @import "./forms.css";
 @import "./lists.css";
+@import "./profile.css";
 
-.profile-container {
-  position: relative;
-  overflow: hidden;
-  top: 15%;
-  border: #88bdbc 3px solid;
-  width: 60%;
-  margin-left: 20%;
-}
-
-.profile-list li {
-  list-style-type: none;
-}
-
-.profile-input {
-  outline: none;
-}
-
-#profile-edit-button-div {
-  float: right;
-}
-
-#profile-edit-button {
-  background: rgb(115, 149, 174);
-  background: linear-gradient(
-    90deg,
-    rgba(115, 149, 174, 1) 0%,
-    rgba(136, 189, 188, 1) 25%,
-    rgba(237, 193, 130, 1) 80%
-  );
-  border: none;
-  color: black;
-  font-weight: bolder;
-}
-
-#profile-edit-button:hover {
-  color: white;
-}
 
 .rounded-border {
   border-radius: 20px;
@@ -54,13 +18,6 @@
 .rounded-top-border {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-}
-
-@media (max-width: 576px) {
-  .profile-container {
-    margin-left: 10%;
-    width: 80%;
-  }
 }
 
 .change-day-off {

@@ -4,7 +4,7 @@ import { Alert, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
-import "./css/app.css";
+import "./css/App.css";
 import "./others/FontawesomeIcons";
 import AuthTokenManager from "./others/AuthTokenManager";
 import { useSetUserContext } from "./contexts/UserContext";
