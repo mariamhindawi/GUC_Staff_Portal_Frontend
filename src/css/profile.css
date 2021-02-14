@@ -113,21 +113,21 @@
   display: flex;
   flex-direction: column;
   font-size: large;
-  margin-bottom: 20px;
 }
 
 .profile-info-tab div > span:first-child {
   color: #5bc0de;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
 .profile-info-tab div > span:last-child:not(.error-message) {
-  margin-bottom: 35px;
+  margin-bottom: 41px;
 }
 
-.profile-info-tab div input {
-  width: 40%;
+.profile-info-tab input {
+  margin-top: 5px;
+  width: 220px;
 }
 
 @media (max-width: 992px) {
@@ -173,13 +173,15 @@
 }
 
 @media (max-width: 400px) {
-  .profile-photo-card a,
-  .profile-info-tabs,
-  .profile-info-tab span {
+  .profile-info-tabs {
     font-size: smaller;
   }
 
   .profile-info-tabs {
     height: 40px;
+  }
+
+  .profile-info-card .tab-content {
+    height: calc(100% - 40px);
   }
 }

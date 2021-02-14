@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Field, ErrorMessage, useFormikContext } from "formik";
 import { Tabs, Tab, Button } from "react-bootstrap";
@@ -9,7 +9,6 @@ import FormButton from "../button_components/FormButton";
 import CloseButton from "../button_components/CloseButton";
 
 function ProfileCard(props) {
-  const [edit, setEdit] = useState(false);
   const formikProps = useFormikContext();
 
   const placeholders = {
@@ -19,15 +18,10 @@ function ProfileCard(props) {
 
   const handleSubmit = async () => {
     await formikProps.submitForm();
-    if (formikProps.isValid) {
-      setEdit(false);
-      formikProps.resetForm();
-      props.updateProfile();
-    }
   };
   const handleClose = () => {
     formikProps.resetForm();
-    setEdit(false);
+    props.setEdit(false);
   };
   const handleFocus = e => {
     e.target.placeholder = "";
@@ -38,9 +32,9 @@ function ProfileCard(props) {
   };
 
   const profileButton = () => {
-    if (!edit) {
+    if (!props.edit) {
       return (
-        <Button onClick={() => { setEdit(true); }}>
+        <Button onClick={() => { props.setEdit(true); }}>
           Edit Profile
           <FontAwesomeIcon className="ml-2" icon="edit" />
         </Button>
@@ -72,10 +66,10 @@ function ProfileCard(props) {
       <div className="profile-info-card">
         <Tabs className="profile-info-tabs" defaultActiveKey="personal">
           <Tab className="profile-info-tab" eventKey="personal" title="Personal Info">
-            {edit && <CloseButton onClick={handleClose} />}
+            {props.edit && <CloseButton onClick={handleClose} />}
             <div>
               <span>Email</span>
-              {!edit
+              {!props.edit
                 ? <span>{props.user.email}</span>
                 : (
                   <>
@@ -93,7 +87,7 @@ function ProfileCard(props) {
             </div>
             <div>
               <span>Office</span>
-              {!edit
+              {!props.edit
                 ? <span>{props.user.office}</span>
                 : (
                   <>
@@ -133,10 +127,6 @@ function ProfileCard(props) {
               <span>Salary</span>
               <span>{`${props.user.salary} EGP`}</span>
             </div>
-            <Button variant="info">
-              View Last Month&apos;s Salary
-              <FontAwesomeIcon className="ml-2" icon="eye" />
-            </Button>
           </Tab>
         </Tabs>
       </div>
@@ -158,7 +148,8 @@ ProfileCard.propTypes = {
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   }).isRequired,
-  updateProfile: PropTypes.func.isRequired,
+  edit: PropTypes.bool.isRequired,
+  setEdit: PropTypes.func.isRequired,
 };
 
 export default ProfileCard;

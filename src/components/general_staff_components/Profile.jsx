@@ -7,10 +7,14 @@ import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
 import Spinner from "../helper_components/Spinner";
 import ProfileCard from "./ProfileCard";
+import AlertModal from "../helper_components/AlertModal";
 
 function Profile() {
-  const [user, setUser] = useState();
   const [isLoading, setLoading] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [user, setUser] = useState();
+  const [alertModalIsOpen, setAlertModalOpen] = useState(false);
+  const [alertModalMessage, setAlertModalMessage] = useState({ messageText: "", messageStyle: "" });
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
@@ -65,14 +69,18 @@ function Profile() {
       },
     })
       .then(response => {
-        alert(response.data); //eslint-disable-line
+        setEdit(false);
+        setAlertModalMessage({ messageText: response.data, messageStyle: "success" });
+        setAlertModalOpen(true);
+        fetchProfile();
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
           console.log(`Request cancelled: ${error.message}`);
         }
         else if (error.response) {
-          alert(error.response.data); //eslint-disable-line
+          setAlertModalMessage({ messageText: error.response.data, messageStyle: "danger" });
+          setAlertModalOpen(true);
           console.log(error.response);
         }
         else if (error.request) {
@@ -84,18 +92,31 @@ function Profile() {
       });
   };
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  const toggleAlertModal = () => { setAlertModalOpen(prevState => !prevState); };
+  const resetAlertModal = () => { setAlertModalMessage({ messageText: "", messageStyle: "" }); };
+
   return (
     <div className="profile-container">
-      <Formik
-        initialValues={{ email: user.email, office: user.office }}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+      {isLoading
+        ? <Spinner />
+        : (
+          <Formik
+            initialValues={{ email: user.email, office: user.office }}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            <ProfileCard user={user} edit={edit} setEdit={setEdit} profileUpdated={alertModalMessage.messageStyle === "success"} />
+          </Formik>
+        )}
+
+      <AlertModal
+        isOpen={alertModalIsOpen}
+        variant={alertModalMessage.messageStyle}
+        toggle={toggleAlertModal}
+        reset={resetAlertModal}
       >
-        <ProfileCard user={user} updateProfile={fetchProfile} />
-      </Formik>
+        {alertModalMessage.messageText}
+      </AlertModal>
     </div>
   );
 }

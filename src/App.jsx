@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
-import { Alert, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
 import "./css/App.css";
@@ -10,7 +9,7 @@ import { useSetUserContext } from "./contexts/UserContext";
 import Login from "./components/general_staff_components/Login";
 import StaffHome from "./components/home_components/StaffHome";
 import PageNotFound from "./components/error_components/PageNotFound";
-import CloseButton from "./components/button_components/CloseButton";
+import AlertModal from "./components/helper_components/AlertModal";
 
 function App() {
   const [isLoading, setLoading] = useState(true);
@@ -134,19 +133,14 @@ function App() {
         <Route path="/"><Redirect to="/404" /></Route>
       </Switch>
 
-      <Modal
-        show={alertModalIsOpen}
-        onHide={toggleAlertModal}
-        onExited={resetAlertModal}
-        restoreFocus={false}
+      <AlertModal
+        isOpen={alertModalIsOpen}
+        variant="primary"
+        toggle={toggleAlertModal}
+        reset={resetAlertModal}
       >
-        <span><CloseButton onClick={toggleAlertModal} /></span>
-        <Modal.Body>
-          <Alert className="text-center" variant="primary">
-            {alertModalMessage}
-          </Alert>
-        </Modal.Body>
-      </Modal>
+        {alertModalMessage}
+      </AlertModal>
     </>
   );
 }
