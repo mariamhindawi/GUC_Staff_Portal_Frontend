@@ -33,7 +33,7 @@
   outline: none;
 }
 
-.navbar-item:after {
+.navbar-item::after {
   display: none;
 }
 

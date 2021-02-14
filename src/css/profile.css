@@ -61,6 +61,7 @@
 }
 
 .profile-photo-card button {
+  font-weight: bold;
   margin-top: auto;
   margin-bottom: 20px;
 }
@@ -80,6 +81,15 @@
   font-weight: bold;
 }
 
+.profile-info-tabs a:focus {
+  outline: none;
+}
+
+.profile-info-tabs a:focus-visible {
+  box-shadow: 0 0 2px 0 grey;
+  z-index: 2;
+}
+
 .profile-info-card .tab-content {
   height: calc(100% - 45px);
 }
@@ -91,7 +101,12 @@
   height: 100%;
   overflow-y: auto;
   text-align: left;
-  padding-top: 30px;
+  padding-top: 40px;
+}
+
+.profile-info-tab .close-button {
+  float: right;
+  margin-top: -35px;
 }
 
 .profile-info-tab div {
@@ -107,10 +122,12 @@
   margin-bottom: 8px;
 }
 
-.profile-info-tab button {
-  width: fit-content;
-  font-weight: bold;
-  margin: 5px;
+.profile-info-tab div > span:last-child:not(.error-message) {
+  margin-bottom: 35px;
+}
+
+.profile-info-tab div input {
+  width: 40%;
 }
 
 @media (max-width: 992px) {
@@ -151,15 +168,14 @@
 
   .profile-info-tab {
     overflow-y: unset;
-    padding: 30px 10px 0 10px;
+    padding: 40px 10px 0 10px;
   }
 }
 
 @media (max-width: 400px) {
   .profile-photo-card a,
   .profile-info-tabs,
-  .profile-info-tab span,
-  .profile-info-tab button {
+  .profile-info-tab span {
     font-size: smaller;
   }
 

@@ -21,11 +21,12 @@ function FormButton(props) {
 FormButton.propTypes = {
   children: PropTypes.node.isRequired,
   isSubmiting: PropTypes.bool,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 
 FormButton.defaultProps = {
   isSubmiting: false,
+  onClick: () => {},
 };
 
 export default FormButton;

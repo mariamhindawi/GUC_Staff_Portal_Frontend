@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import Axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
 import FormButton from "../button_components/FormButton";
 import RadioButton from "../helper_components/RadioButton";
 
-const AcademicMemberForm = props => {
+function AcademicMemberForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
@@ -295,7 +295,7 @@ const AcademicMemberForm = props => {
       </div>
     </div>
   );
-};
+}
 
 AcademicMemberForm.propTypes = {
   formType: PropTypes.oneOf(["add", "update"]).isRequired,

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { Alert, Modal } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-social/bootstrap-social.css";
 import "./css/App.css";
@@ -11,6 +10,7 @@ import { useSetUserContext } from "./contexts/UserContext";
 import Login from "./components/general_staff_components/Login";
 import StaffHome from "./components/home_components/StaffHome";
 import PageNotFound from "./components/error_components/PageNotFound";
+import CloseButton from "./components/button_components/CloseButton";
 
 function App() {
   const [isLoading, setLoading] = useState(true);
@@ -140,11 +140,7 @@ function App() {
         onExited={resetAlertModal}
         restoreFocus={false}
       >
-        <span>
-          <button className="modal-close-button" type="button" onClick={toggleAlertModal}>
-            <FontAwesomeIcon icon="times" />
-          </button>
-        </span>
+        <span><CloseButton onClick={toggleAlertModal} /></span>
         <Modal.Body>
           <Alert className="text-center" variant="primary">
             {alertModalMessage}

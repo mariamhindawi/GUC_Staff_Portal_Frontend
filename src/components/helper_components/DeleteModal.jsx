@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Alert, Button, Modal, Spinner } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CloseButton from "../button_components/CloseButton";
 
 function DeleteModal(props) {
   if (props.state === "submitting") {
@@ -19,11 +19,7 @@ function DeleteModal(props) {
   if (props.state === "submitted") {
     return (
       <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
-        <span>
-          <button className="modal-close-button" type="button" onClick={() => { props.toggle(); }}>
-            <FontAwesomeIcon icon="times" />
-          </button>
-        </span>
+        <span><CloseButton onClick={() => { props.toggle(); }} /></span>
         <Modal.Body>
           <Alert className="text-center" variant={props.message.messageStyle}>
             {props.message.messageText}
