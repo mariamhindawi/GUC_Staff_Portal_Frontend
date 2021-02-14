@@ -9,6 +9,7 @@
   display: flex;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   animation: profile-card-animation 1s ease;
 }
 
@@ -29,12 +30,13 @@
 .profile-photo-card {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   width: 30%;
   height: 100%;
   overflow-y: auto;
-  text-align: center;
   border-right: 5px solid #5bc0de;
-  padding: 0 20px;
+  padding: 30px 20px 0 20px;
 }
 
 .profile-photo {
@@ -42,9 +44,14 @@
 }
 
 .profile-photo img {
+  max-width: 100%;
+  border: 5px solid #5bc0de;
   border-radius: 50%;
   padding: 5px;
-  border: 5px solid #5bc0de;
+}
+
+.profile-photo-card span {
+  word-break: break-word;
 }
 
 .profile-name {
@@ -56,7 +63,7 @@
 .profile-role {
   font-size: 18px;
   font-weight: bold;
-  color: #5bc0de;
+  color: #495057;
   margin-bottom: 30px;
 }
 
@@ -74,11 +81,15 @@
 
 .profile-info-tabs {
   height: 45px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
 }
 
 .profile-info-tabs a {
   color: #5bc0de;
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .profile-info-tabs a:focus {
@@ -99,7 +110,7 @@
   flex-direction: column;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  overflow: auto;
   text-align: left;
   padding-top: 40px;
 }
@@ -115,19 +126,36 @@
   font-size: large;
 }
 
-.profile-info-tab div > span:first-child {
-  color: #5bc0de;
+.profile-info-tab div span:first-child {
+  color: #211F1F;
   font-weight: bold;
   margin-bottom: 5px;
 }
 
-.profile-info-tab div > span:last-child:not(.error-message) {
+.profile-info-tab div span:last-child:not(.error-message) {
   margin-bottom: 41px;
 }
 
+.profile-info-tab .linkedin-account span:first-child {
+  color: #0e76a8;
+}
+
+.profile-info-tab .github-account span:first-child {
+  color: #211F1F;
+}
+
+.profile-info-tab .facebook-account span:first-child {
+  color:  #1877f2;
+}
+
+.profile-info-tab svg {
+  margin-right: 5px;
+}
+
 .profile-info-tab input {
-  margin-top: 5px;
   width: 220px;
+  max-width: 100%;
+  margin-top: 5px;
 }
 
 @media (max-width: 992px) {
@@ -151,11 +179,11 @@
   }
 
   .profile-photo-card {
-    border-right: none;
-    border-bottom: 5px solid #5bc0de;
     width: 100%;
     height: fit-content;
-    overflow-y: unset;
+    overflow: unset;
+    border-right: none;
+    border-bottom: 5px solid #5bc0de;
     padding: 0 0 20px 0;
     margin-bottom: 20px;
   }
@@ -173,6 +201,10 @@
 }
 
 @media (max-width: 400px) {
+  .profile-container {
+    padding: 5px;
+  }
+
   .profile-info-tabs {
     font-size: smaller;
   }

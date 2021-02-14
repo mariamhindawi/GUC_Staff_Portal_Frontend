@@ -64,8 +64,8 @@ function ProfileCard(props) {
       </div>
 
       <div className="profile-info-card">
-        <Tabs className="profile-info-tabs" defaultActiveKey="personal">
-          <Tab className="profile-info-tab" eventKey="personal" title="Personal Info">
+        <Tabs className="profile-info-tabs" defaultActiveKey="general">
+          <Tab className="profile-info-tab" eventKey="general" title="General Info">
             {props.edit && <CloseButton onClick={handleClose} />}
             <div>
               <span>Email</span>
@@ -114,7 +114,7 @@ function ProfileCard(props) {
               <span>{props.user.dayOff}</span>
             </div>
           </Tab>
-          <Tab className="profile-info-tab" eventKey="account" title="Account Info">
+          <Tab className="profile-info-tab" eventKey="financial" title="Financial Info">
             <div>
               <span>Accidental Leave Balance</span>
               <span>{`${props.user.accidentalLeaveBalance} day(s)`}</span>
@@ -126,6 +126,29 @@ function ProfileCard(props) {
             <div>
               <span>Salary</span>
               <span>{`${props.user.salary} EGP`}</span>
+            </div>
+          </Tab>
+          <Tab className="profile-info-tab" eventKey="accounts" title="Accounts Info">
+            <div className="linkedin-account">
+              <span>
+                <FontAwesomeIcon icon={["fab", "linkedin"]} />
+                LinkedIn
+              </span>
+              <span>linkedin.com</span>
+            </div>
+            <div className="github-account">
+              <span>
+                <FontAwesomeIcon icon={["fab", "github"]} />
+                GitHub
+              </span>
+              <span>github.com</span>
+            </div>
+            <div className="facebook-account">
+              <span>
+                <FontAwesomeIcon icon={["fab", "facebook"]} />
+                Facebook
+              </span>
+              <span>facebook.com</span>
             </div>
           </Tab>
         </Tabs>

@@ -17,6 +17,15 @@
   );
 }
 
+.navbar-staff-portal .nav {
+  flex-wrap: nowrap;
+}
+
+.navbar-staff-portal .nav:first-child {
+  overflow: hidden;
+  flex-wrap: wrap;
+}
+
 .navbar-item {
   pointer-events: none;
   background-color: transparent;
