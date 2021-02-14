@@ -1,23 +1,17 @@
-input:-webkit-autofill {
-  background-clip: text;
-}
-
 .profile-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   height: 100%;
-  padding: 30px;
+  padding: 30px 0;
 }
 
 .profile-card {
   display: flex;
-  text-align: center;
   width: 100%;
   height: 100%;
-  animation: profile-card-animation 1s 0s ease;
+  animation: profile-card-animation 1s ease;
 }
+
 @keyframes profile-card-animation {
   0% {
     transform: translateY(-25%);
@@ -31,83 +25,145 @@ input:-webkit-autofill {
     opacity: 1;
   }
 }
+
 .profile-photo-card {
-  border-right: 5px solid #5bc0de;
-  width: 35%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin-right: 5%;
+  width: 30%;
+  height: 100%;
+  overflow-y: auto;
+  text-align: center;
+  border-right: 5px solid #5bc0de;
+  padding: 0 20px;
 }
+
 .profile-photo {
-  padding-top: 20px;
+  margin: 20px;
 }
+
 .profile-photo img {
   border-radius: 50%;
   padding: 5px;
   border: 5px solid #5bc0de;
 }
+
 .profile-name {
   font-size: 22px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
+
 .profile-role {
   font-size: 18px;
   font-weight: bold;
   color: #5bc0de;
+  margin-bottom: 30px;
 }
+
+.profile-photo-card button {
+  margin-top: auto;
+  margin-bottom: 20px;
+}
+
 .profile-info-card {
-  width: 65%;
+  width: 70%;
   height: 100%;
+  padding: 0 20px;
 }
-.profile-tab-info {
-  width: 100%;
-  height: 100%;
-  text-align: start;
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-  overflow-y: auto;
+
+.profile-info-tabs {
+  height: 45px;
 }
-.profile-tab-info span {
-  margin-bottom: 8px;
-  font-size: large;
-}
-.profile-salary-button {
-  font-weight: bold;
-  width: fit-content;
-}
-.profile-tab a {
+
+.profile-info-tabs a {
   color: #5bc0de;
   font-weight: bold;
 }
-@media (max-width: 768px) {
-  .profile-card {
-    padding-left: 30px;
-    flex-direction: column;
+
+.profile-info-card .tab-content {
+  height: calc(100% - 45px);
+}
+
+.profile-info-tab {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  text-align: left;
+  padding-top: 30px;
+}
+
+.profile-info-tab div {
+  display: flex;
+  flex-direction: column;
+  font-size: large;
+  margin-bottom: 20px;
+}
+
+.profile-info-tab div > span:first-child {
+  color: #5bc0de;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.profile-info-tab button {
+  width: fit-content;
+  font-weight: bold;
+  margin: 5px;
+}
+
+@media (max-width: 992px) {
+  .profile-photo-card {
+    width: 35%;
   }
+
+  .profile-info-card {
+    width: 65%;
+  }
+}
+
+@media (max-width: 768px), (min-height: 600px) {
+  .profile-container {
+    padding: 15px;
+  }
+
+  .profile-card {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
   .profile-photo-card {
     border-right: none;
     border-bottom: 5px solid #5bc0de;
     width: 100%;
+    height: fit-content;
+    overflow-y: unset;
+    padding: 0 0 20px 0;
     margin-bottom: 20px;
   }
+
   .profile-info-card {
     width: 100%;
+    height: fit-content;
+    padding: 0;
+  }
+
+  .profile-info-tab {
+    overflow-y: unset;
+    padding: 30px 10px 0 10px;
   }
 }
+
 @media (max-width: 400px) {
-  .profile-tab-info span {
+  .profile-photo-card a,
+  .profile-info-tabs,
+  .profile-info-tab span,
+  .profile-info-tab button {
     font-size: smaller;
   }
-  .profile-tab a {
-    font-size: 12px;
-  }
-  .profile-salary-button {
-    font-size: smaller;
-  }
-  .profile-tab-info {
-    height: 350px;
+
+  .profile-info-tabs {
+    height: 40px;
   }
 }

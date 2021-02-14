@@ -20,24 +20,32 @@
   box-shadow: none;
 }
 
-
-.form-submit button {
-  background-color: rgb(100, 148, 237);
-  border-color: rgb(100, 148, 237);
+.form-submit button,
+.profile-card button {
+  background-color: #5bc0de;
+  border-color: #5bc0de;
 }
 
-.form-submit button:hover {
-  background-color: rgb(70, 125, 226);
-  border-color: rgb(70, 125, 226);
+.form-submit button:hover,
+.profile-card button:hover {
+  background-color: #3fafd1;
+  border-color: #3fafd1;
 }
 
-.form-submit button:focus {
-  background-color: rgb(70, 125, 226);
-  border-color: rgb(70, 125, 226);
-  box-shadow: 0 0 0 0.2rem rgb(100 148 237 / 50%);
+.form-submit button:focus,
+.profile-card button:focus {
+  background-color: #3fafd1;
+  border-color: #3fafd1;
+  box-shadow: 0 0 0 0.2rem #3fafd17e;
 }
 
-.form-submit button:not(:disabled):not(.disabled):active {
-  background-color: rgb(62, 106, 189);
-  border-color: rgb(62, 106, 189);
+.form-submit button:not(:disabled):not(.disabled):active,
+.profile-card button:not(:disabled):not(.disabled):active {
+  background-color: #319bbb;
+  border-color: #319bbb;
+}
+
+.form-submit button:not(:disabled):not(.disabled):active:focus
+.profile-card button:not(:disabled):not(.disabled):active:focus {
+  box-shadow: 0 0 0 0.2rem #3fafd17e;
 }

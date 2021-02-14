@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
 import { Tabs, Tab, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
@@ -12,10 +11,9 @@ import FemaleProfile from "../../images/profile-female.jpg";
 
 function Profile() {
   const [user, setUser] = useState();
-  const [office, setOffice] = useState();
-  const [initialIsLoading, setInitialLoading] = useState(true);
+  const [isLoading, setLoading] = useState(true);
   const axiosCancelSource = Axios.CancelToken.source();
-  const match = useRouteMatch();
+  useAxiosCancel(axiosCancelSource);
 
   const fetchProfile = async () => {
     await AxiosInstance.get("/staff/view-profile", {
@@ -24,17 +22,16 @@ function Profile() {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
-      .then(res => {
-        setOffice(res.data.office);
-        setUser(res.data.user);
-        setInitialLoading(false);
+      .then(response => {
+        setUser(response.data);
+        setLoading(false);
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
           console.log(`Request cancelled: ${error.message}`);
         }
         else if (error.response) {
-          setInitialLoading(false);
+          setLoading(false);
           console.log(error.response);
         }
         else if (error.request) {
@@ -46,8 +43,8 @@ function Profile() {
       });
   };
   useEffect(fetchProfile, []);
-  useAxiosCancel(axiosCancelSource);
-  if (initialIsLoading) {
+
+  if (isLoading) {
     return <Spinner />;
   }
   return (
@@ -55,61 +52,57 @@ function Profile() {
       <div className="profile-card">
         <div className="profile-photo-card">
           <div className="profile-photo">
-            {user.gender === "Male" ? <img src={MaleProfile} alt="profile" width={150} /> : <img src={FemaleProfile} alt="profile" width={150} /> }
+            {user.gender === "Male"
+              ? <img src={MaleProfile} alt="profile" width={150} />
+              : <img src={FemaleProfile} alt="profile" width={150} />}
           </div>
-          <br />
-          <span className="profile-name">
-            {user.name}
-          </span>
-          <span className="profile-role">
-            {user.role ? user.role : "HR"}
-          </span>
-          <Link className="text-info pb-3" to={`${match.url}/edit`}>
-            <span>Edit Profile</span>
+          <span className="profile-name">{user.name}</span>
+          <span className="profile-role">{user.role}</span>
+          <Button>
+            Edit Profile
             <FontAwesomeIcon className="ml-2" icon="edit" />
-          </Link>
+          </Button>
         </div>
+
         <div className="profile-info-card">
-          <Tabs defaultActiveKey="personal" className="profile-tab">
-            <Tab eventKey="personal" title="Personal Info">
-              <div className="profile-tab-info">
-                <span className="text-info font-weight-bold">Email</span>
-                <span className="pb-3">{user.email}</span>
-                <span className="text-info font-weight-bold">Office</span>
-                <span className="pb-3">{office.name}</span>
-                {user.department ? (
-                  <>
-                    <span className="text-primary font-weight-bold">
-                      Department
-                      {" "}
-                    </span>
-                    <span className="pb-3">
-                      {user.department}
-                    </span>
-                  </>
-                ) : <></>}
-                <span className="text-info font-weight-bold">Gender</span>
-                <span className="pb-3">{user.gender}</span>
-                <span className="text-info font-weight-bold">Day Off</span>
+          <Tabs className="profile-info-tabs" defaultActiveKey="personal">
+            <Tab className="profile-info-tab" eventKey="personal" title="Personal Info">
+              <div>
+                <span>Email</span>
+                <span>{user.email}</span>
+              </div>
+              <div>
+                <span>Office</span>
+                <span>{user.office}</span>
+              </div>
+              {user.role !== "HR" && (
+                <div>
+                  <span>Department</span>
+                  <span>{user.department}</span>
+                </div>
+              )}
+              <div>
+                <span>Day Off</span>
                 <span>{user.dayOff}</span>
               </div>
             </Tab>
-            <Tab eventKey="account" title="Account Info">
-              <div className="profile-tab-info">
-                <span className="text-info font-weight-bold">Accidental Leave Balance (Days)</span>
-                <span className="pb-3">{user.accidentalLeaveBalance}</span>
-                <span className="text-info font-weight-bold">Annual Leave Balance (Days)</span>
-                <span className="pb-3">{user.annualLeaveBalance}</span>
-                <span className="text-info font-weight-bold">Basic Salary (EGP)</span>
-                <span className="pb-3">{user.salary}</span>
-                <Button
-                  className="profile-salary-button"
-                  variant="info"
-                >
-                  View Last Month&apos;s Salary
-                  <FontAwesomeIcon className="ml-2" icon="eye" />
-                </Button>
+            <Tab className="profile-info-tab" eventKey="account" title="Account Info">
+              <div>
+                <span>Accidental Leave Balance</span>
+                <span>{`${user.accidentalLeaveBalance} day(s)`}</span>
               </div>
+              <div>
+                <span>Annual Leave Balance</span>
+                <span>{`${user.annualLeaveBalance} day(s)`}</span>
+              </div>
+              <div>
+                <span>Salary</span>
+                <span>{`${user.salary} EGP`}</span>
+              </div>
+              <Button variant="info">
+                View Last Month&apos;s Salary
+                <FontAwesomeIcon className="ml-2" icon="eye" />
+              </Button>
             </Tab>
           </Tabs>
         </div>

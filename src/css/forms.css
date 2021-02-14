@@ -115,7 +115,7 @@ input:-webkit-autofill {
   width: 80%;
   height: 50px;
   border: none;
-  border-bottom: solid cornflowerblue;
+  border-bottom: solid #5bc0de;
   transition: 0.35s;
 }
 
@@ -150,7 +150,7 @@ input:-webkit-autofill {
   width: 80%;
   margin-top: 15px;
   margin-left: 10%;
-  color: cornflowerblue;
+  color: #5bc0de;
 }
 
 .form-card .gender-radio-group div {
