@@ -14,6 +14,9 @@ function ProfileCard(props) {
   const placeholders = {
     email: "Email Address",
     office: "Room Name",
+    linkedin: "LinkedIn Account",
+    github: "GitHub Account",
+    facebook: "Facebook Account",
   };
 
   const handleSubmit = async () => {
@@ -128,29 +131,74 @@ function ProfileCard(props) {
               <span>{`${props.user.salary} EGP`}</span>
             </div>
           </Tab>
-          <Tab className="profile-info-tab" eventKey="accounts" title="Accounts Info">
-            <div className="linkedin-account">
-              <span>
-                <FontAwesomeIcon icon={["fab", "linkedin"]} />
-                LinkedIn
-              </span>
-              <span>linkedin.com</span>
-            </div>
-            <div className="github-account">
-              <span>
-                <FontAwesomeIcon icon={["fab", "github"]} />
-                GitHub
-              </span>
-              <span>github.com</span>
-            </div>
-            <div className="facebook-account">
-              <span>
-                <FontAwesomeIcon icon={["fab", "facebook"]} />
-                Facebook
-              </span>
-              <span>facebook.com</span>
-            </div>
-          </Tab>
+          {props.user.role === "HR" && (
+            <Tab className="profile-info-tab" eventKey="accounts" title="Accounts Info">
+              {props.edit && <CloseButton onClick={handleClose} />}
+              <div className="linkedin-account">
+                <span>
+                  <FontAwesomeIcon icon={["fab", "linkedin"]} />
+                  LinkedIn
+                </span>
+                {!props.edit
+                  ? <span>linkedin.com</span> // <span>{props.user.linkedin}</span>
+                  : (
+                    <>
+                      <Field
+                        type="text"
+                        id="linkedin"
+                        name="linkedin"
+                        placeholder={placeholders.linkedin}
+                        onFocus={e => handleFocus(e)}
+                        onBlur={e => handleBlur(e)}
+                      />
+                      <span className="error-message"><ErrorMessage name="linkedin" /></span>
+                    </>
+                  )}
+              </div>
+              <div className="github-account">
+                <span>
+                  <FontAwesomeIcon icon={["fab", "github"]} />
+                  GitHub
+                </span>
+                {!props.edit
+                  ? <span>github.com</span> // <span>{props.user.github}</span>
+                  : (
+                    <>
+                      <Field
+                        type="text"
+                        id="github"
+                        name="github"
+                        placeholder={placeholders.github}
+                        onFocus={e => handleFocus(e)}
+                        onBlur={e => handleBlur(e)}
+                      />
+                      <span className="error-message"><ErrorMessage name="github" /></span>
+                    </>
+                  )}
+              </div>
+              <div className="facebook-account">
+                <span>
+                  <FontAwesomeIcon icon={["fab", "facebook"]} />
+                  Facebook
+                </span>
+                {!props.edit
+                  ? <span>facebook.com</span> // <span>{props.user.facebook}</span>
+                  : (
+                    <>
+                      <Field
+                        type="text"
+                        id="facebook"
+                        name="facebook"
+                        placeholder={placeholders.facebook}
+                        onFocus={e => handleFocus(e)}
+                        onBlur={e => handleBlur(e)}
+                      />
+                      <span className="error-message"><ErrorMessage name="facebook" /></span>
+                    </>
+                  )}
+              </div>
+            </Tab>
+          )}
         </Tabs>
       </div>
     </div>
@@ -170,6 +218,9 @@ ProfileCard.propTypes = {
     office: PropTypes.string,
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
+    linkedin: PropTypes.string,
+    github: PropTypes.string,
+    facebook: PropTypes.string,
   }).isRequired,
   edit: PropTypes.bool.isRequired,
   setEdit: PropTypes.func.isRequired,

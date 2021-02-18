@@ -48,12 +48,26 @@ function Profile() {
   };
   useEffect(fetchProfile, []);
 
+  const initialValues = isLoading ? { email: "", office: "", linkedin: "", github: "", facebook: "" }
+    : {
+      email: user.email,
+      office: user.office,
+      linkedin: user.role === "HR" ? "" : user.linkedin,
+      github: user.role === "HR" ? "" : user.github,
+      facebook: user.role === "HR" ? "" : user.facebook,
+    };
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Invalid email address")
       .required("This field is required"),
     office: Yup.string()
       .required("This field is required"),
+    linkedin: Yup.string()
+      .matches(process.env.REACT_APP_URL_FORMAT, "Invalid url"),
+    github: Yup.string()
+      .matches(process.env.REACT_APP_URL_FORMAT, "Invalid url"),
+    facebook: Yup.string()
+      .matches(process.env.REACT_APP_URL_FORMAT, "Invalid url"),
   });
   const handleSubmit = async values => {
     await AxiosInstance({
@@ -66,6 +80,9 @@ function Profile() {
       data: {
         email: values.email,
         office: values.office,
+        linkedin: values.linkedin,
+        github: values.github,
+        facebook: values.facebook,
       },
     })
       .then(response => {
@@ -101,7 +118,7 @@ function Profile() {
         ? <Spinner />
         : (
           <Formik
-            initialValues={{ email: user.email, office: user.office }}
+            initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >

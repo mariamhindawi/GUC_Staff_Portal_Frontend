@@ -63,7 +63,7 @@
 .profile-role {
   font-size: 18px;
   font-weight: bold;
-  color: #495057;
+  color: grey;
   margin-bottom: 30px;
 }
 
@@ -148,7 +148,7 @@
   color:  #1877f2;
 }
 
-.profile-info-tab svg {
+.profile-info-tab div svg {
   margin-right: 5px;
 }
 
