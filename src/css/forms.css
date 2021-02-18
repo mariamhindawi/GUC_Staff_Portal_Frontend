@@ -2,6 +2,31 @@ input:-webkit-autofill {
   background-clip: text;
 }
 
+select:hover {
+  cursor: pointer;
+}
+
+select.disabled-selected {
+  color: grey;
+}
+
+select option:not(:disabled) {
+  color: black;
+}
+
+select option:not(:disabled):hover {
+  cursor: pointer;
+}
+
+select option:disabled {
+  color: rgb(120, 120, 120);
+  background-color: rgb(200, 200, 200);
+}
+
+select option:disabled:hover {
+  cursor: not-allowed;
+}
+
 .radio-input {
   cursor: pointer;
   display: flex;
@@ -50,6 +75,7 @@ input:-webkit-autofill {
   font-weight: normal;
   transition: 180ms ease-in-out;
   opacity: 0.8;
+  margin: 0;
 }
 
 .radio-input:focus .radio-label,
@@ -89,18 +115,18 @@ input:-webkit-autofill {
   }
 }
 
-.form-title {
+.form-card .form-title {
   font-size: large;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.form-alert {
+.form-card .form-alert {
   width: 80%;
   margin-left: 10%;
 }
 
-.form-card label {
+.form-card > form > label {
   width: 80%;
   text-align: left;
   font-size: smaller;
@@ -108,9 +134,7 @@ input:-webkit-autofill {
   margin-bottom: 0;
 }
 
-.form-card input[type="text"],
-.form-card input[type="email"],
-.form-card input[type="password"],
+.form-card input,
 .form-card select {
   width: 80%;
   height: 50px;
@@ -119,29 +143,10 @@ input:-webkit-autofill {
   transition: 0.35s;
 }
 
-.form-card input[type="text"]:focus,
-.form-card input[type="email"]:focus,
-.form-card input[type="password"]:focus,
+.form-card input:focus,
 .form-card select:focus {
   outline: none;
   border-color: black;
-}
-
-.form-card select:hover {
-  cursor: pointer;
-}
-
-.form-card select.disabled-selected {
-  color: grey;
-}
-
-.form-card select option:not(:disabled) {
-  color: black;
-}
-
-.form-card select option:disabled {
-  color: rgb(120, 120, 120);
-  background-color: rgb(200, 200, 200);
 }
 
 .form-card .gender-radio-group {
@@ -158,9 +163,24 @@ input:-webkit-autofill {
   text-align: left;
 }
 
-.form-submit {
+.form-card input + span.error-message,
+.form-card select + span.error-message,
+.form-card .radio-group + span.error-message {
+  width: 80%;
+  margin-left: 10%;
+  margin-bottom: 15px;
+}
+
+.form-card .form-submit {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.form-card .form-submit > span {
+  margin-left: 10%;
+  text-align: left;
+  max-width: 45%;
 }
 
 @media (max-width: 992px) {
@@ -180,17 +200,17 @@ input:-webkit-autofill {
     width: 90%;
   }
 
-  .form-alert {
+  .form-card .form-alert {
     font-size: small;
   }
 
-  .form-submit {
+  .form-card .form-submit {
     flex-direction: column-reverse;
     margin-left: 10%;
     width: 80%;
   }
 
-  .form-message {
+  .form-card .form-submit > span {
     text-align: center;
     justify-content: center;
     max-width: none;

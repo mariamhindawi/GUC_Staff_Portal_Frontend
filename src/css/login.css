@@ -34,7 +34,11 @@
   overflow-y: auto;
 }
 
-.login-form-icon {
+.login-form-card .card-body {
+  padding-bottom: 0.5rem;
+}
+
+.login-form-card .login-form-icon {
   color: rgb(28, 142, 248);
   font-size: larger;
   margin-right: 10px;
@@ -47,8 +51,9 @@
   width: calc(100% - 27px);
 }
 
-.login-input-message {
+.login-form-card input + span.error-message {
   margin-left: 27px;
+  margin-bottom: 10px ;
 }
 
 .login-form-card button[type="submit"] {
@@ -67,6 +72,7 @@
     rgba(81, 205, 238, 1) 75%,
     rgba(129, 235, 246, 1) 100%
   );
+  margin-top: 10px;
 }
 
 .login-form-card button[type="submit"]:hover {

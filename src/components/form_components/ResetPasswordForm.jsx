@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
-import FormButton from "../button_components/FormButton";
+import Input from "./form_input_components/Input";
+import FormSubmit from "./form_helper_components/FormSubmit";
 
 const ResetPasswordForm = () => {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
@@ -30,7 +31,6 @@ const ResetPasswordForm = () => {
     confirmedNewPassword: Yup.string()
       .required("This field is required"),
   });
-
   const handleSubmit = async (values, formikProps) => {
     if (values.newPassword !== values.confirmedNewPassword) {
       formikProps.setFieldValue("oldPassword", "", false);
@@ -39,7 +39,7 @@ const ResetPasswordForm = () => {
       formikProps.setFieldTouched("newPassword", false, false);
       formikProps.setFieldValue("confirmedNewPassword", "", false);
       formikProps.setFieldTouched("confirmedNewPassword", false, false);
-      setErrorMessage("Entered passwords do not match");
+      setMessage({ messageText: "Entered passwords do not match", messageStyle: "error-message" });
       return;
     }
     await AxiosInstance({
@@ -69,7 +69,7 @@ const ResetPasswordForm = () => {
           formikProps.setFieldTouched("newPassword", false, false);
           formikProps.setFieldValue("confirmedNewPassword", "");
           formikProps.setFieldTouched("confirmedNewPassword", false, false);
-          setErrorMessage(error.response.data);
+          setMessage({ messageText: error.response.data, messageStyle: "error-message" });
           console.log(error.response);
         }
         else if (error.request) {
@@ -80,14 +80,6 @@ const ResetPasswordForm = () => {
         }
       });
   };
-  const handleFocus = e => {
-    e.target.placeholder = "";
-    setErrorMessage("");
-  };
-  const handleBlur = (e, formikProps) => {
-    e.target.placeholder = placeholders[e.target.name];
-    formikProps.setFieldTouched(e.target.name);
-  };
 
   return (
     <Formik
@@ -95,65 +87,13 @@ const ResetPasswordForm = () => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {formikProps => (
-        <Form>
-          <label htmlFor="oldPassword">
-            Old Password
-          </label>
-          <Field
-            type="password"
-            id="oldPassword"
-            name="oldPassword"
-            placeholder={placeholders.oldPassword}
-            onFocus={e => handleFocus(e)}
-            onBlur={e => handleBlur(e, formikProps)}
-          />
-          <span className="form-input-message error-message">
-            <ErrorMessage name="oldPassword" />
-          </span>
+      <Form>
+        <Input label="Old Password" name="oldPassword" type="password" placeholder={placeholders.oldPassword} setMessage={setMessage} />
+        <Input label="New Password" name="newPassword" type="password" placeholder={placeholders.newPassword} setMessage={setMessage} />
+        <Input label="Confirm New Password" name="confirmedNewPassword" type="password" placeholder={placeholders.confirmedNewPassword} setMessage={setMessage} />
 
-          <label htmlFor="newPassword">
-            New Password
-          </label>
-          <Field
-            type="password"
-            id="newPassword"
-            name="newPassword"
-            placeholder={placeholders.newPassword}
-            onFocus={e => handleFocus(e)}
-            onBlur={e => handleBlur(e, formikProps)}
-          />
-          <span className="form-input-message error-message">
-            <ErrorMessage name="newPassword" />
-          </span>
-
-          <label htmlFor="confirmedNewPassword">
-            Confirm New Password
-          </label>
-          <Field
-            type="password"
-            id="confirmedNewPassword"
-            name="confirmedNewPassword"
-            placeholder={placeholders.confirmedNewPassword}
-            onFocus={e => handleFocus(e)}
-            onBlur={e => handleBlur(e, formikProps)}
-          />
-          <span className="form-input-message error-message">
-            <ErrorMessage name="confirmedNewPassword" />
-          </span>
-
-          <div className="form-submit">
-            <span className="form-message error-message">{errorMessage}</span>
-
-            <FormButton
-              isSubmiting={formikProps.isSubmitting}
-              onClick={() => { setErrorMessage(""); }}
-            >
-              {formikProps.isSubmitting ? "Saving changes" : "Save changes"}
-            </FormButton>
-          </div>
-        </Form>
-      )}
+        <FormSubmit formType="update" message={message} setMessage={setMessage} />
+      </Form>
     </Formik>
   );
 };

@@ -15,16 +15,3 @@
   font-size: 12px;
   color: green;
 }
-
-.form-input-message {
-  width: 80%;
-  margin-left: 10%;
-  margin-bottom: 15px;
-}
-
-.form-message {
-  margin-left: 10%;
-  text-align: left;
-  max-width: 45%;
-  height: 30px;
-}

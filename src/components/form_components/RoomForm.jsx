@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
-import FormButton from "../button_components/FormButton";
+import Input from "./form_input_components/Input";
+import Select from "./form_input_components/Select";
+import FormSubmit from "./form_helper_components/FormSubmit";
 
 function RoomForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
@@ -34,7 +36,6 @@ function RoomForm(props) {
       .positive("Capacity must be a positive number")
       .integer("Capacity must be an integer"),
   });
-
   const handleSubmit = async values => {
     setMessage({ messageText: "", messageStyle: "" });
     await AxiosInstance({
@@ -70,14 +71,6 @@ function RoomForm(props) {
         }
       });
   };
-  const handleFocus = e => {
-    e.target.placeholder = "";
-    setMessage({ messageText: "", messageStyle: "" });
-  };
-  const handleBlur = (e, formikProps) => {
-    e.target.placeholder = placeholders[e.target.name];
-    formikProps.setFieldTouched(e.target.name);
-  };
 
   return (
     <div className="form-container">
@@ -87,75 +80,23 @@ function RoomForm(props) {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {formikProps => (
-            <Form>
-              <div className="form-title">
-                {props.formType === "add" ? "Add Room" : `Update Room "${props.room.name}"`}
-              </div>
+          <Form>
+            <div className="form-title">
+              {props.formType === "add" ? "Add Room" : `Update Room "${props.room.name}"`}
+            </div>
 
-              <label htmlFor="name">
-                Name
-              </label>
-              <Field
-                type="text"
-                id="name"
-                name="name"
-                placeholder={placeholders.name}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="name" />
-              </span>
+            <Input label="Name" name="name" placeholder={placeholders.name} setMessage={setMessage} />
+            <Select label="Type" name="type" setMessage={setMessage}>
+              <option disabled value="">Room Type</option>
+              <option value="Office">Office</option>
+              <option value="Tutorial">Tutorial Room</option>
+              <option value="Lab">Lab</option>
+              <option value="Lecture">Lecture Hall</option>
+            </Select>
+            <Input label="Capacity" name="capacity" placeholder={placeholders.capacity} setMessage={setMessage} />
 
-              <label htmlFor="type">
-                Type
-              </label>
-              <Field
-                className={formikProps.values.type === "" ? "disabled-selected" : ""}
-                as="select"
-                id="type"
-                name="type"
-                onFocus={e => handleFocus(e)}
-              >
-                <option disabled value="">Room Type</option>
-                <option value="Office">Office</option>
-                <option value="Tutorial">Tutorial Room</option>
-                <option value="Lab">Lab</option>
-                <option value="Lecture">Lecture Hall</option>
-              </Field>
-              <span className="form-input-message error-message">
-                <ErrorMessage name="type" />
-              </span>
-
-              <label htmlFor="capacity">
-                Capacity
-              </label>
-              <Field
-                type="text"
-                id="capacity"
-                name="capacity"
-                placeholder={placeholders.capacity}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="capacity" />
-              </span>
-
-              <div className="form-submit">
-                <span className={`form-message ${message.messageStyle}`}>{message.messageText}</span>
-
-                <FormButton
-                  isSubmiting={formikProps.isSubmitting}
-                  onClick={() => { setMessage({ messageText: "", messageStyle: "" }); }}
-                >
-                  {props.formType === "add" && (formikProps.isSubmitting ? "Saving" : "Save")}
-                  {props.formType === "update" && (formikProps.isSubmitting ? "Saving changes" : "Save changes")}
-                </FormButton>
-              </div>
-            </Form>
-          )}
+            <FormSubmit formType={props.formType} message={message} setMessage={setMessage} />
+          </Form>
         </Formik>
       </div>
     </div>

@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { Spinner } from "react-bootstrap";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
+import Input from "./form_input_components/Input";
 
 function LoginForm() {
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState({ messageText: "" });
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
@@ -29,7 +30,6 @@ function LoginForm() {
     password: Yup.string()
       .required("This field is required"),
   });
-
   const handleSubmit = async (values, formikProps) => {
     await AxiosInstance({
       method: "post",
@@ -51,7 +51,7 @@ function LoginForm() {
         else if (error.response) {
           formikProps.setFieldValue("password", "");
           formikProps.setFieldTouched("password", false, false);
-          setErrorMessage(error.response.data);
+          setErrorMessage({ messageText: error.response.data });
           console.log(error.response);
         }
         else if (error.request) {
@@ -61,14 +61,6 @@ function LoginForm() {
           console.log(error.message);
         }
       });
-  };
-  const handleFocus = e => {
-    e.target.placeholder = "";
-    setErrorMessage("");
-  };
-  const handleBlur = (e, formikProps) => {
-    e.target.placeholder = placeholders[e.target.name];
-    formikProps.setFieldTouched(e.target.name);
   };
 
   if (AuthTokenManager.getAuthAccessToken()) {
@@ -85,44 +77,24 @@ function LoginForm() {
           <label htmlFor="email">
             <FontAwesomeIcon className="login-form-icon" icon="user" />
           </label>
-          <Field
-            type="email"
-            id="email"
-            name="email"
-            placeholder={placeholders.email}
-            onFocus={e => handleFocus(e)}
-            onBlur={e => handleBlur(e, formikProps)}
-          />
-          <span className="login-input-message error-message mb-2">
-            <ErrorMessage name="email" />
-          </span>
+          <Input name="email" type="email" placeholder={placeholders.email} setMessage={setErrorMessage} />
 
           <label htmlFor="password">
             <FontAwesomeIcon className="login-form-icon" icon="lock" />
           </label>
-          <Field
-            type="password"
-            id="password"
-            name="password"
-            placeholder={placeholders.password}
-            onFocus={e => handleFocus(e)}
-            onBlur={e => handleBlur(e, formikProps)}
-          />
-          <span className="login-input-message error-message mb-3">
-            <ErrorMessage name="password" />
-          </span>
+          <Input name="password" type="password" placeholder={placeholders.password} setMessage={setErrorMessage} />
 
           <button
             type="submit"
             disabled={formikProps.isSubmitting}
-            onClick={() => { setErrorMessage(""); }}
+            onClick={() => { setErrorMessage({ messageText: "" }); }}
           >
             {formikProps.isSubmitting ? "LOGGING IN" : "LOG IN"}
             {formikProps.isSubmitting
               && <Spinner className="ml-2" variant="light" animation="border" size="sm" as="span" />}
           </button>
 
-          <span className="error-message justify-content-center mt-1">{errorMessage}</span>
+          <span className="error-message justify-content-center mt-1">{errorMessage.messageText}</span>
         </Form>
       )}
     </Formik>

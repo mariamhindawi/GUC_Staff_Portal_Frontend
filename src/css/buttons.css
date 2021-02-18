@@ -24,6 +24,7 @@
 .profile-photo-card button {
   background-color: #5bc0de;
   border-color: #5bc0de;
+  height: 40px;
 }
 
 .form-submit button:hover,

@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
-import FormButton from "../button_components/FormButton";
-import RadioButton from "../helper_components/RadioButton";
+import Input from "./form_input_components/Input";
+import RadioGroup from "./form_input_components/RadioGroup";
+import RadioButton from "./form_input_components/RadioButton";
+import FormSubmit from "./form_helper_components/FormSubmit";
 
 function HrMemberForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
@@ -47,7 +49,6 @@ function HrMemberForm(props) {
       .integer("Salary must be an integer"),
     password: Yup.string(),
   });
-
   const handleSubmit = async values => {
     setMessage({ messageText: "", messageStyle: "" });
     await AxiosInstance({
@@ -86,32 +87,6 @@ function HrMemberForm(props) {
         }
       });
   };
-  const handleFocus = e => {
-    e.target.placeholder = "";
-    setMessage({ messageText: "", messageStyle: "" });
-  };
-  const handleBlur = (e, formikProps) => {
-    e.target.placeholder = placeholders[e.target.name];
-    formikProps.setFieldTouched(e.target.name);
-  };
-  const renderPassword = formikProps => (
-    <>
-      <label htmlFor="password">
-        Password
-      </label>
-      <Field
-        type="password"
-        id="password"
-        name="password"
-        placeholder={placeholders.password}
-        onFocus={e => handleFocus(e)}
-        onBlur={e => handleBlur(e, formikProps)}
-      />
-      <span className="form-input-message error-message">
-        <ErrorMessage name="password" />
-      </span>
-    </>
-  );
 
   return (
     <div className="form-container">
@@ -121,106 +96,24 @@ function HrMemberForm(props) {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {formikProps => (
-            <Form>
-              <div className="form-title">
-                {props.formType === "add" ? "Add HR Member" : `Update HR Member "${props.hrMember.id}"`}
-              </div>
+          <Form>
+            <div className="form-title">
+              {props.formType === "add" ? "Add HR Member" : `Update HR Member "${props.hrMember.id}"`}
+            </div>
 
-              <label htmlFor="name">
-                Name
-              </label>
-              <Field
-                type="text"
-                id="name"
-                name="name"
-                placeholder={placeholders.name}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="name" />
-              </span>
+            <Input label="Name" name="name" placeholder={placeholders.name} setMessage={setMessage} />
+            <Input label="Email" name="email" type="email" placeholder={placeholders.email} setMessage={setMessage} />
+            <RadioGroup label="Gender" name="gender" className="gender-radio-group">
+              <div><RadioButton name="gender" value="Male" setMessage={setMessage}>Male</RadioButton></div>
+              <div><RadioButton name="gender" value="Female" setMessage={setMessage}>Female</RadioButton></div>
+            </RadioGroup>
+            <Input label="Office" name="office" placeholder={placeholders.office} setMessage={setMessage} />
+            <Input label="Salary" name="salary" placeholder={placeholders.salary} setMessage={setMessage} />
+            {props.formType === "update"
+              && <Input label="Password" name="password" type="password" placeholder={placeholders.password} setMessage={setMessage} />}
 
-              <label htmlFor="email">
-                Email
-              </label>
-              <Field
-                type="email"
-                id="email"
-                name="email"
-                placeholder={placeholders.email}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="email" />
-              </span>
-
-              <label htmlFor="gender">
-                Gender
-              </label>
-              <div className="gender-radio-group" id="gender">
-                <div>
-                  <RadioButton name="gender" value="Male" onFocus={e => handleFocus(e)}>
-                    Male
-                  </RadioButton>
-                </div>
-                <div>
-                  <RadioButton name="gender" value="Female" onFocus={e => handleFocus(e)}>
-                    Female
-                  </RadioButton>
-                </div>
-              </div>
-              <span className="form-input-message error-message">
-                <ErrorMessage name="gender" />
-              </span>
-
-              <label htmlFor="office">
-                Office
-              </label>
-              <Field
-                type="text"
-                id="office"
-                name="office"
-                placeholder={placeholders.office}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="office" />
-              </span>
-
-              <label htmlFor="salary">
-                Salary
-              </label>
-              <Field
-                type="text"
-                id="salary"
-                name="salary"
-                placeholder={placeholders.salary}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="salary" />
-              </span>
-
-              {props.formType === "update" && renderPassword(formikProps)}
-
-              <div className="form-submit">
-                <span className={`form-message ${message.messageStyle}`}>{message.messageText}</span>
-
-                <FormButton
-                  isSubmiting={formikProps.isSubmitting}
-                  onClick={() => { setMessage({ messageText: "", messageStyle: "" }); }}
-                >
-                  {props.formType === "add" && (formikProps.isSubmitting ? "Saving" : "Save")}
-                  {props.formType === "update" && (formikProps.isSubmitting ? "Saving changes" : "Save changes")}
-                </FormButton>
-              </div>
-            </Form>
-          )}
+            <FormSubmit formType={props.formType} message={message} setMessage={setMessage} />
+          </Form>
         </Formik>
       </div>
     </div>

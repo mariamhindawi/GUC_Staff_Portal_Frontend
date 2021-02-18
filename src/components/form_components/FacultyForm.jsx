@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
-import FormButton from "../button_components/FormButton";
+import Input from "./form_input_components/Input";
+import FormSubmit from "./form_helper_components/FormSubmit";
 
 function FacultyForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
@@ -23,7 +24,6 @@ function FacultyForm(props) {
     name: Yup.string()
       .required("This field is required"),
   });
-
   const handleSubmit = async values => {
     setMessage({ messageText: "", messageStyle: "" });
     await AxiosInstance({
@@ -57,14 +57,6 @@ function FacultyForm(props) {
         }
       });
   };
-  const handleFocus = e => {
-    e.target.placeholder = "";
-    setMessage({ messageText: "", messageStyle: "" });
-  };
-  const handleBlur = (e, formikProps) => {
-    e.target.placeholder = placeholders[e.target.name];
-    formikProps.setFieldTouched(e.target.name);
-  };
 
   return (
     <div className="form-container">
@@ -74,40 +66,15 @@ function FacultyForm(props) {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {formikProps => (
-            <Form>
-              <div className="form-title">
-                {props.formType === "add" ? "Add Faculty" : `Update Faculty "${props.faculty.name}"`}
-              </div>
+          <Form>
+            <div className="form-title">
+              {props.formType === "add" ? "Add Faculty" : `Update Faculty "${props.faculty.name}"`}
+            </div>
 
-              <label htmlFor="name">
-                Name
-              </label>
-              <Field
-                type="text"
-                id="name"
-                name="name"
-                placeholder={placeholders.name}
-                onFocus={e => handleFocus(e)}
-                onBlur={e => handleBlur(e, formikProps)}
-              />
-              <span className="form-input-message error-message">
-                <ErrorMessage name="name" />
-              </span>
+            <Input label="Name" name="name" placeholder={placeholders.name} setMessage={setMessage} />
 
-              <div className="form-submit">
-                <span className={`form-message ${message.messageStyle}`}>{message.messageText}</span>
-
-                <FormButton
-                  isSubmiting={formikProps.isSubmitting}
-                  onClick={() => { setMessage({ messageText: "", messageStyle: "" }); }}
-                >
-                  {props.formType === "add" && (formikProps.isSubmitting ? "Saving" : "Save")}
-                  {props.formType === "update" && (formikProps.isSubmitting ? "Saving changes" : "Save changes")}
-                </FormButton>
-              </div>
-            </Form>
-          )}
+            <FormSubmit formType={props.formType} message={message} setMessage={setMessage} />
+          </Form>
         </Formik>
       </div>
     </div>

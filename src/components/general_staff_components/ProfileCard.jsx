@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Field, ErrorMessage, useFormikContext } from "formik";
+import { useFormikContext } from "formik";
 import { Tabs, Tab, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import MaleProfile from "../../images/profile-male.jpg";
 import FemaleProfile from "../../images/profile-female.jpg";
-import FormButton from "../button_components/FormButton";
 import CloseButton from "../button_components/CloseButton";
+import Input from "../form_components/form_input_components/Input";
+import FormButton from "../button_components/FormButton";
 
 function ProfileCard(props) {
   const formikProps = useFormikContext();
@@ -18,20 +19,12 @@ function ProfileCard(props) {
     github: "GitHub Account",
     facebook: "Facebook Account",
   };
-
   const handleSubmit = async () => {
     await formikProps.submitForm();
   };
-  const handleClose = () => {
+  const handleCloseEdit = () => {
     formikProps.resetForm();
     props.setEdit(false);
-  };
-  const handleFocus = e => {
-    e.target.placeholder = "";
-  };
-  const handleBlur = e => {
-    e.target.placeholder = placeholders[e.target.name];
-    formikProps.setFieldTouched(e.target.name);
   };
 
   const profileButton = () => {
@@ -69,42 +62,18 @@ function ProfileCard(props) {
       <div className="profile-info-card">
         <Tabs className="profile-info-tabs" defaultActiveKey="general">
           <Tab className="profile-info-tab" eventKey="general" title="General Info">
-            {props.edit && <CloseButton onClick={handleClose} />}
+            {props.edit && <CloseButton onClick={handleCloseEdit} />}
             <div>
               <span>Email</span>
               {!props.edit
                 ? <span>{props.user.email}</span>
-                : (
-                  <>
-                    <Field
-                      type="email"
-                      id="email"
-                      name="email"
-                      placeholder={placeholders.email}
-                      onFocus={e => handleFocus(e)}
-                      onBlur={e => handleBlur(e)}
-                    />
-                    <span className="error-message"><ErrorMessage name="email" /></span>
-                  </>
-                )}
+                : <Input name="email" type="email" placeholder={placeholders.email} />}
             </div>
             <div>
               <span>Office</span>
               {!props.edit
                 ? <span>{props.user.office}</span>
-                : (
-                  <>
-                    <Field
-                      type="text"
-                      id="office"
-                      name="office"
-                      placeholder={placeholders.office}
-                      onFocus={e => handleFocus(e)}
-                      onBlur={e => handleBlur(e)}
-                    />
-                    <span className="error-message"><ErrorMessage name="office" /></span>
-                  </>
-                )}
+                : <Input name="office" placeholder={placeholders.office} />}
             </div>
             {props.user.role !== "HR" && (
               <div>
@@ -118,6 +87,7 @@ function ProfileCard(props) {
             </div>
           </Tab>
           <Tab className="profile-info-tab" eventKey="financial" title="Financial Info">
+            {props.edit && <CloseButton onClick={handleCloseEdit} />}
             <div>
               <span>Accidental Leave Balance</span>
               <span>{`${props.user.accidentalLeaveBalance} day(s)`}</span>
@@ -131,29 +101,17 @@ function ProfileCard(props) {
               <span>{`${props.user.salary} EGP`}</span>
             </div>
           </Tab>
-          {props.user.role === "HR" && (
+          {props.user.role !== "HR" && (
             <Tab className="profile-info-tab" eventKey="accounts" title="Accounts Info">
-              {props.edit && <CloseButton onClick={handleClose} />}
+              {props.edit && <CloseButton onClick={handleCloseEdit} />}
               <div className="linkedin-account">
                 <span>
                   <FontAwesomeIcon icon={["fab", "linkedin"]} />
                   LinkedIn
                 </span>
                 {!props.edit
-                  ? <span>linkedin.com</span> // <span>{props.user.linkedin}</span>
-                  : (
-                    <>
-                      <Field
-                        type="text"
-                        id="linkedin"
-                        name="linkedin"
-                        placeholder={placeholders.linkedin}
-                        onFocus={e => handleFocus(e)}
-                        onBlur={e => handleBlur(e)}
-                      />
-                      <span className="error-message"><ErrorMessage name="linkedin" /></span>
-                    </>
-                  )}
+                  ? <span>{props.user.linkedin}</span>
+                  : <Input name="linkedin" placeholder={placeholders.linkedin} />}
               </div>
               <div className="github-account">
                 <span>
@@ -161,20 +119,8 @@ function ProfileCard(props) {
                   GitHub
                 </span>
                 {!props.edit
-                  ? <span>github.com</span> // <span>{props.user.github}</span>
-                  : (
-                    <>
-                      <Field
-                        type="text"
-                        id="github"
-                        name="github"
-                        placeholder={placeholders.github}
-                        onFocus={e => handleFocus(e)}
-                        onBlur={e => handleBlur(e)}
-                      />
-                      <span className="error-message"><ErrorMessage name="github" /></span>
-                    </>
-                  )}
+                  ? <span>{props.user.github}</span>
+                  : <Input name="github" placeholder={placeholders.github} />}
               </div>
               <div className="facebook-account">
                 <span>
@@ -182,20 +128,8 @@ function ProfileCard(props) {
                   Facebook
                 </span>
                 {!props.edit
-                  ? <span>facebook.com</span> // <span>{props.user.facebook}</span>
-                  : (
-                    <>
-                      <Field
-                        type="text"
-                        id="facebook"
-                        name="facebook"
-                        placeholder={placeholders.facebook}
-                        onFocus={e => handleFocus(e)}
-                        onBlur={e => handleBlur(e)}
-                      />
-                      <span className="error-message"><ErrorMessage name="facebook" /></span>
-                    </>
-                  )}
+                  ? <span>{props.user.facebook}</span>
+                  : <Input name="facebook" placeholder={placeholders.facebook} />}
               </div>
             </Tab>
           )}
