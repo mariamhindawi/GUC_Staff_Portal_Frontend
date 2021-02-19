@@ -149,13 +149,16 @@ select option:disabled:hover {
   border-color: black;
 }
 
+.form-card .radio-group {
+  color: #5bc0de;
+}
+
 .form-card .gender-radio-group {
   display: flex;
   justify-content: space-between;
   width: 80%;
   margin-top: 15px;
   margin-left: 10%;
-  color: #5bc0de;
 }
 
 .form-card .gender-radio-group div {

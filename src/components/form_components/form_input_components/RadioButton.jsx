@@ -7,7 +7,6 @@ function RadioButton(props) {
 
   const handleChange = () => {
     helpers.setValue(props.value);
-    helpers.setTouched(true);
   };
   const handleFocus = () => {
     props.setMessage({ messageText: "", messageStyle: "" });

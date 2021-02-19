@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { useFormikContext } from "formik";
 
 function RadioGroup(props) {
+  const isInitialMount = useRef(true);
   const formikProps = useFormikContext();
+
+  const setTouched = () => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    }
+    else {
+      formikProps.setFieldTouched(props.name, true);
+    }
+  };
+  useEffect(setTouched, [formikProps.values[props.name]]);
 
   return (
     <>
