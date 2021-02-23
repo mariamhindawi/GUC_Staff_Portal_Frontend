@@ -1,0 +1,194 @@
+.attendance-container{
+  padding: 15px 15px 0px 15px;
+}
+.attendance-dropdown{
+  width: 80px;
+  border: none;
+  border-bottom: solid #5bc0de;
+  transition: 0.35s;
+  background: none;
+  border-radius: 0px;
+  color:#5bc0de;
+}
+.attendance-dropdown:not(:disabled):not(.disabled).active:focus,
+.attendance-dropdown:not(:disabled):not(.disabled):active:focus,
+.show>.btn-primary.dropdown-toggle:focus,
+.attendance-dropdown.focus,
+.btn-primary:focus {
+  box-shadow: none;
+}
+.attendance-dropdown:not(:disabled):not(.disabled).active,
+.attendance-dropdown:not(:disabled):not(.disabled):active,
+.attendance-dropdown:hover,
+.attendance-dropdown:active{
+  background: none;
+  border-bottom: solid black;
+  color: black;
+}
+.show>.btn-primary.dropdown-toggle,
+.attendance-dropdown:focus {
+  background: none;
+  border-bottom: solid #5bc0de;
+  color: #5bc0de;
+}
+
+.attendance-pagination{
+  padding-top: 10px;
+}
+.attendance-button{
+background: none;
+color: #5bc0de;
+font-weight: bold;
+border: none;
+border-bottom: #495057 1px solid;
+border-radius: 0px;
+height: 38px;
+}
+.attendance-button:hover{
+  border:  lightgray 1px solid;
+  border-bottom: #495057 1px solid;
+  border-top-left-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+  background: none;
+  color: #5bc0de;
+}
+.attendance-button:focus, .attendance-button:active, .attendance-button-clicked{
+  background: none !important;
+  color:#495057 !important;
+  box-shadow: none !important;
+  border: #495057 1px solid !important;
+  border-top-left-radius: 7px !important;
+  border-top-right-radius: 7px !important;
+}
+.dropdown-item:active{
+background:none;
+}
+.hours-progress-container{
+  display: flex;
+  width:100%;
+  margin:5%;
+}
+.hours-card {
+display: flex;
+flex-direction: column;
+margin-right: 10%;
+margin-top: 10%;
+font-weight: bold;
+}
+.hours-progress-container
+.CircularProgressbar {
+  width: 80%;
+}
+.hours-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hours-progress span{
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.attendance-input{
+  width: 140px;
+  box-shadow: none;
+  border:1px solid #495057 ;
+  border-radius: 10px;
+  padding-left: 10px;
+}
+.attendance-input:focus,
+.attendance-input:active{
+  border:1px solid #495057 ;
+  outline: none;
+}
+.hr-attendance-button{
+  border: none;
+  background-color: #5bc0de;
+  color: white;
+  margin-left: 40px;
+}
+.hr-attendance-button:active,
+.hr-attendance-button:focus{
+  outline: none;
+}
+.hr-attendance-button:hover{
+  background-color: #5bc0de;
+}
+.hr-attendance-button:focus,
+.hr-attendance-button:active,
+.hr-attendance-button:not(:disabled):not(.disabled):active{
+  background-color: #5bc0de;
+  outline:none;
+}
+.attendance-button-container{
+  display: flex;
+}
+.general-attendance-container{
+text-align: center;
+}
+.general-attendance-button{
+  width: 150px;
+  height: 100px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  transition: 0.15s;
+  background-color: #5bc0de;
+  border: none;
+  font-weight: bold;
+
+}
+.general-attendance-button:hover{
+  transform: scale(1.05);
+  background-color: #37a8ca;
+  border: none;
+}
+.general-attendance-button:focus,
+.general-attendance-button:active,
+.general-attendance-button:not(:disabled):not(.disabled):active{
+  background-color: #37a8ca;
+  border: none;
+}
+@media (max-width: 768px){
+  .attendance-container{
+    flex-direction: column;
+  }
+  .attendance-dropdown{
+    width: 70px;
+  }
+  .hr-attendance-button{
+    margin-left: 30px;
+  }
+
+}
+@media (max-width: 679px){
+  .general-attendance-container{
+    margin-top: 15%;
+  }
+}
+@media (max-width: 400px){
+  .attendance-button {
+    font-size: 12px;
+  }
+  .hours-card {
+    font-size: smaller;
+    width: 90%;
+  }
+  .hours-progress span{
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: smaller;
+  }
+  .hr-attendance-button{
+    font-size: 12px;
+  }
+  .attendance-button-container{
+    flex-direction: column;
+  }
+  .hr-view-attendance-button{
+    margin-left: 0px;
+    margin-top: 10px;
+    width: 125px;
+    font-size: smaller;
+
+  }
+
+}
