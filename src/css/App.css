@@ -1,29 +1,12 @@
+@import "./general.css";
 @import "./messages.css";
 @import "./buttons.css";
 @import "./modals.css";
 @import "./404_page.css";
 @import "./login.css";
-@import "./general.css";
 @import "./navbar.css";
 @import "./sidebar.css";
-@import "./forms.css";
-@import "./lists.css";
+@import "./widgets.css";
 @import "./profile.css";
-
-
-.rounded-border {
-  border-radius: 20px;
-}
-
-.rounded-top-border {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
-
-.change-day-off {
-  position: absolute;
-  top: 40%;
-  border: #88bdbc 3px solid;
-  width: 60%;
-  margin-left: 20%;
-}
+@import "./lists.css";
+@import "./forms.css";
