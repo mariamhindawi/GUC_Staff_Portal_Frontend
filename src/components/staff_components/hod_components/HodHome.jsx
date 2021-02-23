@@ -4,7 +4,6 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
 import GeneralRequests from "../../todo/GeneralRequestsPage.component";
 import MySchedule from "../../todo/schedule.component";
-import ForbiddenAccess from "../../error_components/ForbiddenAccess";
 import Attendance from "../general_staff_components/Attendance";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
@@ -18,7 +17,7 @@ function HodHome(props) {
   const match = useRouteMatch();
 
   if (user.role !== "Head of Department") {
-    return <ForbiddenAccess />;
+    return <Redirect to="/403" />;
   }
   return (
     <div className={`home-container ${props.homeContainerStyle}`}>

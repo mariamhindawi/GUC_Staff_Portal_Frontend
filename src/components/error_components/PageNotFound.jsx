@@ -14,8 +14,10 @@ function PageNotFound() {
         <span className="circle med" />
         <span className="circle small" />
       </div>
-      <Link to="/">
-        <button className="error-page-button" type="button">Go back to home</button>
+      <Link to="/" tabIndex={-1}>
+        <button className="error-page-button" type="button">
+          Go back to home
+        </button>
       </Link>
     </div>
   );

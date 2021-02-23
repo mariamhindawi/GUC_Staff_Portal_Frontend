@@ -4,7 +4,6 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
 import MySchedule from "../../todo/schedule.component";
 import GeneralRequests from "../../todo/GeneralRequestsPage.component";
-import ForbiddenAccess from "../../error_components/ForbiddenAccess";
 import Attendance from "../general_staff_components/Attendance";
 import TaHomeMain from "./TaHomeMain";
 import Notifications from "../general_staff_components/Notifications";
@@ -16,7 +15,7 @@ function TaHome(props) {
   const match = useRouteMatch();
 
   if (user.role !== "Teaching Assistant") {
-    return <ForbiddenAccess />;
+    return <Redirect to="/403" />;
   }
   return (
     <div className={`home-container ${props.homeContainerStyle}`}>

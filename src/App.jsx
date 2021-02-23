@@ -10,6 +10,7 @@ import Login from "./components/staff_components/general_staff_components/Login"
 import StaffHome from "./components/staff_components/general_staff_components/StaffHome";
 import PageNotFound from "./components/error_components/PageNotFound";
 import AlertModal from "./components/helper_components/AlertModal";
+import ForbiddenAccess from "./components/error_components/ForbiddenAccess";
 
 function App() {
   const [isLoading, setLoading] = useState(true);
@@ -129,6 +130,7 @@ function App() {
         <Route exact path="/"><Redirect to={AuthTokenManager.getAuthAccessToken() ? "/staff" : "/login"} /></Route>
         <Route exact path="/login"><Login /></Route>
         <Route path="/staff"><StaffHome /></Route>
+        <Route exact path="/403"><ForbiddenAccess /></Route>
         <Route exact path="/404"><PageNotFound /></Route>
         <Route path="/"><Redirect to="/404" /></Route>
       </Switch>

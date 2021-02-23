@@ -1,0 +1,345 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Sedgwick+Ave+Display");
+
+.forbidden-access-container {
+  --font-display: "Sedgwick Ave Display";
+  --font-sans-serif: "IBM Plex Mono";
+  --box-shadow: 0px 21px 34px 0px rgba(0, 0, 0, 0.89);
+  --color-bg: linear-gradient(
+    to bottom,
+    rgba(35, 37, 38, 1) 0%,
+    rgba(32, 38, 40, 1) 100%
+  );
+  --scene-width: 400px;
+  --scene-height: 400px;
+  --delay-base: 500ms;
+  --delay-added: 100ms;
+  --acc-back: cubic-bezier(0.39, 0.575, 0.565, 1);
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+.forbidden-access-container .scene {
+  position: relative;
+  width: var(--scene-width);
+  height: var(--scene-height);
+  transition: transform 600ms var(--acc-back);
+  display: flex;
+  align-items: center;
+}
+
+.forbidden-access-container .scene:hover {
+  transform: scale(0.98) skewY(-1deg);
+}
+
+.forbidden-access-container .scene > * {
+  transition: transform 600ms var(--acc-back);
+}
+
+.forbidden-access-container .text {
+  transition: transform 600ms var(--acc-back), opacity 100ms ease-in;
+  height: inherit;
+  width: 100%;
+  height: 100%;
+  z-index: 7;
+  position: relative;
+  pointer-events: none;
+}
+
+.forbidden-access-container .scene:hover .text {
+  opacity: 1;
+  transform: scale(0.91);
+}
+
+@keyframes popInImg {
+  0% {
+    transform: skewY(5deg) scaleX(0.89) scaleY(0.89);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.forbidden-access-container .text span {
+  display: block;
+  font-family: var(--font-sans-serif);
+  text-align: center;
+  text-shadow: var(--box-shadow);
+  animation: popIn 600ms var(--acc-back) 1 forwards;
+  opacity: 0;
+}
+
+@keyframes popIn {
+  0%,
+  13% {
+    transform: scaleX(0.89) scaleY(0.75);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.forbidden-access-container .bg-403 {
+  font-size: 400px;
+  margin-left: 30px;
+  font-family: var(--font-display);
+  animation-delay: calc(var(--delay-base) + 2 * var(--delay-added));
+  z-index: 0;
+  background: rgba(182, 223, 248, 0.5);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: translateX(-25%) translateZ(-100px) skewY(-3deg);
+  position: absolute;
+  pointer-events: none;
+  transition: transform 1200ms var(--acc-back);
+}
+
+.forbidden-access-container .msg {
+  bottom: -38px;
+  right: -21px;
+  font-size: 38px;
+  animation-delay: calc(var(--delay-base) + 3 * var(--delay-added));
+  color: #8b8b8b;
+  font-weight: bolder;
+  margin-top: 144px;
+  letter-spacing: 2px;
+}
+
+.forbidden-access-container .msg span {
+  transform: skewX(-13deg);
+  display: inline-block;
+  color: #fff;
+  letter-spacing: -1px;
+}
+
+.forbidden-access-container .overlay {
+  display: block;
+  position: absolute;
+  cursor: pointer;
+  width: 50%;
+  height: 50%;
+  z-index: 1;
+  transform: translateZ(34px);
+}
+
+.forbidden-access-container .overlay:nth-of-type(1) {
+  left: 0;
+  top: 0;
+}
+
+.forbidden-access-container .overlay:nth-of-type(2) {
+  right: 0;
+  top: 0;
+}
+
+.forbidden-access-container .overlay:nth-of-type(3) {
+  bottom: 0;
+  right: 0;
+}
+
+.forbidden-access-container .overlay:nth-of-type(4) {
+  bottom: 0;
+  left: 0;
+}
+
+.forbidden-access-container .overlay:nth-of-type(1):hover ~ .lock,
+.forbidden-access-container .overlay:nth-of-type(1):focus ~ .lock {
+  transform-origin: right top;
+  transform: translateY(-3px) translateX(5px) rotateX(-13deg) rotateY(3deg)
+    rotateZ(-2deg) translateZ(0) scale(0.89);
+}
+
+.forbidden-access-container .overlay:nth-of-type(1):hover ~ .bg-403,
+.forbidden-access-container .overlay:nth-of-type(1):focus ~ .bg-403 {
+  transform: translateX(-27%) skewY(-3deg) rotateX(-13deg) rotateY(3deg)
+    translateZ(-100px) scale(0.89);
+}
+
+.forbidden-access-container .overlay:nth-of-type(2):hover ~ .lock,
+.forbidden-access-container .overlay:nth-of-type(2):focus ~ .lock {
+  transform-origin: left top;
+  transform: translateY(-3px) translateX(5px) rotateX(13deg) rotateY(3deg)
+    rotateZ(2deg) translateZ(0) scale(1.03);
+}
+
+.forbidden-access-container .overlay:nth-of-type(2):hover ~ .bg-403,
+.forbidden-access-container .overlay:nth-of-type(2):focus ~ .bg-403 {
+  transform: translateX(-21%) skewY(-3deg) rotateX(13deg) rotateY(3deg)
+    translateZ(-100px);
+}
+
+.forbidden-access-container .overlay:nth-of-type(3):hover ~ .lock,
+.forbidden-access-container .overlay:nth-of-type(3):focus ~ .lock {
+  transform-origin: left bottom;
+  transform: translateY(3px) translateX(-5px) rotateX(-13deg) rotateY(3deg)
+    rotateZ(-2deg) translateZ() scale(0.96);
+}
+
+.forbidden-access-container .overlay:nth-of-type(3):hover ~ .bg-403,
+.forbidden-access-container .overlay:nth-of-type(3):focus ~ .bg-403 {
+  transform: translateX(-23%) rotateX(-13deg) rotateY(3deg) translateZ(-100px);
+}
+
+.forbidden-access-container .overlay:nth-of-type(4):hover ~ .lock,
+.forbidden-access-container .overlay:nth-of-type(4):focus ~ .lock {
+  transform-origin: right bottom;
+  transform: translateY(3px) translateX(5px) rotateX(-13deg) rotateY(-3deg)
+    rotateZ(2deg) translateZ(0) scale(0.89);
+}
+
+.forbidden-access-container .overlay:nth-of-type(4):hover ~ .bg-403,
+.forbidden-access-container .overlay:nth-of-type(4):focus ~ .bg-403 {
+  transform: translateX(-19%) rotateX(-13deg) rotateY(-3deg) translateZ(-100px);
+}
+
+.forbidden-access-container .lock {
+  box-shadow: 32px 8px 0 0 #e4e4e4, 40px 8px 0 0 #e4e4e4, 48px 8px 0 0 #e4e4e4,
+    56px 8px 0 0 #e4e4e4, 24px 16px 0 0 #cbcbcb, 32px 16px 0 0 #cbcbcb,
+    40px 16px 0 0 #909090, 48px 16px 0 0 #909090, 56px 16px 0 0 #cbcbcb,
+    64px 16px 0 0 #e4e4e4, 16px 24px 0 0 #cbcbcb, 24px 24px 0 0 #cbcbcb,
+    32px 24px 0 0 #909090, 56px 24px 0 0 #909090, 64px 24px 0 0 #cbcbcb,
+    72px 24px 0 0 #e4e4e4, 16px 32px 0 0 #cbcbcb, 24px 32px 0 0 #909090,
+    64px 32px 0 0 #909090, 72px 32px 0 0 #cbcbcb, 16px 40px 0 0 #cbcbcb,
+    24px 40px 0 0 #909090, 64px 40px 0 0 #909090, 72px 40px 0 0 #cbcbcb,
+    16px 48px 0 0 #909090, 24px 48px 0 0 #909090, 64px 48px 0 0 #909090,
+    72px 48px 0 0 #909090, 8px 56px 0 0 #fbec79, 16px 56px 0 0 #fbec79,
+    24px 56px 0 0 #fbec79, 32px 56px 0 0 #fbec79, 40px 56px 0 0 #fbec79,
+    48px 56px 0 0 #fbec79, 56px 56px 0 0 #fbec79, 64px 56px 0 0 #fbec79,
+    72px 56px 0 0 #fbec79, 80px 56px 0 0 #fbec79, 8px 64px 0 0 #ffc107,
+    16px 64px 0 0 #ffc107, 24px 64px 0 0 #ffc107, 32px 64px 0 0 #ffc107,
+    40px 64px 0 0 #ffc107, 48px 64px 0 0 #ffc107, 56px 64px 0 0 #ffc107,
+    64px 64px 0 0 #ffc107, 72px 64px 0 0 #ffc107, 80px 64px 0 0 #ffc107,
+    8px 72px 0 0 #ffc107, 16px 72px 0 0 #ffc107, 24px 72px 0 0 #ffc107,
+    32px 72px 0 0 #ffc107, 40px 72px 0 0 #ffc107, 48px 72px 0 0 #ffc107,
+    56px 72px 0 0 #ffc107, 64px 72px 0 0 #ffc107, 72px 72px 0 0 #ffc107,
+    80px 72px 0 0 #ffc107, 8px 80px 0 0 #ff9800, 16px 80px 0 0 #ffc107,
+    24px 80px 0 0 #ffc107, 32px 80px 0 0 #ffc107, 40px 80px 0 0 #ffc107,
+    48px 80px 0 0 #ff9800, 56px 80px 0 0 #ff9800, 64px 80px 0 0 #ff9800,
+    72px 80px 0 0 #ff9800, 16px 88px 0 0 #ff9800, 24px 88px 0 0 #ff9800,
+    32px 88px 0 0 #ff9800, 40px 88px 0 0 #ff9800, 48px 88px 0 0 #ff9800,
+    56px 88px 0 0 #ff9800, 64px 88px 0 0 #ff9800, 72px 88px 0 0 #ff9800,
+    24px 96px 0 0 #ff9800, 32px 96px 0 0 #ff9800, 40px 96px 0 0 #ff9800,
+    48px 96px 0 0 #ff9800, 56px 96px 0 0 #ff9800, 64px 96px 0 0 #ff9800;
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  left: calc(50% - 48px);
+  top: 0;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  pointer-events: none;
+  outline: 1px solid transparent;
+}
+
+.forbidden-access-container .forbidden-page-button {
+  position: absolute;
+  top: 5%;
+  left: 3%;
+  width: 200px;
+  height: 45px;
+  background-color: #8b8b8b;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  font-family: sans-serif;
+  font-weight: bold;
+  z-index: 2;
+  transition: 0.25s;
+}
+
+.forbidden-access-container .forbidden-page-button:hover {
+  background-color: #666161;
+}
+
+.forbidden-access-container .forbidden-page-button:focus {
+  outline: none;
+}
+
+.forbidden-access-container .forbidden-page-button:focus-visible {
+  box-shadow: 0 0 0 4px #8b8b8b50;
+}
+
+.forbidden-access-container .forbidden-page-button:not(:disabled):not(.disabled):active {
+  background-color: #666161;
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .forbidden-access-container .bg-403 {
+    margin-left: 50px;
+    font-size: 320px;
+  }
+}
+
+@media (max-width: 560px) {
+  .forbidden-access-container .bg-403 {
+    margin-left: 90px;
+    font-size: 230px;
+  }
+
+  .forbidden-access-container .forbidden-page-button {
+    width: 170px;
+  }
+}
+
+@media (max-width: 420px) {
+  .forbidden-access-container .bg-403 {
+    margin-left: 110px;
+    font-size: 200px;
+  }
+
+  .forbidden-access-container .msg {
+    font-size: 25px;
+  }
+
+  .forbidden-page-button {
+    margin-top: 0px;
+  }
+
+  .forbidden-access-container .msg span {
+    margin-top: 150px;
+  }
+
+  .forbidden-page-button {
+    margin-top: 150px;
+  }
+
+  .forbidden-access-container .lock {
+    top: 50px;
+  }
+}
+
+@media (max-width: 370px) {
+  .forbidden-access-container .bg-403 {
+    font-size: 180px;
+    margin-left: 100px;
+  }
+}
+
+@media (max-width: 355px) {
+  .forbidden-access-container .bg-403 {
+    margin-left: 100px;
+  }
+}
+
+@media (max-width: 340px) {
+  .forbidden-access-container .bg-403 {
+    font-size: 160px;
+    margin-left: 90px;
+  }
+}
+
+@media (max-width: 300px) {
+  .forbidden-access-container .bg-403 {
+    margin-left: 80px;
+  }
+}

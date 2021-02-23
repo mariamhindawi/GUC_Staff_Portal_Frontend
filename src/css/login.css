@@ -73,6 +73,7 @@
     rgba(129, 235, 246, 1) 100%
   );
   margin-top: 10px;
+  transition: 0.25s;
 }
 
 .login-form-card button[type="submit"]:hover {
@@ -81,6 +82,10 @@
 
 .login-form-card button[type="submit"]:focus {
   outline: none;
+}
+
+.login-form-card button[type="submit"]:focus-visible {
+  box-shadow: 0 0 4px 2px grey;
 }
 
 .login-form-card button[type="submit"]:not(:disabled):not(.disabled):active {

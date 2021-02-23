@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
-import ForbiddenAccess from "../../error_components/ForbiddenAccess";
 import Attendance from "../general_staff_components/Attendance";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
@@ -17,7 +16,7 @@ function CcHome(props) {
   const match = useRouteMatch();
 
   if (user.role !== "Course Coordinator") {
-    return <ForbiddenAccess />;
+    return <Redirect to="/403" />;
   }
   return (
     <div className={`home-container ${props.homeContainerStyle}`}>
