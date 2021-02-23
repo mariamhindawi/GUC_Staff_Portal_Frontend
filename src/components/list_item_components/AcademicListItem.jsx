@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link, useRouteMatch } from "react-router-dom";
 import DeleteButton from "../button_components/DeleteButton";
-import UpdateButton from "../button_components/UpdateButton";
+import EditButton from "../button_components/EditButton";
 import { useUserContext } from "../../contexts/UserContext";
 
 function AcademicListItem(props) {
@@ -19,7 +19,7 @@ function AcademicListItem(props) {
             <td>{props.academic.accidentalLeaveBalance}</td>
             <td>
               <Link to={`${match.url}/update/${props.academic.id}`} tabIndex={-1}>
-                <UpdateButton />
+                <EditButton />
               </Link>
             </td>
             <td>

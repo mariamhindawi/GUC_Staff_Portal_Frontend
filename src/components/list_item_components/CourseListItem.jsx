@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useRouteMatch } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import DeleteButton from "../button_components/DeleteButton";
-import UpdateButton from "../button_components/UpdateButton";
+import EditButton from "../button_components/EditButton";
 import { useUserContext } from "../../contexts/UserContext";
 
 function CourseListItem(props) {
@@ -17,7 +17,7 @@ function CourseListItem(props) {
           <>
             <td>
               <Link to={`${match.url}/update/${props.course._id}`} tabIndex={-1}>
-                <UpdateButton />
+                <EditButton />
               </Link>
             </td>
             <td>

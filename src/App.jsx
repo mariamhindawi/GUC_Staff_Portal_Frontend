@@ -6,8 +6,8 @@ import "./css/App.css";
 import "./others/FontawesomeIcons";
 import AuthTokenManager from "./others/AuthTokenManager";
 import { useSetUserContext } from "./contexts/UserContext";
-import Login from "./components/general_staff_components/Login";
-import StaffHome from "./components/home_components/StaffHome";
+import Login from "./components/staff_components/general_staff_components/Login";
+import StaffHome from "./components/staff_components/general_staff_components/StaffHome";
 import PageNotFound from "./components/error_components/PageNotFound";
 import AlertModal from "./components/helper_components/AlertModal";
 
