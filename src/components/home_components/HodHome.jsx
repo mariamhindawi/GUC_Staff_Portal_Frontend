@@ -10,9 +10,7 @@ import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
 import HODcourses from "../todo/hod_courses.component";
-import HodCoverage from "../todo/hod_coverage.component";
 import HODacademics from "../todo/hod_staff_members.component";
-import HODSlotAssignment from "../todo/HOD_ViewTeachingAssignments.component";
 import HodHomeMain from "../hod_components/HodHomeMain";
 
 function HodHome(props) {
@@ -29,13 +27,11 @@ function HodHome(props) {
         <Route path={`${match.path}/notifications`}><Notifications /></Route>
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
-        <Route path={`${match.path}/my-attendance`}><Attendance /></Route>
+        <Route path={`${match.path}/attendance`}><Attendance /></Route>
         <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/schedule`}><MySchedule /></Route>
-        <Route path={`${match.path}/hod-course-details`}><HODcourses /></Route>
-        <Route path={`${match.path}/hod-coverage`}><HodCoverage /></Route>
-        <Route path={`${match.path}/hod-courses-slot-assignment`}><HODSlotAssignment /></Route>
-        <Route path={`${match.path}/hod-staff-members`}><HODacademics /></Route>
+        <Route path={`${match.path}/hod-courses`}><HODcourses /></Route>
+        <Route path={`${match.path}/hod-academic-members`}><HODacademics /></Route>
 
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>

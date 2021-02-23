@@ -26,10 +26,10 @@ function CcHome(props) {
         <Route path={`${match.path}/notifications`}><Notifications /></Route>
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
-        <Route path={`${match.path}/my-attendance`}><Attendance /></Route>
+        <Route path={`${match.path}/attendance`}><Attendance /></Route>
         <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/schedule`}><MySchedule /></Route>
-        <Route path={`${match.path}/course-slots`}><CourseSlotForm /></Route>
+        <Route path={`${match.path}/courses`}><CourseSlotForm /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>

@@ -54,7 +54,7 @@ function ProfileCard(props) {
     <div className="profile-card">
       <div className="profile-photo-card">
         <div className="profile-photo">
-          {props.user.gender !== "Male"
+          {props.user.gender === "Male"
             ? <img src={MaleProfile} alt="profile" width={150} height={150} />
             : <img src={FemaleProfile} alt="profile" width={150} height={150} />}
         </div>

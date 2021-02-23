@@ -46,12 +46,16 @@ function Sidebar(props) {
 
       {user.role !== "HR" ? (
         <>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/my-attendance`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="clipboard-list" />
+            <span className="icon-text">Attendance</span>
+          </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/requests`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user" />
+            <FontAwesomeIcon className="sidebar-icon" icon="list" />
             <span className="icon-text">Requests</span>
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/schedule`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user" />
+            <FontAwesomeIcon className="sidebar-icon" icon="calendar-alt" />
             <span className="icon-text">Schedule</span>
           </Link>
         </>
@@ -60,34 +64,34 @@ function Sidebar(props) {
       {user.role === "Head of Department" ? (
         <>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-courses`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user" />
+            <FontAwesomeIcon className="sidebar-icon" icon="book" />
             <span className="icon-text">Courses</span>
           </Link>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-staff-members`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user" />
-            <span className="icon-text">Staff members</span>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-academic-members`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
+            <span className="icon-text">Academic members</span>
           </Link>
         </>
       ) : null}
 
       {user.role === "Course Instructor" ? (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/ci-courses`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user" />
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/courses`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="book" />
             <span className="icon-text">Courses</span>
           </Link>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/staff`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user" />
-            <span className="icon-text">Staff members</span>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/academic-members`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
+            <span className="icon-text">Academic members</span>
           </Link>
         </>
       ) : null}
 
       {user.role === "Course Coordinator" ? (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/course-slots`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user" />
-            <span className="icon-text">Course Slots</span>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/courses`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="book" />
+            <span className="icon-text">Courses</span>
           </Link>
         </>
       ) : null}
