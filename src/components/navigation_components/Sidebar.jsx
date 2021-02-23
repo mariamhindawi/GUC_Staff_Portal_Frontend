@@ -18,11 +18,11 @@ function Sidebar(props) {
             Attendance
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hr-members`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user-lock" />
+            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
             HR Members
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/academic-members`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
+            <FontAwesomeIcon className="sidebar-icon" icon="user-graduate" />
             Academic Members
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/rooms`}>
