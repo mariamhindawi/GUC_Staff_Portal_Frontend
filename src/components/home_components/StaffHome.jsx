@@ -5,10 +5,10 @@ import { useUserContext } from "../../contexts/UserContext";
 import Navbar from "../navigation_components/Navbar";
 import Sidebar from "../navigation_components/Sidebar";
 import HrHomePage from "./HrHome";
-import HodHomePage from "./hod_home.component";
-import CiHomePage from "./ci_home.component";
-import CCHome from "./cc_home.component";
-import TaHomePage from "./ta_home.component";
+import HodHomePage from "./HodHome";
+import CiHomePage from "./CiHome";
+import CCHome from "./CcHome";
+import TaHomePage from "./TaHome";
 
 function StaffHome() {
   const [sidebarStyle, setSidebarStyle] = useState("");
