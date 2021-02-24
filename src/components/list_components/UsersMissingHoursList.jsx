@@ -1,9 +1,9 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import PropTypes from "prop-types";
-import AttendanceListItem from "../list_item_components/AttendanceListItem";
+import UsersMissingHoursListItem from "../list_item_components/UsersMissingHoursListItem";
 import Pagination from "../helper_components/Pagination";
 
-function AttendanceList(props) {
+function UsersMissingHoursList(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(7);
   const [listStyle, setListStyle] = useState("");
@@ -21,12 +21,12 @@ function AttendanceList(props) {
     newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
     setItemsPerPage(newItemsPerPage);
 
-    const lastPage = Math.ceil(props.attendanceRecords.length / newItemsPerPage) || 1;
+    const lastPage = Math.ceil(props.usersMissingHours.length / newItemsPerPage) || 1;
     const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
     setCurrentPage(newCurrentPage);
 
-    if (props.attendanceRecords.length === 0
-      || (newCurrentPage === lastPage && props.attendanceRecords.length % newItemsPerPage !== 0)) {
+    if (props.usersMissingHours.length === 0
+      || (newCurrentPage === lastPage && props.usersMissingHours.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
     }
     else {
@@ -40,18 +40,18 @@ function AttendanceList(props) {
   useLayoutEffect(setLayout, [currentPage]);
   useEffect(setupEventListeners, [itemsPerPage, currentPage]);
 
-  const attendanceList = () => {
+  const usersMissingHoursList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = props.attendanceRecords.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = props.usersMissingHours.slice(indexOfFirstItem, indexOfLastItem);
 
-    if (props.attendanceRecords.length === 0) {
-      return <tr><td className="no-items">No Attendance Records</td></tr>;
+    if (props.usersMissingHours.length === 0) {
+      return <tr><td className="no-items">No Records</td></tr>;
     }
-    return currentItems.map(attendanceRecord => (
-      <AttendanceListItem
-        key={attendanceRecord._id}
-        attendanceRecord={attendanceRecord}
+    return currentItems.map(userMissingHours => (
+      <UsersMissingHoursListItem
+        key={userMissingHours.id}
+        userMissingHours={userMissingHours}
       />
     ));
   };
@@ -62,12 +62,12 @@ function AttendanceList(props) {
         <table className={`list ${listStyle}`}>
           <thead>
             <tr>
-              <th style={{ width: "250px" }}>Sign In Time</th>
-              <th style={{ width: "250px" }}>Sign Out Time</th>
+              <th style={{ width: "150px" }}>User</th>
+              <th style={{ width: "150px" }}>Missing Hours</th>
             </tr>
           </thead>
           <tbody>
-            {attendanceList()}
+            {usersMissingHoursList()}
           </tbody>
         </table>
       </div>
@@ -75,7 +75,7 @@ function AttendanceList(props) {
       <Pagination
         size={paginationSize}
         className="list-pagination"
-        numberOfItems={props.attendanceRecords.length}
+        numberOfItems={props.usersMissingHours.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -84,12 +84,11 @@ function AttendanceList(props) {
   );
 }
 
-AttendanceList.propTypes = {
-  attendanceRecords: PropTypes.arrayOf(PropTypes.shape({
-    user: PropTypes.string,
-    signInTime: PropTypes.instanceOf(Date),
-    signOutTime: PropTypes.instanceOf(Date),
+UsersMissingHoursList.propTypes = {
+  usersMissingHours: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string,
+    missingHours: PropTypes.number,
   })).isRequired,
 };
 
-export default AttendanceList;
+export default UsersMissingHoursList;

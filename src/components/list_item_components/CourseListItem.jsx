@@ -45,24 +45,22 @@ function CourseListItem(props) {
       <td>
         <Dropdown>
           <Dropdown.Toggle className="list-dropdown-button" variant="light">
-            Course Instructors
+            View Course Instructors
           </Dropdown.Toggle>
           <Dropdown.Menu className="list-dropdown-menu">
             {mapAcademicsToDropdownItems(props.course.courseInstructors)}
           </Dropdown.Menu>
         </Dropdown>
-        {}
       </td>
       <td>
         <Dropdown>
           <Dropdown.Toggle className="list-dropdown-button" variant="light">
-            Teaching Assistants
+            View Teaching Assistants
           </Dropdown.Toggle>
           <Dropdown.Menu className="list-dropdown-menu">
             {mapAcademicsToDropdownItems(props.course.teachingAssistants)}
           </Dropdown.Menu>
         </Dropdown>
-        {}
       </td>
       <td>{props.course.courseCoordinator !== "UNASSIGNED" ? props.course.courseCoordinator : "-"}</td>
       {customData()}

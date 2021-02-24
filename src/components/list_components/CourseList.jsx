@@ -79,8 +79,8 @@ function CourseList(props) {
               <th style={{ width: "200px" }}>Course ID</th>
               <th style={{ width: "300px" }}>Course name</th>
               <th style={{ width: "200px" }}>Department</th>
-              <th style={{ width: "200px" }}>Course Instructors</th>
-              <th style={{ width: "200px" }}>Teaching Assistants</th>
+              <th style={{ width: "240px" }}>Course Instructors</th>
+              <th style={{ width: "240px" }}>Teaching Assistants</th>
               <th style={{ width: "170px" }}>Course Coordinator</th>
               {customTableHeads()}
             </tr>

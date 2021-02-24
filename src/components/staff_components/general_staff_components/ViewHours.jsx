@@ -2,15 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import Spinner from "../../../helper_components/Spinner";
 
 function ViewHours(props) {
-  if (props.isLoading) {
-    return <Spinner />;
-  }
-
   const { requiredHours, missingHours, extraHours } = props.hours;
   const spentHours = missingHours ? requiredHours - missingHours : requiredHours + extraHours;
+
   return (
     <div className="hours-container">
       <div className="hours-card">
@@ -36,7 +32,6 @@ function ViewHours(props) {
 }
 
 ViewHours.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
   hours: PropTypes.shape({
     requiredHours: PropTypes.number,
     missingHours: PropTypes.number,

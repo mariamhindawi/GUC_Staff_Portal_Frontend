@@ -1,12 +1,17 @@
-.attendance-dropdown {
+.attendance-select {
   display: flex;
+  align-items: center;
   width: 100%;
   margin-bottom: 15px;
   color: #495057;
   font-weight: 600;
 }
 
-.attendance-dropdown-button {
+.attendance-select > div {
+  display: flex;
+}
+
+.attendance-select .attendance-dropdown-button {
   width: 80px;
   border: none;
   border-bottom: solid 2px #5bc0de;
@@ -15,18 +20,18 @@
   transition: 0.2s;
 }
 
-.attendance-dropdown-button:hover,
-.attendance-dropdown-button:focus-visible {
+.attendance-select .attendance-dropdown-button:hover,
+.attendance-select .attendance-dropdown-button:focus-visible {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   box-shadow: 0 0 5px 1px #5bc0de;
 }
 
-.attendance-dropdown-button:focus {
+.attendance-select .attendance-dropdown-button:focus {
   outline: none;
 }
 
-.attendance-dropdown-button:active {
+.attendance-select .attendance-dropdown-button:active {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   border-bottom: solid 2px #495057;
@@ -34,8 +39,20 @@
   color: #495057;
 }
 
-.attendance-dropdown .dropdown-item:active {
+.attendance-select .dropdown-item:active {
   background-color: #495057;
+}
+
+.attendance-select input {
+  width: 140px;
+  border-radius: 10px;
+  border: 1px solid #495057;
+  padding: 0 5px;
+  margin-left: 20px;
+}
+
+.attendance-select input:focus {
+  outline: none;
 }
 
 .attendance-tabs {
@@ -72,7 +89,7 @@
 }
 
 .attendance-tab .list-container {
-  height: calc(100% - 50px);
+  height: calc(100% - 45px);
   margin: 0;
 }
 
@@ -118,85 +135,6 @@
   fill: #5bc0de;
 }
 
-@media (max-width: 576px) {
-  .attendance-dropdown{
-    font-size: smaller;
-  }
-
-  .attendance-dropdown-button {
-    width: 60px;
-  }
-
-  .attendance-tabs {
-    font-size: smaller;
-  }
-
-  .attendance-tab {
-    font-size: smaller;
-  }
-
-  .hours-container {
-    flex-direction: column-reverse;
-  }
-
-  .hours-container .hours-card {
-    text-align: center;
-    margin: 30px 0 0 0;
-  }
-
-  .hours-container .hours-progress .CircularProgressbar {
-    width: 65%;
-  }
-}
-
-
-
-
-.attendance-input {
-  width: 140px;
-  box-shadow: none;
-  border: 1px solid #495057;
-  border-radius: 10px;
-  padding-left: 10px;
-}
-
-.attendance-input:focus,
-.attendance-input:active {
-  border: 1px solid #495057;
-  outline: none;
-}
-
-.hr-attendance-button {
-  border: none;
-  background-color: #5bc0de;
-  color: white;
-  margin-left: 40px;
-}
-
-.hr-attendance-button:active,
-.hr-attendance-button:focus {
-  outline: none;
-}
-
-.hr-attendance-button:hover {
-  background-color: #5bc0de;
-}
-
-.hr-attendance-button:focus,
-.hr-attendance-button:active,
-.hr-attendance-button:not(:disabled):not(.disabled):active {
-  background-color: #5bc0de;
-  outline: none;
-}
-
-.attendance-button-container {
-  display: flex;
-}
-
-.general-attendance-container {
-  text-align: center;
-}
-
 .general-attendance-button {
   width: 150px;
   height: 100px;
@@ -221,35 +159,70 @@
   border: none;
 }
 
-@media (max-width: 768px) {
-  .hr-attendance-button {
-    margin-left: 30px;
-  }
+.hr-attendance {
+  width: 100%;
+  height: calc(100% - 43px);
 }
 
-@media (max-width: 679px) {
-  .general-attendance-container {
-    margin-top: 15%;
-  }
+.hr-attendance .alert {
+  width: 250px;
+  margin: auto;
+  margin-top: 30px;
+  text-align: center;
 }
 
-@media (max-width: 400px) {
-  .attendance-button {
-    font-size: 12px;
-  }
+.hr-attendance .list-container .list-last-page tr {
+  height: 45px;
+}
 
-  .hr-attendance-button {
-    font-size: 12px;
-  }
-
-  .attendance-button-container {
+@media (max-width: 576px) {
+  .attendance-select {
+    font-size: smaller;
     flex-direction: column;
+    align-items: flex-start;
   }
 
-  .hr-view-attendance-button {
-    margin-left: 0px;
-    margin-top: 10px;
-    width: 125px;
+  .attendance-select .attendance-dropdown-button {
+    width: 60px;
+  }
+
+  .attendance-select input {
+    margin: 20px 0 0 0;
+  }
+
+  .attendance-tabs {
+    font-size: smaller;
+  }
+
+  .attendance-tab {
+    font-size: smaller;
+  }
+
+  .hours-container {
+    flex-direction: column-reverse;
+  }
+
+  .hours-container .hours-card {
+    text-align: center;
+    margin: 30px 0 0 0;
+  }
+
+  .hours-container .hours-progress .CircularProgressbar {
+    width: 65%;
+  }
+
+  .hr-attendance {
+    height: calc(100% - 81px);
+  }
+
+  .hr-attendance .list-container {
+    height: calc(100% - 45px);
+  }
+}
+
+@media (max-width: 320px) {
+  .hr-attendance .alert {
+    width: fit-content;
     font-size: smaller;
   }
 }

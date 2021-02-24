@@ -6,7 +6,7 @@ import HrHomeMain from "./HrHomeMain";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
-import HrGeneralAttendance from "./hr_attendance_components/HrGeneralAttendance";
+import HrAttendance from "./hr_attendance_components/HrAttendance";
 import HrHrMembers from "./hr_hrmembers_components/HrHrMembers";
 import HrAcademics from "./hr_academics_components/HrAcademics";
 import HrRooms from "./hr_rooms_components/HrRooms";
@@ -34,7 +34,7 @@ function HrHome(props) {
         <Route path={`${match.path}/faculties`}><HrFaculties /></Route>
         <Route path={`${match.path}/departments`}><HrDepartments /></Route>
         <Route path={`${match.path}/courses`}><HrCourses /></Route>
-        <Route path={`${match.path}/attendance`}><HrGeneralAttendance /></Route>
+        <Route path={`${match.path}/attendance`}><HrAttendance /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>

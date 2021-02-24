@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { Dropdown, DropdownButton, Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab } from "react-bootstrap";
 import Axios from "axios";
-import AxiosInstance from "../../../../others/AxiosInstance";
-import AuthTokenManager from "../../../../others/AuthTokenManager";
-import useAxiosCancel from "../../../../hooks/AxiosCancel";
-import ViewAttendanceRecords from "./ViewAttendanceRecords";
-import ViewMissingDays from "./ViewMissingDays";
+import AxiosInstance from "../../../others/AxiosInstance";
+import AuthTokenManager from "../../../others/AuthTokenManager";
+import useAxiosCancel from "../../../hooks/AxiosCancel";
+import Spinner from "../../helper_components/Spinner";
+import AttendanceSelect from "./AttendanceSelect";
+import AttendanceRecordsList from "../../list_components/AttendanceRecordsList";
+import MissingDaysList from "../../list_components/MissingDaysList";
 import ViewHours from "./ViewHours";
 
 function Attendance() {
@@ -17,12 +18,11 @@ function Attendance() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [missingDays, setMissingDays] = useState([]);
-  const [hours, setHours] = useState({});
-  const match = useRouteMatch();
+  const [hours, setHours] = useState({ requiredHours: 0, missingHours: 0, extraHours: 0 });
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const fetchRecords = async () => {
+  const fetchAttendanceRecords = async () => {
     setLoading(prevState => ({ ...prevState, attendanceRecords: true }));
     await AxiosInstance.get("/staff/view-attendance-records", {
       cancelToken: axiosCancelSource.token,
@@ -35,13 +35,12 @@ function Attendance() {
       },
     })
       .then(response => {
-        const { data } = response;
-        for (let i = 0; i < data.length; i++) {
-          const attendanceRecord = data[i];
+        for (let i = 0; i < response.data.length; i++) {
+          const attendanceRecord = response.data[i];
           attendanceRecord.signInTime = new Date(attendanceRecord.signInTime);
           attendanceRecord.signOutTime = new Date(attendanceRecord.signOutTime);
         }
-        setAttendanceRecords(data);
+        setAttendanceRecords(response.data);
         setLoading(prevState => ({ ...prevState, attendanceRecords: false }));
       })
       .catch(error => {
@@ -60,7 +59,7 @@ function Attendance() {
         }
       });
   };
-  const fetchDays = async () => {
+  const fetchMissingDays = async () => {
     setLoading(prevState => ({ ...prevState, missingDays: true }));
     await AxiosInstance.get("/staff/view-missing-days", {
       cancelToken: axiosCancelSource.token,
@@ -73,11 +72,10 @@ function Attendance() {
       },
     })
       .then(response => {
-        const { data } = response;
-        for (let i = 0; i < data.length; i++) {
-          data[i] = new Date(data[i]);
+        for (let i = 0; i < response.data.length; i++) {
+          response.data[i] = new Date(response.data[i]);
         }
-        setMissingDays(data);
+        setMissingDays(response.data);
         setLoading(prevState => ({ ...prevState, missingDays: false }));
       })
       .catch(error => {
@@ -128,79 +126,31 @@ function Attendance() {
         }
       });
   };
-  useEffect(fetchRecords, [month, year]);
-  useEffect(fetchDays, [month, year]);
+  useEffect(fetchAttendanceRecords, [month, year]);
+  useEffect(fetchMissingDays, [month, year]);
   useEffect(fetchHours, [month, year]);
 
-  const getDropdownMonths = () => {
-    const dropdownMonths = [];
-    for (let i = 1; i <= 12; i++) {
-      const dropdownMonth = (
-        <Dropdown.Item
-          onClick={() => { setMonth(i); }}
-          key={i}
-        >
-          {i}
-        </Dropdown.Item>
-      );
-      dropdownMonths.push(dropdownMonth);
-    }
-    return dropdownMonths;
-  };
-  const getDropdownYears = () => {
-    const dropdownYears = [];
-    const currentYear = new Date().getFullYear();
-    for (let i = 0; i < 5; i++) {
-      const dropdownYear = (
-        <Dropdown.Item
-          onClick={() => { setYear(currentYear - i); }}
-          key={currentYear - i}
-        >
-          {currentYear - i}
-        </Dropdown.Item>
-      );
-      dropdownYears.push(dropdownYear);
-    }
-    return dropdownYears;
-  };
-
   return (
-    <Switch>
-      <Route exact path={`${match.path}`}>
-        <div className="view-container">
-          <div className="attendance-dropdown">
-            <span className="mr-2">Month</span>
-            <DropdownButton bsPrefix="attendance-dropdown-button" title={month}>
-              {getDropdownMonths()}
-            </DropdownButton>
-            <span className="ml-3 mr-2">Year</span>
-            <DropdownButton bsPrefix="attendance-dropdown-button" title={year}>
-              {getDropdownYears()}
-            </DropdownButton>
-          </div>
-          <Tabs className="attendance-tabs" defaultActiveKey="attendanceRecords">
-            <Tab className="attendance-tab" eventKey="attendanceRecords" title="Attendance Records">
-              <ViewAttendanceRecords
-                isLoading={isLoading.attendanceRecords}
-                attendanceRecords={attendanceRecords}
-              />
-            </Tab>
-            <Tab className="attendance-tab" eventKey="missingDays" title="Missing Days">
-              <ViewMissingDays
-                isLoading={isLoading.missingDays}
-                missingDays={missingDays}
-              />
-            </Tab>
-            <Tab className="attendance-tab" eventKey="hours" title="Hours">
-              <ViewHours
-                isLoading={isLoading.hours}
-                hours={hours}
-              />
-            </Tab>
-          </Tabs>
-        </div>
-      </Route>
-    </Switch>
+    <div className="view-container">
+      <AttendanceSelect month={month} year={year} setMonth={setMonth} setYear={setYear} />
+      <Tabs className="attendance-tabs" defaultActiveKey="attendanceRecords">
+        <Tab className="attendance-tab" eventKey="attendanceRecords" title="Attendance Records">
+          {isLoading.attendanceRecords
+            ? <Spinner />
+            : <AttendanceRecordsList attendanceRecords={attendanceRecords} />}
+        </Tab>
+        <Tab className="attendance-tab" eventKey="missingDays" title="Missing Days">
+          {isLoading.missingDays
+            ? <Spinner />
+            : <MissingDaysList missingDays={missingDays} />}
+        </Tab>
+        <Tab className="attendance-tab" eventKey="hours" title="Hours">
+          {isLoading.missingDays
+            ? <Spinner />
+            : <ViewHours hours={hours} />}
+        </Tab>
+      </Tabs>
+    </div>
   );
 }
 

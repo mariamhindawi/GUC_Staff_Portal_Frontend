@@ -20,6 +20,7 @@
   box-shadow: none;
 }
 
+.submit-button,
 .form-submit button,
 .profile-photo-card button {
   background-color: #5bc0de;
@@ -27,12 +28,14 @@
   height: 40px;
 }
 
+.submit-button:hover,
 .form-submit button:hover,
 .profile-photo-card button:hover {
   background-color: #3fafd1;
   border-color: #3fafd1;
 }
 
+.submit-button:focus,
 .form-submit button:focus,
 .profile-photo-card button:focus {
   background-color: #3fafd1;
@@ -40,17 +43,21 @@
   box-shadow: 0 0 0 0.2rem #3fafd17e;
 }
 
+.submit-button:not(:disabled):not(.disabled):active,
 .form-submit button:not(:disabled):not(.disabled):active,
 .profile-photo-card button:not(:disabled):not(.disabled):active {
   background-color: #319bbb;
   border-color: #319bbb;
 }
 
+.submit-button:not(:disabled):not(.disabled):active:focus,
 .form-submit button:not(:disabled):not(.disabled):active:focus,
 .profile-photo-card button:not(:disabled):not(.disabled):active:focus {
   box-shadow: 0 0 0 0.2rem #3fafd17e;
 }
 
+.submit-button:disabled,
+.submit-button.disabled,
 .form-submit button:disabled,
 .form-submit button.disabled,
 .profile-photo-card button:disabled,

@@ -44,7 +44,7 @@ export const TimePickerField = ({ ...props }) => {
 };
 
 
-const AddMissingHoursComponent = ({ }) => {
+const HrAddAttendanceRecord = ({ }) => {
 	const [records, setRecords] = useState([]);
 	const [record, setRecord] = useState("");
 	const [modalOpen, setModalOpen] = useState(false);
@@ -248,4 +248,4 @@ const AddMissingHoursComponent = ({ }) => {
 	);
 };
 
-export default AddMissingHoursComponent;
+export default HrAddAttendanceRecord;

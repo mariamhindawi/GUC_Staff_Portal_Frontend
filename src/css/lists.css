@@ -54,24 +54,24 @@
 }
 
 .list-dropdown-button {
-  width: 180px;
+  width: fit-content;
   text-align: left;
 }
 
 .list-dropdown-menu {
-  z-index: 5;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .list-dropdown-item {
   pointer-events: none;
-  min-width: 180px;
+  min-width: 200px;
   padding: .25rem 12px;
 }
 
 .list-pagination {
   position: absolute;
   bottom: 0;
-  margin-bottom: 15px;
 }
 
 .list-pagination .page-item:not(.disabled) .page-link {
