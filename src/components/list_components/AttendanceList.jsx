@@ -21,12 +21,12 @@ function AttendanceList(props) {
     newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
     setItemsPerPage(newItemsPerPage);
 
-    const lastPage = Math.ceil(props.records.length / newItemsPerPage) || 1;
+    const lastPage = Math.ceil(props.attendanceRecords.length / newItemsPerPage) || 1;
     const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
     setCurrentPage(newCurrentPage);
 
-    if (props.records.length === 0
-      || (newCurrentPage === lastPage && props.records.length % newItemsPerPage !== 0)) {
+    if (props.attendanceRecords.length === 0
+      || (newCurrentPage === lastPage && props.attendanceRecords.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
     }
     else {
@@ -43,15 +43,15 @@ function AttendanceList(props) {
   const attendanceList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = props.records.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = props.attendanceRecords.slice(indexOfFirstItem, indexOfLastItem);
 
-    if (props.records.length === 0) {
+    if (props.attendanceRecords.length === 0) {
       return <tr><td className="no-items">No Attendance Records</td></tr>;
     }
-    return currentItems.map(record => (
+    return currentItems.map(attendanceRecord => (
       <AttendanceListItem
-        key={record._id}
-        record={record}
+        key={attendanceRecord._id}
+        attendanceRecord={attendanceRecord}
       />
     ));
   };
@@ -62,8 +62,8 @@ function AttendanceList(props) {
         <table className={`list ${listStyle}`}>
           <thead>
             <tr>
-              <th style={{ width: "220px" }}>Sign In Time</th>
-              <th style={{ width: "220px" }}>Sign Out Time</th>
+              <th style={{ width: "250px" }}>Sign In Time</th>
+              <th style={{ width: "250px" }}>Sign Out Time</th>
             </tr>
           </thead>
           <tbody>
@@ -74,8 +74,8 @@ function AttendanceList(props) {
 
       <Pagination
         size={paginationSize}
-        className="attendance-pagination"
-        numberOfItems={props.records.length}
+        className="list-pagination"
+        numberOfItems={props.attendanceRecords.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -85,10 +85,10 @@ function AttendanceList(props) {
 }
 
 AttendanceList.propTypes = {
-  records: PropTypes.arrayOf(PropTypes.shape({
+  attendanceRecords: PropTypes.arrayOf(PropTypes.shape({
     user: PropTypes.string,
-    signInTime: PropTypes.string,
-    signOutTime: PropTypes.string,
+    signInTime: PropTypes.instanceOf(Date),
+    signOutTime: PropTypes.instanceOf(Date),
   })).isRequired,
 };
 

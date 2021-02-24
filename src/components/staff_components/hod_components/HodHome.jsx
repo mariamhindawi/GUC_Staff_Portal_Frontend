@@ -4,7 +4,7 @@ import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
 import GeneralRequests from "../../todo/GeneralRequestsPage.component";
 import MySchedule from "../../todo/schedule.component";
-import Attendance from "../general_staff_components/Attendance";
+import Attendance from "../general_staff_components/attendance_components/Attendance";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";

@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 function MissingDaysListItem(props) {
   return (
     <tr>
-      <td>{props.record}</td>
+      <td>{props.missingDay.toString().substring(0, 15)}</td>
     </tr>
   );
 }
 
 MissingDaysListItem.propTypes = {
-  record: PropTypes.string.isRequired,
+  missingDay: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default MissingDaysListItem;

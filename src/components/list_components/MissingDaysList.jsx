@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import PropTypes, { string } from "prop-types";
+import PropTypes from "prop-types";
 import MissingDaysListItem from "../list_item_components/MissingDaysListItem";
 import Pagination from "../helper_components/Pagination";
 
@@ -21,12 +21,12 @@ function MissingDaysList(props) {
     newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
     setItemsPerPage(newItemsPerPage);
 
-    const lastPage = Math.ceil(props.records.length / newItemsPerPage) || 1;
+    const lastPage = Math.ceil(props.missingDays.length / newItemsPerPage) || 1;
     const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
     setCurrentPage(newCurrentPage);
 
-    if (props.records.length === 0
-      || (newCurrentPage === lastPage && props.records.length % newItemsPerPage !== 0)) {
+    if (props.missingDays.length === 0
+      || (newCurrentPage === lastPage && props.missingDays.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
     }
     else {
@@ -43,15 +43,15 @@ function MissingDaysList(props) {
   const missingDaysList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = props.records.slice(indexOfFirstItem, indexOfLastItem);
+    const currentItems = props.missingDays.slice(indexOfFirstItem, indexOfLastItem);
 
-    if (props.records.length === 0) {
+    if (props.missingDays.length === 0) {
       return <tr><td className="no-items">No Missing Days</td></tr>;
     }
-    return currentItems.map(record => (
+    return currentItems.map(missingDay => (
       <MissingDaysListItem
-        key={record}
-        record={record}
+        key={missingDay}
+        missingDay={missingDay}
       />
     ));
   };
@@ -62,7 +62,7 @@ function MissingDaysList(props) {
         <table className={`list ${listStyle}`}>
           <thead>
             <tr>
-              <th>Day</th>
+              <th style={{ width: "200px" }}>Day</th>
             </tr>
           </thead>
           <tbody>
@@ -73,8 +73,8 @@ function MissingDaysList(props) {
 
       <Pagination
         size={paginationSize}
-        className="attendance-pagination"
-        numberOfItems={props.records.length}
+        className="list-pagination"
+        numberOfItems={props.missingDays.length}
         itemsPerPage={itemsPerPage}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -84,7 +84,7 @@ function MissingDaysList(props) {
 }
 
 MissingDaysList.propTypes = {
-  records: PropTypes.arrayOf(string).isRequired,
+  missingDays: PropTypes.arrayOf(PropTypes.instanceOf(Date)).isRequired,
 };
 
 export default MissingDaysList;

@@ -4,17 +4,25 @@ import PropTypes from "prop-types";
 function AttendanceListItem(props) {
   return (
     <tr>
-      <td>{props.record.signInTime}</td>
-      <td>{props.record.signOutTime}</td>
+      <td>
+        {props.attendanceRecord.signInTime.getMilliseconds() !== 0
+          ? props.attendanceRecord.signInTime.toString().substring(0, 24)
+          : ""}
+      </td>
+      <td>
+        {props.attendanceRecord.signOutTime.getMilliseconds() !== 0
+          ? props.attendanceRecord.signOutTime.toString().substring(0, 24)
+          : ""}
+      </td>
     </tr>
   );
 }
 
 AttendanceListItem.propTypes = {
-  record: PropTypes.shape({
+  attendanceRecord: PropTypes.shape({
     user: PropTypes.string,
-    signInTime: PropTypes.string,
-    signOutTime: PropTypes.string,
+    signInTime: PropTypes.instanceOf(Date),
+    signOutTime: PropTypes.instanceOf(Date),
   }).isRequired,
 };
 

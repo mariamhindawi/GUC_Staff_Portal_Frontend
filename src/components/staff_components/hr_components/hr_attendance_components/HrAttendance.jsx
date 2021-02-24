@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../../hooks/AxiosCancel";
-import ViewAttendance from "../../general_staff_components/ViewAttendance";
+import ViewAttendanceRecords from "../../general_staff_components/attendance_components/ViewAttendanceRecords";
 
 function HrAttendance() {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -57,7 +57,6 @@ function HrAttendance() {
         }
         else if (error.response) {
           setLoading(false);
-          setMessage({ messageText: error.response.data, messageStyle: "error-message" });
           console.log(error.response);
         }
         else if (error.request) {
@@ -174,7 +173,7 @@ function HrAttendance() {
               </Button>
             </div>
             {initialState === true ? <></> : (
-              <ViewAttendance
+              <ViewAttendanceRecords
                 isLoading={isLoading}
                 records={attendanceRecords}
               />

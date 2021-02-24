@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Switch, useRouteMatch, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import MyAttendance from "../../general_staff_components/Attendance";
-import StaffAttendanceRecords from "./HrAttendance";
-import StaffMissingDays from "./HrMissingDays";
-import StaffMissingHours from "./HrMissingHours";
+import Attendance from "../../general_staff_components/attendance_components/Attendance";
+import HrAttendance from "./HrAttendance";
+import HrMissingDays from "./HrMissingDays";
+import HrMissingHours from "./HrMissingHours";
 import HrAddMissingRecord from "./HrAddMissingRecord";
 
 function HrGeneralAttendance() {
@@ -30,11 +30,11 @@ function HrGeneralAttendance() {
           </Link>
         </div>
       </Route>
-      <Route exact path={`${match.path}/my-attendance`} component={MyAttendance} />
-      <Route exact path={`${match.path}/staff-attendance-records`} component={StaffAttendanceRecords} />
-      <Route exact path={`${match.path}/staff-missing-days`} component={StaffMissingDays} />
-      <Route exact path={`${match.path}/staff-missing-hours`} component={StaffMissingHours} />
-      <Route exact path={`${match.path}/add-missing-record`} component={HrAddMissingRecord} />
+      <Route exact path={`${match.path}/my-attendance`}><Attendance /></Route>
+      <Route exact path={`${match.path}/staff-attendance-records`}><HrAttendance /></Route>
+      <Route exact path={`${match.path}/staff-missing-days`}><HrMissingDays /></Route>
+      <Route exact path={`${match.path}/staff-missing-hours`}><HrMissingHours /></Route>
+      <Route exact path={`${match.path}/add-missing-record`}><HrAddMissingRecord /></Route>
     </Switch>
 
   );
