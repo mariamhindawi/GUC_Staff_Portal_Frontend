@@ -46,7 +46,7 @@ function Sidebar(props) {
 
       {user.role !== "HR" ? (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/my-attendance`}>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/attendance`}>
             <FontAwesomeIcon className="sidebar-icon" icon="clipboard-list" />
             <span className="icon-text">Attendance</span>
           </Link>

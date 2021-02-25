@@ -1,0 +1,44 @@
+.course-select {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+  color: #495057;
+  font-weight: 600;
+}
+
+.course-select > div {
+  display: flex;
+}
+
+.course-select .course-dropdown-button {
+  width: 120px;
+  border: none;
+  border-bottom: solid 2px #5bc0de;
+  background-color: transparent;
+  color: #5bc0de;
+  transition: 0.2s;
+}
+
+.course-select .course-dropdown-button:hover,
+.course-select .course-dropdown-button:focus-visible {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 0 0 5px 1px #5bc0de;
+}
+
+.course-select .course-dropdown-button:focus {
+  outline: none;
+}
+
+.course-select .course-dropdown-button:active {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: solid 2px #495057;
+  box-shadow: 0 0 5px 1px #495057;
+  color: #495057;
+}
+
+.course-select .dropdown-item:active {
+  background-color: #495057;
+}

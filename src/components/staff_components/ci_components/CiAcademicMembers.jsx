@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import { Dropdown, Button } from "react-bootstrap";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
-import ViewCiAcadeicMembers from "./ViewCiAcademicMembers";
 import Spinner from "../../helper_components/Spinner";
+import AcademicList from "../../list_components/AcademicList";
 
 function CiAcademicMembers() {
-  const [departmentCourses, setDepartmentCourses] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [dropdownChoice, setDropdownChoice] = useState("My Department");
-  const [initialIsLoading, setIninitialIsLoading] = useState(true);
-  const [initialState, setInitialState] = useState(true);
+  const [departmentCourses, setDepartmentCourses] = useState([]);
+  const [departmentCourse, setDepartmentCourse] = useState("All Courses");
   const [academics, setAcademics] = useState([]);
-  const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
   const fetchCourses = async () => {
-    setLoading(true);
-    setIninitialIsLoading(true);
     await AxiosInstance.get("/staff/fe/get-courses-by-department", {
       cancelToken: axiosCancelSource.token,
       headers: {
@@ -29,17 +23,13 @@ function CiAcademicMembers() {
       },
     })
       .then(response => {
-        setDepartmentCourses(response.data);
-        setLoading(false);
-        setIninitialIsLoading(false);
+        setDepartmentCourses(response.data.courses);
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
           console.log(`Request cancelled: ${error.message}`);
         }
         else if (error.response) {
-          setLoading(false);
-          setIninitialIsLoading(false);
           console.log(error.response);
         }
         else if (error.request) {
@@ -50,51 +40,103 @@ function CiAcademicMembers() {
         }
       });
   };
+  const fetchAcademics = async () => {
+    setLoading(true);
+    if (departmentCourse === "All Courses") {
+      await AxiosInstance.get("/staff/ci/view-staff", {
+        cancelToken: axiosCancelSource.token,
+        headers: {
+          "auth-access-token": AuthTokenManager.getAuthAccessToken(),
+        },
+      })
+        .then(response => {
+          setAcademics(response.data);
+          setLoading(false);
+        })
+        .catch(error => {
+          if (Axios.isCancel(error)) {
+            console.log(`Request cancelled: ${error.message}`);
+          }
+          else if (error.response) {
+            setLoading(false);
+            console.log(error.response);
+          }
+          else if (error.request) {
+            console.log(error.request);
+          }
+          else {
+            console.log(error.message);
+          }
+        });
+    }
+    else {
+      await AxiosInstance.get(`/staff/ci/view-staff/${departmentCourse}`, {
+        cancelToken: axiosCancelSource.token,
+        headers: {
+          "auth-access-token": AuthTokenManager.getAuthAccessToken(),
+        },
+      })
+        .then(response => {
+          setAcademics(response.data);
+          console.log(response.data);
+          setLoading(false);
+        })
+        .catch(error => {
+          if (Axios.isCancel(error)) {
+            console.log(`Request cancelled: ${error.message}`);
+          }
+          else if (error.response) {
+            setLoading(false);
+            console.log(error.response);
+          }
+          else if (error.request) {
+            console.log(error.request);
+          }
+          else {
+            console.log(error.message);
+          }
+        });
+    }
+  };
 
   useEffect(fetchCourses, []);
+  useEffect(fetchAcademics, [departmentCourse]);
 
-  const courseList = () => (
-    <Dropdown.Menu>
-      <Dropdown.Item onClick={() => { setDropdownChoice("My Department"); }}>
-        My Department
+  const mapCoursesToDropdownItems = courses => {
+    if (courses.length === 0) {
+      return <Dropdown.Item as="span">No Courses</Dropdown.Item>;
+    }
+    return courses.map(course => (
+      <Dropdown.Item
+        key={course.id}
+        onClick={() => { setDepartmentCourse(course.id); }}
+      >
+        {course.id}
       </Dropdown.Item>
-      {departmentCourses.map(course => (
-        <Dropdown.Item onClick={() => { setDropdownChoice(course); }}>
-          {course}
-        </Dropdown.Item>
-      ))}
-    </Dropdown.Menu>
-  );
+    ));
+  };
 
-  if (initialIsLoading) {
-    return <Spinner />;
-  }
   return (
-    <Switch>
-      <Route exact path={`${match.path}`}>
-        <>
-          <Dropdown className="mr-2">
-            <span className="mr-2">View Staff In</span>
-            <Dropdown.Toggle className="attendance-dropdown">
-              {dropdownChoice}
-            </Dropdown.Toggle>
-            {courseList()}
-          </Dropdown>
-          <Button>View</Button>
-          {initialState
-            ? (
-              <>
-              </>
-            )
-            : (
-              <ViewCiAcadeicMembers
-                isLoading={isLoading}
-                academics={academics}
-              />
-            )}
-        </>
-      </Route>
-    </Switch>
+    <div className="view-container">
+      <div className="course-select">
+        <div>
+          <span className="mr-2">Course</span>
+          <DropdownButton bsPrefix="course-dropdown-button" title={departmentCourse}>
+            <Dropdown.Item
+              key="All Courses"
+              onClick={() => { setDepartmentCourse("All Courses"); }}
+            >
+              All Courses
+            </Dropdown.Item>
+            {mapCoursesToDropdownItems(departmentCourses)}
+          </DropdownButton>
+        </div>
+      </div>
+      {isLoading
+        ? <Spinner />
+        : <AcademicList academics={academics} />}
+
+    </div>
   );
 }
 
