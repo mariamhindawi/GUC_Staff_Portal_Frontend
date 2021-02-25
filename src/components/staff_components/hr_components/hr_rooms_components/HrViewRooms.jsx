@@ -37,7 +37,7 @@ function HrViewRooms(props) {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           setDeleteModalMessage({

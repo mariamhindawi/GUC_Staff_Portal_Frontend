@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import Axios from "axios";
-import AxiosInstance from "../../../others/AxiosInstance";
-import AuthTokenManager from "../../../others/AuthTokenManager";
-import useAxiosCancel from "../../../hooks/AxiosCancel";
-import Spinner from "../../helper_components/Spinner";
+import AxiosInstance from "../../../../others/AxiosInstance";
+import AuthTokenManager from "../../../../others/AuthTokenManager";
+import useAxiosCancel from "../../../../hooks/AxiosCancel";
+import Spinner from "../../../helper_components/Spinner";
 import AttendanceSelect from "./AttendanceSelect";
-import AttendanceRecordsList from "../../list_components/AttendanceRecordsList";
-import MissingDaysList from "../../list_components/MissingDaysList";
+import AttendanceRecordsList from "../../../list_components/AttendanceRecordsList";
+import MissingDaysList from "../../../list_components/MissingDaysList";
 import ViewHours from "./ViewHours";
+import ViewSalary from "./ViewSalary";
 
 function Attendance() {
   const [isLoading, setLoading] = useState({
-    attendanceRecords: true, missingDays: true, hours: true,
+    attendanceRecords: true, missingDays: true, hours: true, salary: true,
   });
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [missingDays, setMissingDays] = useState([]);
   const [hours, setHours] = useState({ requiredHours: 0, missingHours: 0, extraHours: 0 });
+  const [salary, setSalary] = useState({ baseSalary: 0, calculatedSalary: 0 });
   const axiosCancelSource = Axios.CancelToken.source();
-  useAxiosCancel(axiosCancelSource);
+  useAxiosCancel(axiosCancelSource, [month, year]);
 
   const fetchAttendanceRecords = async () => {
     setLoading(prevState => ({ ...prevState, attendanceRecords: true }));
@@ -45,11 +47,11 @@ function Attendance() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
-          console.log(error.response);
           setLoading(prevState => ({ ...prevState, attendanceRecords: false }));
+          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);
@@ -80,11 +82,11 @@ function Attendance() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
-          console.log(error.response);
           setLoading(prevState => ({ ...prevState, missingDays: false }));
+          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);
@@ -112,11 +114,43 @@ function Attendance() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
-          console.log(error.response);
           setLoading(prevState => ({ ...prevState, hours: false }));
+          console.log(error.response);
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+      });
+  };
+  const fetchSalary = async () => {
+    setLoading(prevState => ({ ...prevState, salary: true }));
+    await AxiosInstance.get("/staff/view-salary", {
+      cancelToken: axiosCancelSource.token,
+      headers: {
+        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
+      },
+      params: {
+        month,
+        year,
+      },
+    })
+      .then(response => {
+        setSalary(response.data);
+        setLoading(prevState => ({ ...prevState, salary: false }));
+      })
+      .catch(error => {
+        if (Axios.isCancel(error)) {
+          console.log(error.message);
+        }
+        else if (error.response) {
+          setLoading(prevState => ({ ...prevState, salary: false }));
+          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);
@@ -129,6 +163,7 @@ function Attendance() {
   useEffect(fetchAttendanceRecords, [month, year]);
   useEffect(fetchMissingDays, [month, year]);
   useEffect(fetchHours, [month, year]);
+  useEffect(fetchSalary, [month, year]);
 
   return (
     <div className="view-container">
@@ -148,6 +183,11 @@ function Attendance() {
           {isLoading.missingDays
             ? <Spinner />
             : <ViewHours hours={hours} />}
+        </Tab>
+        <Tab className="attendance-tab" eventKey="salary" title="Salary">
+          {isLoading.salary
+            ? <Spinner />
+            : <ViewSalary salary={salary} />}
         </Tab>
       </Tabs>
     </div>

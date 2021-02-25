@@ -5,7 +5,7 @@ import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../../hooks/AxiosCancel";
 import Spinner from "../../../helper_components/Spinner";
-import AttendanceSelect from "../../general_staff_components/AttendanceSelect";
+import AttendanceSelect from "../../general_staff_components/attendance_components/AttendanceSelect";
 import AttendanceRecordsList from "../../../list_components/AttendanceRecordsList";
 
 function HrAttendance() {
@@ -16,7 +16,7 @@ function HrAttendance() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const axiosCancelSource = Axios.CancelToken.source();
-  useAxiosCancel(axiosCancelSource);
+  useAxiosCancel(axiosCancelSource, [userId, month, year]);
 
   const fetchAttendanceRecords = async () => {
     setLoading(true);
@@ -44,7 +44,7 @@ function HrAttendance() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);

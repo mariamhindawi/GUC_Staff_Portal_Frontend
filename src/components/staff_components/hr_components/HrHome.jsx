@@ -6,6 +6,7 @@ import HrHomeMain from "./HrHomeMain";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
+import Attendance from "../general_staff_components/attendance_components/Attendance";
 import HrAttendance from "./hr_attendance_components/HrAttendance";
 import HrHrMembers from "./hr_hrmembers_components/HrHrMembers";
 import HrAcademics from "./hr_academics_components/HrAcademics";
@@ -28,13 +29,14 @@ function HrHome(props) {
         <Route path={`${match.path}/notifications`}><Notifications /></Route>
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
+        <Route path={`${match.path}/attendance`}><Attendance /></Route>
+        <Route path={`${match.path}/staff-attendance`}><HrAttendance /></Route>
         <Route path={`${match.path}/hr-members`}><HrHrMembers /></Route>
         <Route path={`${match.path}/academic-members`}><HrAcademics /></Route>
         <Route path={`${match.path}/rooms`}><HrRooms /></Route>
         <Route path={`${match.path}/faculties`}><HrFaculties /></Route>
         <Route path={`${match.path}/departments`}><HrDepartments /></Route>
         <Route path={`${match.path}/courses`}><HrCourses /></Route>
-        <Route path={`${match.path}/attendance`}><HrAttendance /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>

@@ -32,7 +32,7 @@ function Profile() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           setLoading(false);
@@ -93,7 +93,7 @@ function Profile() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           setAlertModalMessage({ messageText: error.response.data, messageStyle: "danger" });

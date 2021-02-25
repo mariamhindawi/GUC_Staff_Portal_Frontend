@@ -4,7 +4,7 @@ import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../../hooks/AxiosCancel";
 import Spinner from "../../../helper_components/Spinner";
-import AttendanceSelect from "../../general_staff_components/AttendanceSelect";
+import AttendanceSelect from "../../general_staff_components/attendance_components/AttendanceSelect";
 import UsersMissingDaysList from "../../../list_components/UsersMissingDaysList";
 
 function HrMissingDays() {
@@ -13,7 +13,7 @@ function HrMissingDays() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [usersMissingDays, setUsersMissingDays] = useState([]);
   const axiosCancelSource = Axios.CancelToken.source();
-  useAxiosCancel(axiosCancelSource);
+  useAxiosCancel(axiosCancelSource, [month, year]);
 
   const fetchMissingDays = async () => {
     setLoading(true);
@@ -39,7 +39,7 @@ function HrMissingDays() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);

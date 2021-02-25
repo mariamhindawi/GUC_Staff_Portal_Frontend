@@ -11,11 +11,16 @@ function Sidebar(props) {
   return (
     <div className={`sidebar ${props.sidebarStyle}`}>
 
-      {user.role === "HR" ? (
+      <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/attendance`}>
+        <FontAwesomeIcon className="sidebar-icon" icon="clipboard-list" />
+        Attendance
+      </Link>
+
+      {user.role === "HR" && (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/attendance`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="clipboard-list" />
-            Attendance
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/staff-attendance`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="address-book" />
+            Staff Attendance
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hr-members`}>
             <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
@@ -42,14 +47,10 @@ function Sidebar(props) {
             Courses
           </Link>
         </>
-      ) : null}
+      )}
 
-      {user.role !== "HR" ? (
+      {user.role !== "HR" && (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/my-attendance`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="clipboard-list" />
-            <span className="icon-text">Attendance</span>
-          </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/requests`}>
             <FontAwesomeIcon className="sidebar-icon" icon="list" />
             <span className="icon-text">Requests</span>
@@ -59,22 +60,9 @@ function Sidebar(props) {
             <span className="icon-text">Schedule</span>
           </Link>
         </>
-      ) : null}
+      )}
 
-      {user.role === "Head of Department" ? (
-        <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-courses`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="book" />
-            <span className="icon-text">Courses</span>
-          </Link>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-academic-members`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
-            <span className="icon-text">Academic members</span>
-          </Link>
-        </>
-      ) : null}
-
-      {user.role === "Course Instructor" ? (
+      {(user.role === "Course Instructor" || user.role === "Head of Department") && (
         <>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/courses`}>
             <FontAwesomeIcon className="sidebar-icon" icon="book" />
@@ -85,16 +73,29 @@ function Sidebar(props) {
             <span className="icon-text">Academic members</span>
           </Link>
         </>
-      ) : null}
+      )}
 
-      {user.role === "Course Coordinator" ? (
+      {user.role === "Head of Department" && (
+        <>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-courses`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="book" />
+            <span className="icon-text">Courses</span>
+          </Link>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-academic-members`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
+            <span className="icon-text">Academic members</span>
+          </Link>
+        </>
+      )}
+
+      {user.role === "Course Coordinator" && (
         <>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/courses`}>
             <FontAwesomeIcon className="sidebar-icon" icon="book" />
             <span className="icon-text">Courses</span>
           </Link>
         </>
-      ) : null}
+      )}
     </div>
   );
 }

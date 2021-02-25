@@ -4,7 +4,7 @@ import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../../hooks/AxiosCancel";
 import Spinner from "../../../helper_components/Spinner";
-import AttendanceSelect from "../../general_staff_components/AttendanceSelect";
+import AttendanceSelect from "../../general_staff_components/attendance_components/AttendanceSelect";
 import UsersMissingHoursList from "../../../list_components/UsersMissingHoursList";
 
 function HrViewMissingHours() {
@@ -13,7 +13,7 @@ function HrViewMissingHours() {
   const [year, setYear] = useState(new Date().getFullYear());
   const [usersMissingHours, setUsersMissingHours] = useState([]);
   const axiosCancelSource = Axios.CancelToken.source();
-  useAxiosCancel(axiosCancelSource);
+  useAxiosCancel(axiosCancelSource, [month, year]);
 
   const fetchMissingHours = async () => {
     setLoading(true);
@@ -33,7 +33,7 @@ function HrViewMissingHours() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           setLoading(false);

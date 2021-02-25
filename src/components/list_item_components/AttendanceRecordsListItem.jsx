@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 function AttendanceRecordsListItem(props) {
   return (
     <tr>
-      {props.attendanceRecord.signInTime.getMilliseconds() !== 0
+      {props.attendanceRecord.signInTime.getTime() !== 0
         ? <td>{props.attendanceRecord.signInTime.toString().substring(0, 24)}</td>
         : <td style={{ paddingLeft: "100px" }}>-</td>}
-      {props.attendanceRecord.signOutTime.getMilliseconds() !== 0
+      {props.attendanceRecord.signOutTime.getTime() !== 0
         ? <td>{props.attendanceRecord.signOutTime.toString().substring(0, 24)}</td>
         : <td style={{ paddingLeft: "100px" }}>-</td>}
     </tr>
