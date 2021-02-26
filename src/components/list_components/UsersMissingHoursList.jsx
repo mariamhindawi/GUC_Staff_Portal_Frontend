@@ -1,5 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import useListLayout from "../../hooks/ListLayout";
 import UsersMissingHoursListItem from "../list_item_components/UsersMissingHoursListItem";
 import Pagination from "../helper_components/Pagination";
 
@@ -9,36 +10,8 @@ function UsersMissingHoursList(props) {
   const [listStyle, setListStyle] = useState("");
   const [paginationSize, setPaginationSize] = useState("");
 
-  const setLayout = () => {
-    if (window.innerWidth >= 768) {
-      setPaginationSize("");
-    }
-    else {
-      setPaginationSize("sm");
-    }
-
-    let newItemsPerPage = Math.floor((window.innerHeight - 245) / 45);
-    newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
-    setItemsPerPage(newItemsPerPage);
-
-    const lastPage = Math.ceil(props.usersMissingHours.length / newItemsPerPage) || 1;
-    const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
-    setCurrentPage(newCurrentPage);
-
-    if (props.usersMissingHours.length === 0
-      || (newCurrentPage === lastPage && props.usersMissingHours.length % newItemsPerPage !== 0)) {
-      setListStyle("list-last-page");
-    }
-    else {
-      setListStyle("");
-    }
-  };
-  const setupEventListeners = () => {
-    window.addEventListener("resize", setLayout);
-    return () => { window.removeEventListener("resize", setLayout); };
-  };
-  useLayoutEffect(setLayout, [props.usersMissingHours, currentPage]);
-  useEffect(setupEventListeners, [props.usersMissingHours, currentPage]);
+  useListLayout(setCurrentPage, setItemsPerPage, setPaginationSize, setListStyle,
+    currentPage, props.usersMissingHours);
 
   const usersMissingHoursList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;

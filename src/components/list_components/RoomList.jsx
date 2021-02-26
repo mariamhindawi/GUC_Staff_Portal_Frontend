@@ -1,6 +1,7 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useUserContext } from "../../contexts/UserContext";
+import useListLayout from "../../hooks/ListLayout";
 import RoomListItem from "../list_item_components/RoomListItem";
 import Pagination from "../helper_components/Pagination";
 
@@ -11,36 +12,8 @@ function RoomList(props) {
   const [paginationSize, setPaginationSize] = useState("");
   const user = useUserContext();
 
-  const setLayout = () => {
-    if (window.innerWidth >= 768) {
-      setPaginationSize("");
-    }
-    else {
-      setPaginationSize("sm");
-    }
-
-    let newItemsPerPage = Math.floor((window.innerHeight - 245) / 45);
-    newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
-    setItemsPerPage(newItemsPerPage);
-
-    const lastPage = Math.ceil(props.rooms.length / newItemsPerPage) || 1;
-    const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
-    setCurrentPage(newCurrentPage);
-
-    if (props.rooms.length === 0
-      || (newCurrentPage === lastPage && props.rooms.length % newItemsPerPage !== 0)) {
-      setListStyle("list-last-page");
-    }
-    else {
-      setListStyle("");
-    }
-  };
-  const setupEventListeners = () => {
-    window.addEventListener("resize", setLayout);
-    return () => { window.removeEventListener("resize", setLayout); };
-  };
-  useLayoutEffect(setLayout, [props.rooms, currentPage]);
-  useEffect(setupEventListeners, [props.rooms, currentPage]);
+  useListLayout(setCurrentPage, setItemsPerPage, setPaginationSize, setListStyle,
+    currentPage, props.rooms);
 
   const customTableHeads = () => {
     switch (user.role) {
@@ -109,7 +82,11 @@ RoomList.propTypes = {
     capacity: PropTypes.number,
     remainingCapacity: PropTypes.number,
   })).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  toggleDeleteModal: PropTypes.func,
+};
+
+RoomList.defaultProps = {
+  toggleDeleteModal: () => {},
 };
 
 export default RoomList;

@@ -1,6 +1,7 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { useUserContext } from "../../contexts/UserContext";
+import useListLayout from "../../hooks/ListLayout";
 import HrListItem from "../list_item_components/HrListItem";
 import Pagination from "../helper_components/Pagination";
 
@@ -11,36 +12,8 @@ function HrList(props) {
   const [paginationSize, setPaginationSize] = useState("");
   const user = useUserContext();
 
-  const setLayout = () => {
-    if (window.innerWidth >= 768) {
-      setPaginationSize("");
-    }
-    else {
-      setPaginationSize("sm");
-    }
-
-    let newItemsPerPage = Math.floor((window.innerHeight - 245) / 45);
-    newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
-    setItemsPerPage(newItemsPerPage);
-
-    const lastPage = Math.ceil(props.hrMembers.length / newItemsPerPage) || 1;
-    const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
-    setCurrentPage(newCurrentPage);
-
-    if (props.hrMembers.length === 0
-      || (newCurrentPage === lastPage && props.hrMembers.length % newItemsPerPage !== 0)) {
-      setListStyle("list-last-page");
-    }
-    else {
-      setListStyle("");
-    }
-  };
-  const setupEventListeners = () => {
-    window.addEventListener("resize", setLayout);
-    return () => { window.removeEventListener("resize", setLayout); };
-  };
-  useLayoutEffect(setLayout, [props.hrMembers, currentPage]);
-  useEffect(setupEventListeners, [props.hrMembers, currentPage]);
+  useListLayout(setCurrentPage, setItemsPerPage, setPaginationSize, setListStyle,
+    currentPage, props.hrMembers);
 
   const customTableHeads = () => {
     switch (user.role) {
@@ -116,7 +89,11 @@ HrList.propTypes = {
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   })).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  toggleDeleteModal: PropTypes.func,
+};
+
+HrList.defaultProps = {
+  toggleDeleteModal: () => {},
 };
 
 export default HrList;

@@ -18,6 +18,10 @@
   );
 }
 
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
 .sidebar-none {
   width: 0px;
 }

@@ -1,5 +1,6 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
+import useListLayout from "../../hooks/ListLayout";
 import MissingDaysListItem from "../list_item_components/MissingDaysListItem";
 import Pagination from "../helper_components/Pagination";
 
@@ -9,36 +10,8 @@ function MissingDaysList(props) {
   const [listStyle, setListStyle] = useState("");
   const [paginationSize, setPaginationSize] = useState("");
 
-  const setLayout = () => {
-    if (window.innerWidth >= 768) {
-      setPaginationSize("");
-    }
-    else {
-      setPaginationSize("sm");
-    }
-
-    let newItemsPerPage = Math.floor((window.innerHeight - 245) / 45);
-    newItemsPerPage = newItemsPerPage > 0 ? newItemsPerPage : 1;
-    setItemsPerPage(newItemsPerPage);
-
-    const lastPage = Math.ceil(props.missingDays.length / newItemsPerPage) || 1;
-    const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
-    setCurrentPage(newCurrentPage);
-
-    if (props.missingDays.length === 0
-      || (newCurrentPage === lastPage && props.missingDays.length % newItemsPerPage !== 0)) {
-      setListStyle("list-last-page");
-    }
-    else {
-      setListStyle("");
-    }
-  };
-  const setupEventListeners = () => {
-    window.addEventListener("resize", setLayout);
-    return () => { window.removeEventListener("resize", setLayout); };
-  };
-  useLayoutEffect(setLayout, [props.missingDays, currentPage]);
-  useEffect(setupEventListeners, [props.missingDays, currentPage]);
+  useListLayout(setCurrentPage, setItemsPerPage, setPaginationSize, setListStyle,
+    currentPage, props.missingDays);
 
   const missingDaysList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;
