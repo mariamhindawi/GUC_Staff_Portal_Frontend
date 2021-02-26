@@ -5,17 +5,18 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import AcademicList from "../../list_components/AcademicList";
+import CiViewAcademics from "./CiViewAcademicMembers";
 
 function CiAcademicMembers() {
   const [isLoading, setLoading] = useState(true);
+  const [myCourses, setMyCourses] = useState([]);
   const [departmentCourses, setDepartmentCourses] = useState([]);
   const [departmentCourse, setDepartmentCourse] = useState("All Courses");
   const [academics, setAcademics] = useState([]);
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const fetchCourses = async () => {
+  const fetchDepartmentCourses = async () => {
     await AxiosInstance.get("/staff/fe/get-courses-by-department", {
       cancelToken: axiosCancelSource.token,
       headers: {
@@ -78,7 +79,6 @@ function CiAcademicMembers() {
       })
         .then(response => {
           setAcademics(response.data);
-          console.log(response.data);
           setLoading(false);
         })
         .catch(error => {
@@ -98,9 +98,38 @@ function CiAcademicMembers() {
         });
     }
   };
+  const fetchMyCourses = async () => {
+    await AxiosInstance.get("/staff/fe/get-my-courses", {
+      cancelToken: axiosCancelSource.token,
+      headers: {
+        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
+      },
+    })
+      .then(response => {
+        for (let i = 0; i < response.data.length; i++) {
+          response.data[i] = response.data[i].id;
+        }
+        setMyCourses(response.data);
+      })
+      .catch(error => {
+        if (Axios.isCancel(error)) {
+          console.log(`Request cancelled: ${error.message}`);
+        }
+        else if (error.response) {
+          console.log(error.response);
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+      });
+  };
 
-  useEffect(fetchCourses, []);
+  useEffect(fetchDepartmentCourses, []);
   useEffect(fetchAcademics, [departmentCourse]);
+  useEffect(fetchMyCourses, []);
 
   const mapCoursesToDropdownItems = courses => {
     if (courses.length === 0) {
@@ -134,7 +163,15 @@ function CiAcademicMembers() {
       </div>
       {isLoading
         ? <Spinner />
-        : <AcademicList academics={academics} />}
+        : (
+          <CiViewAcademics
+            isLoading={isLoading}
+            academics={academics}
+            course={departmentCourse}
+            updateAcademics={fetchAcademics}
+            myCourses={myCourses}
+          />
+        )}
 
     </div>
   );

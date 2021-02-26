@@ -46,6 +46,7 @@ function AcademicList(props) {
     switch (user.role) {
       case "HR": return (
         <>
+          <th style={{ width: "150px" }}>Day Off</th>
           <th style={{ width: "150px" }}>Salary</th>
           <th style={{ width: "150px" }}>Annual Leave Balance</th>
           <th style={{ width: "150px" }}>Accidental Leave Balance</th>
@@ -53,6 +54,17 @@ function AcademicList(props) {
           <th style={{ width: "70px" }}> </th>
         </>
       );
+      case "Course Instructor":
+        if (props.course !== "All Courses" && props.myCourses.includes(props.course)) {
+          return (
+            <>
+              <th style={{ width: "70px" }}> </th>
+            </>
+          );
+        }
+
+        return null;
+
       default: return null;
     }
   };
@@ -69,6 +81,8 @@ function AcademicList(props) {
         key={academic.id}
         academic={academic}
         toggleDeleteModal={props.toggleDeleteModal}
+        course={props.course}
+        myCourses={props.myCourses}
       />
     ));
   };
@@ -86,7 +100,6 @@ function AcademicList(props) {
               <th style={{ width: "200px" }}>Department</th>
               <th style={{ width: "220px" }}>Role</th>
               <th style={{ width: "150px" }}>Office</th>
-              <th style={{ width: "150px" }}>Day Off</th>
               {customTableHeads()}
             </tr>
           </thead>
@@ -122,7 +135,12 @@ AcademicList.propTypes = {
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   })).isRequired,
+  myCourses: PropTypes.arrayOf(String),
   toggleDeleteModal: PropTypes.func.isRequired,
+  course: PropTypes.string,
 };
-
+AcademicList.defaultProps = {
+  course: "",
+  myCourses: [],
+};
 export default AcademicList;

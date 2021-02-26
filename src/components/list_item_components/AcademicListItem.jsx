@@ -14,6 +14,7 @@ function AcademicListItem(props) {
       case "HR":
         return (
           <>
+            <td>{props.academic.dayOff}</td>
             <td>{props.academic.salary}</td>
             <td>{props.academic.annualLeaveBalance}</td>
             <td>{props.academic.accidentalLeaveBalance}</td>
@@ -27,6 +28,19 @@ function AcademicListItem(props) {
             </td>
           </>
         );
+      case "Course Instructor":
+        if (props.academic.role === "Teaching Assistant") {
+          if (props.course !== "All Courses" && props.myCourses.includes(props.course)) {
+            return (
+              <td>
+                <DeleteButton onClick={() => { props.toggleDeleteModal(props.academic.id); }} />
+              </td>
+            );
+          }
+
+          return null;
+        }
+        return <td> </td>;
       default: return null;
     }
   };
@@ -40,7 +54,6 @@ function AcademicListItem(props) {
       <td>{props.academic.department !== "UNASSIGNED" ? props.academic.department : "-"}</td>
       <td>{props.academic.role}</td>
       <td>{props.academic.office}</td>
-      <td>{props.academic.dayOff}</td>
       {customData()}
     </tr>
   );
@@ -60,7 +73,13 @@ AcademicListItem.propTypes = {
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   }).isRequired,
+  myCourses: PropTypes.arrayOf(String),
   toggleDeleteModal: PropTypes.func.isRequired,
+  course: PropTypes.string,
+};
+AcademicListItem.defaultProps = {
+  course: "",
+  myCourses: [],
 };
 
 export default AcademicListItem;

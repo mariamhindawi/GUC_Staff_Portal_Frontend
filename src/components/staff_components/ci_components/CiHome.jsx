@@ -6,7 +6,7 @@ import Attendance from "../general_staff_components/Attendance";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
-import CICourses from "../../todo/ci_courses.component";
+import CICourses from "./CiCourses";
 import GeneralRequests from "../../todo/GeneralRequestsPage.component";
 import CiHomeMain from "./CiHomeMain";
 import MySchedule from "../../todo/schedule.component";
