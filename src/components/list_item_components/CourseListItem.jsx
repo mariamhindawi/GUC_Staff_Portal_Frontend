@@ -12,19 +12,28 @@ function CourseListItem(props) {
 
   const customData = () => {
     switch (user.role) {
-      case "HR":
-        return (
-          <>
+      case "HR": return (
+        <>
+          <td>
+            <Link to={`${match.url}/update/${props.course._id}`} tabIndex={-1}>
+              <EditButton />
+            </Link>
+          </td>
+          <td>
+            <DeleteButton onClick={() => { props.toggleDeleteModal(props.course.id); }} />
+          </td>
+        </>
+      );
+      case "Course Instructor": return (
+        <>
+          {props.type === "Personal" && (
             <td>
-              <Link to={`${match.url}/update/${props.course._id}`} tabIndex={-1}>
-                <EditButton />
-              </Link>
+              {props.courseCoverage}
+              &nbsp;%
             </td>
-            <td>
-              <DeleteButton onClick={() => { props.toggleDeleteModal(props.course.id); }} />
-            </td>
-          </>
-        );
+          )}
+        </>
+      );
       default: return null;
     }
   };
@@ -78,7 +87,15 @@ CourseListItem.propTypes = {
     teachingAssistants: PropTypes.arrayOf(PropTypes.string),
     courseCoordinator: PropTypes.string,
   }).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  courseCoverage: PropTypes.number,
+  toggleDeleteModal: PropTypes.func,
+  type: PropTypes.oneOf(["General", "Personal"]),
+};
+
+CourseListItem.defaultProps = {
+  courseCoverage: 0,
+  toggleDeleteModal: () => {},
+  type: "General",
 };
 
 export default CourseListItem;

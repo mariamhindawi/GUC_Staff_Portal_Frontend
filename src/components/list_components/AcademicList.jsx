@@ -53,6 +53,12 @@ function AcademicList(props) {
           <th style={{ width: "70px" }}> </th>
         </>
       );
+      case "Course Instructor": return (
+        <>
+          {props.listType === "Personal" && props.academicsType === "Teaching Assistant"
+            && <th style={{ width: "70px" }}> </th>}
+        </>
+      );
       default: return null;
     }
   };
@@ -69,6 +75,8 @@ function AcademicList(props) {
         key={academic.id}
         academic={academic}
         toggleDeleteModal={props.toggleDeleteModal}
+        academicsType={props.academicsType}
+        listType={props.listType}
       />
     ));
   };
@@ -122,7 +130,15 @@ AcademicList.propTypes = {
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   })).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  academicsType: PropTypes.oneOf(["All", "Course Instructor", "Teaching Assistant"]),
+  listType: PropTypes.oneOf(["General", "Personal"]),
+  toggleDeleteModal: PropTypes.func,
+};
+
+AcademicList.defaultProps = {
+  academicsType: "All",
+  listType: "General",
+  toggleDeleteModal: () => {},
 };
 
 export default AcademicList;

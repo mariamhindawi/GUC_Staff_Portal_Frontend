@@ -39,6 +39,11 @@
   color: #495057;
 }
 
+.attendance-select .dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .attendance-select .dropdown-item:active {
   background-color: #495057;
 }

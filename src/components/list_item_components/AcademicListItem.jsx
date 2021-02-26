@@ -11,22 +11,31 @@ function AcademicListItem(props) {
 
   const customData = () => {
     switch (user.role) {
-      case "HR":
-        return (
-          <>
-            <td>{props.academic.salary}</td>
-            <td>{props.academic.annualLeaveBalance}</td>
-            <td>{props.academic.accidentalLeaveBalance}</td>
-            <td>
-              <Link to={`${match.url}/update/${props.academic.id}`} tabIndex={-1}>
-                <EditButton />
-              </Link>
-            </td>
-            <td>
-              <DeleteButton onClick={() => { props.toggleDeleteModal(props.academic.id); }} />
-            </td>
-          </>
-        );
+      case "HR": return (
+        <>
+          <td>{props.academic.salary}</td>
+          <td>{props.academic.annualLeaveBalance}</td>
+          <td>{props.academic.accidentalLeaveBalance}</td>
+          <td>
+            <Link to={`${match.url}/update/${props.academic.id}`} tabIndex={-1}>
+              <EditButton />
+            </Link>
+          </td>
+          <td>
+            <DeleteButton onClick={() => { props.toggleDeleteModal(props.academic.id); }} />
+          </td>
+        </>
+      );
+      case "Course Instructor": return (
+        <>
+          {props.listType === "Personal" && props.academicsType === "Teaching Assistant"
+            && (
+              <td>
+                <DeleteButton onClick={() => { props.toggleDeleteModal(props.academic.id); }} />
+              </td>
+            )}
+        </>
+      );
       default: return null;
     }
   };
@@ -60,7 +69,15 @@ AcademicListItem.propTypes = {
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   }).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  academicsType: PropTypes.oneOf(["All", "Course Instructor", "Teaching Assistant"]),
+  listType: PropTypes.oneOf(["General", "Personal"]),
+  toggleDeleteModal: PropTypes.func,
+};
+
+AcademicListItem.defaultProps = {
+  academicsType: "All",
+  listType: "General",
+  toggleDeleteModal: () => {},
 };
 
 export default AcademicListItem;

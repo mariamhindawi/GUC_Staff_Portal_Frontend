@@ -50,6 +50,11 @@ function CourseList(props) {
           <th style={{ width: "70px" }}> </th>
         </>
       );
+      case "Course Instructor": return (
+        <>
+          {props.type === "Personal" && <th style={{ width: "150px" }}>Course Coverage</th>}
+        </>
+      );
       default: return null;
     }
   };
@@ -61,11 +66,13 @@ function CourseList(props) {
     if (props.courses.length === 0) {
       return <tr><td className="no-items">No Courses</td></tr>;
     }
-    return currentItems.map(course => (
+    return currentItems.map((course, i) => (
       <CourseListItem
         key={course._id}
         course={course}
+        courseCoverage={props.coursesCoverage[i]}
         toggleDeleteModal={props.toggleDeleteModal}
+        type={props.type}
       />
     ));
   };
@@ -113,7 +120,15 @@ CourseList.propTypes = {
     teachingAssistants: PropTypes.arrayOf(PropTypes.string),
     courseCoordinator: PropTypes.string,
   })).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  coursesCoverage: PropTypes.arrayOf(PropTypes.number),
+  toggleDeleteModal: PropTypes.func,
+  type: PropTypes.oneOf(["General", "Personal"]),
+};
+
+CourseList.defaultProps = {
+  coursesCoverage: [],
+  toggleDeleteModal: () => {},
+  type: "General",
 };
 
 export default CourseList;
