@@ -63,7 +63,7 @@ function HrMissingDays() {
         setMonth={setMonth}
         setYear={setYear}
       />
-      <div className="hr-attendance">
+      <div className="hr-attendance-container">
         {isLoading
           ? <Spinner />
           : <UsersMissingDaysList usersMissingDays={usersMissingDays} />}

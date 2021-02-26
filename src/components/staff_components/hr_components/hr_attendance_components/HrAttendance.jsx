@@ -12,9 +12,9 @@ function HrAttendance() {
   return (
     <Switch>
       <Route exact path={`${match.path}`}><HrAttendanceHome /></Route>
-      <Route path={`${match.path}/staff-attendance-records`}><HrViewAttendanceRecords /></Route>
-      <Route path={`${match.path}/staff-missing-days`}><HrViewMissingDays /></Route>
-      <Route path={`${match.path}/staff-missing-hours`}><HrViewMissingHours /></Route>
+      <Route path={`${match.path}/attendance-records`}><HrViewAttendanceRecords /></Route>
+      <Route path={`${match.path}/missing-days`}><HrViewMissingDays /></Route>
+      <Route path={`${match.path}/missing-hours`}><HrViewMissingHours /></Route>
       <Route path={`${match.path}/add-attendance-record`}><HrAddAttendanceRecord /></Route>
     </Switch>
   );

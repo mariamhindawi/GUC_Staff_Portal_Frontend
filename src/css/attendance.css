@@ -55,6 +55,22 @@
   outline: none;
 }
 
+@media (max-width: 576px) {
+  .attendance-select {
+    font-size: smaller;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .attendance-select .attendance-dropdown-button {
+    width: 60px;
+  }
+
+  .attendance-select input {
+    margin: 20px 0 0 0;
+  }
+}
+
 .attendance-tabs {
   padding: 1px;
   overflow-x: auto;
@@ -97,99 +113,7 @@
   height: 45px;
 }
 
-.hours-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-.hours-container .hours-card {
-  display: flex;
-  flex-direction: column;
-  margin-right: 10%;
-  font-weight: bold;
-}
-
-.hours-container .hours-progress {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hours-container .hours-progress span {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.hours-container .hours-progress .CircularProgressbar {
-  width: 80%;
-}
-
-.hours-container .hours-progress .CircularProgressbar-path {
-  stroke: #5bc0de;
-}
-
-.hours-container .hours-progress .CircularProgressbar-text {
-  fill: #5bc0de;
-}
-
-.general-attendance-button {
-  width: 150px;
-  height: 100px;
-  margin-bottom: 20px;
-  margin-left: 20px;
-  transition: 0.15s;
-  background-color: #5bc0de;
-  border: none;
-  font-weight: bold;
-}
-
-.general-attendance-button:hover {
-  transform: scale(1.05);
-  background-color: #37a8ca;
-  border: none;
-}
-
-.general-attendance-button:focus,
-.general-attendance-button:active,
-.general-attendance-button:not(:disabled):not(.disabled):active {
-  background-color: #37a8ca;
-  border: none;
-}
-
-.hr-attendance {
-  width: 100%;
-  height: calc(100% - 43px);
-}
-
-.hr-attendance .alert {
-  width: 250px;
-  margin: auto;
-  margin-top: 30px;
-  text-align: center;
-}
-
-.hr-attendance .list-container .list-last-page tr {
-  height: 45px;
-}
-
 @media (max-width: 576px) {
-  .attendance-select {
-    font-size: smaller;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .attendance-select .attendance-dropdown-button {
-    width: 60px;
-  }
-
-  .attendance-select input {
-    margin: 20px 0 0 0;
-  }
-
   .attendance-tabs {
     font-size: smaller;
   }
@@ -197,31 +121,103 @@
   .attendance-tab {
     font-size: smaller;
   }
+}
 
-  .hours-container {
+.progress-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.progress-container .progress-card {
+  display: flex;
+  flex-direction: column;
+  margin-right: 10%;
+  font-weight: bold;
+}
+
+.progress-container .progress-card span {
+  margin-bottom: 10px;
+}
+
+.progress-container .progress-chart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-container .progress-chart span {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.progress-container .progress-chart .CircularProgressbar {
+  width: 80%;
+}
+
+.progress-container .progress-chart .CircularProgressbar-path {
+  stroke: #5bc0de;
+}
+
+.progress-container .progress-chart .CircularProgressbar-text {
+  fill: #5bc0de;
+}
+
+@media (max-width: 576px) {
+  .progress-container {
     flex-direction: column-reverse;
   }
 
-  .hours-container .hours-card {
+  .progress-container .progress-card {
     text-align: center;
     margin: 30px 0 0 0;
   }
 
-  .hours-container .hours-progress .CircularProgressbar {
+  .progress-container .progress-chart .CircularProgressbar {
     width: 65%;
   }
+}
 
-  .hr-attendance {
+.staff-attendance-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.hr-attendance-container {
+  width: 100%;
+  height: calc(100% - 43px);
+}
+
+.hr-attendance-container .alert {
+  width: 250px;
+  margin: auto;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.hr-attendance-container .list-container .list-last-page tr {
+  height: 45px;
+}
+
+@media (max-width: 576px) {
+  .hr-attendance-container {
     height: calc(100% - 81px);
   }
 
-  .hr-attendance .list-container {
+  .hr-attendance-container .list-container {
     height: calc(100% - 45px);
   }
 }
 
 @media (max-width: 320px) {
-  .hr-attendance .alert {
+  .hr-attendance-container .alert {
     width: fit-content;
     font-size: smaller;
   }

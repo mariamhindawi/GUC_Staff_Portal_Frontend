@@ -19,6 +19,9 @@ function HrAttendance() {
   useAxiosCancel(axiosCancelSource, [userId, month, year]);
 
   const fetchAttendanceRecords = async () => {
+    if (userId === "") {
+      return;
+    }
     setLoading(true);
     await AxiosInstance.get("/staff/hr/view-staff-attendance-records", {
       cancelToken: axiosCancelSource.token,
@@ -86,7 +89,7 @@ function HrAttendance() {
         setUserId={setUserId}
         search
       />
-      <div className="hr-attendance">
+      <div className="hr-attendance-container">
         {renderList()}
       </div>
     </div>

@@ -8,8 +8,12 @@ function ViewHours(props) {
   const spentHours = missingHours ? requiredHours - missingHours : requiredHours + extraHours;
 
   return (
-    <div className="hours-container">
-      <div className="hours-card">
+    <div className="progress-container">
+      <div className="progress-card">
+        <span>
+          Required hours:&nbsp;&nbsp;
+          {requiredHours.toFixed(2)}
+        </span>
         <span>
           Missing hours:&nbsp;&nbsp;
           {missingHours.toFixed(2)}
@@ -19,7 +23,7 @@ function ViewHours(props) {
           {extraHours.toFixed(2)}
         </span>
       </div>
-      <div className="hours-progress">
+      <div className="progress-chart">
         <span>Hours Spent</span>
         <CircularProgressbar
           value={spentHours}

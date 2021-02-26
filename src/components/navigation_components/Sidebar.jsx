@@ -19,7 +19,7 @@ function Sidebar(props) {
       {user.role === "HR" && (
         <>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/staff-attendance`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="address-book" />
+            <FontAwesomeIcon className="sidebar-icon" icon="user-clock" />
             Staff Attendance
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hr-members`}>

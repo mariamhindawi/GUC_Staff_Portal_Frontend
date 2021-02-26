@@ -180,7 +180,7 @@ function Attendance() {
             : <MissingDaysList missingDays={missingDays} />}
         </Tab>
         <Tab className="attendance-tab" eventKey="hours" title="Hours">
-          {isLoading.missingDays
+          {isLoading.hours
             ? <Spinner />
             : <ViewHours hours={hours} />}
         </Tab>

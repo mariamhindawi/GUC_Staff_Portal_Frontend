@@ -57,7 +57,7 @@ function HrViewMissingHours() {
         setMonth={setMonth}
         setYear={setYear}
       />
-      <div className="hr-attendance">
+      <div className="hr-attendance-container">
         {isLoading
           ? <Spinner />
           : <UsersMissingHoursList usersMissingHours={usersMissingHours} />}

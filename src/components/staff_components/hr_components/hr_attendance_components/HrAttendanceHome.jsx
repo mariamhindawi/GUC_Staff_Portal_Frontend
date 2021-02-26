@@ -1,24 +1,43 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { Link, useRouteMatch } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function HrAttendanceHome() {
   const match = useRouteMatch();
 
   return (
-    <div className="view-container align-center text-center">
-      <Link to={`${match.url}/staff-attendance-records`} tabIndex={-1}>
-        <Button className="general-attendance-button">Staff Attendance Records</Button>
-      </Link>
-      <Link to={`${match.url}/staff-missing-days`} tabIndex={-1}>
-        <Button className="general-attendance-button">Staff Missing Days</Button>
-      </Link>
-      <Link to={`${match.url}/staff-missing-hours`} tabIndex={-1}>
-        <Button className="general-attendance-button">Staff Missing Hours</Button>
-      </Link>
-      <Link to={`${match.url}/add-attendance-record`} tabIndex={-1}>
-        <Button className="general-attendance-button">Add Missing Attendance Record</Button>
-      </Link>
+    <div className="view-container">
+      <div className="staff-attendance-container">
+        <Link to={`${match.url}/attendance-records`} tabIndex={-1}>
+          <Button className="general-attendance-button" variant="info">
+            Staff Attendance Records
+            <br />
+            <FontAwesomeIcon icon="address-book" />
+          </Button>
+        </Link>
+        <Link to={`${match.url}/missing-days`} tabIndex={-1}>
+          <Button className="general-attendance-button" variant="info">
+            Staff Missing Days
+            <br />
+            <FontAwesomeIcon icon="calendar-day" />
+          </Button>
+        </Link>
+        <Link to={`${match.url}/missing-hours`} tabIndex={-1}>
+          <Button className="general-attendance-button" variant="info">
+            Staff Missing Hours
+            <br />
+            <FontAwesomeIcon icon="hourglass-half" />
+          </Button>
+        </Link>
+        <Link to={`${match.url}/add-attendance-record`} tabIndex={-1}>
+          <Button className="general-attendance-button" variant="info">
+            Add Missing Attendance Record
+            <br />
+            <FontAwesomeIcon icon="calendar-plus" />
+          </Button>
+        </Link>
+      </div>
     </div>
   );
 }
