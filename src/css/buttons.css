@@ -67,7 +67,7 @@
   opacity: 0.6;
 }
 
-.general-attendance-button {
+.general-page-button {
   width: 250px;
   height: 225px;
   max-width: 100%;
@@ -79,26 +79,26 @@
   font-weight: bold;
 }
 
-.general-attendance-button:hover,
-.general-attendance-button:focus {
+.general-page-button:hover,
+.general-page-button:focus {
   transform: scale(1.05);
   background-color: #37a8ca;
   border-color: #37a8ca;
 }
 
-.general-attendance-button:not(:disabled):not(.disabled):active {
+.general-page-button:not(:disabled):not(.disabled):active {
   background-color: #2694b6;
   border-color: #2694b6;
 }
 
-.general-attendance-button svg {
+.general-page-button svg {
   margin-top: 20px;
   font-size: 80px;
   text-align: center;
 }
 
 @media (max-width: 992px), (max-height: 500px) {
-  .general-attendance-button {
+  .general-page-button {
     width: 225px;
     height: 175px;
   }

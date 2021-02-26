@@ -1,7 +1,7 @@
 .list-container {
   width: 100%;
-  height: calc(100vh - 170px);
-  margin-top: 15px;
+  height: calc(100% - 105px);
+  margin: 15px 0 10px;
   overflow-x: scroll;
 }
 
@@ -17,6 +17,10 @@
 
 .list-last-page {
   height: auto;
+}
+
+.list-last-page tr {
+  height: 50px;
 }
 
 .list thead tr {

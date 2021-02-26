@@ -76,7 +76,7 @@ function CiCourses() {
   return (
     <div className="view-container">
       <Tabs className="view-tabs" defaultActiveKey="personalCourses">
-        <Tab eventKey="personalCourses" title="My Courses">
+        <Tab className="view-tab" eventKey="personalCourses" title="My Courses">
           {isLoading.personalCourses
             ? <Spinner />
             : (
@@ -87,7 +87,7 @@ function CiCourses() {
               />
             )}
         </Tab>
-        <Tab eventKey="departmentCourses" title="Department Courses">
+        <Tab className="view-tab" eventKey="departmentCourses" title="Department Courses">
           {isLoading.departmentCourses
             ? <Spinner />
             : (

@@ -168,23 +168,23 @@ function Attendance() {
   return (
     <div className="view-container">
       <AttendanceSelect month={month} year={year} setMonth={setMonth} setYear={setYear} />
-      <Tabs className="attendance-tabs" defaultActiveKey="attendanceRecords">
-        <Tab className="attendance-tab" eventKey="attendanceRecords" title="Attendance Records">
+      <Tabs className="view-tabs attendance-tabs" defaultActiveKey="attendanceRecords">
+        <Tab className="view-tab" eventKey="attendanceRecords" title="Attendance Records">
           {isLoading.attendanceRecords
             ? <Spinner />
             : <AttendanceRecordsList attendanceRecords={attendanceRecords} />}
         </Tab>
-        <Tab className="attendance-tab" eventKey="missingDays" title="Missing Days">
+        <Tab className="view-tab" eventKey="missingDays" title="Missing Days">
           {isLoading.missingDays
             ? <Spinner />
             : <MissingDaysList missingDays={missingDays} />}
         </Tab>
-        <Tab className="attendance-tab" eventKey="hours" title="Hours">
+        <Tab className="view-tab" eventKey="hours" title="Hours">
           {isLoading.hours
             ? <Spinner />
             : <ViewHours hours={hours} />}
         </Tab>
-        <Tab className="attendance-tab" eventKey="salary" title="Salary">
+        <Tab className="view-tab" eventKey="salary" title="Salary">
           {isLoading.salary
             ? <Spinner />
             : <ViewSalary salary={salary} />}

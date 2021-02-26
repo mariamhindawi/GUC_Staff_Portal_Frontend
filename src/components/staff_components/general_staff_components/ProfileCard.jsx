@@ -60,7 +60,7 @@ function ProfileCard(props) {
       </div>
 
       <div className="profile-info-card">
-        <Tabs className="profile-info-tabs" defaultActiveKey="general">
+        <Tabs className="view-tabs profile-info-tabs" defaultActiveKey="general">
           <Tab className="profile-info-tab" eventKey="general" title="General Info">
             {props.edit && <CloseButton onClick={handleCloseEdit} />}
             <div>

@@ -39,14 +39,14 @@ function AttendanceSelect(props) {
   };
 
   return (
-    <div className="attendance-select">
+    <div className="view-select">
       <div>
         <span className="mr-2">Month</span>
-        <DropdownButton bsPrefix="attendance-dropdown-button" title={props.month}>
+        <DropdownButton bsPrefix="view-dropdown-button attendance-dropdown-button" title={props.month}>
           {getDropdownMonths()}
         </DropdownButton>
         <span className="ml-3 mr-2">Year</span>
-        <DropdownButton bsPrefix="attendance-dropdown-button" title={props.year}>
+        <DropdownButton bsPrefix="view-dropdown-button attendance-dropdown-button" title={props.year}>
           {getDropdownYears()}
         </DropdownButton>
       </div>

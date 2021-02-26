@@ -190,31 +190,33 @@ function CiAcademicMembers() {
 
     return (
       <div className="view-select mt-3">
-        <span className="mr-2">Course</span>
-        <DropdownButton bsPrefix="view-dropdown-button" title={selectedCourse}>
-          {mapCoursesToDropdownItems(courses, personal)}
-        </DropdownButton>
-        <span className="ml-3 mr-2">Academic Type</span>
-        <DropdownButton bsPrefix="view-dropdown-button" title={academicsType}>
-          <Dropdown.Item
-            key="All"
-            onClick={() => { setAcademicsType("All"); }}
-          >
-            All
-          </Dropdown.Item>
-          <Dropdown.Item
-            key="Course Instructor"
-            onClick={() => { setAcademicsType("Course Instructor"); }}
-          >
-            Course Instructor
-          </Dropdown.Item>
-          <Dropdown.Item
-            key="Teaching Assistant"
-            onClick={() => { setAcademicsType("Teaching Assistant"); }}
-          >
-            Teaching Assistant
-          </Dropdown.Item>
-        </DropdownButton>
+        <div>
+          <span className="mr-2">Course</span>
+          <DropdownButton bsPrefix="view-dropdown-button" title={selectedCourse}>
+            {mapCoursesToDropdownItems(courses, personal)}
+          </DropdownButton>
+          <span className="ml-3 mr-2">Academic Type</span>
+          <DropdownButton bsPrefix="view-dropdown-button" title={academicsType}>
+            <Dropdown.Item
+              key="All"
+              onClick={() => { setAcademicsType("All"); }}
+            >
+              All
+            </Dropdown.Item>
+            <Dropdown.Item
+              key="Course Instructor"
+              onClick={() => { setAcademicsType("Course Instructor"); }}
+            >
+              Course Instructor
+            </Dropdown.Item>
+            <Dropdown.Item
+              key="Teaching Assistant"
+              onClick={() => { setAcademicsType("Teaching Assistant"); }}
+            >
+              Teaching Assistant
+            </Dropdown.Item>
+          </DropdownButton>
+        </div>
       </div>
     );
   };

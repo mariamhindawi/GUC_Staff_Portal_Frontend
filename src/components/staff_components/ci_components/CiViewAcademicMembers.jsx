@@ -81,14 +81,12 @@ function CiViewAcademics(props) {
 
       {
         !props.isLoading && (
-          <div className="view-container">
-            <AcademicList
-              academics={academics}
-              academicsType={props.academicsType}
-              listType={props.listType}
-              toggleDeleteModal={toggleDeleteModal}
-            />
-          </div>
+          <AcademicList
+            academics={academics}
+            academicsType={props.academicsType}
+            listType={props.listType}
+            toggleDeleteModal={toggleDeleteModal}
+          />
         )
       }
 
@@ -145,7 +143,7 @@ CiViewAcademics.defaultProps = {
   academicsType: "All",
   listType: "General",
   course: "",
-  updateAcademics: () => {},
+  updateAcademics: () => { },
 };
 
 export default CiViewAcademics;
