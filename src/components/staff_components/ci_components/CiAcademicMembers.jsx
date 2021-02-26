@@ -169,7 +169,7 @@ function CiAcademicMembers() {
         key=""
         onClick={() => { setCourse(""); }}
       >
-        {personal ? "Select Course" : "All Courses"}
+        {personal ? "Select Course" : "All Staff"}
       </Dropdown.Item>
     );
 
@@ -186,7 +186,7 @@ function CiAcademicMembers() {
   };
   const renderSelect = personal => {
     const courses = personal ? personalCourses : departmentCourses;
-    const selectedCourse = personal ? (selectedPersonalCourse || "Select Course") : (selectedDepartmentCourse || "All Courses");
+    const selectedCourse = personal ? (selectedPersonalCourse || "Select Course") : (selectedDepartmentCourse || "All Staff");
 
     return (
       <div className="view-select mt-3">
