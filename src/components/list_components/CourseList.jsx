@@ -39,8 +39,8 @@ function CourseList(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+  useLayoutEffect(setLayout, [props.courses, currentPage]);
+  useEffect(setupEventListeners, [props.courses, currentPage]);
 
   const customTableHeads = () => {
     switch (user.role) {

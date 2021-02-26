@@ -11,19 +11,18 @@ function RoomListItem(props) {
 
   const customData = () => {
     switch (user.role) {
-      case "HR":
-        return (
-          <>
-            <td>
-              <Link to={`${match.url}/update/${props.room._id}`} tabIndex={-1}>
-                <EditButton />
-              </Link>
-            </td>
-            <td>
-              <DeleteButton onClick={() => { props.toggleDeleteModal(props.room.name); }} />
-            </td>
-          </>
-        );
+      case "HR": return (
+        <>
+          <td>
+            <Link to={`${match.url}/update/${props.room._id}`} tabIndex={-1}>
+              <EditButton />
+            </Link>
+          </td>
+          <td>
+            <DeleteButton onClick={() => { props.toggleDeleteModal(props.room.name); }} />
+          </td>
+        </>
+      );
       default: return null;
     }
   };
@@ -47,7 +46,11 @@ RoomListItem.propTypes = {
     capacity: PropTypes.number,
     remainingCapacity: PropTypes.number,
   }).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  toggleDeleteModal: PropTypes.func,
+};
+
+RoomListItem.defaultProps = {
+  toggleDeleteModal: () => {},
 };
 
 export default RoomListItem;

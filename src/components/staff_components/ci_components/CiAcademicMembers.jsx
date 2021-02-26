@@ -26,7 +26,11 @@ function CiAcademicMembers() {
   });
   const [academicsType, setAcademicsType] = useState("All");
   const axiosCancelSource = Axios.CancelToken.source();
+  const axiosCancelSourcePersonalCourse = Axios.CancelToken.source();
+  const axiosCancelSourceDepartmentCourse = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
+  useAxiosCancel(axiosCancelSourcePersonalCourse, [selectedPersonalCourse]);
+  useAxiosCancel(axiosCancelSourceDepartmentCourse, [selectedDepartmentCourse]);
 
   const fetchPersonalCourses = async () => {
     setLoading(prevState => ({ ...prevState, personalCourses: true }));
@@ -94,7 +98,7 @@ function CiAcademicMembers() {
       return;
     }
     await AxiosInstance.get(`/staff/academic/get-staff/${selectedPersonalCourse}`, {
-      cancelToken: axiosCancelSource.token,
+      cancelToken: axiosCancelSourcePersonalCourse.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
@@ -124,7 +128,7 @@ function CiAcademicMembers() {
     await AxiosInstance({
       method: "get",
       url: selectedDepartmentCourse === "" ? "/staff/academic/get-department-staff" : `/staff/academic/get-staff/${selectedDepartmentCourse}`,
-      cancelToken: axiosCancelSource.token,
+      cancelToken: axiosCancelSourceDepartmentCourse.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },

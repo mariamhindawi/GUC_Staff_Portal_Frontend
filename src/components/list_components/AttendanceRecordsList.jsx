@@ -37,8 +37,8 @@ function AttendanceRecordsList(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+  useLayoutEffect(setLayout, [props.attendanceRecords, currentPage]);
+  useEffect(setupEventListeners, [props.attendanceRecords, currentPage]);
 
   const attendanceRecordsList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;

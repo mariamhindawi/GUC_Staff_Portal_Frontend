@@ -11,19 +11,18 @@ function DepartmentListItem(props) {
 
   const customData = () => {
     switch (user.role) {
-      case "HR":
-        return (
-          <>
-            <td>
-              <Link to={`${match.url}/update/${props.department._id}`} tabIndex={-1}>
-                <EditButton />
-              </Link>
-            </td>
-            <td>
-              <DeleteButton onClick={() => { props.toggleDeleteModal(props.department.name); }} />
-            </td>
-          </>
-        );
+      case "HR": return (
+        <>
+          <td>
+            <Link to={`${match.url}/update/${props.department._id}`} tabIndex={-1}>
+              <EditButton />
+            </Link>
+          </td>
+          <td>
+            <DeleteButton onClick={() => { props.toggleDeleteModal(props.department.name); }} />
+          </td>
+        </>
+      );
       default: return null;
     }
   };
@@ -45,7 +44,11 @@ DepartmentListItem.propTypes = {
     faculty: PropTypes.string,
     headOfDepartment: PropTypes.string,
   }).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  toggleDeleteModal: PropTypes.func,
+};
+
+DepartmentListItem.defaultProps = {
+  toggleDeleteModal: () => {},
 };
 
 export default DepartmentListItem;

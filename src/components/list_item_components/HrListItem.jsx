@@ -11,22 +11,21 @@ function HrListItem(props) {
 
   const customData = () => {
     switch (user.role) {
-      case "HR":
-        return (
-          <>
-            <td>{props.hrMember.salary}</td>
-            <td>{props.hrMember.annualLeaveBalance}</td>
-            <td>{props.hrMember.accidentalLeaveBalance}</td>
-            <td>
-              <Link to={`${match.url}/update/${props.hrMember.id}`} tabIndex={-1}>
-                <EditButton />
-              </Link>
-            </td>
-            <td>
-              <DeleteButton onClick={() => { props.toggleDeleteModal(props.hrMember.id); }} />
-            </td>
-          </>
-        );
+      case "HR": return (
+        <>
+          <td>{props.hrMember.salary}</td>
+          <td>{props.hrMember.annualLeaveBalance}</td>
+          <td>{props.hrMember.accidentalLeaveBalance}</td>
+          <td>
+            <Link to={`${match.url}/update/${props.hrMember.id}`} tabIndex={-1}>
+              <EditButton />
+            </Link>
+          </td>
+          <td>
+            <DeleteButton onClick={() => { props.toggleDeleteModal(props.hrMember.id); }} />
+          </td>
+        </>
+      );
       default: return null;
     }
   };
@@ -54,7 +53,11 @@ HrListItem.propTypes = {
     annualLeaveBalance: PropTypes.number,
     accidentalLeaveBalance: PropTypes.number,
   }).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  toggleDeleteModal: PropTypes.func,
+};
+
+HrListItem.defaultProps = {
+  toggleDeleteModal: () => {},
 };
 
 export default HrListItem;

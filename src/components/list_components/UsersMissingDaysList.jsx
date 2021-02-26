@@ -37,8 +37,8 @@ function UsersMissingDaysList(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+  useLayoutEffect(setLayout, [props.usersMissingDays, currentPage]);
+  useEffect(setupEventListeners, [props.usersMissingDays, currentPage]);
 
   const usersMissingDaysList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;

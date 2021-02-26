@@ -26,7 +26,6 @@ function AcademicList(props) {
     const lastPage = Math.ceil(props.academics.length / newItemsPerPage) || 1;
     const newCurrentPage = currentPage > lastPage ? lastPage : currentPage;
     setCurrentPage(newCurrentPage);
-
     if (props.academics.length === 0
       || (newCurrentPage === lastPage && props.academics.length % newItemsPerPage !== 0)) {
       setListStyle("list-last-page");
@@ -39,8 +38,8 @@ function AcademicList(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+  useLayoutEffect(setLayout, [props.academics, currentPage]);
+  useEffect(setupEventListeners, [props.academics, currentPage]);
 
   const customTableHeads = () => {
     switch (user.role) {
@@ -138,7 +137,7 @@ AcademicList.propTypes = {
 AcademicList.defaultProps = {
   academicsType: "All",
   listType: "General",
-  toggleDeleteModal: () => {},
+  toggleDeleteModal: () => { },
 };
 
 export default AcademicList;

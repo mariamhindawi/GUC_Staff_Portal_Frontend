@@ -39,8 +39,8 @@ function RoomList(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+  useLayoutEffect(setLayout, [props.rooms, currentPage]);
+  useEffect(setupEventListeners, [props.rooms, currentPage]);
 
   const customTableHeads = () => {
     switch (user.role) {

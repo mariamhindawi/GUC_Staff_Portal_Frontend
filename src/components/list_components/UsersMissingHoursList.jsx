@@ -37,8 +37,8 @@ function UsersMissingHoursList(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+  useLayoutEffect(setLayout, [props.usersMissingHours, currentPage]);
+  useEffect(setupEventListeners, [props.usersMissingHours, currentPage]);
 
   const usersMissingHoursList = () => {
     const indexOfLastItem = currentPage * itemsPerPage;

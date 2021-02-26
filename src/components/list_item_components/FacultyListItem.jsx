@@ -11,19 +11,18 @@ function FacultyListItem(props) {
 
   const customData = () => {
     switch (user.role) {
-      case "HR":
-        return (
-          <>
-            <td>
-              <Link to={`${match.url}/update/${props.faculty._id}`} tabIndex={-1}>
-                <EditButton />
-              </Link>
-            </td>
-            <td>
-              <DeleteButton onClick={() => { props.toggleDeleteModal(props.faculty.name); }} />
-            </td>
-          </>
-        );
+      case "HR": return (
+        <>
+          <td>
+            <Link to={`${match.url}/update/${props.faculty._id}`} tabIndex={-1}>
+              <EditButton />
+            </Link>
+          </td>
+          <td>
+            <DeleteButton onClick={() => { props.toggleDeleteModal(props.faculty.name); }} />
+          </td>
+        </>
+      );
       default: return null;
     }
   };
@@ -41,7 +40,11 @@ FacultyListItem.propTypes = {
     _id: PropTypes.string,
     name: PropTypes.string,
   }).isRequired,
-  toggleDeleteModal: PropTypes.func.isRequired,
+  toggleDeleteModal: PropTypes.func,
+};
+
+FacultyListItem.defaultProps = {
+  toggleDeleteModal: () => {},
 };
 
 export default FacultyListItem;

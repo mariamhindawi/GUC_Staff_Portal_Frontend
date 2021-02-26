@@ -16,9 +16,9 @@ function CiViewAcademics(props) {
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const deleteAcademic = async academicId => {
+  const unassignAcademic = async academicId => {
     setDeleteModalState("submitting");
-    await AxiosInstance.delete(`/staff/ci/delete-ta-from-course/${academicId}/${props.course}`, {
+    await AxiosInstance.delete(`/staff/ci/unassign-teaching-assistant/${academicId}/${props.course}`, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -74,6 +74,7 @@ function CiViewAcademics(props) {
   else {
     academics = [...props.academics.courseInstructors, ...props.academics.teachingAssistants];
   }
+
   return (
     <>
       { props.isLoading && <Spinner />}
@@ -96,7 +97,7 @@ function CiViewAcademics(props) {
         state={deleteModalState}
         message={deleteModalMessage}
         itemToDelete={academicToDelete}
-        deleteItem={deleteAcademic}
+        deleteItem={unassignAcademic}
         toggle={toggleDeleteModal}
         reset={resetDeleteModal}
       />

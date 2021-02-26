@@ -39,8 +39,8 @@ function HrList(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  useLayoutEffect(setLayout, [currentPage]);
-  useEffect(setupEventListeners, [itemsPerPage, currentPage]);
+  useLayoutEffect(setLayout, [props.hrMembers, currentPage]);
+  useEffect(setupEventListeners, [props.hrMembers, currentPage]);
 
   const customTableHeads = () => {
     switch (user.role) {
