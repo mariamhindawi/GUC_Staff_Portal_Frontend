@@ -30,7 +30,7 @@ function AcademicMemberForm(props) {
     email: props.academic.email,
     gender: props.academic.gender,
     role: props.academic.role,
-    department: props.academic.department,
+    department: props.academic.department === "UNASSIGNED" ? "" : props.academic.department,
     office: props.academic.office,
     salary: props.academic.salary,
     dayOff: props.academic.dayOff,
@@ -55,7 +55,7 @@ function AcademicMemberForm(props) {
       .oneOf(["Male", "Female"], "Invalid gender"),
     role: Yup.string()
       .required("This field is required")
-      .oneOf(["Course Instructor", "Head of Department", "Teaching Assistant"], "Invalid role"),
+      .oneOf(["Course Instructor", "Head of Department", "Teaching Assistant", "Course Coordinator"], "Invalid role"),
     dayOff: Yup.string()
       .required("This field is required")
       .oneOf(["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], "Invalid day off"),
@@ -127,6 +127,7 @@ function AcademicMemberForm(props) {
               <option value="Course Instructor">Course Instructor</option>
               <option value="Head of Department">Head of Department</option>
               <option value="Teaching Assistant">Teaching Assistant</option>
+              <option disabled value="Course Coordinator">Course Coordinator</option>
             </Select>
             <Input label="Department" name="department" placeholder={placeholders.department} setMessage={setMessage} />
             <Input label="Office" name="office" placeholder={placeholders.office} setMessage={setMessage} />

@@ -51,14 +51,13 @@ function DepartmentForm(props) {
   };
   const initialValues = {
     name: props.department.name,
-    faculty: props.department.faculty,
-    headOfDepartment: props.department.headOfDepartment,
+    faculty: props.department.faculty === "UNASSIGNED" ? "" : props.department.faculty,
+    headOfDepartment: props.department.headOfDepartment === "UNASSIGNED" ? "" : props.department.headOfDepartment,
   };
   const validationSchema = Yup.object({
     name: Yup.string()
       .required("This field is required"),
-    faculty: Yup.string()
-      .required("This field is required"),
+    faculty: Yup.string(),
     headOfDepartment: Yup.string(),
   });
   const handleSubmit = async values => {
@@ -72,8 +71,8 @@ function DepartmentForm(props) {
       },
       data: {
         name: values.name,
-        faculty: values.faculty !== "UNASSIGNED" ? values.faculty : "",
-        headOfDepartment: values.headOfDepartment !== "UNASSIGNED" ? values.headOfDepartment : "",
+        faculty: values.faculty,
+        headOfDepartment: values.headOfDepartment,
       },
     })
       .then(response => {

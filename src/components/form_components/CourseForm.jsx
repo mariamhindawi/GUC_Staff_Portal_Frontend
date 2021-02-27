@@ -22,7 +22,7 @@ function CourseForm(props) {
   const initialValues = {
     id: props.course.id,
     name: props.course.name,
-    department: props.course.department,
+    department: props.course.department === "UNASSIGNED" ? "" : props.course.department,
   };
   const validationSchema = Yup.object({
     id: Yup.string()
