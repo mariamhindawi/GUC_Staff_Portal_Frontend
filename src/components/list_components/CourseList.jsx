@@ -25,18 +25,19 @@ function CourseList(props) {
       );
       case "Course Instructor": return (
         <>
-          {props.type === "Personal" && (
-          <>
-            <th style={{ width: "150px" }}>Course Coverage</th>
-            <th style={{ width: "70px" }}> </th>
-          </>
+          {props.listType === "Personal" && (
+            <>
+              <th style={{ width: "150px" }}>Course Coverage</th>
+              <th style={{ width: "70px" }}>Assign TA</th>
+            </>
           )}
         </>
       );
       case "Head of Department": return (
         <>
           <th style={{ width: "150px" }}>Course Coverage</th>
-          <th style={{ width: "70px" }}> </th>
+          {props.listType === "Personal" && <th style={{ width: "100px" }}>Assign TA</th>}
+          {props.listType === "General" && <th style={{ width: "130px" }}>Assign Course Instructor</th>}
         </>
       );
       default: return null;
@@ -55,10 +56,10 @@ function CourseList(props) {
         key={course._id}
         course={course}
         courseCoverage={props.coursesCoverage[i]}
+        listType={props.listType}
         toggleDeleteModal={props.toggleDeleteModal}
         toggleAssignModal={props.toggleAssignModal}
         toggleUnassignModal={props.toggleUnassignModal}
-        type={props.type}
       />
     ));
   };
@@ -107,18 +108,18 @@ CourseList.propTypes = {
     courseCoordinator: PropTypes.string,
   })).isRequired,
   coursesCoverage: PropTypes.arrayOf(PropTypes.number),
+  listType: PropTypes.oneOf(["General", "Personal"]),
   toggleDeleteModal: PropTypes.func,
   toggleAssignModal: PropTypes.func,
   toggleUnassignModal: PropTypes.func,
-  type: PropTypes.oneOf(["General", "Personal"]),
 };
 
 CourseList.defaultProps = {
   coursesCoverage: [],
-  toggleDeleteModal: () => {},
-  toggleAssignModal: () => {},
-  toggleUnassignModal: () => {},
-  type: "General",
+  listType: "General",
+  toggleDeleteModal: () => { },
+  toggleAssignModal: () => { },
+  toggleUnassignModal: () => { },
 };
 
 export default CourseList;

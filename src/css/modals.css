@@ -2,50 +2,29 @@
   float: right;
 }
 
-.delete-modal-header {
+.modal-header {
   position: relative;
   display: flex;
   justify-content: center;
   height: 110px;
 }
 
-.delete-modal-body {
+.modal-confirm {
   height: 50px;
-  margin-left: -0.5px;
-  margin-right: -0.5px;
+  margin: -0.5px;
 }
 
-.delete-modal-button {
+.modal-confirm-button {
   border-radius: 0;
   width: 50%;
   height: 100%;
 }
 
-.delete-modal-button:focus,
-.delete-modal-button:not(:disabled):not(.disabled):active:focus {
+.modal-confirm-button:focus,
+.modal-confirm-button:not(:disabled):not(.disabled):active:focus {
   box-shadow: none;
 }
 
-.assign-modal-header {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  height: 110px;
-}
-
-.assign-modal-body {
-  height: 300px;
-  margin-left: -0.5px;
-  margin-right: -0.5px;
-}
-
-.assign-modal-button {
-  border-radius: 0;
-  width: 50%;
-  height: 100%;
-}
-
-.assign-modal-button:focus,
-.assign-modal-button:not(:disabled):not(.disabled):active:focus {
-  box-shadow: none;
+.modal-form label {
+  margin-right: 15px;
 }

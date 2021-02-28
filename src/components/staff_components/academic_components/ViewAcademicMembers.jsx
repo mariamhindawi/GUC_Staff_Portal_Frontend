@@ -5,31 +5,31 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import UnassignModal from "../../helper_components/UnassignModal";
+import UnassignAcademicModal from "../../helper_components/UnassignAcademicModal";
 import AcademicList from "../../list_components/AcademicList";
 
 function ViewAcademics(props) {
-  const [academicToUnassign, setAcademicToUnassign] = useState({});
   const [unassignModalIsOpen, setUnassignModalOpen] = useState(false);
   const [unassignModalState, setUnassignModalState] = useState("will submit");
+  const [unassignModalBodyText, setUnassignModalBodyText] = useState("");
   const [unassignModalMessage, setUnassignModalMessage] = useState({ messageText: "", messageStyle: "" });
-  const [unassignBodyText, setUnassignBodyText] = useState("");
+  const [academicToUnassign, setAcademicToUnassign] = useState({});
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
   const unassignAcademic = async academic => {
-    let academicRole;
-    let academicPath;
+    let userRolePath;
+    let academicRolePath;
     if (academic.role === "Teaching Assistant" || academic.role === "Course Coordinator") {
-      academicRole = "teaching-assistant";
-      academicPath = "ci";
+      userRolePath = "ci";
+      academicRolePath = "teaching-assistant";
     }
     else {
-      academicRole = "course-instructor";
-      academicPath = "hod";
+      userRolePath = "hod";
+      academicRolePath = "course-instructor";
     }
     setUnassignModalState("submitting");
-    await AxiosInstance.delete(`/staff/${academicPath}/unassign-${academicRole}/${academic.id}/${props.course}`, {
+    await AxiosInstance.put(`/staff/${userRolePath}/unassign-${academicRolePath}/${academic.id}/${props.course}`, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -67,15 +67,15 @@ function ViewAcademics(props) {
   const toggleUnassignModal = (academic, text) => {
     if (academic) {
       setAcademicToUnassign(academic);
-      setUnassignBodyText(text);
+      setUnassignModalBodyText(text);
     }
     setUnassignModalOpen(prevState => !prevState);
   };
   const resetUnassignModal = () => {
     setAcademicToUnassign({});
     setUnassignModalState("will submit");
+    setUnassignModalBodyText("");
     setUnassignModalMessage({ messageText: "", messageStyle: "" });
-    setUnassignBodyText("");
   };
 
   const getAcademics = () => {
@@ -109,15 +109,15 @@ function ViewAcademics(props) {
         )
       }
 
-      <UnassignModal
+      <UnassignAcademicModal
         isOpen={unassignModalIsOpen}
         state={unassignModalState}
         message={unassignModalMessage}
-        itemToUnassign={academicToUnassign}
-        unassignItem={unassignAcademic}
+        bodyText={unassignModalBodyText}
+        academicToUnassign={academicToUnassign}
+        unassignAcademic={unassignAcademic}
         toggle={toggleUnassignModal}
         reset={resetUnassignModal}
-        unassignBodyText={unassignBodyText}
       />
     </>
   );

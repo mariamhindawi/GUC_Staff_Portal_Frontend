@@ -11,6 +11,41 @@ import { useUserContext } from "../../contexts/UserContext";
 function CourseListItem(props) {
   const user = useUserContext();
   const match = useRouteMatch();
+
+  const courseCoordinatorField = () => {
+    if (props.listType === "Personal"
+      && (user.role === "Course Instructor" || user.role === "Head of Department")) {
+      if (props.course.courseCoordinator === "UNASSIGNED") {
+        return (
+          <td>
+            <div style={{ width: "120px", minWidth: "fit-content" }}>
+              -
+              <AssignButton
+                className="float-right"
+                onClick={() => {
+                  props.toggleAssignModal(props.course, "Course Coordinator", `Assign Course Coordinator to "${props.course.id}"`);
+                }}
+              />
+            </div>
+          </td>
+        );
+      }
+      return (
+        <td>
+          <div style={{ width: "120px", minWidth: "fit-content" }}>
+            {props.course.courseCoordinator}
+            <UnassignButton
+              className="float-right"
+              onClick={() => {
+                props.toggleUnassignModal(props.course, `Are You sure you want to unassign "${props.course.courseCoordinator}" from being a Course Coordinator in "${props.course.name}"?`);
+              }}
+            />
+          </div>
+        </td>
+      );
+    }
+    return <td>{props.course.courseCoordinator !== "UNASSIGNED" ? props.course.courseCoordinator : "-"}</td>;
+  };
   const customData = () => {
     switch (user.role) {
       case "HR": return (
@@ -27,20 +62,20 @@ function CourseListItem(props) {
       );
       case "Course Instructor": return (
         <>
-          {props.type === "Personal" && (
-          <>
-            <td>
-              {props.courseCoverage}
+          {props.listType === "Personal" && (
+            <>
+              <td>
+                {props.courseCoverage}
               &nbsp;%
-            </td>
-            <td>
-              <AssignButton
-                onClick={() => {
-                  props.toggleAssignModal(props.course.id, "teaching-assistant", `Assign Teaching Assistant to ${props.course.id}`);
-                }}
-              />
-            </td>
-          </>
+              </td>
+              <td>
+                <AssignButton
+                  onClick={() => {
+                    props.toggleAssignModal(props.course, "Teaching Assistant", `Assign Teaching Assistant to "${props.course.id}"`);
+                  }}
+                />
+              </td>
+            </>
           )}
         </>
       );
@@ -50,20 +85,20 @@ function CourseListItem(props) {
             {props.courseCoverage}
             &nbsp;%
           </td>
-          {props.type === "General" && (
+          {props.listType === "General" && (
             <td>
               <AssignButton
                 onClick={() => {
-                  props.toggleAssignModal(props.course.id, "course-instructor", `Assign Course Instructor to ${props.course.id}`);
+                  props.toggleAssignModal(props.course, "Course Instructor", `Assign Course Instructor to "${props.course.id}"`);
                 }}
               />
             </td>
           )}
-          {props.type === "Personal" && (
+          {props.listType === "Personal" && (
             <td>
               <AssignButton
                 onClick={() => {
-                  props.toggleAssignModal(props.course.id, "academic", `Assign Academic to ${props.course.id}`);
+                  props.toggleAssignModal(props.course, "Teaching Assistant", `Assign Teaching Assistant to "${props.course.id}"`);
                 }}
               />
             </td>
@@ -107,32 +142,7 @@ function CourseListItem(props) {
           </Dropdown.Menu>
         </Dropdown>
       </td>
-      {(user.role === "Course Instructor" || user.role === "Head of Department") && props.type === "Personal" ? (
-        <td>
-          {props.course.courseCoordinator !== "UNASSIGNED" ? (
-            <div>
-              <span>{props.course.courseCoordinator}</span>
-              <span>
-                <UnassignButton onClick={() => {
-                  props.toggleUnassignModal(props.course.id, props.course.courseCoordinator);
-                }}
-                />
-              </span>
-            </div>
-          ) : (
-            <div>
-              <span>-</span>
-              <span>
-                <AssignButton onClick={() => {
-                  props.toggleAssignModal(props.course.id, props.course.teachingAssistants, "course-coordinator");
-                }}
-                />
-              </span>
-            </div>
-          ) }
-        </td>
-      )
-        : <td>{props.course.courseCoordinator !== "UNASSIGNED" ? props.course.courseCoordinator : "-"}</td>}
+      {courseCoordinatorField()}
       {customData()}
     </tr>
   );
@@ -149,19 +159,18 @@ CourseListItem.propTypes = {
     courseCoordinator: PropTypes.string,
   }).isRequired,
   courseCoverage: PropTypes.number,
+  listType: PropTypes.oneOf(["General", "Personal"]),
   toggleDeleteModal: PropTypes.func,
   toggleAssignModal: PropTypes.func,
   toggleUnassignModal: PropTypes.func,
-  type: PropTypes.oneOf(["General", "Personal"]),
 };
 
 CourseListItem.defaultProps = {
   courseCoverage: 0,
-  toggleDeleteModal: () => {},
-  toggleAssignModal: () => {},
-  toggleUnassignModal: () => {},
-  type: "General",
-
+  listType: "General",
+  toggleDeleteModal: () => { },
+  toggleAssignModal: () => { },
+  toggleUnassignModal: () => { },
 };
 
 export default CourseListItem;

@@ -19,9 +19,6 @@ function ProfileCard(props) {
     github: "GitHub Account",
     facebook: "Facebook Account",
   };
-  const handleSubmit = async () => {
-    await formikProps.submitForm();
-  };
   const handleCloseEdit = () => {
     formikProps.resetForm();
     props.setEdit(false);
@@ -39,7 +36,7 @@ function ProfileCard(props) {
     return (
       <FormButton
         isSubmiting={formikProps.isSubmitting}
-        onClick={handleSubmit}
+        onClick={formikProps.submitForm}
       >
         {formikProps.isSubmitting ? "Saving changes" : "Save changes"}
       </FormButton>

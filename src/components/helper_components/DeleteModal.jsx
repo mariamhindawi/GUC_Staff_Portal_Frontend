@@ -30,16 +30,16 @@ function DeleteModal(props) {
   }
   return (
     <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
-      <Modal.Header className="delete-modal-header">
+      <Modal.Header className="modal-header">
         <Alert className="align-center-vertical" variant="danger">
           {`Are you sure you want to delete "${props.itemToDelete}" ?`}
         </Alert>
       </Modal.Header>
-      <div className="delete-modal-body">
-        <Button className="delete-modal-button" variant="danger" onClick={() => { props.deleteItem(props.itemToDelete); }}>
+      <div className="modal-confirm">
+        <Button className="modal-confirm-button" variant="danger" onClick={() => { props.deleteItem(props.itemToDelete); }}>
           Yes
         </Button>
-        <Button className="delete-modal-button" variant="secondary" onClick={() => { props.toggle(); }}>
+        <Button className="modal-confirm-button" variant="secondary" onClick={() => { props.toggle(); }}>
           No
         </Button>
       </div>

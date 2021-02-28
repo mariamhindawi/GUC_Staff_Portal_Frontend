@@ -33,8 +33,7 @@ function AcademicListItem(props) {
             && (
               <td>
                 <UnassignButton onClick={() => {
-                  const academicRole = props.academic.role === "Teaching Assistant" || props.academic.role === "Course Coordinator" ? "Teaching Assistant" : "Course Instructor";
-                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${academicRole} in ${props.course}?`);
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a Teaching Assistant in "${props.course}"?`);
                 }}
                 />
               </td>
@@ -47,8 +46,7 @@ function AcademicListItem(props) {
             && (
               <td>
                 <UnassignButton onClick={() => {
-                  const academicRole = props.academic.role === "Teaching Assistant" || props.academic.role === "Course Coordinator" ? "Teaching Assistant" : "Course Instructor";
-                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${academicRole} in ${props.course}?`);
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a Teaching Assistant in "${props.course}"?`);
                 }}
                 />
               </td>
@@ -57,8 +55,7 @@ function AcademicListItem(props) {
             && (
               <td>
                 <UnassignButton onClick={() => {
-                  const academicRole = props.academic.role === "Teaching Assistant" || props.academic.role === "Course Coordinator" ? "Teaching Assistant" : "Course Instructor";
-                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${academicRole} in ${props.course}?`);
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a Course Instructor in "${props.course}"?`);
                 }}
                 />
               </td>

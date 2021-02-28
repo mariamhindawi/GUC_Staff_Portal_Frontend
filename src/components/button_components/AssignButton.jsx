@@ -5,17 +5,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function AssgnButton(props) {
   return (
-    <Button className="assign-button" variant="outline-success" onClick={props.onClick}>
+    <Button className={`assign-button ${props.className}`} variant="outline-success" onClick={props.onClick}>
       <FontAwesomeIcon icon="plus" color="green" />
     </Button>
   );
 }
 
 AssgnButton.propTypes = {
+  className: PropTypes.string,
   onClick: PropTypes.func,
 };
 
 AssgnButton.defaultProps = {
+  className: "",
   onClick: () => {},
 };
 

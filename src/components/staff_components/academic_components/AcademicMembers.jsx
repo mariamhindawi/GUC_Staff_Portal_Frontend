@@ -34,7 +34,7 @@ function AcademicMembers() {
   useAxiosCancel(axiosCancelSourceDepartmentCourse, [selectedDepartmentCourse]);
 
   const fetchPersonalCourses = async () => {
-    setLoading(prevState => ({ ...prevState, personalCourses: true }));
+    // setLoading(prevState => ({ ...prevState, personalCourses: true }));
     await AxiosInstance.get("/staff/academic/get-my-courses", {
       cancelToken: axiosCancelSource.token,
       headers: {
@@ -226,7 +226,7 @@ function AcademicMembers() {
 
   return (
     <div className="view-container">
-      { isLoading.departmentCourses ? <Spinner /> : (
+      { isLoading.personalCourses || isLoading.departmentCourses ? <Spinner /> : (
         <Tabs className="view-tabs" defaultActiveKey="personalCourses">
           <Tab className="view-tab" eventKey="personalCourses" title="My Courses">
             {renderSelect(true)}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Alert, Button, Modal, Spinner } from "react-bootstrap";
 import CloseButton from "../button_components/CloseButton";
 
-function UnassignModal(props) {
+function UnassignAcademicModal(props) {
   if (props.state === "submitting") {
     return (
       <Modal show={props.isOpen} backdrop="static" onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
@@ -30,16 +30,16 @@ function UnassignModal(props) {
   }
   return (
     <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
-      <Modal.Header className="delete-modal-header">
+      <Modal.Header className="modal-header">
         <Alert className="align-center-vertical text-center" variant="danger">
-          {props.unassignBodyText}
+          {props.bodyText}
         </Alert>
       </Modal.Header>
-      <div className="delete-modal-body">
-        <Button className="delete-modal-button" variant="danger" onClick={() => { props.unassignItem(props.itemToUnassign); }}>
+      <div className="modal-confirm">
+        <Button className="modal-confirm-button" variant="danger" onClick={() => { props.unassignAcademic(props.academicToUnassign, props.courseToUnassignFrom); }}>
           Yes
         </Button>
-        <Button className="delete-modal-button" variant="secondary" onClick={() => { props.toggle(); }}>
+        <Button className="modal-confirm-button" variant="secondary" onClick={() => { props.toggle(); }}>
           No
         </Button>
       </div>
@@ -47,21 +47,28 @@ function UnassignModal(props) {
   );
 }
 
-UnassignModal.propTypes = {
+UnassignAcademicModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   state: PropTypes.oneOf(["will submit", "submitting", "submitted"]).isRequired,
+  bodyText: PropTypes.string.isRequired,
   message: PropTypes.shape({
     messageText: PropTypes.string.isRequired,
     messageStyle: PropTypes.string.isRequired,
   }).isRequired,
-  unassignBodyText: PropTypes.string.isRequired,
-  itemToUnassign: PropTypes.shape({
+  academicToUnassign: PropTypes.shape({
     id: PropTypes.string,
     role: PropTypes.string,
   }).isRequired,
-  unassignItem: PropTypes.func.isRequired,
+  courseToUnassignFrom: PropTypes.shape({
+    id: PropTypes.string,
+  }),
+  unassignAcademic: PropTypes.func.isRequired,
   toggle: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
 };
 
-export default UnassignModal;
+UnassignAcademicModal.defaultProps = {
+  courseToUnassignFrom: { id: "" },
+};
+
+export default UnassignAcademicModal;

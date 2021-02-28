@@ -4,26 +4,34 @@ import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
-import Spinner from "../../helper_components/Spinner";
 import ViewCourses from "./ViewCourses";
+import { useUserContext } from "../../../contexts/UserContext";
 
 function Courses() {
   const [isLoading, setLoading] = useState({ personalCourses: true, departmentCourses: true });
   const [personalCourses, setPersonalCourses] = useState({ courses: [], coursesCoverage: [] });
-  const [departmentCourses, setDepartmentCourses] = useState([]);
+  const [departmentCourses, setDepartmentCourses] = useState({ courses: [], coursesCoverage: [] });
+  const user = useUserContext();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
   const fetchPersonalCourses = async () => {
+    const url = user.role === "Course Instructor" || user.role === "Head of Department"
+      ? "/staff/ci/get-my-courses-coverage" : "/staff/academic/get-my-courses";
     setLoading(prevState => ({ ...prevState, personalCourses: true }));
-    await AxiosInstance.get("/staff/ci/get-my-courses-coverage", {
+    await AxiosInstance.get(url, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
       .then(response => {
-        setPersonalCourses(response.data);
+        if (user.role === "Course Instructor" || user.role === "Head of Department") {
+          setPersonalCourses(response.data);
+        }
+        else {
+          setPersonalCourses({ courses: response.data, coursesCoverage: [] });
+        }
         setLoading(prevState => ({ ...prevState, personalCourses: false }));
       })
       .catch(error => {
@@ -43,15 +51,22 @@ function Courses() {
       });
   };
   const fetchDepartmentCourses = async () => {
+    const url = user.role === "Head of Department"
+      ? "/staff/hod/get-department-courses-coverage" : "/staff/academic/get-department-courses";
     setLoading(prevState => ({ ...prevState, departmentCourses: true }));
-    await AxiosInstance.get("/staff/academic/get-department-courses", {
+    await AxiosInstance.get(url, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
       .then(response => {
-        setDepartmentCourses(response.data);
+        if (user.role === "Head of Department") {
+          setDepartmentCourses(response.data);
+        }
+        else {
+          setDepartmentCourses({ courses: response.data, coursesCoverage: [] });
+        }
         setLoading(prevState => ({ ...prevState, departmentCourses: false }));
       })
       .catch(error => {
@@ -70,7 +85,6 @@ function Courses() {
         }
       });
   };
-
   useEffect(fetchPersonalCourses, []);
   useEffect(fetchDepartmentCourses, []);
 
@@ -78,28 +92,22 @@ function Courses() {
     <div className="view-container">
       <Tabs className="view-tabs" defaultActiveKey="personalCourses">
         <Tab className="view-tab" eventKey="personalCourses" title="My Courses">
-          {isLoading.personalCourses
-            ? <Spinner />
-            : (
-              <ViewCourses
-                isLoading={isLoading.personalCourses}
-                courses={personalCourses.courses}
-                updateCourses={fetchPersonalCourses}
-                type="Personal"
-              />
-            )}
+          <ViewCourses
+            isLoading={isLoading.personalCourses}
+            courses={personalCourses.courses}
+            coursesCoverage={personalCourses.coursesCoverage}
+            updateCourses={fetchPersonalCourses}
+            listType="Personal"
+          />
         </Tab>
         <Tab className="view-tab" eventKey="departmentCourses" title="Department Courses">
-          {isLoading.departmentCourses
-            ? <Spinner />
-            : (
-              <ViewCourses
-                isLoading={isLoading.departmentCourses}
-                courses={departmentCourses}
-                updateCourses={fetchDepartmentCourses}
-                type="General"
-              />
-            )}
+          <ViewCourses
+            isLoading={isLoading.departmentCourses}
+            courses={departmentCourses.courses}
+            coursesCoverage={departmentCourses.coursesCoverage}
+            updateCourses={fetchDepartmentCourses}
+            listType="General"
+          />
         </Tab>
       </Tabs>
     </div>
