@@ -25,7 +25,18 @@ function CourseList(props) {
       );
       case "Course Instructor": return (
         <>
-          {props.type === "Personal" && <th style={{ width: "150px" }}>Course Coverage</th>}
+          {props.type === "Personal" && (
+          <>
+            <th style={{ width: "150px" }}>Course Coverage</th>
+            <th style={{ width: "70px" }}> </th>
+          </>
+          )}
+        </>
+      );
+      case "Head of Department": return (
+        <>
+          <th style={{ width: "150px" }}>Course Coverage</th>
+          <th style={{ width: "70px" }}> </th>
         </>
       );
       default: return null;
@@ -45,6 +56,8 @@ function CourseList(props) {
         course={course}
         courseCoverage={props.coursesCoverage[i]}
         toggleDeleteModal={props.toggleDeleteModal}
+        toggleAssignModal={props.toggleAssignModal}
+        toggleUnassignModal={props.toggleUnassignModal}
         type={props.type}
       />
     ));
@@ -95,12 +108,16 @@ CourseList.propTypes = {
   })).isRequired,
   coursesCoverage: PropTypes.arrayOf(PropTypes.number),
   toggleDeleteModal: PropTypes.func,
+  toggleAssignModal: PropTypes.func,
+  toggleUnassignModal: PropTypes.func,
   type: PropTypes.oneOf(["General", "Personal"]),
 };
 
 CourseList.defaultProps = {
   coursesCoverage: [],
   toggleDeleteModal: () => {},
+  toggleAssignModal: () => {},
+  toggleUnassignModal: () => {},
   type: "General",
 };
 

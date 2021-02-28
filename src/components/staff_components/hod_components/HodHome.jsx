@@ -8,9 +8,9 @@ import Attendance from "../general_staff_components/attendance_components/Attend
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
-import HODcourses from "../../todo/hod_courses.component";
-import HODacademics from "../../todo/hod_staff_members.component";
 import HodHomeMain from "./HodHomeMain";
+import CIAcademicMembers from "../ci_components/CiAcademicMembers";
+import CICourses from "../ci_components/CiCourses";
 
 function HodHome(props) {
   const user = useUserContext();
@@ -29,9 +29,8 @@ function HodHome(props) {
         <Route path={`${match.path}/attendance`}><Attendance /></Route>
         <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/schedule`}><MySchedule /></Route>
-        <Route path={`${match.path}/hod-courses`}><HODcourses /></Route>
-        <Route path={`${match.path}/hod-academic-members`}><HODacademics /></Route>
-
+        <Route path={`${match.path}/courses`}><CICourses /></Route>
+        <Route path={`${match.path}/academic-members`}><CIAcademicMembers /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>

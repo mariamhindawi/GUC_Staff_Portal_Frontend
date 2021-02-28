@@ -59,40 +59,32 @@ function Sidebar(props) {
             <FontAwesomeIcon className="sidebar-icon" icon="calendar-alt" />
             <span className="icon-text">Schedule</span>
           </Link>
-        </>
-      )}
-
-      {(user.role === "Course Instructor" || user.role === "Head of Department") && (
-        <>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/courses`}>
             <FontAwesomeIcon className="sidebar-icon" icon="book" />
             <span className="icon-text">Courses</span>
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/academic-members`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
+            <FontAwesomeIcon className="sidebar-icon" icon="user-graduate" />
             <span className="icon-text">Academic members</span>
           </Link>
+        </>
+      )}
+
+      {(user.role === "Course Instructor" || user.role === "Head of Department") && (
+        <>
         </>
       )}
 
       {user.role === "Head of Department" && (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-courses`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="book" />
-            <span className="icon-text">Courses</span>
-          </Link>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-academic-members`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user-tie" />
-            <span className="icon-text">Academic members</span>
-          </Link>
         </>
       )}
 
       {user.role === "Course Coordinator" && (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/courses`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="book" />
-            <span className="icon-text">Courses</span>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/slots`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="clock" />
+            <span className="icon-text">Slots</span>
           </Link>
         </>
       )}

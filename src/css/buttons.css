@@ -20,6 +20,17 @@
   box-shadow: none;
 }
 
+.assign-button {
+  border: none;
+}
+
+.assign-button:hover,
+.assign-button:focus,
+.assign-button:not(:disabled):not(.disabled):active {
+  background: #e0ffcb;
+  box-shadow: none;
+}
+
 .submit-button,
 .form-submit button,
 .profile-photo-card button {

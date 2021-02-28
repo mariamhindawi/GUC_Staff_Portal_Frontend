@@ -25,3 +25,27 @@
 .delete-modal-button:not(:disabled):not(.disabled):active:focus {
   box-shadow: none;
 }
+
+.assign-modal-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height: 110px;
+}
+
+.assign-modal-body {
+  height: 300px;
+  margin-left: -0.5px;
+  margin-right: -0.5px;
+}
+
+.assign-modal-button {
+  border-radius: 0;
+  width: 50%;
+  height: 100%;
+}
+
+.assign-modal-button:focus,
+.assign-modal-button:not(:disabled):not(.disabled):active:focus {
+  box-shadow: none;
+}

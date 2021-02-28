@@ -32,6 +32,14 @@ function AcademicList(props) {
             && <th style={{ width: "70px" }}> </th>}
         </>
       );
+      case "Head of Department": return (
+        <>
+          {props.listType === "Personal" && props.academicsType !== "All"
+            && <th style={{ width: "70px" }}> </th>}
+          {props.listType === "General" && props.academicsType === "Course Instructor" && props.course !== ""
+            && <th style={{ width: "70px" }}> </th>}
+        </>
+      );
       default: return null;
     }
   };
@@ -47,9 +55,11 @@ function AcademicList(props) {
       <AcademicListItem
         key={academic.id}
         academic={academic}
-        toggleDeleteModal={props.toggleDeleteModal}
         academicsType={props.academicsType}
         listType={props.listType}
+        course={props.course}
+        toggleDeleteModal={props.toggleDeleteModal}
+        toggleUnassignModal={props.toggleUnassignModal}
       />
     ));
   };
@@ -106,12 +116,16 @@ AcademicList.propTypes = {
   academicsType: PropTypes.oneOf(["All", "Course Instructor", "Teaching Assistant"]),
   listType: PropTypes.oneOf(["General", "Personal"]),
   toggleDeleteModal: PropTypes.func,
+  toggleUnassignModal: PropTypes.func,
+  course: PropTypes.string,
 };
 
 AcademicList.defaultProps = {
   academicsType: "All",
   listType: "General",
+  course: "",
   toggleDeleteModal: () => {},
+  toggleUnassignModal: () => {},
 };
 
 export default AcademicList;

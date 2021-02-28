@@ -9,6 +9,8 @@ import TaHomeMain from "./TaHomeMain";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
+import TAAcademicMembers from "./TaAcademicMembers";
+import TACourses from "./TaCourses";
 
 function TaHome(props) {
   const user = useUserContext();
@@ -27,6 +29,8 @@ function TaHome(props) {
         <Route path={`${match.path}/my-attendance`}><Attendance /></Route>
         <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/schedule`}><MySchedule /></Route>
+        <Route path={`${match.path}/courses`}><TACourses /></Route>
+        <Route path={`${match.path}/academic-members`}><TAAcademicMembers /></Route>
 
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>

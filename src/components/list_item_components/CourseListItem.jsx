@@ -4,12 +4,13 @@ import { Link, useRouteMatch } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import DeleteButton from "../button_components/DeleteButton";
 import EditButton from "../button_components/EditButton";
+import AssignButton from "../button_components/AssignButton";
+import UnassignButton from "../button_components/UnassignButton";
 import { useUserContext } from "../../contexts/UserContext";
 
 function CourseListItem(props) {
   const user = useUserContext();
   const match = useRouteMatch();
-
   const customData = () => {
     switch (user.role) {
       case "HR": return (
@@ -27,9 +28,44 @@ function CourseListItem(props) {
       case "Course Instructor": return (
         <>
           {props.type === "Personal" && (
+          <>
             <td>
               {props.courseCoverage}
               &nbsp;%
+            </td>
+            <td>
+              <AssignButton
+                onClick={() => {
+                  props.toggleAssignModal(props.course.id, "teaching-assistant", `Assign Teaching Assistant to ${props.course.id}`);
+                }}
+              />
+            </td>
+          </>
+          )}
+        </>
+      );
+      case "Head of Department": return (
+        <>
+          <td>
+            {props.courseCoverage}
+            &nbsp;%
+          </td>
+          {props.type === "General" && (
+            <td>
+              <AssignButton
+                onClick={() => {
+                  props.toggleAssignModal(props.course.id, "course-instructor", `Assign Course Instructor to ${props.course.id}`);
+                }}
+              />
+            </td>
+          )}
+          {props.type === "Personal" && (
+            <td>
+              <AssignButton
+                onClick={() => {
+                  props.toggleAssignModal(props.course.id, "academic", `Assign Academic to ${props.course.id}`);
+                }}
+              />
             </td>
           )}
         </>
@@ -71,7 +107,32 @@ function CourseListItem(props) {
           </Dropdown.Menu>
         </Dropdown>
       </td>
-      <td>{props.course.courseCoordinator !== "UNASSIGNED" ? props.course.courseCoordinator : "-"}</td>
+      {(user.role === "Course Instructor" || user.role === "Head of Department") && props.type === "Personal" ? (
+        <td>
+          {props.course.courseCoordinator !== "UNASSIGNED" ? (
+            <div>
+              <span>{props.course.courseCoordinator}</span>
+              <span>
+                <UnassignButton onClick={() => {
+                  props.toggleUnassignModal(props.course.id, props.course.courseCoordinator);
+                }}
+                />
+              </span>
+            </div>
+          ) : (
+            <div>
+              <span>-</span>
+              <span>
+                <AssignButton onClick={() => {
+                  props.toggleAssignModal(props.course.id, props.course.teachingAssistants, "course-coordinator");
+                }}
+                />
+              </span>
+            </div>
+          ) }
+        </td>
+      )
+        : <td>{props.course.courseCoordinator !== "UNASSIGNED" ? props.course.courseCoordinator : "-"}</td>}
       {customData()}
     </tr>
   );
@@ -89,13 +150,18 @@ CourseListItem.propTypes = {
   }).isRequired,
   courseCoverage: PropTypes.number,
   toggleDeleteModal: PropTypes.func,
+  toggleAssignModal: PropTypes.func,
+  toggleUnassignModal: PropTypes.func,
   type: PropTypes.oneOf(["General", "Personal"]),
 };
 
 CourseListItem.defaultProps = {
   courseCoverage: 0,
   toggleDeleteModal: () => {},
+  toggleAssignModal: () => {},
+  toggleUnassignModal: () => {},
   type: "General",
+
 };
 
 export default CourseListItem;
