@@ -52,9 +52,9 @@ function Profile() {
     : {
       email: user.email,
       office: user.office,
-      linkedin: user.role === "HR" ? "" : user.linkedin,
-      github: user.role === "HR" ? "" : user.github,
-      facebook: user.role === "HR" ? "" : user.facebook,
+      linkedin: user.role === "HR" || user.linkedin === "Not Specified" ? "" : user.linkedin,
+      github: user.role === "HR" || user.github === "Not Specified" ? "" : user.github,
+      facebook: user.role === "HR" || user.facebook === "Not Specified" ? "" : user.facebook,
     };
   const validationSchema = Yup.object({
     email: Yup.string()
