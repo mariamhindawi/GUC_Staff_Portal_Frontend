@@ -8,7 +8,7 @@ import Spinner from "../../helper_components/Spinner";
 import AssignModal from "../../helper_components/AssignModal";
 import CourseList from "../../list_components/CourseList";
 
-function CiViewCourses(props) {
+function ViewCourses(props) {
   const [courseToAssign, setCourseToAssign] = useState("");
   const [academicTypeToAssign, setAcademicTypeToAssign] = useState("");
   const [assignModalIsOpen, setAssignModalOpen] = useState(false);
@@ -39,7 +39,7 @@ function CiViewCourses(props) {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           setAssignModalMessage({
@@ -57,7 +57,6 @@ function CiViewCourses(props) {
         }
       });
   };
-
   const toggleAssignModal = (courseId, type, text) => {
     if (courseId) {
       setCourseToAssign(courseId);
@@ -66,7 +65,6 @@ function CiViewCourses(props) {
     }
     setAssignModalOpen(prevState => !prevState);
   };
-
   const resetAssignModal = () => {
     setCourseToAssign("");
     setAcademicTypeToAssign("");
@@ -103,7 +101,7 @@ function CiViewCourses(props) {
   );
 }
 
-CiViewCourses.propTypes = {
+ViewCourses.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   courses: PropTypes.arrayOf(PropTypes.shape({
     _id: PropTypes.string,
@@ -118,9 +116,9 @@ CiViewCourses.propTypes = {
   updateCourses: PropTypes.func,
 };
 
-CiViewCourses.defaultProps = {
+ViewCourses.defaultProps = {
   type: "General",
   updateCourses: () => { },
 };
 
-export default CiViewCourses;
+export default ViewCourses;

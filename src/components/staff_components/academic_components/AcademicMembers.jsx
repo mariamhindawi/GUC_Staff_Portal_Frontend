@@ -5,9 +5,9 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import TaViewAcademics from "./TaViewAcademicMembers";
+import ViewAcademics from "./ViewAcademicMembers";
 
-function TaAcademicMembers() {
+function AcademicMembers() {
   const [isLoading, setLoading] = useState({
     personalCourses: true,
     departmentCourses: true,
@@ -25,6 +25,7 @@ function TaAcademicMembers() {
     courseInstructors: [], teachingAssistants: [],
   });
   const [academicsType, setAcademicsType] = useState("All");
+
   const axiosCancelSource = Axios.CancelToken.source();
   const axiosCancelSourcePersonalCourse = Axios.CancelToken.source();
   const axiosCancelSourceDepartmentCourse = Axios.CancelToken.source();
@@ -41,12 +42,13 @@ function TaAcademicMembers() {
       },
     })
       .then(response => {
+        setSelectedPersonalCourse("");
         setPersonalCourses(response.data);
         setLoading(prevState => ({ ...prevState, personalCourses: false }));
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);
@@ -69,12 +71,13 @@ function TaAcademicMembers() {
       },
     })
       .then(response => {
+        setSelectedDepartmentCourse("");
         setDepartmentCourses(response.data);
         setLoading(prevState => ({ ...prevState, departmentCourses: false }));
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);
@@ -109,7 +112,7 @@ function TaAcademicMembers() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);
@@ -139,7 +142,7 @@ function TaAcademicMembers() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);
@@ -223,26 +226,29 @@ function TaAcademicMembers() {
 
   return (
     <div className="view-container">
-      {isLoading.personalCourses || isLoading.departmentCourses ? <Spinner /> : (
+      { isLoading.departmentCourses ? <Spinner /> : (
         <Tabs className="view-tabs" defaultActiveKey="personalCourses">
           <Tab className="view-tab" eventKey="personalCourses" title="My Courses">
             {renderSelect(true)}
-            <TaViewAcademics
+            <ViewAcademics
               isLoading={isLoading.personalCourseAcademics}
               academics={personalCourseAcademics}
-              academicsType={academicsType}
-              updateAcademics={fetchPersonalCourseAcademics}
               course={selectedPersonalCourse}
               listType="Personal"
+              academicsType={academicsType}
+              updateAcademics={fetchPersonalCourseAcademics}
             />
           </Tab>
           <Tab className="view-tab" eventKey="departmentCourses" title="Department Courses">
             {renderSelect(false)}
-            <TaViewAcademics
+            <ViewAcademics
               isLoading={isLoading.departmentCourseAcademics}
               academics={departmentCourseAcademics}
-              academicsType={academicsType}
+              course={selectedDepartmentCourse}
               listType="General"
+              academicsType={academicsType}
+              updateAcademics={fetchDepartmentCourseAcademics}
+              updateCourses={fetchPersonalCourses}
             />
           </Tab>
         </Tabs>
@@ -251,4 +257,4 @@ function TaAcademicMembers() {
   );
 }
 
-export default TaAcademicMembers;
+export default AcademicMembers;

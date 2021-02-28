@@ -34,7 +34,7 @@ function AcademicList(props) {
       );
       case "Head of Department": return (
         <>
-          {props.listType === "Personal" && props.academicsType !== "All"
+          {props.listType === "Personal" && props.academicsType === "Teaching Assistant"
             && <th style={{ width: "70px" }}> </th>}
           {props.listType === "General" && props.academicsType === "Course Instructor" && props.course !== ""
             && <th style={{ width: "70px" }}> </th>}

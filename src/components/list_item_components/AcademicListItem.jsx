@@ -33,7 +33,8 @@ function AcademicListItem(props) {
             && (
               <td>
                 <UnassignButton onClick={() => {
-                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${props.academic.role} in ${props.course}?`);
+                  const academicRole = props.academic.role === "Teaching Assistant" || props.academic.role === "Course Coordinator" ? "Teaching Assistant" : "Course Instructor";
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${academicRole} in ${props.course}?`);
                 }}
                 />
               </td>
@@ -42,12 +43,22 @@ function AcademicListItem(props) {
       );
       case "Head of Department": return (
         <>
-          {((props.listType === "Personal" && props.academicsType !== "All")
-            || (props.listType === "General" && props.academicsType === "Course Instructor" && props.course !== ""))
+          {props.listType === "Personal" && props.academicsType === "Teaching Assistant"
             && (
               <td>
                 <UnassignButton onClick={() => {
-                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${props.academic.role} in ${props.course}?`);
+                  const academicRole = props.academic.role === "Teaching Assistant" || props.academic.role === "Course Coordinator" ? "Teaching Assistant" : "Course Instructor";
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${academicRole} in ${props.course}?`);
+                }}
+                />
+              </td>
+            )}
+          {(props.listType === "General" && props.academicsType === "Course Instructor" && props.course !== "")
+            && (
+              <td>
+                <UnassignButton onClick={() => {
+                  const academicRole = props.academic.role === "Teaching Assistant" || props.academic.role === "Course Coordinator" ? "Teaching Assistant" : "Course Instructor";
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${academicRole} in ${props.course}?`);
                 }}
                 />
               </td>

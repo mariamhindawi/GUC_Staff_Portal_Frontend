@@ -5,9 +5,9 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import CourseList from "../../list_components/CourseList";
+import ViewCourses from "./ViewCourses";
 
-function TaCourses() {
+function Courses() {
   const [isLoading, setLoading] = useState({ personalCourses: true, departmentCourses: true });
   const [personalCourses, setPersonalCourses] = useState({ courses: [], coursesCoverage: [] });
   const [departmentCourses, setDepartmentCourses] = useState([]);
@@ -28,7 +28,7 @@ function TaCourses() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);
@@ -56,7 +56,7 @@ function TaCourses() {
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
-          console.log(`Request cancelled: ${error.message}`);
+          console.log(error.message);
         }
         else if (error.response) {
           console.log(error.response);
@@ -70,6 +70,7 @@ function TaCourses() {
         }
       });
   };
+
   useEffect(fetchPersonalCourses, []);
   useEffect(fetchDepartmentCourses, []);
 
@@ -80,10 +81,11 @@ function TaCourses() {
           {isLoading.personalCourses
             ? <Spinner />
             : (
-              <CourseList
-                type="Personal"
+              <ViewCourses
+                isLoading={isLoading.personalCourses}
                 courses={personalCourses.courses}
-                coursesCoverage={personalCourses.coursesCoverage}
+                updateCourses={fetchPersonalCourses}
+                type="Personal"
               />
             )}
         </Tab>
@@ -91,8 +93,11 @@ function TaCourses() {
           {isLoading.departmentCourses
             ? <Spinner />
             : (
-              <CourseList
+              <ViewCourses
+                isLoading={isLoading.departmentCourses}
                 courses={departmentCourses}
+                updateCourses={fetchDepartmentCourses}
+                type="General"
               />
             )}
         </Tab>
@@ -101,4 +106,4 @@ function TaCourses() {
   );
 }
 
-export default TaCourses;
+export default Courses;

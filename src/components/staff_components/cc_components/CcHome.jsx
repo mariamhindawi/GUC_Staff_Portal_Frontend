@@ -2,14 +2,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
-import Attendance from "../general_staff_components/attendance_components/Attendance";
+import CcHomeMain from "./CcHomeMain";
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
-import CourseSlotForm from "../../todo/course_slot_form.component";
-import GeneralRequests from "../../todo/GeneralRequestsPage.component";
-import MySchedule from "../../todo/schedule.component";
-import CcHomeMain from "./CcHomeMain";
+import Attendance from "../general_staff_components/attendance_components/Attendance";
+import Schedule from "../../todo/schedule.component";
+import Requests from "../../todo/GeneralRequestsPage.component";
+import Courses from "../academic_components/Courses";
+import AcademicMembers from "../academic_components/AcademicMembers";
 
 function CcHome(props) {
   const user = useUserContext();
@@ -26,9 +27,10 @@ function CcHome(props) {
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
         <Route path={`${match.path}/attendance`}><Attendance /></Route>
-        <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
-        <Route path={`${match.path}/schedule`}><MySchedule /></Route>
-        <Route path={`${match.path}/courses`}><CourseSlotForm /></Route>
+        <Route path={`${match.path}/schedule`}><Schedule /></Route>
+        <Route path={`${match.path}/requests`}><Requests /></Route>
+        <Route path={`${match.path}/courses`}><Courses /></Route>
+        <Route path={`${match.path}/academic-members`}><AcademicMembers /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>
