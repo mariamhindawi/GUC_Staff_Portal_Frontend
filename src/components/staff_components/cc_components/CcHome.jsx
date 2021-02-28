@@ -11,6 +11,7 @@ import Schedule from "../../todo/schedule.component";
 import Requests from "../../todo/GeneralRequestsPage.component";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";
+import CCSlots from "./CcSlots";
 
 function CcHome(props) {
   const user = useUserContext();
@@ -31,6 +32,7 @@ function CcHome(props) {
         <Route path={`${match.path}/requests`}><Requests /></Route>
         <Route path={`${match.path}/courses`}><Courses /></Route>
         <Route path={`${match.path}/academic-members`}><AcademicMembers /></Route>
+        <Route path={`${match.path}/slots`}><CCSlots /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>
