@@ -5,22 +5,20 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import UnassignModal from "../../helper_components/UnassignModal";
 import AcademicList from "../../list_components/AcademicList";
+import UnassignModal from "../../helper_components/UnassignModal";
 
 function CiViewAcademics(props) {
-  const [academicToUnassign, setAcademicToUnassign] = useState({});
+  const [academicToUnassign, setAcademicToUnassign] = useState("");
   const [unassignModalIsOpen, setUnassignModalOpen] = useState(false);
   const [unassignModalState, setUnassignModalState] = useState("will submit");
   const [unassignModalMessage, setUnassignModalMessage] = useState({ messageText: "", messageStyle: "" });
-  const [unassignBodyText, setUnassignBodyText] = useState("");
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const unassignAcademic = async academic => {
-    const academicRole = academic.role === "Teaching Assistant" || academic.role === "Course Coordinator" ? "teaching-assistant" : "course-instructor";
+  const unassignAcademic = async academicId => {
     setUnassignModalState("submitting");
-    await AxiosInstance.delete(`/staff/ci/unassign-${academicRole}/${academic.id}/${props.course}`, {
+    await AxiosInstance.delete(`/staff/ci/unassign-teaching-assistant/${academicId}/${props.course}`, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -54,33 +52,28 @@ function CiViewAcademics(props) {
         }
       });
   };
-  const toggleUnassignModal = (academic, text) => {
-    if (academic) {
-      setAcademicToUnassign(academic);
-      setUnassignBodyText(text);
+  const toggleUnassignModal = academicID => {
+    if (academicID) {
+      setAcademicToUnassign(academicID);
     }
     setUnassignModalOpen(prevState => !prevState);
   };
   const resetUnassignModal = () => {
-    setAcademicToUnassign({});
+    setAcademicToUnassign("");
     setUnassignModalState("will submit");
     setUnassignModalMessage({ messageText: "", messageStyle: "" });
-    setUnassignBodyText("");
   };
 
-  const getAcademics = () => {
-    let academics;
-    if (props.academicsType === "Course Instructor") {
-      academics = props.academics.courseInstructors;
-    }
-    else if (props.academicsType === "Teaching Assistant") {
-      academics = props.academics.teachingAssistants;
-    }
-    else {
-      academics = [...props.academics.courseInstructors, ...props.academics.teachingAssistants];
-    }
-    return academics;
-  };
+  let academics;
+  if (props.academicsType === "Course Instructor") {
+    academics = props.academics.courseInstructors;
+  }
+  else if (props.academicsType === "Teaching Assistant") {
+    academics = props.academics.teachingAssistants;
+  }
+  else {
+    academics = [...props.academics.courseInstructors, ...props.academics.teachingAssistants];
+  }
 
   return (
     <>
@@ -89,11 +82,10 @@ function CiViewAcademics(props) {
       {
         !props.isLoading && (
           <AcademicList
-            academics={getAcademics()}
+            academics={academics}
             academicsType={props.academicsType}
             listType={props.listType}
             toggleUnassignModal={toggleUnassignModal}
-            course={props.course}
           />
         )
       }
@@ -106,7 +98,6 @@ function CiViewAcademics(props) {
         unassignItem={unassignAcademic}
         toggle={toggleUnassignModal}
         reset={resetUnassignModal}
-        unassignBodyText={unassignBodyText}
       />
     </>
   );
@@ -152,7 +143,7 @@ CiViewAcademics.defaultProps = {
   academicsType: "All",
   listType: "General",
   course: "",
-  updateAcademics: () => {},
+  updateAcademics: () => { },
 };
 
 export default CiViewAcademics;

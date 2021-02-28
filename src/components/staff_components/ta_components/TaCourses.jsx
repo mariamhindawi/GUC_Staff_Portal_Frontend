@@ -5,9 +5,9 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import CiViewCourses from "./CiViewCourses";
+import CourseList from "../../list_components/CourseList";
 
-function CiCourses() {
+function TaCourses() {
   const [isLoading, setLoading] = useState({ personalCourses: true, departmentCourses: true });
   const [personalCourses, setPersonalCourses] = useState({ courses: [], coursesCoverage: [] });
   const [departmentCourses, setDepartmentCourses] = useState([]);
@@ -70,7 +70,6 @@ function CiCourses() {
         }
       });
   };
-
   useEffect(fetchPersonalCourses, []);
   useEffect(fetchDepartmentCourses, []);
 
@@ -81,11 +80,10 @@ function CiCourses() {
           {isLoading.personalCourses
             ? <Spinner />
             : (
-              <CiViewCourses
-                isLoading={isLoading.personalCourses}
-                courses={personalCourses.courses}
-                updateCourses={fetchPersonalCourses}
+              <CourseList
                 type="Personal"
+                courses={personalCourses.courses}
+                coursesCoverage={personalCourses.coursesCoverage}
               />
             )}
         </Tab>
@@ -93,11 +91,8 @@ function CiCourses() {
           {isLoading.departmentCourses
             ? <Spinner />
             : (
-              <CiViewCourses
-                isLoading={isLoading.departmentCourses}
+              <CourseList
                 courses={departmentCourses}
-                updateCourses={fetchDepartmentCourses}
-                type="General"
               />
             )}
         </Tab>
@@ -106,4 +101,4 @@ function CiCourses() {
   );
 }
 
-export default CiCourses;
+export default TaCourses;

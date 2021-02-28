@@ -5,9 +5,9 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import Spinner from "../../helper_components/Spinner";
-import CiViewAcademics from "./CiViewAcademicMembers";
+import TaViewAcademics from "./TaViewAcademicMembers";
 
-function CiAcademicMembers() {
+function TaAcademicMembers() {
   const [isLoading, setLoading] = useState({
     personalCourses: true,
     departmentCourses: true,
@@ -227,7 +227,7 @@ function CiAcademicMembers() {
         <Tabs className="view-tabs" defaultActiveKey="personalCourses">
           <Tab className="view-tab" eventKey="personalCourses" title="My Courses">
             {renderSelect(true)}
-            <CiViewAcademics
+            <TaViewAcademics
               isLoading={isLoading.personalCourseAcademics}
               academics={personalCourseAcademics}
               academicsType={academicsType}
@@ -238,12 +238,10 @@ function CiAcademicMembers() {
           </Tab>
           <Tab className="view-tab" eventKey="departmentCourses" title="Department Courses">
             {renderSelect(false)}
-            <CiViewAcademics
+            <TaViewAcademics
               isLoading={isLoading.departmentCourseAcademics}
               academics={departmentCourseAcademics}
               academicsType={academicsType}
-              updateAcademics={fetchDepartmentCourseAcademics}
-              course={selectedDepartmentCourse}
               listType="General"
             />
           </Tab>
@@ -253,4 +251,4 @@ function CiAcademicMembers() {
   );
 }
 
-export default CiAcademicMembers;
+export default TaAcademicMembers;

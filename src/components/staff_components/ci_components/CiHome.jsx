@@ -6,11 +6,11 @@ import Attendance from "../general_staff_components/attendance_components/Attend
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
-import CICourses from "./CiCourses";
 import GeneralRequests from "../../todo/GeneralRequestsPage.component";
 import CiHomeMain from "./CiHomeMain";
 import MySchedule from "../../todo/schedule.component";
-import CIacademicMembers from "./CiAcademicMembers";
+import CIAcademicMembers from "./CiAcademicMembers";
+import CICourses from "./CiCourses";
 
 function CiHome(props) {
   const user = useUserContext();
@@ -30,7 +30,7 @@ function CiHome(props) {
         <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/schedule`}><MySchedule /></Route>
         <Route path={`${match.path}/courses`}><CICourses /></Route>
-        <Route path={`${match.path}/academic-members`}><CIacademicMembers /></Route>
+        <Route path={`${match.path}/academic-members`}><CIAcademicMembers /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>

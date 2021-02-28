@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link, useRouteMatch } from "react-router-dom";
 import DeleteButton from "../button_components/DeleteButton";
 import EditButton from "../button_components/EditButton";
+import UnassignButton from "../button_components/UnassignButton";
 import { useUserContext } from "../../contexts/UserContext";
 
 function AcademicListItem(props) {
@@ -31,7 +32,24 @@ function AcademicListItem(props) {
           {props.listType === "Personal" && props.academicsType === "Teaching Assistant"
             && (
               <td>
-                <DeleteButton onClick={() => { props.toggleDeleteModal(props.academic.id); }} />
+                <UnassignButton onClick={() => {
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${props.academic.role} in ${props.course}?`);
+                }}
+                />
+              </td>
+            )}
+        </>
+      );
+      case "Head of Department": return (
+        <>
+          {((props.listType === "Personal" && props.academicsType !== "All")
+            || (props.listType === "General" && props.academicsType === "Course Instructor" && props.course !== ""))
+            && (
+              <td>
+                <UnassignButton onClick={() => {
+                  props.toggleUnassignModal(props.academic, `Are You sure you want to unassign "${props.academic.id}" from being a ${props.academic.role} in ${props.course}?`);
+                }}
+                />
               </td>
             )}
         </>
@@ -72,12 +90,16 @@ AcademicListItem.propTypes = {
   academicsType: PropTypes.oneOf(["All", "Course Instructor", "Teaching Assistant"]),
   listType: PropTypes.oneOf(["General", "Personal"]),
   toggleDeleteModal: PropTypes.func,
+  toggleUnassignModal: PropTypes.func,
+  course: PropTypes.string,
 };
 
 AcademicListItem.defaultProps = {
   academicsType: "All",
   listType: "General",
+  course: "",
   toggleDeleteModal: () => {},
+  toggleUnassignModal: () => {},
 };
 
 export default AcademicListItem;
