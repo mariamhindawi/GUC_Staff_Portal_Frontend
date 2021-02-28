@@ -6,10 +6,12 @@ import Attendance from "../general_staff_components/attendance_components/Attend
 import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
-import CourseSlotForm from "../../todo/course_slot_form.component";
-import GeneralRequests from "../../todo/GeneralRequestsPage.component";
+import GeneralRequests from "../general_staff_components/request_components/GeneralRequestsPage";
 import MySchedule from "../../todo/schedule.component";
 import CcHomeMain from "./CcHomeMain";
+import CCAcademicMembers from "../ta_components/TaAcademicMembers";
+import CCourses from "../ta_components/TaCourses";
+import CCSlots from "./CcSlots";
 
 function CcHome(props) {
   const user = useUserContext();
@@ -28,7 +30,9 @@ function CcHome(props) {
         <Route path={`${match.path}/attendance`}><Attendance /></Route>
         <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/schedule`}><MySchedule /></Route>
-        <Route path={`${match.path}/courses`}><CourseSlotForm /></Route>
+        <Route path={`${match.path}/courses`}><CCourses /></Route>
+        <Route path={`${match.path}/academic-members`}><CCAcademicMembers /></Route>
+        <Route path={`${match.path}/slots`}><CCSlots /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>
