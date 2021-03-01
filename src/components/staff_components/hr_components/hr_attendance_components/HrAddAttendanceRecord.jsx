@@ -45,7 +45,7 @@ function HrAddAttendanceRecord() {
     day: Yup.date().max(new Date()),
   });
 
-  const toggle = () => setModalOpen(!modalOpen);
+  const toggle = () => setModalOpen(prevState => !prevState);
   const handleSubmit = values => {
     toggle();
     const type = !record ? "fullDay" : record.signInTime ? "signOut" : "signIn";
