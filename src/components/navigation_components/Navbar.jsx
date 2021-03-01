@@ -9,7 +9,7 @@ import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
 import Logo from "../../images/guc_logo.png";
 import { useUserContext } from "../../contexts/UserContext";
-import Notifications from "../staff_components/general_staff_components/Notifications";
+import Notifications from "../staff_components/academic_components/Notifications";
 
 function Navbar(props) {
   const [sidebarIsOpen, setSidebarOpen] = useState(false);

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
 import TaHomeMain from "./TaHomeMain";
-import Notifications from "../general_staff_components/Notifications";
+import Notifications from "../academic_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
 import Attendance from "../general_staff_components/attendance_components/Attendance";
