@@ -11,7 +11,8 @@ import Schedule from "../../todo/schedule.component";
 import GeneralRequests from "../general_staff_components/request_components/GeneralRequestsPage";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";
-import CiAssignSlot from "../../todo/CI_assignSlots.component";
+import CiAssignSlot from "./CiAssignSlots";
+import CiSlots from "./CiViewCoursesSlots";
 
 function CiHome(props) {
   const user = useUserContext();
@@ -33,6 +34,7 @@ function CiHome(props) {
         <Route path={`${match.path}/courses`}><Courses /></Route>
         <Route path={`${match.path}/academic-members`}><AcademicMembers /></Route>
         <Route path={`${match.path}/assign-slot`}><CiAssignSlot /></Route>
+        <Route path={`${match.path}/course-slot-assignments`}><CiSlots /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>
     </div>

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import {
   Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Button, Alert, Input
 } from "reactstrap";
-import AxiosInstance from "../../others/AxiosInstance";
-import AuthTokenManager from "../../others/AuthTokenManager";
-import SlotTableComponent from "./SlotTable.component";
+import AxiosInstance from "../../../others/AxiosInstance";
+import AuthTokenManager from "../../../others/AuthTokenManager";
+import SlotTableComponent from "../../todo/SlotTable.component";
 
 const CIAssignSlots = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -78,7 +78,7 @@ const CIAssignSlots = () => {
   return (
     <Dropdown isOpen={dropdownOpen} toggle={toggle}>
       <DropdownToggle caret>
-        {course || "Select course"}
+        {course || "Choose course"}
       </DropdownToggle>
       <DropdownMenu>
         {dropdownCourses}

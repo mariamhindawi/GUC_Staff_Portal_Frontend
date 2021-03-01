@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from "reactstrap";
-import axios from "axios";
-import axiosInstance from "../../others/AxiosInstance";
-import SlotTableComponent from "./SlotTable.component";
+import Axios from "axios";
+import AxiosInstance from "../../../others/AxiosInstance";
+import AuthTokenManager from "../../../others/AuthTokenManager";
+import SlotTableComponent from "../../todo/SlotTable.component";
 
 const CICoursesSlotsComponent = () => {
     const [courses, setCourses] = useState([])
@@ -17,49 +18,43 @@ const CICoursesSlotsComponent = () => {
     const toggle = (id) => { setActive(id); setModalOpen(!modalOpen) }
 
     useEffect(() => {
-        axiosInstance.get("/fe/get-my-courses", {
+        AxiosInstance.get("staff/academic/get-my-courses", {
             headers: {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
         }).then(res => setCourses(res.data))
     }, [])
 
     const getCourseSlots = (id) => {
         setCourse(id)
-        axiosInstance.get("fe/course-slots", {
+        AxiosInstance.get(`staff/fe/course-slots/${id}`, {
             headers: {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             },
-            params: {
-                id: id
-            }
         }).then(res => setSlots(res.data)).catch(err => console.log(err))
     }
     const handleSubmit = (event)=>{
         toggle("")
-        axiosInstance("/ci/delete-academic-member-to-slot",{
+        AxiosInstance("staff/ci/delete-academic-member-from-slot",{
             method: "DELETE",
             headers:{
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             },
             data:{
                 day:slots.filter(slot=>slot._id===active)[0].day,
                 room:slots.filter(slot=>slot._id===active)[0].room,
                 slotNumber: slots.filter(slot=>slot._id===active)[0].slotNumber
             }
-        }).then(()=>axiosInstance.get("fe/course-slots", {
+        }).then(()=>AxiosInstance.get(`staff/fe/course-slots/${course}`, {
             headers: {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             },
-            params: {
-                id: course
-            }
         }).then(res => setSlots(res.data)).catch(err => console.log(err)))
     }
     let dropdownItems = courses.map(course => <DropdownItem onClick={() => getCourseSlots(course.id)} key={course._id}>{course.name}</DropdownItem>)
     return <>
         <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-            <DropdownToggle>
+            <DropdownToggle caret>
                 {course ? courses.filter(cou => cou.id === course)[0].name : "Choose course"}
             </DropdownToggle>
             <DropdownMenu>

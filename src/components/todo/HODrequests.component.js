@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from "reactstrap";
+import { Button, Form, Input, Label, Modal, ModalBody } from "reactstrap";
+import Spinner from "../helper_components/Spinner";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
@@ -64,7 +65,7 @@ const HODRequestsComponent = (props) => {
         return <div className="container">
             <div className="row">
                 <div className="offset-5">
-                    <Spinner color="primary" />
+                    <Spinner />
                 </div>
             </div>
         </div>
