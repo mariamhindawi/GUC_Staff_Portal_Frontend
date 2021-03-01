@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react"
 import { Button, Form, Input, Label, Modal, ModalBody, Spinner } from "reactstrap";
-import Axios from "../../others/AxiosInstance"
+import Axios from "axios";
+import AxiosInstance from "../../others/AxiosInstance";
+import AuthTokenManager from "../../others/AuthTokenManager";
 import RequestsTable from "./requestsTable.component"
 
 const HODRequestsComponent = (props) => {
@@ -12,22 +14,22 @@ const HODRequestsComponent = (props) => {
     const toggle = (reqID) => {setRequestID(reqID);setModal(!modal)};
 
     useEffect(() => {
-        Axios.get("/hod/staff-requests", {
+        AxiosInstance.get("staff/hod/staff-requests", {
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { console.log(res.data);setLeaveRequests(res.data); setLoading(false) }).catch(error => alert(error))
     }, [])
     const acceptRequest = id => {
-        Axios(`/hod/staff-requests/${id}/accept`, {
+        AxiosInstance(`staff/hod/staff-requests/${id}/accept`, {
             method: "put",
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
-        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/hod/staff-requests", {
+        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => AxiosInstance.get("staff/hod/staff-requests", {
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))
@@ -43,17 +45,17 @@ const HODRequestsComponent = (props) => {
     }
     const rejectRequest = () => {
         toggle()
-        Axios(`/hod/staff-requests/${requestID}/reject`, {
+        AxiosInstance(`staff/hod/staff-requests/${requestID}/reject`, {
             method: "put",
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             },
             data: {
                 HODComment: message
             }
-        }).then(res => console.log("Request " + res.data.id + " rejected")).then(() => Axios.get("/hod/staff-requests", {
+        }).then(res => console.log("Request " + res.data.id + " rejected")).then(() => AxiosInstance.get("staff/hod/staff-requests", {
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setLeaveRequests(res.data); setLoading(false) })).catch(error => alert(error))

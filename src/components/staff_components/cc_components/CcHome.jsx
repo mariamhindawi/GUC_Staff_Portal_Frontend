@@ -8,7 +8,7 @@ import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
 import Attendance from "../general_staff_components/attendance_components/Attendance";
 import Schedule from "../../todo/schedule.component";
-import Requests from "../../todo/GeneralRequestsPage.component";
+import GeneralRequests from "../general_staff_components/request_components/GeneralRequestsPage";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";
 import CCSlots from "./cc_slots_components/CcSlots";
@@ -29,7 +29,7 @@ function CcHome(props) {
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
         <Route path={`${match.path}/attendance`}><Attendance /></Route>
         <Route path={`${match.path}/schedule`}><Schedule /></Route>
-        <Route path={`${match.path}/requests`}><Requests /></Route>
+        <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/courses`}><Courses /></Route>
         <Route path={`${match.path}/academic-members`}><AcademicMembers /></Route>
         <Route path={`${match.path}/slots`}><CCSlots /></Route>

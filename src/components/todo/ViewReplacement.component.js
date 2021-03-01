@@ -1,43 +1,45 @@
 import React, { useEffect, useState } from "react"
 import { Spinner } from "reactstrap";
-import Axios from "../../others/AxiosInstance"
-import RequestsTable from "./requestsTable.component"
+import Axios from "axios";
+import AxiosInstance from "../../others/AxiosInstance";
+import AuthTokenManager from "../../others/AuthTokenManager";
+import RequestsTable from "./requestsTable.component";
 
 const ViewReplacementComponent = (props) => {
     const [requests, setRequests] = useState([]);
     const [loading, setLoading] = useState([]);
 
     useEffect(() => {
-        Axios.get("/academic/replacement-requests", {
+        AxiosInstance.get("staff/academic/replacement-requests", {
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { console.log(res.data);setRequests(res.data.forMe); setLoading(false) }).catch(error => alert(error))
     }, [])
     const acceptRequest = id => {
-        Axios(`/academic/replacement-requests/${id}/accept`, {
+        AxiosInstance(`staff/academic/replacement-requests/${id}/accept`, {
             method: "put",
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
-        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/academic/replacement-requests", {
+        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => AxiosInstance.get("staff/academic/replacement-requests", {
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setRequests(res.data.forMe); setLoading(false) })).catch(error => alert(error))
     }
 
     const rejectRequest = id => {
-        Axios(`/academic/replacement-requests/${id}/reject`, {
+        AxiosInstance(`staff/academic/replacement-requests/${id}/reject`, {
             method: "put",
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
-        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("/academic/replacement-requests", {
+        }).then(res => console.log("Request " + res.data.id + " accepted")).then(() => Axios.get("staff/academic/replacement-requests", {
             "headers": {
-                "auth-access-token": authTokenManager.getAuthAccessToken()
+                "auth-access-token": AuthTokenManager.getAuthAccessToken()
             }
         }
         ).then((res) => { setRequests(res.data.forMe); setLoading(false) })).catch(error => alert(error))

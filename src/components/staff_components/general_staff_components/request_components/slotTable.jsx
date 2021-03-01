@@ -1,11 +1,12 @@
 import React from "react";
-import { Card, CardTitle } from "reactstrap";
+import { Card, CardHeader, CardTitle, Table } from "reactstrap";
 
 const SlotTableComponent = ({ slots, onClick, active }) => {
   const slotRows = [];
   for (let i = 1; i < 6; i++) {
-    slotRows.push(<SlotTableRow key={i} slots={slots.filter(slot => slot.slotNumber === `${i}`)} slotNumber={i} onClick={onClick} active={active} />);
+    slotRows.push(<SlotTableRow key={i} slots={slots.filter(slot => slot.slotNumber === i)} slotNumber={i} onClick={onClick} active={active} />);
   }
+
   return (
     <table className="table">
       <thead className="table-head">
@@ -25,7 +26,6 @@ const SlotTableComponent = ({ slots, onClick, active }) => {
     </table>
   );
 };
-
 const SlotTableRow = ({ slotNumber, slots, chooseSlot, onClick, active }) => (
   <tr className="table-schedule">
     <th className="table-row-schedule text-center">{slotNumber}</th>
