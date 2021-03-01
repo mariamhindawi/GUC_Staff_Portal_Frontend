@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
 import HrHomeMain from "./HrHomeMain";
-import Notifications from "../general_staff_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
 import Attendance from "../general_staff_components/attendance_components/Attendance";
@@ -26,7 +25,6 @@ function HrHome(props) {
     <div className={`home-container ${props.homeContainerStyle}`}>
       <Switch>
         <Route exact path={match.path}><HrHomeMain /></Route>
-        <Route path={`${match.path}/notifications`}><Notifications /></Route>
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
         <Route path={`${match.path}/attendance`}><Attendance /></Route>

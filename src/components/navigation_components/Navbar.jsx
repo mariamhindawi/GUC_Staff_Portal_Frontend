@@ -56,6 +56,9 @@ function Navbar(props) {
     return () => { window.removeEventListener("resize", setLayout); };
   };
   const fetchNotifications = () => {
+    if (user.role === "HR") {
+      return;
+    }
     AxiosInstance({
       method: "get",
       url: "/staff/fe/academic/notifications",
@@ -128,25 +131,27 @@ function Navbar(props) {
         <Nav.Link className="navbar-item" as={Link} to={match.path}>
           <FontAwesomeIcon className="navbar-icon" icon="home" />
         </Nav.Link>
-        <Dropdown>
-          <Dropdown.Toggle className="nav-link navbar-item" as="button">
-            <FontAwesomeIcon className="navbar-icon" icon="bell" />
-          </Dropdown.Toggle>
-          <Dropdown.Menu className="navbar-dropdown-menu" align="right">
-            <Dropdown.Item className="dropdown-notifications" as="span" tabIndex={0}>
-              {
-                notifications.length !== 0
-                  ? <Notifications notifications={notifications.slice(0, 4)} />
-                  : "No Notifications"
-              }
-            </Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item className="navbar-dropdown-link" as={Link} to={`${match.path}/${user.rolePath}/notifications`}>
-              <FontAwesomeIcon icon="envelope" />
+        {user.role !== "HR" && (
+          <Dropdown>
+            <Dropdown.Toggle className="nav-link navbar-item" as="button">
+              <FontAwesomeIcon className="navbar-icon" icon="bell" />
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="navbar-dropdown-menu" align="right">
+              <Dropdown.Item className="dropdown-notifications" as="span" tabIndex={0}>
+                {
+                  notifications.length !== 0
+                    ? <Notifications notifications={notifications.slice(0, 4)} />
+                    : "No Notifications"
+                }
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item className="navbar-dropdown-link" as={Link} to={`${match.path}/${user.rolePath}/notifications`}>
+                <FontAwesomeIcon icon="envelope" />
               &nbsp;&nbsp;View all notifications
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        )}
         <Dropdown>
           <Dropdown.Toggle className="nav-link navbar-item" as="button">
             <FontAwesomeIcon className="navbar-icon" icon="user" />
