@@ -29,7 +29,9 @@ function ViewAcademics(props) {
       academicRolePath = "course-instructor";
     }
     setUnassignModalState("submitting");
-    await AxiosInstance.put(`/staff/${userRolePath}/unassign-${academicRolePath}/${academic.id}/${props.course}`, {
+    await AxiosInstance({
+      method: "put",
+      url: `/staff/${userRolePath}/unassign-${academicRolePath}/${academic.id}/${props.course}`,
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),

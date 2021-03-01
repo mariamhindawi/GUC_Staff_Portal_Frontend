@@ -236,7 +236,10 @@ function AcademicMembers() {
               course={selectedPersonalCourse}
               listType="Personal"
               academicsType={academicsType}
-              updateAcademics={fetchPersonalCourseAcademics}
+              updateAcademics={() => {
+                fetchPersonalCourseAcademics();
+                fetchDepartmentCourseAcademics();
+              }}
             />
           </Tab>
           <Tab className="view-tab" eventKey="departmentCourses" title="Department Courses">
@@ -247,7 +250,10 @@ function AcademicMembers() {
               course={selectedDepartmentCourse}
               listType="General"
               academicsType={academicsType}
-              updateAcademics={fetchDepartmentCourseAcademics}
+              updateAcademics={() => {
+                fetchPersonalCourseAcademics();
+                fetchDepartmentCourseAcademics();
+              }}
               updateCourses={fetchPersonalCourses}
             />
           </Tab>

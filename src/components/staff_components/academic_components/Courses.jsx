@@ -96,7 +96,10 @@ function Courses() {
             isLoading={isLoading.personalCourses}
             courses={personalCourses.courses}
             coursesCoverage={personalCourses.coursesCoverage}
-            updateCourses={fetchPersonalCourses}
+            updateCourses={() => {
+              fetchPersonalCourses();
+              fetchDepartmentCourses();
+            }}
             listType="Personal"
           />
         </Tab>
@@ -105,7 +108,10 @@ function Courses() {
             isLoading={isLoading.departmentCourses}
             courses={departmentCourses.courses}
             coursesCoverage={departmentCourses.coursesCoverage}
-            updateCourses={fetchDepartmentCourses}
+            updateCourses={() => {
+              fetchPersonalCourses();
+              fetchDepartmentCourses();
+            }}
             listType="General"
           />
         </Tab>

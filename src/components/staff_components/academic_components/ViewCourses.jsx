@@ -97,7 +97,9 @@ function ViewCourses(props) {
   };
   const unassignAcademic = async (academic, course) => {
     setUnassignModalState("submitting");
-    await AxiosInstance.put(`/staff/ci/unassign-course-coordinator/${academic.id}/${course.id}`, {
+    await AxiosInstance({
+      method: "put",
+      url: `/staff/ci/unassign-course-coordinator/${academic.id}/${course.id}`,
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
