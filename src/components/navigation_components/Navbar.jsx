@@ -13,7 +13,6 @@ import Notifications from "../staff_components/academic_components/Notifications
 
 function Navbar(props) {
   const [sidebarIsOpen, setSidebarOpen] = useState(false);
-  const [notifications, setNotifications] = useState([]);
   const user = useUserContext();
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
@@ -55,39 +54,8 @@ function Navbar(props) {
     window.addEventListener("resize", setLayout);
     return () => { window.removeEventListener("resize", setLayout); };
   };
-  const fetchNotifications = () => {
-    if (user.role === "HR") {
-      return;
-    }
-    AxiosInstance({
-      method: "get",
-      url: "/staff/fe/academic/notifications",
-      cancelToken: axiosCancelSource.token,
-      headers: {
-        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
-      },
-    })
-      .then(res => {
-        setNotifications(res.data);
-      })
-      .catch(error => {
-        if (Axios.isCancel(error)) {
-          console.log(error.message);
-        }
-        else if (error.response) {
-          console.log(error.response);
-        }
-        else if (error.request) {
-          console.log(error.request);
-        }
-        else {
-          console.log(error.message);
-        }
-      });
-  };
   useLayoutEffect(setLayout, [sidebarIsOpen]);
   useEffect(setupEventListeners, [sidebarIsOpen]);
-  useEffect(fetchNotifications, []);
 
   const handleLogOut = async () => {
     await AxiosInstance({
@@ -137,17 +105,11 @@ function Navbar(props) {
               <FontAwesomeIcon className="navbar-icon" icon="bell" />
             </Dropdown.Toggle>
             <Dropdown.Menu className="navbar-dropdown-menu" align="right">
-              <Dropdown.Item className="dropdown-notifications" as="span" tabIndex={0}>
-                {
-                  notifications.length !== 0
-                    ? <Notifications notifications={notifications.slice(0, 4)} />
-                    : "No Notifications"
-                }
-              </Dropdown.Item>
+              <Notifications inNavbar />
               <Dropdown.Divider />
               <Dropdown.Item className="navbar-dropdown-link" as={Link} to={`${match.path}/${user.rolePath}/notifications`}>
-                <FontAwesomeIcon icon="envelope" />
-              &nbsp;&nbsp;View all notifications
+                <FontAwesomeIcon className="mr-2" icon="envelope" />
+                View all notifications
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
@@ -170,18 +132,18 @@ function Navbar(props) {
             </span>
             <Dropdown.Divider />
             <Dropdown.Item className="navbar-dropdown-link" as={Link} to={`${match.path}/${user.rolePath}/profile`}>
-              <FontAwesomeIcon icon="address-card" />
-              &nbsp;&nbsp;View Profile
+              <FontAwesomeIcon className="mr-2" icon="address-card" />
+              View Profile
             </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item className="navbar-dropdown-link" as={Link} to={`${match.path}/${user.rolePath}/reset-password`}>
-              <FontAwesomeIcon icon="key" />
-              &nbsp;&nbsp;Reset Password
+              <FontAwesomeIcon className="mr-2" icon="key" />
+              Reset Password
             </Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Item className="navbar-dropdown-link" as="button" onClick={handleLogOut}>
-              <FontAwesomeIcon icon="sign-out-alt" />
-              &nbsp;&nbsp;Log out
+              <FontAwesomeIcon className="mr-2" icon="sign-out-alt" />
+              Log out
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

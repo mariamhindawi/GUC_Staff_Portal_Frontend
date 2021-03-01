@@ -1,0 +1,41 @@
+.dropdown-notification {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+}
+
+.dropdown-notification:hover,
+.dropdown-notification:focus-visible {
+  background-color: lightblue !important;
+}
+
+.dropdown-notification:focus {
+  outline: none;
+}
+
+.dropdown-notification:active {
+  color: white;
+  background-color: black !important;
+  outline: none;
+}
+
+.dropdown-notification span {
+  width: 100%;
+  white-space: initial;
+}
+
+.notifications-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.notification-card {
+  cursor: pointer;
+  padding: 10px;
+  margin-bottom: 30px;
+}
+
+.notification-card:active {
+  background-color: lightblue !important;
+}

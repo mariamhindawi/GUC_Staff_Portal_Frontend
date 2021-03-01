@@ -112,10 +112,6 @@
   outline: none;
 }
 
-.dropdown-notifications {
-  pointer-events: none;
-}
-
 .dropdown-user-initial {
   display: flex;
   justify-content: center;
