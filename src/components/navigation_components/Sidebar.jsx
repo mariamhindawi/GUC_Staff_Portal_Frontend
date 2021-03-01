@@ -72,11 +72,19 @@ function Sidebar(props) {
 
       {(user.role === "Course Instructor" || user.role === "Head of Department") && (
         <>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/assign-slot`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="user-graduate" />
+            <span className="icon-text"> members</span>
+          </Link>
         </>
       )}
 
       {user.role === "Head of Department" && (
         <>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-assignments`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="clock" />
+            <span className="icon-text">Slots</span>
+          </Link>
         </>
       )}
 
