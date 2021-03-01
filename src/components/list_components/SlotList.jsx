@@ -49,12 +49,12 @@ function SlotList(props) {
         <table className={`list ${listStyle}`}>
           <thead>
             <tr>
-              <th style={{ width: "150px" }}>DAY</th>
-              <th style={{ width: "170px" }}>SLOT NUMBER</th>
-              <th style={{ width: "150px" }}>ROOM</th>
-              <th style={{ width: "150px" }}>TYPE</th>
-              <th style={{ width: "150px" }}>COURSE</th>
-              <th style={{ width: "150px" }}>STAFF MEMBER</th>
+              <th style={{ width: "150px" }}>Day</th>
+              <th style={{ width: "170px" }}>Slot Number</th>
+              <th style={{ width: "150px" }}>Room</th>
+              <th style={{ width: "150px" }}>Type</th>
+              <th style={{ width: "150px" }}>Course</th>
+              <th style={{ width: "150px" }}>Academic Member</th>
               {customTableHeads()}
             </tr>
           </thead>

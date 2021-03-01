@@ -165,17 +165,7 @@ function AcademicMembers() {
     if (courses.length === 0) {
       return <Dropdown.Item as="span">No Courses</Dropdown.Item>;
     }
-
     const setCourse = personal ? setSelectedPersonalCourse : setSelectedDepartmentCourse;
-    const defaultItem = (
-      <Dropdown.Item
-        key=""
-        onClick={() => { setCourse(""); }}
-      >
-        {personal ? "Select Course" : "All Staff"}
-      </Dropdown.Item>
-    );
-
     const dropdownItems = courses.map(course => (
       <Dropdown.Item
         key={course.id}
@@ -184,6 +174,14 @@ function AcademicMembers() {
         {course.id}
       </Dropdown.Item>
     ));
+    const defaultItem = (
+      <Dropdown.Item
+        key=""
+        onClick={() => { setCourse(""); }}
+      >
+        {personal ? "Select Course" : "All Staff"}
+      </Dropdown.Item>
+    );
     dropdownItems.unshift(defaultItem);
     return dropdownItems;
   };

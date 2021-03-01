@@ -17,16 +17,6 @@ function SlotForm(props) {
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const mapCoursesToDropdownItems = dropdwonCourses => {
-    if (dropdwonCourses.length === 0) {
-      return <option value="No Courses">No Assigned Courses</option>;
-    }
-    return dropdwonCourses.map(dropdwonCourse => (
-      <option value={dropdwonCourse.id}>{dropdwonCourse.id}</option>
-
-    ));
-  };
-
   const placeholders = {
     room: "Room Name",
   };
@@ -41,22 +31,22 @@ function SlotForm(props) {
     day: Yup.string()
       .required("This field is required")
       .oneOf(["Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"], "Invalid day off"),
-    slotNumber: Yup.number()
-      .required("This field is required"),
+    slotNumber: Yup.string()
+      .required("This field is required")
+      .oneOf(["1", "2", "3", "4", "5"], "Invalid slot number"),
     room: Yup.string()
       .required("This field is required"),
     type: Yup.string()
       .required("This field is required")
-      .oneOf(["Tutorial", "Lab", "Lecture"], "Invalid type"),
+      .oneOf(["Lecture", "Tutorial", "Lab"], "Invalid type"),
     course: Yup.string()
       .required("This field is required"),
-
   });
   const handleSubmit = async values => {
     setMessage({ messageText: "", messageStyle: "" });
     await AxiosInstance({
       method: props.formType === "add" ? "post" : "put",
-      url: `/staff/cc/${props.formType}-course-slot${props.formType === "add" ? "" : `/${props.slot.day}/${props.slot.slotNumber}/${props.slot.room}/${props.slot.course}`}`,
+      url: `/staff/cc/${props.formType}-course-slot${props.formType === "add" ? "" : `/${props.slot._id}`}`,
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -90,6 +80,15 @@ function SlotForm(props) {
       });
   };
 
+  const mapCoursesToDropdownItems = dropdwonCourses => {
+    if (dropdwonCourses.length === 0) {
+      return <option value="">No Assigned Courses</option>;
+    }
+    return dropdwonCourses.map(dropdwonCourse => (
+      <option value={dropdwonCourse.id} key={dropdwonCourse.id}>{dropdwonCourse.id}</option>
+    ));
+  };
+
   return (
     <div className="form-container">
       <div className="form-card">
@@ -102,6 +101,7 @@ function SlotForm(props) {
             <div className="form-title">
               {props.formType === "add" ? "Add Slot" : "Update Slot"}
             </div>
+
             <Select label="Day" name="day" setMessage={setMessage}>
               <option disabled value="">Choose Day</option>
               <option value="Saturday">Saturday</option>
@@ -124,12 +124,12 @@ function SlotForm(props) {
               <div><RadioButton name="type" value="Tutorial" setMessage={setMessage}>Tutorial</RadioButton></div>
               <div><RadioButton name="type" value="Lab" setMessage={setMessage}>Lab</RadioButton></div>
               <div><RadioButton name="type" value="Lecture" setMessage={setMessage}>Lecture</RadioButton></div>
-
             </RadioGroup>
             <Select label="Course" name="course" setMessage={setMessage}>
               <option disabled value="">Choose Courses</option>
               {mapCoursesToDropdownItems(props.courses)}
             </Select>
+
             <FormSubmit formType={props.formType} message={message} setMessage={setMessage} />
           </Form>
         </Formik>
@@ -141,6 +141,7 @@ function SlotForm(props) {
 SlotForm.propTypes = {
   formType: PropTypes.oneOf(["add", "update"]).isRequired,
   slot: PropTypes.shape({
+    _id: PropTypes.string,
     day: PropTypes.string,
     slotNumber: PropTypes.string,
     room: PropTypes.string,

@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Link, useRouteMatch } from "react-router-dom";
 import Axios from "axios";
-import AxiosInstance from "../../../others/AxiosInstance";
-import AuthTokenManager from "../../../others/AuthTokenManager";
-import useAxiosCancel from "../../../hooks/AxiosCancel";
-import Spinner from "../../helper_components/Spinner";
-import AddButton from "../../button_components/AddButton";
-import DeleteModal from "../../helper_components/DeleteModal";
-import SlotList from "../../list_components/SlotList";
+import AxiosInstance from "../../../../others/AxiosInstance";
+import AuthTokenManager from "../../../../others/AuthTokenManager";
+import useAxiosCancel from "../../../../hooks/AxiosCancel";
+import Spinner from "../../../helper_components/Spinner";
+import AddButton from "../../../button_components/AddButton";
+import DeleteModal from "../../../helper_components/DeleteModal";
+import SlotList from "../../../list_components/SlotList";
 
 function CcViewSlots(props) {
+  const [slotToDelete, setSlotToDelete] = useState("");
   const [deleteModalIsOpen, setDeleteModalOpen] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState("will submit");
   const [deleteModalMessage, setDeleteModalMessage] = useState({ messageText: "", messageStyle: "" });
@@ -20,7 +21,9 @@ function CcViewSlots(props) {
 
   const deleteSlot = async slotId => {
     setDeleteModalState("submitting");
-    await AxiosInstance.delete(`/staff/cc/delete-course-slot/${slotId}`, {
+    await AxiosInstance({
+      method: "delete",
+      url: `/staff/cc/delete-course-slot/${slotId}`,
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -54,7 +57,10 @@ function CcViewSlots(props) {
         }
       });
   };
-  const toggleDeleteModal = () => {
+  const toggleDeleteModal = slotId => {
+    if (slotId) {
+      setSlotToDelete(slotId);
+    }
     setDeleteModalOpen(prevState => !prevState);
   };
   const resetDeleteModal = () => {
@@ -83,7 +89,7 @@ function CcViewSlots(props) {
         isOpen={deleteModalIsOpen}
         state={deleteModalState}
         message={deleteModalMessage}
-        itemToDelete="slot"
+        itemToDelete={slotToDelete}
         deleteItem={deleteSlot}
         toggle={toggleDeleteModal}
         reset={resetDeleteModal}

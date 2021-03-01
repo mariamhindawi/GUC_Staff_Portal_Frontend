@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import AddSlotForm from "../../form_components/SlotForm";
+import AddSlotForm from "../../../form_components/SlotForm";
 
 function CcAddSlot(props) {
-  return <AddSlotForm formType="add" updateSlots={props.updateSlots} courses={props.courses} />;
+  return <AddSlotForm formType="add" courses={props.courses} updateSlots={props.updateSlots} />;
 }
 
 CcAddSlot.propTypes = {

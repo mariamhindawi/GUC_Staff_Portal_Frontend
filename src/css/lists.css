@@ -105,3 +105,11 @@
   border-color: rgba(26, 151, 210, 1);
   z-index: 3;
 }
+
+.slot-list-container .list-container {
+  height: calc(100% - 150px);
+}
+
+.slot-list-container .list-container .list tbody tr td {
+  padding: 0px 5px;
+}

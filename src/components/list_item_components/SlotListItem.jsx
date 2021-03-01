@@ -35,7 +35,6 @@ function SlotListItem(props) {
       <td>{props.slot.type}</td>
       <td>{props.slot.course}</td>
       <td>{props.slot.staffMember !== "UNASSIGNED" ? props.slot.staffMember : "-"}</td>
-
       {customData()}
     </tr>
   );

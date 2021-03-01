@@ -11,7 +11,7 @@ import Schedule from "../../todo/schedule.component";
 import Requests from "../../todo/GeneralRequestsPage.component";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";
-import CCSlots from "./CcSlots";
+import CCSlots from "./cc_slots_components/CcSlots";
 
 function CcHome(props) {
   const user = useUserContext();
