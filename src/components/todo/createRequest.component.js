@@ -38,18 +38,22 @@ const LeaveRequestForm = props => {
     reason: "Reason",
     document: "googledrive.com/uploadedProofDocument",
     duration: 60,
+    compensationDate: ""
   };
 
   const initialValues = {
     day: new Date(),
+    compensationDate: new Date(),
     reason: "",
-    document: "",
+    document: ""
   };
 
   const validationSchema = Yup.object({
     day: Yup.date()
       .required("This field is required"),
     document: request === "sickLeave" || request === "maternityLeave" ? Yup.string()
+      .required("This field is required") : Yup.string(),
+    compensationDate: request === "Compensation Leave" ? Yup.date()
       .required("This field is required") : Yup.string(),
     duration: request === "maternityLeave" ? Yup.number()
       .required("This field is required")
@@ -73,6 +77,8 @@ const LeaveRequestForm = props => {
         duration: values.duration,
         document: values.document,
         reason: values.reason,
+        compensationDate: `${values.compensationDate.getFullYear()}-${values.compensationDate.getMonth() < 9 ? `0${values.compensationDate.getMonth() + 1}` : values.compensationDate.getMonth() + 1}-${values.compensationDate.getDate() < 10 ? `0${values.compensationDate.getDate()}` : values.compensationDate.getDate()}`,
+
       },
     })
       .then(response => {
@@ -81,7 +87,7 @@ const LeaveRequestForm = props => {
       })
       .catch(error => {
         if (error.response) {
-          document.getElementById("room-form-error-message").innerHTML = error.response;
+          document.getElementById("room-form-error-message").innerHTML = error.response.data;
           console.log(error.response);
         }
         else if (error.request) {
@@ -131,6 +137,15 @@ const LeaveRequestForm = props => {
               <div className="form-input-error-message">
                 <ErrorMessage name="day" />
               </div>
+              {request === "Compensation Leave" ? (
+                <>
+                  <Label className="form-input-label col-sm-4" for="duration">Compensation date:</Label>
+                  <DatePickerField className="rounded form-input-border col-sm-8" name="compensationDate" />
+                  <div className="form-input-error-message">
+                    <ErrorMessage name="compensationDate" />
+                  </div>
+                </>
+              ) : null}
               {request === "Maternity Leave" ? (
                 <>
                   <Label className="form-input-label col-sm-4" for="duration">Duration:</Label>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Spinner } from "reactstrap";
 import Axios from "axios";
+import Spinner from "../helper_components/Spinner";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import RequestsTable from "./requestsTable.component";
@@ -48,7 +48,7 @@ const ViewReplacementComponent = (props) => {
         return <div className="container">
             <div className="row">
                 <div className="offset-5">
-                    <Spinner color="primary" />
+                    <Spinner />
                 </div>
             </div>
         </div>

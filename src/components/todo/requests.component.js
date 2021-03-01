@@ -1,13 +1,14 @@
 import React from "react";
 import Axios from "axios";
 import {
-  Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Spinner, Button, Breadcrumb, BreadcrumbItem
+  Col, Dropdown, DropdownItem, DropdownToggle, DropdownMenu, Button, Breadcrumb, BreadcrumbItem
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import RequestsTableComponent from "./requestsTable.component";
+import Spinner from "../helper_components/Spinner";
 
 class requestsComponent extends React.Component {
   constructor(props) {
@@ -71,14 +72,6 @@ class requestsComponent extends React.Component {
                 </DropdownMenu>
               </Dropdown>
             </div>
-            <div className="col-3 offset-7">
-              <NavLink to="/staff/home/send-leave-request">
-                <Button className="bg-success">
-                  Create a new request
-                  <FontAwesomeIcon className="ml-1" icon="plus" />
-                </Button>
-              </NavLink>
-            </div>
           </div>
           <br />
           <div className="row">
@@ -97,7 +90,7 @@ class requestsComponent extends React.Component {
             <br />
             <br />
             <br />
-            <Spinner color="primary" />
+            <Spinner />
           </Col>
         </div>
       </div>

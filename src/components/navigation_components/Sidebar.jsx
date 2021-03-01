@@ -73,17 +73,29 @@ function Sidebar(props) {
       {(user.role === "Course Instructor" || user.role === "Head of Department") && (
         <>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/assign-slot`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user-graduate" />
-            <span className="icon-text"> members</span>
+            <FontAwesomeIcon className="sidebar-icon" icon="user-plus" />
+            <span className="icon-text"> Assign Slot</span>
           </Link>
         </>
       )}
 
       {user.role === "Head of Department" && (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/hod-assignments`}>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/department-slot-assignments`}>
             <FontAwesomeIcon className="sidebar-icon" icon="clock" />
-            <span className="icon-text">Slots</span>
+            <span className="icon-text">Department Slots</span>
+          </Link>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/course-slot-assignments`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="clock" />
+            <span className="icon-text">Course Slots</span>
+          </Link>
+        </>
+      )}
+      {user.role === "Course Instructor" && (
+        <>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/course-slot-assignments`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="clock" />
+            <span className="icon-text">Course Slots</span>
           </Link>
         </>
       )}
