@@ -20,8 +20,8 @@ function ProfileCard(props) {
     facebook: "Facebook Account",
   };
   const handleCloseEdit = () => {
-    formikProps.resetForm();
     props.setEdit(false);
+    formikProps.resetForm();
   };
 
   const profileButton = () => {

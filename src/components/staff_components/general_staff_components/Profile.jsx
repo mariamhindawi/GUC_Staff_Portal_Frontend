@@ -5,6 +5,7 @@ import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
+import { useSetUserContext, useUserContext } from "../../../contexts/UserContext";
 import Spinner from "../../helper_components/Spinner";
 import AlertModal from "../../helper_components/AlertModal";
 import ProfileCard from "./ProfileCard";
@@ -15,6 +16,8 @@ function Profile() {
   const [user, setUser] = useState();
   const [alertModalIsOpen, setAlertModalOpen] = useState(false);
   const [alertModalMessage, setAlertModalMessage] = useState({ messageText: "", messageStyle: "" });
+  const userContext = useUserContext();
+  const setUserContext = useSetUserContext();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
@@ -28,6 +31,7 @@ function Profile() {
     })
       .then(response => {
         setUser(response.data);
+        setUserContext({ ...userContext, email: response.data.email });
         setLoading(false);
       })
       .catch(error => {
@@ -69,7 +73,7 @@ function Profile() {
     facebook: Yup.string()
       .matches(process.env.REACT_APP_URL_FORMAT, "Invalid url"),
   });
-  const handleSubmit = async values => {
+  const handleSubmit = async (values, formikProps) => {
     await AxiosInstance({
       method: "put",
       url: "/staff/update-profile",
@@ -96,6 +100,8 @@ function Profile() {
           console.log(error.message);
         }
         else if (error.response) {
+          setEdit(false);
+          formikProps.resetForm();
           setAlertModalMessage({ messageText: error.response.data, messageStyle: "danger" });
           setAlertModalOpen(true);
           console.log(error.response);
