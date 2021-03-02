@@ -26,7 +26,7 @@ function TaHome(props) {
         <Route path={`${match.path}/notifications`}><Notifications /></Route>
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
-        <Route path={`${match.path}/my-attendance`}><Attendance /></Route>
+        <Route path={`${match.path}/attendance`}><Attendance /></Route>
         <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
         <Route path={`${match.path}/schedule`}><Schedule /></Route>
         <Route path={`${match.path}/courses`}><Courses /></Route>
