@@ -20,4 +20,5 @@ function HrAttendance() {
     </Switch>
   );
 }
+
 export default HrAttendance;
