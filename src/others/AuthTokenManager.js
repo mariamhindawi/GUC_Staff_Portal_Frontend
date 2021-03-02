@@ -34,6 +34,7 @@ const AuthTokenManager = () => {
     })
       .then(response => {
         setAuthAccessToken(response.headers["auth-access-token"]);
+        window.dispatchEvent(new Event("set-user"));
       })
       .catch(error => {
         if (error.response) {

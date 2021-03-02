@@ -16,10 +16,15 @@ function App() {
   const [isLoading, setLoading] = useState(true);
   const [alertModalIsOpen, setAlertModalOpen] = useState(false);
   const [alertModalMessage, setAlertModalMessage] = useState("");
-  const setUser = useSetUserContext();
+  const setUserContext = useSetUserContext();
   const history = useHistory();
 
-  const initUser = () => {
+  const initAuthToken = async () => {
+    setLoading(true);
+    await AuthTokenManager.initAuthAccessToken();
+    setLoading(false);
+  };
+  const setUser = () => {
     const decodedAuthAccessToken = AuthTokenManager.getDecodedAuthAccessToken();
     let rolePath;
     switch (decodedAuthAccessToken.role) {
@@ -38,19 +43,10 @@ function App() {
       rolePath,
       loggedIn: decodedAuthAccessToken.loggedIn,
     };
-    setUser(user);
-  };
-  const initAuthToken = async () => {
-    setLoading(true);
-    await AuthTokenManager.initAuthAccessToken();
-    const authAccessToken = AuthTokenManager.getAuthAccessToken();
-    if (authAccessToken) {
-      initUser();
-    }
-    setLoading(false);
+    setUserContext(user);
   };
   const handleLogin = () => {
-    initUser();
+    setUser();
     history.push("/staff");
     localStorage.setItem("login", Date.now());
   };
@@ -102,12 +98,14 @@ function App() {
     }
   };
   const setupEventListeners = () => {
+    window.addEventListener("set-user", setUser);
     window.addEventListener("login", handleLogin);
     window.addEventListener("logout", handleLogout);
     window.addEventListener("session-timeout", handleTimeout);
     window.addEventListener("reset-password", handleResetPassword);
     window.addEventListener("storage", syncTabs);
     return () => {
+      window.removeEventListener("set-user", setUser);
       window.removeEventListener("login", handleLogin);
       window.removeEventListener("logout", handleLogout);
       window.removeEventListener("session-timeout", handleTimeout);
