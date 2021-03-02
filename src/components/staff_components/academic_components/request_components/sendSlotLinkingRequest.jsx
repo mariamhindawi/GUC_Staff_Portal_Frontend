@@ -5,8 +5,8 @@ import {
 } from "reactstrap";
 import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
+import SlotTableComponent from "../schedule_components/slotTable";
 import useAxiosCancel from "../../../../hooks/AxiosCancel";
-import SlotTableComponent from "./slotTable";
 
 function SlotLinkingForm() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -46,7 +46,7 @@ function SlotLinkingForm() {
   };
   const chooseCourse = async id => {
     setCourse(id);
-    await AxiosInstance.get(`/staff/fe/course-slots/${id}`, {
+    await AxiosInstance.get(`/staff/ci/course-slots/${id}`, {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),

@@ -3,9 +3,9 @@ import Axios from "axios";
 import {
   Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Label, Table, Card, Button, Alert
 } from "reactstrap";
-import AxiosInstance from "../../others/AxiosInstance";
-import AuthTokenManager from "../../others/AuthTokenManager";
-import SlotTableComponent from "./SlotTable.component";
+import AxiosInstance from "../../../../others/AxiosInstance";
+import AuthTokenManager from "../../../../others/AuthTokenManager";
+import SlotTableComponent from "../schedule_components/slotTable";
 
 function SlotLinkingForm() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -27,7 +27,7 @@ function SlotLinkingForm() {
 
   const chooseCourse = id => {
     setCourse(id);
-    AxiosInstance.get(`staff/fe/course-slots/${id}`, {
+    AxiosInstance.get(`staff/ci/course-slots/${id}`, {
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },

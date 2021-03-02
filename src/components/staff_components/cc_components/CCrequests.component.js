@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import {
   Button, Form, Input, Label, Modal, ModalBody
 } from "reactstrap";
-import Spinner from "../helper_components/Spinner";
+import Spinner from "../../helper_components/Spinner";
 import Axios from "axios";
-import AxiosInstance from "../../others/AxiosInstance";
-import AuthTokenManager from "../../others/AuthTokenManager";
-import RequestsTable from "./requestsTable.component";
+import AxiosInstance from "../../../others/AxiosInstance";
+import AuthTokenManager from "../../../others/AuthTokenManager";
+import RequestsTable from "../academic_components/request_components/requestsTable.component";
 
 const CCRequestsComponent = props => {
   const [slotRequests, setSlotRequests] = useState([]);

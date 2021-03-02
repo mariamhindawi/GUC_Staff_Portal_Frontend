@@ -97,7 +97,7 @@ function Notifications(props) {
     }
     return (notifications.map(notification => (
       <Dropdown.Item
-        className={`dropdown-notification ${notification.seen ? "bg-white" : "bg-warning"}`}
+        className={`dropdown-notification ${notification.seen ? "bg-white" : "bg-info"}`}
         as="div"
         tabIndex={0}
         key={notification._id}
@@ -120,7 +120,7 @@ function Notifications(props) {
     }
     return (notifications.map(notification => (
       <Card
-        className={notification.seen ? "notification-card" : "notification-card bg-warning"}
+        className={notification.seen ? "notification-card" : "notification-card notification-seen"}
         key={notification._id}
         onClick={() => { seeNotification(notification); }}
       >

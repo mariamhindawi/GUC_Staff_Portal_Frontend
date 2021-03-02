@@ -1,14 +1,15 @@
 import React from "react";
 import { Link, Route, useRouteMatch } from "react-router-dom";
 import { Card, CardHeader, Col, Container, Row } from "reactstrap";
+import { Button } from "react-bootstrap";
 import changeDayOffRequest from "./changeDayOffRequest";
-import SendSlotLinkingRequest from "../../../todo/createSlotLinkingRequest.component";
-import ViewRequests from "../../../todo/requests.component";
-import ViewReplacement from "../../../todo/ViewReplacement.component";
-import SendReplacement from "../../../todo/ReplacementRequest.component";
-import CCRequests from "../../../todo/CCrequests.component";
-import LeaveRequest from "../../../todo/createRequest.component";
-import HODRequests from "../../../todo/HODrequests.component";
+import SendSlotLinkingRequest from "./createSlotLinkingRequest.component";
+import ViewRequests from "./requests.component";
+import ViewReplacement from "./ViewReplacement.component";
+import SendReplacement from "./ReplacementRequest.component";
+import CCRequests from "../../cc_components/CCrequests.component";
+import LeaveRequest from "./createRequest.component";
+import HODRequests from "../../hod_components/HODrequests.component";
 import { useUserContext } from "../../../../contexts/UserContext";
 
 const GeneralRequestsPageComponent = () => {
@@ -21,46 +22,52 @@ const GeneralRequestsPageComponent = () => {
           <Row>
             <Col md={4}>
               <Link to={`${match.path}/view-requests`}>
-                <Card className="m-2 p-2">
-                  <CardHeader>View Requests status</CardHeader>
-                </Card>
+                <Button className="general-page-button" variant="info">
+                  View Requests status
+                  <br />
+                </Button>
               </Link>
             </Col>
             <Col md={4}>
               <Link to={`${match.path}/view-replacement-requests`}>
-                <Card className="m-2 p-2">
-                  <CardHeader>View replacement request</CardHeader>
-                </Card>
+                <Button className="general-page-button" variant="info">
+                  View replacement request
+                  <br />
+                </Button>
               </Link>
             </Col>
             <Col md={4}>
               <Link to={`${match.path}/send-leave-request`}>
-                <Card className="m-2 p-2">
-                  <CardHeader>Send Leave Request</CardHeader>
-                </Card>
+                <Button className="general-page-button" variant="info">
+                  Send Leave Request
+                  <br />
+                </Button>
               </Link>
             </Col>
           </Row>
           <Row>
             <Col md={4}>
               <Link to={`${match.path}/send-replacement-request`}>
-                <Card className="m-2 p-2">
-                  <CardHeader>Send replacement request</CardHeader>
-                </Card>
+                <Button className="general-page-button" variant="info">
+                  Send replacement request
+                  <br />
+                </Button>
               </Link>
             </Col>
             <Col md={4}>
               <Link to={`${match.path}/send-slot-linking-request`}>
-                <Card className="m-2 p-2">
-                  <CardHeader>Send Slot-Linking Request</CardHeader>
-                </Card>
+                <Button className="general-page-button" variant="info">
+                  Send slot linking request
+                  <br />
+                </Button>
               </Link>
             </Col>
             <Col md={4}>
               <Link to={`${match.path}/change-day-off-request`}>
-                <Card className="m-2 p-2">
-                  <CardHeader>Change Day Off Request</CardHeader>
-                </Card>
+                <Button className="general-page-button" variant="info">
+                  Change day off request
+                  <br />
+                </Button>
               </Link>
             </Col>
           </Row>
@@ -69,9 +76,10 @@ const GeneralRequestsPageComponent = () => {
               ? (
                 <Col md={{ size: 4, offset: 4 }}>
                   <Link to={`${match.path}/view-staff-requests`}>
-                    <Card className="m-2 p-2">
-                      <CardHeader>View Staff Requests</CardHeader>
-                    </Card>
+                    <Button className="general-page-button" variant="info">
+                      View staff requests
+                      <br />
+                    </Button>
                   </Link>
                 </Col>
               ) : null}
@@ -79,9 +87,10 @@ const GeneralRequestsPageComponent = () => {
               ? (
                 <Col md={{ size: 4, offset: 4 }}>
                   <Link to={`${match.path}/view-slot-linking-requests`}>
-                    <Card className="m-2 p-2">
-                      <CardHeader>View Slot-Linking Requests</CardHeader>
-                    </Card>
+                    <Button className="general-page-button" variant="info">
+                      View slot linking requests
+                      <br />
+                    </Button>
                   </Link>
 
                 </Col>

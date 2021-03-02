@@ -39,3 +39,6 @@
 .notification-card:active {
   background-color: lightblue !important;
 }
+.notification-seen{
+  background-color: lightblue !important;
+}

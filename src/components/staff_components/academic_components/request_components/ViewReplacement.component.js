@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios";
-import Spinner from "../helper_components/Spinner";
-import AxiosInstance from "../../others/AxiosInstance";
-import AuthTokenManager from "../../others/AuthTokenManager";
+import Spinner from "../../../helper_components/Spinner";
+import AxiosInstance from "../../../../others/AxiosInstance";
+import AuthTokenManager from "../../../../others/AuthTokenManager";
 import RequestsTable from "./requestsTable.component";
 
 const ViewReplacementComponent = (props) => {
