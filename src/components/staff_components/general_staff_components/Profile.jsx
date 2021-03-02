@@ -21,7 +21,7 @@ function Profile() {
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const fetchProfile = async () => {
+  const fetchProfile = async updateProfile => {
     setLoading(true);
     await AxiosInstance.get("/staff/view-profile", {
       cancelToken: axiosCancelSource.token,
@@ -31,7 +31,9 @@ function Profile() {
     })
       .then(response => {
         setUser(response.data);
-        setUserContext({ ...userContext, email: response.data.email });
+        if (updateProfile) {
+          setUserContext({ ...userContext, email: response.data.email });
+        }
         setLoading(false);
       })
       .catch(error => {
@@ -93,7 +95,7 @@ function Profile() {
         setEdit(false);
         setAlertModalMessage({ messageText: response.data, messageStyle: "success" });
         setAlertModalOpen(true);
-        fetchProfile();
+        fetchProfile(true);
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
