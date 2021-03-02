@@ -29,7 +29,7 @@ const AuthTokenManager = () => {
 
   const refreshAccessToken = async () => {
     await axiosInstance({
-      method: "post",
+      method: "get",
       url: "/staff/refresh-token",
     })
       .then(response => {
@@ -39,18 +39,16 @@ const AuthTokenManager = () => {
       .catch(error => {
         if (error.response) {
           if (error.response.data === "Invalid refresh token") {
-            console.log(error.response.data);
             window.dispatchEvent(new Event("session-timeout"));
           }
         }
         else if (error.request) {
-          removeAuthAccessToken();
           console.log(error.request);
         }
         else {
-          removeAuthAccessToken();
           console.log(error.message);
         }
+        removeAuthAccessToken();
       });
   };
 
