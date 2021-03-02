@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import Axios from "axios";
 import AxiosInstance from "../../../../others/AxiosInstance";
@@ -131,13 +131,14 @@ function CcSlots() {
           )}
         </div>
       </Route>
-
       <Route exact path={`${match.path}/add`}>
         <CcAddSlot courses={courses} updateSlots={fetchSlots} />
       </Route>
-
       <Route exact path={`${match.path}/update/:_id`}>
         <CcUpdateSlot slots={slots} courses={courses} updateSlots={fetchSlots} />
+      </Route>
+      <Route path={match.path}>
+        <Redirect to="/404" />
       </Route>
     </Switch>
   );

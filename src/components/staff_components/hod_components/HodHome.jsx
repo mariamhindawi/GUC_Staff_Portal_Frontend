@@ -8,7 +8,7 @@ import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
 import Attendance from "../general_staff_components/attendance_components/Attendance";
 import Schedule from "../academic_components/schedule_components/schedule.component";
-import GeneralRequests from "../academic_components/request_components/GeneralRequestsPage";
+import Requests from "../academic_components/request_components/Requests";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";
 import CiAssignSlot from "../ci_components/CiAssignSlots";
@@ -31,7 +31,7 @@ function HodHome(props) {
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>
         <Route path={`${match.path}/attendance`}><Attendance /></Route>
         <Route path={`${match.path}/schedule`}><Schedule /></Route>
-        <Route path={`${match.path}/requests`}><GeneralRequests /></Route>
+        <Route path={`${match.path}/requests`}><Requests /></Route>
         <Route path={`${match.path}/courses`}><Courses /></Route>
         <Route path={`${match.path}/academic-members`}><AcademicMembers /></Route>
         <Route path={`${match.path}/assign-slot`}><CiAssignSlot /></Route>
@@ -46,4 +46,5 @@ function HodHome(props) {
 HodHome.propTypes = {
   homeContainerStyle: PropTypes.string.isRequired,
 };
+
 export default HodHome;

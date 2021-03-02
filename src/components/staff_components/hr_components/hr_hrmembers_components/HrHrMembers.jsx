@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import Axios from "axios";
 import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
@@ -61,13 +61,14 @@ function HrHrMembers() {
           updateHrMembers={fetchHrMembers}
         />
       </Route>
-
       <Route exact path={`${match.path}/add`}>
         <HrAddHrMember updateHrMembers={fetchHrMembers} />
       </Route>
-
       <Route exact path={`${match.path}/update/:id`}>
         <HrUpdateHrMember hrMembers={hrMembers} updateHrMembers={fetchHrMembers} />
+      </Route>
+      <Route path={match.path}>
+        <Redirect to="/404" />
       </Route>
     </Switch>
   );
