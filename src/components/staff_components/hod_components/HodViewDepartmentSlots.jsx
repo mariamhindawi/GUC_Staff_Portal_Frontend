@@ -5,7 +5,7 @@ import {
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import SlotTableComponent from "../academic_components/schedule_components/slotTable";
+import SlotsTable from "../../list_components/SlotsTable";
 
 const ViewTeachingAssignmentsComponent = () => {
   const [courses, setCourses] = useState([]);
@@ -52,7 +52,7 @@ const ViewTeachingAssignmentsComponent = () => {
           {courses.map(cou => <DropdownItem onClick={() => {getCourseSlots(cou.id); setCourse(cou.id);}} key={cou._id}>{cou.name}</DropdownItem>)}
         </DropdownMenu>
       </Dropdown>
-      <SlotTableComponent slots={slots} active={active} onClick={toggle} />
+      <SlotsTable slots={slots} active={active} onClick={toggle} />
       <Modal isOpen={modalOpen} toggle={toggle}>
         <ModalBody>
           {slots.filter(slot => slot._id === active).map(slot => (

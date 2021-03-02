@@ -8,7 +8,7 @@ import Spinner from "../../../helper_components/Spinner";
 import AttendanceSelect from "../../general_staff_components/attendance_components/AttendanceSelect";
 import AttendanceRecordsList from "../../../list_components/AttendanceRecordsList";
 
-function HrAttendance() {
+function HrViewAttendanceRecords() {
   const [isLoading, setLoading] = useState(false);
   const [userFound, setUserFound] = useState(false);
   const [userId, setUserId] = useState("");
@@ -23,7 +23,7 @@ function HrAttendance() {
       return;
     }
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/view-staff-attendance-records", {
+    await AxiosInstance.get("/staff/hr/get-staff-attendance-records", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -95,4 +95,4 @@ function HrAttendance() {
     </div>
   );
 }
-export default HrAttendance;
+export default HrViewAttendanceRecords;

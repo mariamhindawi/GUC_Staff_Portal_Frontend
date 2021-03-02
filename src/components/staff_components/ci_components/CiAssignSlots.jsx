@@ -4,7 +4,7 @@ import {
 } from "reactstrap";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import SlotTableComponent from "../academic_components/schedule_components/slotTable";
+import SlotsTable from "../../list_components/SlotsTable";
 
 const CIAssignSlots = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -67,7 +67,7 @@ const CIAssignSlots = () => {
           </DropdownMenu>
         </Dropdown>
         <h1>Choose a slot</h1>
-        <SlotTableComponent slots={slots.filter(slot => slot.staffMember === "UNASSIGNED")} onClick={setActive} active={active} />
+        <SlotsTable slots={slots.filter(slot => slot.staffMember === "UNASSIGNED")} onClick={setActive} active={active} />
         {active ? <Input name="academicMember" value={academicMember} onChange={handleChange} /> : null}
         <Button type="submit" className={active ? "bg-primary" : ""} onClick={sendRequest}>Assign to slot</Button>
         {alert ? <Alert className="bg-success">{alert}</Alert> : null}

@@ -17,7 +17,7 @@ function HrViewMissingHours() {
 
   const fetchMissingHours = async () => {
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/view-staff-missing-hours", {
+    await AxiosInstance.get("/staff/hr/get-staff-missing-hours", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),

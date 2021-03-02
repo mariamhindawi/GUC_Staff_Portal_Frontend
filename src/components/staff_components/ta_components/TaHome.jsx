@@ -7,7 +7,7 @@ import Notifications from "../academic_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
 import Attendance from "../general_staff_components/attendance_components/Attendance";
-import Schedule from "../academic_components/schedule_components/schedule.component";
+import Schedule from "../academic_components/Schedule";
 import Requests from "../academic_components/request_components/Requests";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";

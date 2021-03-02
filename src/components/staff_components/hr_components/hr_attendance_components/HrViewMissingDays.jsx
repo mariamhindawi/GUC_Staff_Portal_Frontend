@@ -7,7 +7,7 @@ import Spinner from "../../../helper_components/Spinner";
 import AttendanceSelect from "../../general_staff_components/attendance_components/AttendanceSelect";
 import UsersMissingDaysList from "../../../list_components/UsersMissingDaysList";
 
-function HrMissingDays() {
+function HrViewMissingDays() {
   const [isLoading, setLoading] = useState(true);
   const [month, setMonth] = useState(new Date().getMonth() + 1);
   const [year, setYear] = useState(new Date().getFullYear());
@@ -17,7 +17,7 @@ function HrMissingDays() {
 
   const fetchMissingDays = async () => {
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/view-staff-missing-days", {
+    await AxiosInstance.get("/staff/hr/get-staff-missing-days", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
@@ -71,4 +71,4 @@ function HrMissingDays() {
     </div>
   );
 }
-export default HrMissingDays;
+export default HrViewMissingDays;

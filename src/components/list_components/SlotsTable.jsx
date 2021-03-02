@@ -1,7 +1,7 @@
 import React from "react";
-import { Card, CardHeader, CardTitle, Table } from "reactstrap";
+import { Card, CardTitle } from "reactstrap";
 
-const SlotTableComponent = ({ slots, onClick, active }) => {
+const SlotsTable = ({ slots, onClick, active }) => {
   const slotRows = [];
   for (let i = 1; i < 6; i++) {
     slotRows.push(<SlotTableRow key={i} slots={slots.filter(slot => slot.slotNumber === i)} slotNumber={i} onClick={onClick} active={active} />);
@@ -45,4 +45,4 @@ const SlotTableRow = ({ slotNumber, slots, chooseSlot, onClick, active }) => (
   </tr>
 );
 
-export default SlotTableComponent;
+export default SlotsTable;
