@@ -3,7 +3,7 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, Mo
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import SlotTableComponent from "../../todo/SlotTable.component";
+import SlotTableComponent from "../academic_components/schedule_components/slotTable";
 
 const CICoursesSlotsComponent = () => {
     const [courses, setCourses] = useState([])
@@ -27,7 +27,7 @@ const CICoursesSlotsComponent = () => {
 
     const getCourseSlots = (id) => {
         setCourse(id)
-        AxiosInstance.get(`staff/fe/course-slots/${id}`, {
+        AxiosInstance.get(`staff/ci/course-slots/${id}`, {
             headers: {
                 "auth-access-token": AuthTokenManager.getAuthAccessToken()
             },
@@ -45,7 +45,7 @@ const CICoursesSlotsComponent = () => {
                 room:slots.filter(slot=>slot._id===active)[0].room,
                 slotNumber: slots.filter(slot=>slot._id===active)[0].slotNumber
             }
-        }).then(()=>AxiosInstance.get(`staff/fe/course-slots/${course}`, {
+        }).then(()=>AxiosInstance.get(`staff/ci/course-slots/${course}`, {
             headers: {
                 "auth-access-token": AuthTokenManager.getAuthAccessToken()
             },

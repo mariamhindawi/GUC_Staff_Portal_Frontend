@@ -4,7 +4,7 @@ import {
 } from "reactstrap";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import SlotTableComponent from "../../todo/SlotTable.component";
+import SlotTableComponent from "../academic_components/schedule_components/slotTable";
 
 const CIAssignSlots = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -27,7 +27,7 @@ const CIAssignSlots = () => {
 
   const chooseCourse = id => {
     setCourse(id);
-    AxiosInstance.get(`staff/fe/course-slots/${id}`, {
+    AxiosInstance.get(`staff/ci/course-slots/${id}`, {
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },

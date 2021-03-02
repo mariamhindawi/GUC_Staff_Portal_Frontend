@@ -8,10 +8,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import jwt from "jsonwebtoken";
 import Axios from "axios";
 import * as Yup from "yup";
-import AuthTokenManager from "../../others/AuthTokenManager";
-import SlotTableComponent from "./SlotTable.component";
-import AxiosInstance from "../../others/AxiosInstance";
-import { useUserContext } from "../../contexts/UserContext";
+import AxiosInstance from "../../../../others/AxiosInstance";
+import AuthTokenManager from "../../../../others/AuthTokenManager";
+import SlotTableComponent from "../schedule_components/slotTable";
+import { useUserContext } from "../../../../contexts/UserContext";
 
 export const DatePickerField = ({ ...props }) => {
   const { setFieldValue } = useFormikContext();

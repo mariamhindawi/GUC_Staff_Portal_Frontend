@@ -5,10 +5,10 @@ import {
 } from "reactstrap";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AxiosInstance from "../../others/AxiosInstance";
-import AuthTokenManager from "../../others/AuthTokenManager";
+import AxiosInstance from "../../../../others/AxiosInstance";
+import AuthTokenManager from "../../../../others/AuthTokenManager";
 import RequestsTableComponent from "./requestsTable.component";
-import Spinner from "../helper_components/Spinner";
+import Spinner from "../../../helper_components/Spinner";
 
 class requestsComponent extends React.Component {
   constructor(props) {

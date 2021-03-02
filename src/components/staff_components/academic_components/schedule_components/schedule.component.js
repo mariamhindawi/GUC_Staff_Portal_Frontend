@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import Axios from "axios";
-import AxiosInstance from "../../others/AxiosInstance";
-import AuthTokenManager from "../../others/AuthTokenManager";
-import SlotTableComponent from "./SlotTable.component";
-import { useUserContext } from "../../contexts/UserContext";
+import AxiosInstance from "../../../../others/AxiosInstance";
+import AuthTokenManager from "../../../../others/AuthTokenManager";
+import SlotTableComponent from "./slotTable";
+import { useUserContext } from "../../../../contexts/UserContext";
 
 const ScheduleComponent = () => {
   const [slots, setSlots] = useState([]);
