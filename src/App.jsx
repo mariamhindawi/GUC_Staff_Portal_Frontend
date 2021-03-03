@@ -8,8 +8,8 @@ import { useSetUserContext } from "./contexts/UserContext";
 import Login from "./components/staff_components/general_staff_components/Login";
 import StaffHome from "./components/staff_components/general_staff_components/StaffHome";
 import PageNotFound from "./components/error_components/PageNotFound";
-import AlertModal from "./components/helper_components/AlertModal";
 import ForbiddenAccess from "./components/error_components/ForbiddenAccess";
+import AlertModal from "./components/helper_components/AlertModal";
 
 function App() {
   const [isLoading, setLoading] = useState(true);

@@ -5,6 +5,10 @@
   padding: 30px 0;
 }
 
+.profile-container ::-webkit-scrollbar{
+  display: none;
+}
+
 .profile-card {
   display: flex;
   width: 100%;
