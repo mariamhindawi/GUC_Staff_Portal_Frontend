@@ -4,7 +4,7 @@ import HrAttendanceHome from "./HrAttendanceHome";
 import HrViewAttendanceRecords from "./HrViewAttendanceRecords";
 import HrViewMissingDays from "./HrViewMissingDays";
 import HrViewMissingHours from "./HrViewMissingHours";
-import HrAddAttendanceRecord from "./HrAddAttendanceRecord";
+import HrEditAttendanceRecords from "./HrEditAttendanceRecords";
 
 function HrAttendance() {
   const match = useRouteMatch();
@@ -12,10 +12,10 @@ function HrAttendance() {
   return (
     <Switch>
       <Route exact path={`${match.path}`}><HrAttendanceHome /></Route>
-      <Route path={`${match.path}/attendance-records`}><HrViewAttendanceRecords /></Route>
-      <Route path={`${match.path}/missing-days`}><HrViewMissingDays /></Route>
-      <Route path={`${match.path}/missing-hours`}><HrViewMissingHours /></Route>
-      <Route path={`${match.path}/add-attendance-record`}><HrAddAttendanceRecord /></Route>
+      <Route path={`${match.path}/view-attendance-records`}><HrViewAttendanceRecords /></Route>
+      <Route path={`${match.path}/edit-attendance-records`}><HrEditAttendanceRecords /></Route>
+      <Route path={`${match.path}/view-missing-days`}><HrViewMissingDays /></Route>
+      <Route path={`${match.path}/view-missing-hours`}><HrViewMissingHours /></Route>
       <Route path={match.path}><Redirect to="/404" /></Route>
     </Switch>
   );

@@ -9,32 +9,32 @@ function HrAttendanceHome() {
   return (
     <div className="view-container">
       <div className="general-page-container">
-        <Link to={`${match.url}/attendance-records`} tabIndex={-1}>
+        <Link to={`${match.url}/view-attendance-records`} tabIndex={-1}>
           <Button className="general-page-button" variant="info">
             Staff Attendance Records
             <br />
             <FontAwesomeIcon icon="address-book" />
           </Button>
         </Link>
-        <Link to={`${match.url}/missing-days`} tabIndex={-1}>
+        <Link to={`${match.url}/edit-attendance-records`} tabIndex={-1}>
+          <Button className="general-page-button" variant="info">
+            Add Missing Attendance Records
+            <br />
+            <FontAwesomeIcon icon="calendar-plus" />
+          </Button>
+        </Link>
+        <Link to={`${match.url}/view-missing-days`} tabIndex={-1}>
           <Button className="general-page-button" variant="info">
             Staff Missing Days
             <br />
             <FontAwesomeIcon icon="calendar-day" />
           </Button>
         </Link>
-        <Link to={`${match.url}/missing-hours`} tabIndex={-1}>
+        <Link to={`${match.url}/view-missing-hours`} tabIndex={-1}>
           <Button className="general-page-button" variant="info">
             Staff Missing Hours
             <br />
             <FontAwesomeIcon icon="hourglass-half" />
-          </Button>
-        </Link>
-        <Link to={`${match.url}/add-attendance-record`} tabIndex={-1}>
-          <Button className="general-page-button" variant="info">
-            Add Missing Attendance Record
-            <br />
-            <FontAwesomeIcon icon="calendar-plus" />
           </Button>
         </Link>
       </div>

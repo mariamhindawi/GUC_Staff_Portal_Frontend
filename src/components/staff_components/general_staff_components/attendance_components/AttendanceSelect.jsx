@@ -52,6 +52,7 @@ function AttendanceSelect(props) {
       </div>
       {props.search && (
         <input
+          className="input"
           type="search"
           value={props.userId}
           placeholder="User ID"

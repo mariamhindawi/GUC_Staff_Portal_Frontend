@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { addDays, isBefore } from "date-fns";
 import Axios from "axios";
 import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
@@ -9,8 +10,9 @@ import UsersMissingHoursList from "../../../list_components/UsersMissingHoursLis
 
 function HrViewMissingHours() {
   const [isLoading, setLoading] = useState(true);
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(isBefore(new Date(), new Date().setDate(11))
+    ? new Date().getMonth() : new Date().getMonth() + 1);
+  const [year, setYear] = useState(addDays(Date.now(), -10).getFullYear());
   const [usersMissingHours, setUsersMissingHours] = useState([]);
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource, [month, year]);

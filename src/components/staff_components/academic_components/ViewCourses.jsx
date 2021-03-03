@@ -71,7 +71,6 @@ function ViewCourses(props) {
             messageStyle: "danger",
           });
           setAssignModalState("submitted");
-          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);
@@ -123,7 +122,6 @@ function ViewCourses(props) {
             messageStyle: "danger",
           });
           setUnassignModalState("submitted");
-          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);

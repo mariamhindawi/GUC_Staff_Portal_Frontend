@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
+import { addDays, set } from "date-fns";
 import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
@@ -18,49 +19,59 @@ function AttendanceRecordForm(props) {
 
   const placeholders = {
     user: "User ID",
-    day: "Choose day",
-    signInTime: "",
-    signOutTime: "",
+    day: "Select day",
+    signInTime: "Select sign-in time",
+    signOutTime: "Select sign-out time",
   };
   const initialValues = {
     user: "",
-    day: "",
-    signInTime: "",
-    signOutTime: "",
+    day: addDays(Date.now(), -1),
+    signInTime: set(Date.now(), { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }),
+    signOutTime: set(Date.now(), { hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }),
   };
   const validationSchema = Yup.object({
-    user: props.record ? null : Yup.string()
+    user: props.attendanceRecord._id ? null : Yup.string()
       .required("This field is required")
       .matches(/(([a][c]|[h][r])[-][0-9]+)$/, "Invalid user id"),
-    day: !props.record && Yup.date()
+    day: !props.attendanceRecord._id && Yup.date()
       .typeError("Invalid date")
       .required("This field is required")
-      .max(new Date(Date.now() - 24 * 60 * 60 * 1000), "Date must be before current day"),
-    signIn: (!props.record || !props.record.signInTime) && Yup.date()
-      .typeError("Invalid date")
+      .max(addDays(Date.now(), -1), "Date must be before current day"),
+    signInTime: (!props.attendanceRecord._id || !props.attendanceRecord.signInTime.getTime())
+    && Yup.date()
+      .typeError("Invalid time")
       .required("Sign in time is required"),
-    signOut: (!props.record || !props.record.signOutTime) && Yup.date()
-      .typeError("Invalid date")
+    signOutTime: (!props.attendanceRecord._id || !props.attendanceRecord.signOutTime.getTime())
+    && Yup.date()
+      .typeError("Invalid time")
       .required("Sign out time is required"),
   });
-  const handleSubmit = values => {
+  const handleSubmit = async values => {
+    let date;
     let type;
     let signInTime;
     let signOutTime;
-    if (!props.record) {
+    if (!props.attendanceRecord._id) {
+      date = values.day;
       type = "Full Record";
-      signInTime = new Date(values.signIn.setDate(values.day.getDate()));
-      signOutTime = new Date(values.signOut.setDate(values.day.getDate()));
+      signInTime = set(values.signInTime,
+        { year: date.getFullYear(), month: date.getMonth(), date: date.getDate() });
+      signOutTime = set(values.signOutTime,
+        { year: date.getFullYear(), month: date.getMonth(), date: date.getDate() });
     }
-    else if (props.record.signInTime) {
+    else if (props.attendanceRecord.signInTime.getTime()) {
+      date = new Date(props.attendanceRecord.signInTime);
       type = "Sign Out";
-      signOutTime = values.signOut.setDate(props.record.signInTime).getDate();
+      signOutTime = set(values.signOutTime,
+        { year: date.getFullYear(), month: date.getMonth(), date: date.getDate() });
     }
     else {
+      date = new Date(props.attendanceRecord.signOutTime);
       type = "Sign In";
-      signInTime = values.signIn.setDate(props.record.signOutTime).getDate();
+      signInTime = set(values.signInTime,
+        { year: date.getFullYear(), month: date.getMonth(), date: date.getDate() });
     }
-    AxiosInstance({
+    await AxiosInstance({
       method: "post",
       url: "/staff/hr/add-missing-attendance-record",
       cancelToken: axiosCancelSource.token,
@@ -68,19 +79,23 @@ function AttendanceRecordForm(props) {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
       data: {
-        userId: props.record ? props.record.user : values.user,
+        userId: props.attendanceRecord._id ? props.attendanceRecord.user : values.user,
         recordType: type,
-        recordId: type === "Full Record" && props.record._id,
+        recordId: type !== "Full Record" && props.attendanceRecord._id,
         signInTime,
         signOutTime,
       },
     })
       .then(response => {
-        console.log(response.data);
+        setMessage({ messageText: response.data, messageStyle: "success-message" });
+        props.updateAttendanceRecords();
       })
       .catch(error => {
-        if (error.response) {
-          console.log(error.response);
+        if (Axios.isCancel(error)) {
+          console.log(error.message);
+        }
+        else if (error.response) {
+          setMessage({ messageText: error.response.data, messageStyle: "error-message" });
         }
         else if (error.request) {
           console.log(error.request);
@@ -92,50 +107,81 @@ function AttendanceRecordForm(props) {
   };
 
   return (
-    <div className="form-container">
-      <div className="form-card">
-        <Formik
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-          initialValues={initialValues}
-        >
-          <Form>
-            <div className="form-title">
-              Add missing sign in record
-            </div>
+    <div className="add-missing-record-form">
+      <Formik
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+        initialValues={initialValues}
+      >
+        <Form>
+          <div className="form-title">
+            {!props.attendanceRecord._id && "Add Missing Attendance Record"}
+            {props.attendanceRecord._id && !props.attendanceRecord.signInTime.getTime() && "Add Missing Sign-in"}
+            {props.attendanceRecord._id && !props.attendanceRecord.signOutTime.getTime() && "Add Missing Sign-out"}
+          </div>
 
-            {!props.record && (
-              <Input label="User" name="user" placeholder={placeholders.user} setMessage={setMessage} />
-            )}
-            {!props.record && (
-              <DatePickerField label="Day" name="day" setMessage={setMessage} />
-            )}
-            {(!props.record || !props.record.signInTime) && (
-              <TimePickerField label="Sign In Time" name="signInTime" setMessage={setMessage} />
-            )}
-            {(!props.record || !props.record.signOutTime) && (
-              <TimePickerField label="Sign Out Time" name="signOutTime" setMessage={setMessage} />
-            )}
+          {!props.attendanceRecord._id && (
+            <Input
+              className="input"
+              label="User"
+              name="user"
+              placeholder={placeholders.user}
+              setMessage={setMessage}
+            />
+          )}
+          {!props.attendanceRecord._id && (
+            <DatePickerField
+              label="Day"
+              name="day"
+              placeholder={placeholders.day}
+              setMessage={setMessage}
+              variant="inline"
+              maxDate={addDays(Date.now(), -1)}
+            />
+          )}
+          {(!props.attendanceRecord._id || !props.attendanceRecord.signInTime.getTime()) && (
+            <TimePickerField
+              label="Sign In Time"
+              name="signInTime"
+              placeholder={placeholders.signInTime}
+              setMessage={setMessage}
+              variant="inline"
+            />
+          )}
+          {(!props.attendanceRecord._id || !props.attendanceRecord.signOutTime.getTime()) && (
+            <TimePickerField
+              label="Sign Out Time"
+              name="signOutTime"
+              placeholder={placeholders.signOutTime}
+              setMessage={setMessage}
+              variant="inline"
+            />
+          )}
 
-            <FormSubmit formType="update" message={message} setMessage={setMessage} />
-          </Form>
-        </Formik>
-      </div>
+          <FormSubmit formType="update" message={message} setMessage={setMessage} />
+        </Form>
+      </Formik>
     </div>
   );
 }
 
 AttendanceRecordForm.propTypes = {
-  record: PropTypes.shape({
+  attendanceRecord: PropTypes.shape({
     _id: PropTypes.string,
     user: PropTypes.string,
     signInTime: PropTypes.instanceOf(Date),
     signOutTime: PropTypes.instanceOf(Date),
   }),
+  updateAttendanceRecords: PropTypes.func.isRequired,
 };
 
 AttendanceRecordForm.defaultProps = {
-  record: null,
+  attendanceRecord: PropTypes.shape({
+    _id: "",
+    user: "",
+    signInTime: Date.now(),
+    signOutTime: Date.now(),
+  }),
 };
 
 export default AttendanceRecordForm;

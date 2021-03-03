@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link, useRouteMatch } from "react-router-dom";
+import { useUserContext } from "../../contexts/UserContext";
 import DeleteButton from "../button_components/DeleteButton";
 import EditButton from "../button_components/EditButton";
 import UnassignButton from "../button_components/UnassignButton";
-import { useUserContext } from "../../contexts/UserContext";
 
 function AcademicListItem(props) {
   const user = useUserContext();

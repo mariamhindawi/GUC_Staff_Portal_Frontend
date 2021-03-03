@@ -52,7 +52,6 @@ function LoginForm() {
           formikProps.setFieldValue("password", "");
           formikProps.setFieldTouched("password", false, false);
           setErrorMessage({ messageText: error.response.data });
-          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);

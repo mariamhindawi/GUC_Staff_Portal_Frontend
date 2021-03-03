@@ -45,7 +45,6 @@ function HrViewFaculties(props) {
             messageStyle: "danger",
           });
           setDeleteModalState("submitted");
-          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);

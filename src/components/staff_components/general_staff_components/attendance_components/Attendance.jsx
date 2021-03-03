@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { addDays, isBefore } from "date-fns";
 import { Tabs, Tab } from "react-bootstrap";
 import Axios from "axios";
 import AxiosInstance from "../../../../others/AxiosInstance";
@@ -15,8 +16,9 @@ function Attendance() {
   const [isLoading, setLoading] = useState({
     attendanceRecords: true, missingDays: true, hours: true, salary: true,
   });
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(isBefore(new Date(), new Date().setDate(11))
+    ? new Date().getMonth() : new Date().getMonth() + 1);
+  const [year, setYear] = useState(addDays(Date.now(), -10).getFullYear());
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [missingDays, setMissingDays] = useState([]);
   const [hours, setHours] = useState({ requiredHours: 0, missingHours: 0, extraHours: 0 });

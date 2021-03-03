@@ -70,7 +70,6 @@ const ResetPasswordForm = () => {
           formikProps.setFieldValue("confirmedNewPassword", "");
           formikProps.setFieldTouched("confirmedNewPassword", false, false);
           setMessage({ messageText: error.response.data, messageStyle: "error-message" });
-          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);

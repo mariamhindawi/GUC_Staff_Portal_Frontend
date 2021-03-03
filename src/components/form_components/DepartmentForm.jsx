@@ -85,7 +85,6 @@ function DepartmentForm(props) {
         }
         else if (error.response) {
           setMessage({ messageText: error.response.data, messageStyle: "error-message" });
-          console.log(error.response);
         }
         else if (error.request) {
           console.log(error.request);

@@ -1,34 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useField } from "formik";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { KeyboardTimePicker } from "@material-ui/pickers";
 
 function TimePickerField(props) {
   const [field, meta, helpers] = useField(props.name);
 
-  const handleFocus = () => {
+  const handleFocus = e => {
+    e.target.placeholder = "";
     props.setMessage({ messageText: "", messageStyle: "" });
+  };
+  const handleBlur = e => {
+    e.target.placeholder = props.placeholder;
+    helpers.setTouched(true);
   };
 
   return (
     <>
       {props.label && <label htmlFor={props.name}>{props.label}</label>}
-      <DatePicker
+      <KeyboardTimePicker
+        className="timepicker"
         id={props.name}
         name={props.name}
         value={field.value}
-        // onChange={field.onChange}
-        onChange={val => {
-          helpers.setValue(val);
+        onChange={value => {
+          helpers.setValue(value);
         }}
         onFocus={handleFocus}
-        onBlur={field.onBlur}
-        dateFormat="HH:mm:ss"
-        timeIntervals={15}
-        selected={(field.value && new Date(field.value)) || null}
-        showTimeSelect
-        showTimeSelectOnly
+        onBlur={handleBlur}
+        variant={props.variant}
       />
       <span className="error-message">{meta.touched && meta.error}</span>
     </>
@@ -37,13 +37,17 @@ function TimePickerField(props) {
 
 TimePickerField.propTypes = {
   name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   label: PropTypes.string,
   setMessage: PropTypes.func,
+  variant: PropTypes.oneOf(["dialog", "inline", "static"]),
 };
 
 TimePickerField.defaultProps = {
+  placeholder: "",
   label: null,
-  setMessage: () => { },
+  setMessage: () => {},
+  variant: "dialog",
 };
 
 export default TimePickerField;

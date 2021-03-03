@@ -18,6 +18,7 @@ function Input(props) {
     <>
       {props.label && <label htmlFor={props.name}>{props.label}</label>}
       <input
+        className={props.className}
         type={props.type}
         id={props.name}
         name={props.name}
@@ -33,6 +34,7 @@ function Input(props) {
 }
 
 Input.propTypes = {
+  className: PropTypes.string,
   name: PropTypes.string.isRequired,
   type: PropTypes.string,
   placeholder: PropTypes.string,
@@ -41,6 +43,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
+  className: "",
   type: "text",
   placeholder: "",
   label: null,

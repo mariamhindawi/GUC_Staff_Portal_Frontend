@@ -28,3 +28,13 @@
 .modal-form label {
   margin-right: 15px;
 }
+
+.edit-modal .modal-content {
+  max-height: 90vh;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.edit-modal ::-webkit-scrollbar {
+  display: none;
+}

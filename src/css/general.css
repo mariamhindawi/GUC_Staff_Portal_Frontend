@@ -109,7 +109,7 @@
   border-bottom: solid 2px #5bc0de;
   background-color: transparent;
   color: #5bc0de;
-  transition: 0.2s;
+  transition: 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
 }
 
 .view-select .view-dropdown-button:hover,
@@ -142,14 +142,26 @@
 
 .view-select input {
   width: 140px;
-  border-radius: 10px;
-  border: 1px solid #495057;
   padding: 0 5px;
   margin-left: 20px;
+  border-bottom: solid 2px #5bc0de;
 }
 
-.view-select input:focus {
-  outline: none;
+.view-select input:hover,
+.view-select input:focus-visible {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-color: #5bc0de;
+  box-shadow: 0 0 5px 1px #5bc0de;
+}
+
+.view-select input:active {
+  border-color: black;
+  box-shadow: 0 0 5px 1px black;
+}
+
+.view-select input::after {
+  display: none;
 }
 
 @media (max-width: 576px) {

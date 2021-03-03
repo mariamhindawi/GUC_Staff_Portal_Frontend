@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { addDays, isBefore } from "date-fns";
 import { Alert } from "react-bootstrap";
 import Axios from "axios";
 import AxiosInstance from "../../../../others/AxiosInstance";
@@ -12,8 +13,9 @@ function HrViewAttendanceRecords() {
   const [isLoading, setLoading] = useState(false);
   const [userFound, setUserFound] = useState(false);
   const [userId, setUserId] = useState("");
-  const [month, setMonth] = useState(new Date().getMonth() + 1);
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [month, setMonth] = useState(isBefore(new Date(), new Date().setDate(11))
+    ? new Date().getMonth() : new Date().getMonth() + 1);
+  const [year, setYear] = useState(addDays(Date.now(), -10).getFullYear());
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource, [userId, month, year]);
@@ -23,13 +25,13 @@ function HrViewAttendanceRecords() {
       return;
     }
     setLoading(true);
-    await AxiosInstance.get("/staff/hr/get-staff-attendance-records", {
+    await AxiosInstance.get("/staff/hr/get-user-month-attendance-records", {
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
       params: {
-        id: userId,
+        user: userId,
         month,
         year,
       },

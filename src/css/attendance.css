@@ -131,3 +131,49 @@
     font-size: smaller;
   }
 }
+
+.add-missing-record-select {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.add-missing-record-select > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.add-missing-record-select > div > input {
+  width: 140px;
+  height: 32px;
+  padding: 6px 0 7px;
+  margin-right: 20px;
+}
+
+.add-missing-record-select + .hr-attendance-container {
+  height: calc(100% - 53px);
+}
+
+@media (max-width: 650px) {
+  .add-missing-record-select {
+    font-size: smaller;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .add-missing-record-select > div {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .add-missing-record-select > div > input {
+    margin-right: 15px;
+  }
+
+  .add-missing-record-select + .hr-attendance-container {
+    height: calc(100% - 95px);
+  }
+}
