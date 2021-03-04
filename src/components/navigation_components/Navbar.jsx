@@ -7,8 +7,8 @@ import Axios from "axios";
 import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
-import Logo from "../../images/guc_logo.png";
 import { useUserContext } from "../../contexts/UserContext";
+import Logo from "../../images/guc_logo.png";
 import Notifications from "../staff_components/academic_components/Notifications";
 
 function Navbar(props) {

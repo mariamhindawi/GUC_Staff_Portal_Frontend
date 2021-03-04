@@ -109,7 +109,6 @@
 .navbar-dropdown-link:active {
   color: white;
   background-color: black;
-  outline: none;
 }
 
 .dropdown-user-initial {

@@ -1,32 +1,39 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Dropdown } from "react-bootstrap";
-import { Card, CardFooter, CardText } from "reactstrap";
+import { Link, useRouteMatch } from "react-router-dom";
+import { Card, Dropdown } from "react-bootstrap";
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
+import { useUserContext } from "../../../contexts/UserContext";
+import {
+  useNotificationsContext,
+  useSetNotificationsContext
+} from "../../../contexts/NotificationsContext";
 import Spinner from "../../helper_components/Spinner";
 
 function Notifications(props) {
   const [isLoading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState([]);
+  const notifications = useNotificationsContext();
+  const setNotifications = useSetNotificationsContext();
   const [seenNotifications, setSeenNotifications] = useState([]);
+  const user = useUserContext();
+  const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const fetchNotifications = () => {
-    setLoading(true);
-    AxiosInstance({
+  const fetchNotifications = async () => {
+    await AxiosInstance({
       method: "get",
-      url: "/staff/academic/notifications",
+      url: "/staff/academic/get-notifications",
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
       .then(response => {
-        setNotifications(props.inNavbar ? response.data.slice(0, 2) : response.data);
+        setNotifications(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -45,8 +52,8 @@ function Notifications(props) {
         }
       });
   };
-  const updateSeenNotifications = () => {
-    AxiosInstance({
+  const updateSeenNotifications = async () => {
+    await AxiosInstance({
       method: "put",
       url: "/staff/academic/mark-notifications-seen",
       cancelToken: axiosCancelSource.token,
@@ -57,8 +64,8 @@ function Notifications(props) {
         seenNotifications,
       },
     })
-      .then(response => {
-        console.log(response.data);
+      .then(async () => {
+        await fetchNotifications();
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
@@ -78,30 +85,38 @@ function Notifications(props) {
   useEffect(fetchNotifications, []);
   useEffect(updateSeenNotifications, [seenNotifications]);
 
-  const seeNotification = notification => {
-    setSeenNotifications(prevState => {
-      if (prevState.includes(notification)) {
-        return prevState;
-      }
-      return [...prevState, notification];
+  const seeNotification = clickedNotification => {
+    if (clickedNotification.seen) {
+      return;
+    }
+    setSeenNotifications(prevState => [...prevState, clickedNotification]);
+    setNotifications(prevNotifications => {
+      const notification = prevNotifications.filter(n => n._id === clickedNotification._id)[0];
+      notification.seen = true;
+      return prevNotifications;
     });
   };
 
   const notficationDrodownItems = () => {
     if (notifications.length === 0) {
       return (
-        <Dropdown.Item className="dropdown-notification" as="span" tabIndex={0}>
+        <Dropdown.Item
+          className="dropdown-no-notifications"
+          as="span"
+          tabIndex={0}
+        >
           No Notifications
         </Dropdown.Item>
       );
     }
-    return (notifications.map(notification => (
+    const navbarNotifications = notifications.slice(0, 2);
+    return (navbarNotifications.map(notification => (
       <Dropdown.Item
-        className={`dropdown-notification ${notification.seen ? "bg-white" : "bg-info"}`}
-        as="div"
-        tabIndex={0}
-        key={notification._id}
+        className={`dropdown-notification ${notification.seen ? "seen-notification" : "unseen-notification"}`}
+        as={Link}
+        to={`${match.path}/${user.rolePath}/notifications`}
         onClick={() => { seeNotification(notification); }}
+        key={notification._id}
       >
         <span>{notification.message}</span>
         <span>{notification.createdAt.replace("T", " ").split(".")[0]}</span>
@@ -111,29 +126,36 @@ function Notifications(props) {
   const notificationCards = () => {
     if (notifications.length === 0) {
       return (
-        <Card className="notification-card">
-          <CardText>
+        <Card className="no-notifications-card" body>
+          <Card.Title>
             No Notifications
-          </CardText>
+          </Card.Title>
         </Card>
       );
     }
     return (notifications.map(notification => (
       <Card
-        className={notification.seen ? "notification-card" : "notification-card notification-seen"}
-        key={notification._id}
+        className={`notification-card ${notification.seen ? "seen-notification" : "unseen-notification"}`}
+        tabIndex={0}
         onClick={() => { seeNotification(notification); }}
+        onKeyPress={() => { seeNotification(notification); }}
+        key={notification._id}
       >
-        <CardText>
-          {notification.message}
-        </CardText>
-        <CardFooter>
+        <Card.Body>
+          <Card.Text>
+            {notification.message}
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer>
           {notification.createdAt.replace("T", " ").split(".")[0]}
-        </CardFooter>
+        </Card.Footer>
       </Card>
     )));
   };
 
+  if (isLoading && props.inNavbar) {
+    return null;
+  }
   if (isLoading) {
     return <Spinner />;
   }

@@ -25,7 +25,7 @@ UserProvider.propTypes = {
 function useUserContext() {
   const context = useContext(UserContext);
   if (context === undefined) {
-    throw new Error("useUser must be used within a UserProvider");
+    throw new Error("useUserContext must be used within a UserProvider");
   }
   return context;
 }
@@ -33,7 +33,7 @@ function useUserContext() {
 function useSetUserContext() {
   const context = useContext(SetUserContext);
   if (context === undefined) {
-    throw new Error("useSetUser must be used within a UserProvider");
+    throw new Error("useSetUserContext must be used within a UserProvider");
   }
   return context;
 }

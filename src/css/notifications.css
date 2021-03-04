@@ -1,12 +1,60 @@
+.unseen-notification {
+  background-color: rgba(173, 216, 230, 0.5);
+}
+
+.seen-notification {
+  background-color: white;
+}
+
+.notifications-container {
+  width: 100%;
+  height: 100%;
+  padding: 5px;
+  overflow-y: auto;
+}
+
+.no-notifications-card .card-title {
+  margin: 0;
+}
+
+.notification-card {
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+
+.notification-card:focus-visible {
+  box-shadow: 0 0 5px 0 black;
+}
+
+.notification-card:hover {
+  box-shadow: 0 0 5px 0 grey;
+}
+
+.notification-card:focus {
+  outline: none;
+}
+
+.notification-card:active {
+  background-color: rgb(226, 224, 224);
+  outline: none;
+}
+
+.dropdown-no-notifications {
+  pointer-events: none;
+}
+
+.dropdown-no-notifications:focus {
+  outline: none;
+}
+
 .dropdown-notification {
   display: flex;
   flex-direction: column;
-  width: 250px;
 }
 
 .dropdown-notification:hover,
 .dropdown-notification:focus-visible {
-  background-color: lightblue !important;
+  background-color: rgba(173, 216, 230);
 }
 
 .dropdown-notification:focus {
@@ -14,31 +62,11 @@
 }
 
 .dropdown-notification:active {
-  color: white;
-  background-color: black !important;
-  outline: none;
+  color: black;
+  background-color: rgb(226, 224, 224);
 }
 
 .dropdown-notification span {
   width: 100%;
   white-space: initial;
-}
-
-.notifications-container {
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.notification-card {
-  cursor: pointer;
-  padding: 10px;
-  margin-bottom: 30px;
-}
-
-.notification-card:active {
-  background-color: lightblue !important;
-}
-.notification-seen{
-  background-color: lightblue !important;
 }
