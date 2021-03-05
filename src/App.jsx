@@ -44,60 +44,74 @@ function App() {
     };
     setUserContext(user);
   };
-  const handleLogin = () => {
-    setUser();
-    history.push("/staff");
-    localStorage.setItem("login", Date.now());
+  const updateToken = (e, syncTabs) => {
+    if (syncTabs) {
+      setTimeout(() => { AuthTokenManager.initAuthAccessToken(); }, 1000);
+    }
+    else {
+      AuthTokenManager.initAuthAccessToken();
+    }
   };
-  const handleLogout = () => {
+  const handleLogin = async (e, syncTabs) => {
+    if (!syncTabs) {
+      setUser();
+      localStorage.setItem("login", Date.now());
+    }
+    else {
+      await initAuthToken();
+    }
+    history.push("/staff");
+  };
+  const handleLogout = (e, syncTabs) => {
     AuthTokenManager.removeAuthAccessToken();
     history.push("/login");
     setAlertModalMessage("Logged out successfully");
     setAlertModalOpen(true);
-    localStorage.setItem("logout", Date.now());
+    setUserContext({});
+    if (!syncTabs) {
+      localStorage.setItem("logout", Date.now());
+    }
   };
-  const handleTimeout = () => {
+  const handleTimeout = (e, syncTabs) => {
     AuthTokenManager.removeAuthAccessToken();
     history.push("/login");
     setAlertModalMessage("Session expired. Please log in again");
     setAlertModalOpen(true);
-    localStorage.setItem("session-timeout", Date.now());
+    setUserContext({});
+    if (!syncTabs) {
+      localStorage.setItem("session-timeout", Date.now());
+    }
   };
-  const handleResetPassword = () => {
+  const handleResetPassword = (e, syncTabs) => {
     AuthTokenManager.removeAuthAccessToken();
     history.push("/login");
     setAlertModalMessage("Password reset successfully. Please log in again");
     setAlertModalOpen(true);
-    localStorage.setItem("reset-password", Date.now());
+    setUserContext({});
+    if (!syncTabs) {
+      localStorage.setItem("reset-password", Date.now());
+    }
   };
-  const syncTabs = async event => {
-    if (event.key === "login") {
-      setAlertModalOpen(false);
-      setAlertModalMessage("");
-      await initAuthToken();
-      history.push("/staff");
+  const syncTabs = async e => {
+    if (e.key === "update-token") {
+      updateToken(e, true);
     }
-    else if (event.key === "logout") {
-      AuthTokenManager.removeAuthAccessToken();
-      history.push("/login");
-      setAlertModalMessage("Logged out successfully");
-      setAlertModalOpen(true);
+    else if (e.key === "login") {
+      handleLogin(e, true);
     }
-    else if (event.key === "session-timeout") {
-      AuthTokenManager.removeAuthAccessToken();
-      history.push("/login");
-      setAlertModalMessage("Session expired. Please log in again");
-      setAlertModalOpen(true);
+    else if (e.key === "logout") {
+      handleLogout(e, true);
     }
-    else if (event.key === "reset-password") {
-      AuthTokenManager.removeAuthAccessToken();
-      history.push("/login");
-      setAlertModalMessage("Password reset successfully. Please log in again");
-      setAlertModalOpen(true);
+    else if (e.key === "session-timeout") {
+      handleTimeout(e, true);
+    }
+    else if (e.key === "reset-password") {
+      handleResetPassword(e, true);
     }
   };
   const setupEventListeners = () => {
     window.addEventListener("set-user", setUser);
+    window.addEventListener("update-token", updateToken);
     window.addEventListener("login", handleLogin);
     window.addEventListener("logout", handleLogout);
     window.addEventListener("session-timeout", handleTimeout);
@@ -105,6 +119,7 @@ function App() {
     window.addEventListener("storage", syncTabs);
     return () => {
       window.removeEventListener("set-user", setUser);
+      window.removeEventListener("update-token", updateToken);
       window.removeEventListener("login", handleLogin);
       window.removeEventListener("logout", handleLogout);
       window.removeEventListener("session-timeout", handleTimeout);

@@ -15,6 +15,9 @@ const AuthTokenManager = () => {
     authAccessToken = accessToken;
     decodedAuthAccessToken = jwt.decode(authAccessToken);
     const delay = new Date(1000 * decodedAuthAccessToken.exp - 5000) - new Date();
+    if (refreshTimeoutId) {
+      clearTimeout(refreshTimeoutId);
+    }
     refreshTimeoutId = setTimeout(refreshAccessToken, delay);
   };
 

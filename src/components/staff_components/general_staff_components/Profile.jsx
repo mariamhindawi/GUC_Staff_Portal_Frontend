@@ -5,7 +5,6 @@ import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
-import { useSetUserContext, useUserContext } from "../../../contexts/UserContext";
 import Spinner from "../../helper_components/Spinner";
 import AlertModal from "../../helper_components/AlertModal";
 import ProfileCard from "./ProfileCard";
@@ -16,8 +15,6 @@ function Profile() {
   const [user, setUser] = useState();
   const [alertModalIsOpen, setAlertModalOpen] = useState(false);
   const [alertModalMessage, setAlertModalMessage] = useState({ messageText: "", messageStyle: "" });
-  const userContext = useUserContext();
-  const setUserContext = useSetUserContext();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
@@ -32,7 +29,8 @@ function Profile() {
       .then(response => {
         setUser(response.data);
         if (updateProfile) {
-          setUserContext({ ...userContext, email: response.data.email });
+          window.dispatchEvent(new Event("update-token"));
+          localStorage.setItem("update-token", Date.now());
         }
         setLoading(false);
       })
