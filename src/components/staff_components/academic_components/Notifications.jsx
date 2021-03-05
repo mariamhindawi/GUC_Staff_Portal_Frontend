@@ -7,10 +7,7 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import { useUserContext } from "../../../contexts/UserContext";
-import {
-  useNotificationsContext,
-  useSetNotificationsContext
-} from "../../../contexts/NotificationsContext";
+import { useNotificationsContext, useSetNotificationsContext } from "../../../contexts/NotificationsContext";
 import Spinner from "../../helper_components/Spinner";
 
 function Notifications(props) {
@@ -153,14 +150,11 @@ function Notifications(props) {
     )));
   };
 
-  if (isLoading && props.inNavbar) {
-    return null;
+  if (props.inNavbar) {
+    return <>{notficationDrodownItems()}</>;
   }
   if (isLoading) {
     return <Spinner />;
-  }
-  if (props.inNavbar) {
-    return <>{notficationDrodownItems()}</>;
   }
   return (
     <div className="view-container">
