@@ -8,12 +8,14 @@ import AxiosInstance from "../../others/AxiosInstance";
 import AuthTokenManager from "../../others/AuthTokenManager";
 import useAxiosCancel from "../../hooks/AxiosCancel";
 import { useUserContext } from "../../contexts/UserContext";
+import { useUnseenNotificationsContext } from "../../contexts/NotificationsContext";
 import Logo from "../../images/guc_logo.png";
 import Notifications from "../staff_components/academic_components/Notifications";
 
 function Navbar(props) {
   const [sidebarIsOpen, setSidebarOpen] = useState(false);
   const user = useUserContext();
+  const numberOfUnseenNotifications = useUnseenNotificationsContext();
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
@@ -101,8 +103,17 @@ function Navbar(props) {
         </Nav.Link>
         {user.role !== "HR" && (
           <Dropdown>
-            <Dropdown.Toggle className="nav-link navbar-item" as="button">
-              <FontAwesomeIcon className="navbar-icon" icon="bell" />
+            <Dropdown.Toggle className="navbar-item navbar-notification-item" as="button">
+              <span>
+                <FontAwesomeIcon className="navbar-icon" icon="bell" />
+                {numberOfUnseenNotifications !== 0 && (
+                  <span
+                    className={`fa-layers-counter navbar-notification-counter ${numberOfUnseenNotifications < 10 ? "small" : ""}${numberOfUnseenNotifications >= 10 && numberOfUnseenNotifications < 100 ? "medium" : ""}${numberOfUnseenNotifications >= 100 ? "large" : ""}`}
+                  >
+                    {numberOfUnseenNotifications}
+                  </span>
+                )}
+              </span>
             </Dropdown.Toggle>
             <Dropdown.Menu className="navbar-dropdown-menu" align="right">
               <Notifications inNavbar />

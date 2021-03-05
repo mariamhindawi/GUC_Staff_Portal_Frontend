@@ -39,6 +39,41 @@
   outline: none;
 }
 
+.navbar-notification-item {
+  padding: 0;
+}
+
+.navbar-notification-item > span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 46px;
+  height: 40px;
+  padding-top: 1px;
+}
+
+.navbar-notification-counter {
+  pointer-events: all;
+  top: 7px;
+  font-size: xx-large;
+}
+
+.navbar-notification-counter.small {
+  left: -10px;
+  right: unset;
+}
+
+.navbar-notification-counter.medium {
+  left: -12px;
+  right: unset;
+}
+
+.navbar-notification-counter.large {
+  left: -30px;
+  right: 2px;
+}
+
 .dropdown-no-notifications {
   pointer-events: none;
 }
