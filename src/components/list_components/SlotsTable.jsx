@@ -4,7 +4,7 @@ import { Card, CardTitle } from "reactstrap";
 const SlotsTable = ({ slots, onClick, active }) => {
   const slotRows = [];
   for (let i = 1; i < 6; i++) {
-    slotRows.push(<SlotTableRow key={i} slots={slots.filter(slot => slot.slotNumber === i)} slotNumber={i} onClick={onClick} active={active} />);
+    slotRows.push(<SlotTableRow key={i} slots={slots.filter(slot => slot.slotNumber === (i+""))} slotNumber={i+""} onClick={onClick} active={active} />);
   }
 
   return (
