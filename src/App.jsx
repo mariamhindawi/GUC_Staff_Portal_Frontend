@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./css/App.css";
 import "./others/FontawesomeIcons";
 import AuthTokenManager from "./others/AuthTokenManager";
+import { sleep } from "./others/Helpers";
 import { useSetUserContext } from "./contexts/UserContext";
 import Login from "./components/staff_components/general_staff_components/Login";
 import StaffHome from "./components/staff_components/general_staff_components/StaffHome";
@@ -44,13 +45,11 @@ function App() {
     };
     setUserContext(user);
   };
-  const updateToken = (e, syncTabs) => {
+  const updateToken = async (e, syncTabs) => {
     if (syncTabs) {
-      setTimeout(() => { AuthTokenManager.initAuthAccessToken(); }, 1000);
+      await sleep(1000);
     }
-    else {
-      AuthTokenManager.initAuthAccessToken();
-    }
+    AuthTokenManager.initAuthAccessToken();
   };
   const handleLogin = async (e, syncTabs) => {
     if (!syncTabs) {
