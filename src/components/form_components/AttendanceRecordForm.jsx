@@ -158,7 +158,7 @@ function AttendanceRecordForm(props) {
             />
           )}
 
-          <FormSubmit formType="update" message={message} setMessage={setMessage} />
+          <FormSubmit formType={!props.attendanceRecord._id ? "add" : "update"} message={message} setMessage={setMessage} />
         </Form>
       </Formik>
     </div>
