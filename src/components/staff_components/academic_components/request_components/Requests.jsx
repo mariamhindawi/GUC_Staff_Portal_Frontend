@@ -4,7 +4,7 @@ import { useUserContext } from "../../../../contexts/UserContext";
 import RequestsHome from "./RequestsHome";
 import ChangeDayOffRequest from "./changeDayOffRequest";
 import SendSlotLinkingRequest from "./createSlotLinkingRequest.component";
-import ViewRequests from "./requests.component";
+import ViewRequests from "./ViewMyRequests";
 import ViewReplacement from "./ViewReplacement.component";
 import SendReplacement from "./ReplacementRequest.component";
 import CCRequests from "../../cc_components/CCrequests.component";
