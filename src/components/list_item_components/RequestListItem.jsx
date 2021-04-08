@@ -55,12 +55,9 @@ function RequestListItem(props) {
       <td>{props.request.id}</td>
       <td>{props.request.type}</td>
       <td>
-        {props.request.type === "replacementRequest" ? props.request.reason : null }
+        {props.request.type === "replacementRequest" ? props.request.reason : <>-</> }
         {props.request.type === "slotLinkingRequest" ? props.request.ccComment : props.request.HODComment}
-
       </td>
-
-      <td>{props.request.reason ? props.request.reason : <>-</>}</td>
       <td>{props.request.type !== "slotLinkingRequest" && props.request.type !== "dayOffChangeRequest" ? props.request.day.split("T")[0] : <>-</>}</td>
       {customData()}
     </tr>
