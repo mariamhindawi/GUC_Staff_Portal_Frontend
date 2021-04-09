@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { addDays } from "date-fns";
+import { addDays, isAfter, isValid } from "date-fns";
 import { Alert, Modal } from "react-bootstrap";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import Axios from "axios";
@@ -29,7 +29,8 @@ function HrEditAttendanceRecords() {
   useAxiosCancel(axiosCancelSource2);
 
   const fetchAttendanceRecords = async () => {
-    if (userId === "") {
+    if (userId === "" || !isValid(day) || isAfter(day, addDays(Date.now(), -1))) {
+      setAttendanceRecords([]);
       return;
     }
     setLoading(true);
@@ -137,7 +138,7 @@ function HrEditAttendanceRecords() {
   };
 
   const renderList = () => {
-    if (userId === "") {
+    if (userId === "" || !isValid(day) || isAfter(day, addDays(Date.now(), -1))) {
       return null;
     }
     if (isLoading) {

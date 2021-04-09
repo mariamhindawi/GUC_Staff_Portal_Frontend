@@ -5,6 +5,7 @@ import { Card, Dropdown } from "react-bootstrap";
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
+import { sleep } from "../../../others/Helpers";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import { useUserContext } from "../../../contexts/UserContext";
 import { useNotificationsContext, useSetNotificationsContext } from "../../../contexts/NotificationsContext";
@@ -14,13 +15,13 @@ function Notifications(props) {
   const [isLoading, setLoading] = useState(true);
   const notifications = useNotificationsContext();
   const setNotifications = useSetNotificationsContext();
-  const [seenNotifications, setSeenNotifications] = useState([]);
   const user = useUserContext();
   const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
   const fetchNotifications = async () => {
+    await sleep(500);
     await AxiosInstance({
       method: "get",
       url: "/staff/academic/get-notifications",
@@ -49,7 +50,9 @@ function Notifications(props) {
         }
       });
   };
-  const updateSeenNotifications = async () => {
+  useEffect(fetchNotifications, []);
+
+  const updateSeenNotifications = async notification => {
     await AxiosInstance({
       method: "put",
       url: "/staff/academic/mark-notifications-seen",
@@ -58,7 +61,7 @@ function Notifications(props) {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
       data: {
-        seenNotifications,
+        seenNotifications: [notification],
       },
     })
       .then(async () => {
@@ -79,19 +82,14 @@ function Notifications(props) {
         }
       });
   };
-  useEffect(fetchNotifications, []);
-  useEffect(updateSeenNotifications, [seenNotifications]);
-
   const seeNotification = clickedNotification => {
     if (clickedNotification.seen) {
       return;
     }
-    setSeenNotifications(prevState => [...prevState, clickedNotification]);
-    setNotifications(prevNotifications => {
-      const notification = prevNotifications.filter(n => n._id === clickedNotification._id)[0];
-      notification.seen = true;
-      return prevNotifications;
-    });
+    const notification = clickedNotification;
+    notification.seen = true;
+    setNotifications(prevNotifications => [...prevNotifications]);
+    updateSeenNotifications(notification);
   };
 
   const notficationDrodownItems = () => {
@@ -153,7 +151,7 @@ function Notifications(props) {
   if (props.inNavbar) {
     return <>{notficationDrodownItems()}</>;
   }
-  if (isLoading) {
+  if (isLoading && notifications.length === 0) {
     return <Spinner />;
   }
   return (

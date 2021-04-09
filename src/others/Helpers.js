@@ -1,13 +1,13 @@
-const getItem = (items, itemIdName, itemId) => {
+function getItem(items, itemIdName, itemId) {
   for (let i = 0; i < items.length; i++) {
     if (items[i][itemIdName] === itemId) {
       return items[i];
     }
   }
   return null;
-};
+}
 
-const removeFromPath = (path, number) => {
+function removeFromPath(path, number) {
   const splitPath = path.split("/");
   if (number < splitPath.length) {
     splitPath.length -= number;
@@ -16,4 +16,8 @@ const removeFromPath = (path, number) => {
   return "";
 };
 
-export { getItem, removeFromPath };
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export { getItem, removeFromPath, sleep };

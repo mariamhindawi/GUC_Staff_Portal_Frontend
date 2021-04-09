@@ -22,6 +22,7 @@ function HrViewAttendanceRecords() {
 
   const fetchAttendanceRecords = async () => {
     if (userId === "") {
+      setAttendanceRecords([]);
       return;
     }
     setLoading(true);
