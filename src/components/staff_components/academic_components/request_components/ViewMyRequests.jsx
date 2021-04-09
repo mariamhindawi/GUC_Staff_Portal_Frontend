@@ -101,9 +101,9 @@ function ViewMyRequests() {
                 </Dropdown.Item>
                 <Dropdown.Item
                   key="accepted"
-                  onClick={() => { setLeaveFilter("Under Review"); }}
+                  onClick={() => { setLeaveFilter("Pending"); }}
                 >
-                  Under Review
+                  Pending
                 </Dropdown.Item>
               </DropdownButton>
             </div>

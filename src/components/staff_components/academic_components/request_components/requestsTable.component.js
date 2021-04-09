@@ -58,7 +58,7 @@ const RequestsTableRow = ({ request, cancelRequest, acceptRequest, rejectRequest
         <td>{request.type !== "slotLinkingRequest" && request.type !== "dayOffChangeRequest" ? request.day.split("T")[0] : null}</td>
         {cancelRequest && request.type !== "slotLinkingRequest" && request.type !== "dayOffChangeRequest"
                 && new Date(request.day) > new Date()
-                || cancelRequest && request.status === "Under review"
+                || cancelRequest && request.status === "Pending"
           ? <td><Button className="bg-danger" onClick={() => cancelRequest(request.id)}>Cancel</Button></td> : <td />}
         {acceptRequest ? <td><Button className="bg-success" onClick={() => acceptRequest(request.id)}>Accept</Button></td> : <td />}
         {rejectRequest ? <td><Button className="bg-danger" onClick={() => rejectRequest(request.id)}>Reject</Button></td> : <></>}

@@ -10,6 +10,8 @@ import SendReplacement from "./ReplacementRequest.component";
 import CCRequests from "../../cc_components/CCrequests.component";
 import LeaveRequest from "./createRequest.component";
 import HODRequests from "../../hod_components/HODrequests.component";
+import SendRequests from "../request_components/sendRequest";
+
 
 function Requests() {
   const match = useRouteMatch();
@@ -24,6 +26,8 @@ function Requests() {
       <Route exact path={`${match.path}/send-replacement-request`}><SendReplacement /></Route>
       <Route exact path={`${match.path}/send-slot-linking-request`}><SendSlotLinkingRequest /></Route>
       <Route exact path={`${match.path}/change-day-off-request`}><ChangeDayOffRequest /></Route>
+      <Route exact path={`${match.path}/send-request`}><SendRequests /></Route>
+
       {user.role === "Head of Department"
         && <Route exact path={`${match.path}/view-staff-requests`}><HODRequests /></Route>}
       {user.role === "Course Coordinator"

@@ -228,6 +228,9 @@ select option:disabled:hover {
   text-align: left;
   max-width: 45%;
 }
+.request-form .MuiFormControl-root{
+  width: 80%;}
+
 
 @media (max-width: 992px) {
   .form-card {

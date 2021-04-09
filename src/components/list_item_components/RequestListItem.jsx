@@ -16,7 +16,7 @@ function RequestListItem(props) {
         <>
           <td>{props.request.status}</td>
           <td>
-            {props.request.status === "Under review"
+            {props.request.status === "Pending"
               ? <DeleteButton onClick={() => { props.toggleDeleteModal(props.request.id); }} />
               : <></>}
           </td>
@@ -29,7 +29,7 @@ function RequestListItem(props) {
         <>
           <td>{props.request.status}</td>
           <td>
-            {props.request.status === "Under review"
+            {props.request.status === "Pending"
               ? <DeleteButton onClick={() => { props.toggleDeleteModal(props.request.id); }} />
               : <></>}
           </td>

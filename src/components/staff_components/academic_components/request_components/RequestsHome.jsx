@@ -12,12 +12,6 @@ function RequestsHome() {
   return (
     <div className="view-container">
       <div className="general-page-container">
-        <Link to={`${match.path}/view-replacement-requests`}>
-          <Button className="general-page-button" variant="info">
-            View replacement request
-            <br />
-          </Button>
-        </Link>
         <Link to={`${match.path}/view-requests`} tabIndex={-1}>
           <Button className="general-page-button" variant="info">
             Requests status
@@ -26,6 +20,13 @@ function RequestsHome() {
           </Button>
         </Link>
         <Link to={`${match.path}/send-leave-request`} tabIndex={-1}>
+          <Button className="general-page-button" variant="info">
+            Send Request
+            <br />
+            <FontAwesomeIcon icon="share" />
+          </Button>
+        </Link>
+        <Link to={`${match.path}/send-request`} tabIndex={-1}>
           <Button className="general-page-button" variant="info">
             Send Request
             <br />
