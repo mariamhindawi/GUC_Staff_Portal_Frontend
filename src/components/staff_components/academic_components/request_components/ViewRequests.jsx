@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Link, useRouteMatch } from "react-router-dom";
 import Axios from "axios";
 import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
@@ -14,11 +13,10 @@ function ViewRequests(props) {
   const [deleteModalIsOpen, setDeleteModalOpen] = useState(false);
   const [deleteModalState, setDeleteModalState] = useState("will submit");
   const [deleteModalMessage, setDeleteModalMessage] = useState({ messageText: "", messageStyle: "" });
-  const match = useRouteMatch();
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
-  const acceptRequest = async requestId => {
+  const acceptReplacement = async requestId => {
     await AxiosInstance({
       method: "put",
       url: `/staff/academic/replacement-requests/${requestId}/accept`,
@@ -27,7 +25,7 @@ function ViewRequests(props) {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
-      .then(async response => {
+      .then(() => {
         props.updateRequests();
       })
       .catch(error => {
@@ -45,7 +43,7 @@ function ViewRequests(props) {
         }
       });
   };
-  const rejectRequest = async requestId => {
+  const rejectReplacement = async requestId => {
     await AxiosInstance({
       method: "put",
       url: `/staff/academic/replacement-requests/${requestId}/reject`,
@@ -54,7 +52,7 @@ function ViewRequests(props) {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
     })
-      .then(async response => {
+      .then(() => {
         props.updateRequests();
       })
       .catch(error => {
@@ -133,8 +131,12 @@ function ViewRequests(props) {
           requestType={props.requestType}
           requestFilter={props.requestFilter}
           toggleDeleteModal={toggleDeleteModal}
-          acceptRequest={acceptRequest}
-          rejectRequest={rejectRequest}
+          acceptReplacement={acceptReplacement}
+          rejectReplacement={rejectReplacement}
+          hodAcceptRequest={props.hodAcceptRequest}
+          hodRejectRequest={props.hodRejectRequest}
+          ccAcceptRequest={props.ccAcceptRequest}
+          ccRejectRequest={props.ccRejectRequest}
 
         />
         )
@@ -166,6 +168,18 @@ ViewRequests.propTypes = {
     day: PropTypes.string,
   })).isRequired,
   updateRequests: PropTypes.func.isRequired,
+  hodAcceptRequest: PropTypes.func,
+  hodRejectRequest: PropTypes.func,
+  ccAcceptRequest: PropTypes.func,
+  ccRejectRequest: PropTypes.func,
+
 };
 
+ViewRequests.defaultProps = {
+  hodAcceptRequest: () => {},
+  hodRejectRequest: () => {},
+  ccAcceptRequest: () => {},
+  ccRejectRequest: () => {},
+
+};
 export default ViewRequests;

@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, useRouteMatch } from "react-router-dom";
 import DeleteButton from "../button_components/DeleteButton";
 import AcceptButton from "../button_components/AcceptButton";
 import RejectButton from "../button_components/RejectButton";
@@ -8,9 +7,34 @@ import { useUserContext } from "../../contexts/UserContext";
 
 function RequestListItem(props) {
   const user = useUserContext();
-  const match = useRouteMatch();
 
   const customData = () => {
+    if (user.role === "Head of Department") {
+      return (
+        <>
+          <td>{props.request.requestedBy}</td>
+          <td>
+            <AcceptButton onClick={() => { props.hodAcceptRequest(props.request.id); }} />
+          </td>
+          <td>
+            <RejectButton onClick={() => { props.hodRejectRequest(props.request.id); }} />
+          </td>
+        </>
+      );
+    }
+    if (user.role === "Course Coordinator") {
+      return (
+        <>
+          <td>{props.request.requestedBy}</td>
+          <td>
+            <AcceptButton onClick={() => { props.ccAcceptRequest(props.request.id); }} />
+          </td>
+          <td>
+            <RejectButton onClick={() => { props.ccRejectRequest(props.request.id); }} />
+          </td>
+        </>
+      );
+    }
     if (props.requestType === "Leave requests") {
       return (
         <>
@@ -41,10 +65,10 @@ function RequestListItem(props) {
       <>
         <td>{props.request.requestedBy}</td>
         <td>
-          <AcceptButton onClick={() => { props.acceptRequest(props.request.id); }} />
+          <AcceptButton onClick={() => { props.acceptReplacement(props.request.id); }} />
         </td>
         <td>
-          <RejectButton onClick={() => { props.rejectRequest(props.request.id); }} />
+          <RejectButton onClick={() => { props.rejectReplacement(props.request.id); }} />
         </td>
       </>
     );
@@ -79,14 +103,23 @@ RequestListItem.propTypes = {
     ccComment: PropTypes.string,
   }).isRequired,
   toggleDeleteModal: PropTypes.func,
-  acceptRequest: PropTypes.func,
-  rejectRequest: PropTypes.func,
+  acceptReplacement: PropTypes.func,
+  rejectReplacement: PropTypes.func,
+  hodAcceptRequest: PropTypes.func,
+  hodRejectRequest: PropTypes.func,
+  ccAcceptRequest: PropTypes.func,
+  ccRejectRequest: PropTypes.func,
+
 };
 
 RequestListItem.defaultProps = {
   toggleDeleteModal: () => {},
-  acceptRequest: () => {},
-  rejectRequest: () => {},
+  acceptReplacement: () => {},
+  rejectReplacement: () => {},
+  hodAcceptRequest: () => {},
+  hodRejectRequest: () => {},
+  ccAcceptRequest: () => {},
+  ccRejectRequest: () => {},
 
 };
 

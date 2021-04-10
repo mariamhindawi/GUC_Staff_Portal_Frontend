@@ -30,12 +30,36 @@ function RequestList(props) {
         toggleDeleteModal={props.toggleDeleteModal}
         requestType={props.requestType}
         requestFilter={props.requestFilter}
-        acceptRequest={props.acceptRequest}
-        rejectRequest={props.rejectRequest}
+        acceptReplacement={props.acceptReplacement}
+        rejectReplacement={props.rejectReplacement}
+        hodAcceptRequest={props.hodAcceptRequest}
+        hodRejectRequest={props.hodRejectRequest}
+        ccAcceptRequest={props.ccAcceptRequest}
+        ccRejectRequest={props.ccRejectRequest}
       />
     ));
   };
   const customTableHeads = () => {
+    if (user.role === "Head of Department") {
+      return (
+        <>
+          <th style={{ width: "100px" }}>Requested by</th>
+          <th style={{ width: "70px" }}> </th>
+          <th style={{ width: "70px" }}> </th>
+
+        </>
+      );
+    }
+    if (user.role === "Course Coordinator") {
+      return (
+        <>
+          <th style={{ width: "100px" }}>Requested by</th>
+          <th style={{ width: "70px" }}> </th>
+          <th style={{ width: "70px" }}> </th>
+
+        </>
+      );
+    }
     if (props.requestType === "Leave requests") {
       return (
         <>
@@ -106,15 +130,23 @@ RequestList.propTypes = {
     day: PropTypes.string,
   })).isRequired,
   toggleDeleteModal: PropTypes.func,
-  acceptRequest: PropTypes.func,
-  rejectRequest: PropTypes.func,
+  acceptReplacement: PropTypes.func,
+  rejectReplacement: PropTypes.func,
+  hodAcceptRequest: PropTypes.func,
+  hodRejectRequest: PropTypes.func,
+  ccAcceptRequest: PropTypes.func,
+  ccRejectRequest: PropTypes.func,
 
 };
 
 RequestList.defaultProps = {
   toggleDeleteModal: () => {},
-  acceptRequest: () => {},
-  rejectRequest: () => {},
+  acceptReplacement: () => {},
+  rejectReplacement: () => {},
+  hodAcceptRequest: () => {},
+  hodRejectRequest: () => {},
+  ccAcceptRequest: () => {},
+  ccRejectRequest: () => {},
 
 };
 
