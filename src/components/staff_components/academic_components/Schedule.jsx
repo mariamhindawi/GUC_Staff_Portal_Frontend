@@ -7,7 +7,7 @@ import { useUserContext } from "../../../contexts/UserContext";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import SlotsTable from "../../list_components/SlotsTable";
 
-const Schedule = () => {
+function Schedule() {
   const [slots, setSlots] = useState([]);
   const [active, setActive] = useState("");
   const [modal, setModal] = useState(false);
@@ -24,6 +24,7 @@ const Schedule = () => {
     })
       .then(response => {
         setSlots(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
@@ -84,6 +85,6 @@ const Schedule = () => {
       </Modal>
     </>
   );
-};
+}
 
 export default Schedule;

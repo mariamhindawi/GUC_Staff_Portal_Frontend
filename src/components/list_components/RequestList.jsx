@@ -40,7 +40,7 @@ function RequestList(props) {
     ));
   };
   const customTableHeads = () => {
-    if (user.role === "Head of Department") {
+    if (user.role === "Head of Department" && props.requestType !== "Leave requests" && props.requestType !== "Replacement requests") {
       return (
         <>
           <th style={{ width: "100px" }}>Requested by</th>
@@ -50,7 +50,7 @@ function RequestList(props) {
         </>
       );
     }
-    if (user.role === "Course Coordinator") {
+    if (user.role === "Course Coordinator" && props.requestType !== "Leave requests" && props.requestType !== "Replacement requests") {
       return (
         <>
           <th style={{ width: "100px" }}>Requested by</th>

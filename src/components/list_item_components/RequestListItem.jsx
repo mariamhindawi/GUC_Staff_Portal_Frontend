@@ -9,7 +9,7 @@ function RequestListItem(props) {
   const user = useUserContext();
 
   const customData = () => {
-    if (user.role === "Head of Department") {
+    if (user.role === "Head of Department" && props.requestType !== "Leave requests" && props.requestType !== "Replacement requests") {
       return (
         <>
           <td>{props.request.requestedBy}</td>
@@ -22,7 +22,7 @@ function RequestListItem(props) {
         </>
       );
     }
-    if (user.role === "Course Coordinator") {
+    if (user.role === "Course Coordinator" && props.requestType !== "Leave requests" && props.requestType !== "Replacement requests") {
       return (
         <>
           <td>{props.request.requestedBy}</td>
