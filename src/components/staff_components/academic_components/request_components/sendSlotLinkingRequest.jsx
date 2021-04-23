@@ -5,7 +5,7 @@ import {
 } from "reactstrap";
 import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
-import SlotsTable from "../../../list_components/SlotsTable";
+import SlotsTableList from "../../../list_components/SlotsTableList";
 import useAxiosCancel from "../../../../hooks/AxiosCancel";
 
 function SlotLinkingForm() {
@@ -100,7 +100,7 @@ function SlotLinkingForm() {
           </Dropdown>
         </div>
         <div className="text-center"><h1>Choose a slot</h1></div>
-        <SlotsTable slots={slots.filter(slot => slot.staffMember === "UNASSIGNED")} onClick={setActive} active={active} />
+        <SlotsTableList slots={slots.filter(slot => slot.staffMember === "UNASSIGNED")} onClick={setActive} active={active} />
         <div className="form-button-div mb-2">
           <Button type="submit" className={active ? "bg-success" : ""} onClick={sendRequest}>Send Request</Button>
         </div>

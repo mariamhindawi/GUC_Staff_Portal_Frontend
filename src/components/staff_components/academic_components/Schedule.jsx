@@ -5,9 +5,11 @@ import AxiosInstance from "../../../others/AxiosInstance";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
 import { useUserContext } from "../../../contexts/UserContext";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import SlotsTable from "../../list_components/SlotsTable";
+import SlotsTableList from "../../list_components/SlotsTableList";
+import Spinner from "../../helper_components/Spinner";
 
 function Schedule() {
+  const [isLoading, setLoading] = useState(true);
   const [slots, setSlots] = useState([]);
   const [active, setActive] = useState("");
   const [modal, setModal] = useState(false);
@@ -16,6 +18,7 @@ function Schedule() {
   useAxiosCancel(axiosCancelSource);
 
   const fetchSchedule = () => {
+    setLoading(true);
     AxiosInstance.get("staff/academic/schedule", {
       cancelToken: axiosCancelSource.token,
       headers: {
@@ -24,7 +27,7 @@ function Schedule() {
     })
       .then(response => {
         setSlots(response.data);
-        console.log(response.data);
+        setLoading(false);
       })
       .catch(error => {
         if (Axios.isCancel(error)) {
@@ -32,6 +35,7 @@ function Schedule() {
         }
         else if (error.response) {
           console.log(error.response);
+          setLoading(false);
         }
         else if (error.request) {
           console.log(error.request);
@@ -48,10 +52,17 @@ function Schedule() {
     setActive(slot);
     toggle();
   };
+  if (isLoading) {
+    return (
+      <Spinner />
+    );
+  }
 
   return (
     <>
-      <SlotsTable slots={slots} active="" onClick={click} />
+      <div className="view-container text-center">
+        <SlotsTableList slots={slots} active="" onClick={click} />
+      </div>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Slot Details</ModalHeader>
         <ModalBody>

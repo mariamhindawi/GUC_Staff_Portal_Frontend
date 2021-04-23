@@ -1,0 +1,42 @@
+
+.table-schedule{
+  margin-left: auto;
+  margin-right: auto;
+  table-layout: fixed;
+  border: rgb(0, 83, 138) 3px solid;
+  border-collapse: separate;
+  border-radius: 10px;
+  border-spacing: 0;
+  min-width: 1070px;
+  display: inline-table;
+}
+.table-schedule th{
+  background-color: rgba(26, 151, 210, 1);
+  color: white;
+
+}
+.table-schedule tr {
+height: 70px;
+}
+.table-schedule thead tr th:first-child {
+  border-top-left-radius: 7px;
+}
+
+.table-schedule thead tr th:last-child {
+  border-top-right-radius: 7px;
+
+}
+.last-slot{
+  border-bottom-left-radius: 7px;
+}
+.last-day{
+  border-bottom-right-radius: 7px;
+}
+.schedule-card{
+   width: 180px;
+   margin-left: auto;
+   margin-right: auto;
+   height: 50px;
+   background-color: rgba(0, 217, 241, 0.1) !important;
+
+}

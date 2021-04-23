@@ -3,7 +3,7 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, Mo
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
-import SlotsTable from "../../list_components/SlotsTable";
+import SlotsTableList from "../../list_components/SlotsTableList";
 
 const CICoursesSlotsComponent = () => {
   const [courses, setCourses] = useState([]);
@@ -61,7 +61,7 @@ const CICoursesSlotsComponent = () => {
         {dropdownItems}
       </DropdownMenu>
     </Dropdown>
-    <SlotsTable slots={slots.filter(sl => sl.staffMember !== "UNASSIGNED")} active={active} onClick={toggle} />
+    <SlotsTableList slots={slots.filter(sl => sl.staffMember !== "UNASSIGNED")} active={active} onClick={toggle} />
     <Modal isOpen={modalOpen} toggle={toggle}>
       <ModalBody>
         {slots.filter(slot => slot._id === active).map(slot => {

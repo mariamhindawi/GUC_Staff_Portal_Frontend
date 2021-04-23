@@ -10,7 +10,7 @@ import Axios from "axios";
 import * as Yup from "yup";
 import AxiosInstance from "../../../../others/AxiosInstance";
 import AuthTokenManager from "../../../../others/AuthTokenManager";
-import SlotsTable from "../../../list_components/SlotsTable";
+import SlotsTableList from "../../../list_components/SlotsTableList";
 import { useUserContext } from "../../../../contexts/UserContext";
 
 export const DatePickerField = ({ ...props }) => {
@@ -98,7 +98,7 @@ const ReplacementRequestComponent = ({ }) => {
 
   return (
     <>
-      <SlotsTable slots={slots.filter(slot => slot.staffMember === user.id)} active={active} onClick={setActive} />
+      <SlotsTableList slots={slots.filter(slot => slot.staffMember === user.id)} active={active} onClick={setActive} />
       <Formik
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
