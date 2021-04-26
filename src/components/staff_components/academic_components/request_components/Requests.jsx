@@ -2,10 +2,7 @@ import React from "react";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../../contexts/UserContext";
 import RequestsHome from "./RequestsHome";
-import SendSlotLinkingRequest from "./createSlotLinkingRequest.component";
 import ViewRequests from "./ViewMyRequests";
-import ViewReplacement from "./ViewReplacement.component";
-import SendReplacement from "./ReplacementRequest.component";
 import CCRequests from "../../cc_components/CcRequests";
 import HODRequests from "../../hod_components/HodRequests";
 import SendRequests from "./sendRequest";
@@ -18,9 +15,6 @@ function Requests() {
     <Switch>
       <Route exact path={match.path}><RequestsHome /></Route>
       <Route exact path={`${match.path}/view-requests`}><ViewRequests /></Route>
-      <Route exact path={`${match.path}/view-replacement-requests`}><ViewReplacement /></Route>
-      <Route exact path={`${match.path}/send-replacement-request`}><SendReplacement /></Route>
-      <Route exact path={`${match.path}/send-slot-linking-request`}><SendSlotLinkingRequest /></Route>
       <Route exact path={`${match.path}/send-request`}><SendRequests /></Route>
 
       {user.role === "Head of Department"

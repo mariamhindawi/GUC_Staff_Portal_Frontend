@@ -27,7 +27,7 @@ const CICoursesSlotsComponent = () => {
 
   const getCourseSlots = (id) => {
     setCourse(id);
-    AxiosInstance.get(`staff/ci/course-slots/${id}`, {
+    AxiosInstance.get(`staff/academic/course-slots/${id}`, {
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken()
       },
@@ -45,7 +45,7 @@ const CICoursesSlotsComponent = () => {
         room: slots.filter(slot => slot._id === active)[0].room,
         slotNumber: slots.filter(slot => slot._id === active)[0].slotNumber
       }
-    }).then(() => AxiosInstance.get(`staff/ci/course-slots/${course}`, {
+    }).then(() => AxiosInstance.get(`staff/academic/course-slots/${course}`, {
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken()
       },

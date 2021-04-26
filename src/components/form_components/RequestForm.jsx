@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-closing-tag-location */
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Formik, Form } from "formik";
@@ -11,6 +10,8 @@ import Input from "./form_input_components/Input";
 import FormSubmit from "./form_helper_components/FormSubmit";
 import DatePickerField from "./form_input_components/DatePickerField";
 import Select from "./form_input_components/Select";
+import ReplacementRequest from "../staff_components/academic_components/request_components/ReplacementRequest";
+import SlotLinkingRequest from "../staff_components/academic_components/request_components/SlotLinkingRequest";
 
 function RequestForm(props) {
   const [message, setMessage] = useState({ messageText: "", messageStyle: "" });
@@ -51,6 +52,7 @@ function RequestForm(props) {
     setMessage({ messageText: "", messageStyle: "" });
     await AxiosInstance({
       method: "post",
+      // eslint-disable-next-line no-nested-ternary
       url: props.requestType !== "dayOffChangeRequest" ? "/staff/academic/send-leave-request" : "/staff/academic/change-day-off-request",
       cancelToken: axiosCancelSource.token,
       headers: {
@@ -85,6 +87,16 @@ function RequestForm(props) {
       });
   };
 
+  if (props.requestType === "replacementRequest") {
+    return (
+      <ReplacementRequest />
+    );
+  }
+  if (props.requestType === "slotLinkingRequest") {
+    return (
+      <SlotLinkingRequest />
+    );
+  }
   return (
     <div className="form-container request-form">
       <div className="form-card">

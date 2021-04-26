@@ -12,18 +12,6 @@ function RequestsHome() {
   return (
     <div className="view-container">
       <div className="general-page-container">
-        <Link to={`${match.path}/send-replacement-request`}>
-          <Button className="general-page-button" variant="info">
-            Send replacement request
-            <br />
-          </Button>
-        </Link>
-        <Link to={`${match.path}/send-slot-linking-request`}>
-          <Button className="general-page-button" variant="info">
-            Send slot linking request
-            <br />
-          </Button>
-        </Link>
         <Link to={`${match.path}/view-requests`} tabIndex={-1}>
           <Button className="general-page-button" variant="info">
             Requests status

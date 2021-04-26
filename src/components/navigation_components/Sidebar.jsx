@@ -51,13 +51,13 @@ function Sidebar(props) {
 
       {user.role !== "HR" && (
         <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/requests`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="list" />
-            <span className="icon-text">Requests</span>
-          </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/schedule`}>
             <FontAwesomeIcon className="sidebar-icon" icon="calendar-alt" />
             <span className="icon-text">Schedule</span>
+          </Link>
+          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/requests`}>
+            <FontAwesomeIcon className="sidebar-icon" icon="list" />
+            <span className="icon-text">Requests</span>
           </Link>
           <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/courses`}>
             <FontAwesomeIcon className="sidebar-icon" icon="book" />

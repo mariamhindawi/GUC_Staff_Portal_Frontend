@@ -11,7 +11,7 @@ import Spinner from "../../helper_components/Spinner";
 function Schedule() {
   const [isLoading, setLoading] = useState(true);
   const [slots, setSlots] = useState([]);
-  const [active, setActive] = useState("");
+  const [activeSlot, setActiveSlot] = useState("");
   const [modal, setModal] = useState(false);
   const user = useUserContext();
   const axiosCancelSource = Axios.CancelToken.source();
@@ -49,7 +49,7 @@ function Schedule() {
 
   const toggle = () => setModal(!modal);
   const click = slot => {
-    setActive(slot);
+    setActiveSlot(slot);
     toggle();
   };
   if (isLoading) {
@@ -61,12 +61,12 @@ function Schedule() {
   return (
     <>
       <div className="view-container text-center">
-        <SlotsTableList slots={slots} active="" onClick={click} />
+        <SlotsTableList slots={slots} activeSlot={activeSlot} onClick={click} />
       </div>
       <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>Slot Details</ModalHeader>
         <ModalBody>
-          {slots.filter(slot => slot._id === active).map(slot => (
+          {slots.filter(slot => slot._id === activeSlot).map(slot => (
             <ul key="slot._id" className="unstyled">
               <li key="k1">
                 Slot:

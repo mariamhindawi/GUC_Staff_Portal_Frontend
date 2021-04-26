@@ -27,7 +27,7 @@ const CIAssignSlots = () => {
 
   const chooseCourse = id => {
     setCourse(id);
-    AxiosInstance.get(`staff/ci/course-slots/${id}`, {
+    AxiosInstance.get(`staff/academic/course-slots/${id}`, {
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },

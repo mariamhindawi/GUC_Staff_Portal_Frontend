@@ -134,3 +134,8 @@
 .close-button:not(:disabled):not(.disabled):active {
   box-shadow: 0 0 0 3px lightgrey;
 }
+
+.slot-linking-send-button{
+float: right;
+margin-right: 30px;
+}

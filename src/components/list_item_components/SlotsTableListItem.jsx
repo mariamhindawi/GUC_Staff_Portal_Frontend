@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 function SlotsTableListItem(props) {
   return (
@@ -10,7 +11,7 @@ function SlotsTableListItem(props) {
           <Card
             key={slot._id}
             onClick={() => { props.onClick(slot._id); }}
-            className={props.active === slot._id ? "bg-primary schedule-card" : "bg-transparent schedule-card"}
+            className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
           </Card>
@@ -20,8 +21,8 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Sunday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); }}
-            className={props.active === slot._id ? "bg-primary schedule-card" : "bg-transparent schedule-card"}
+            onClick={() => { props.onClick(slot._id); console.log(props.activeSlot); }}
+            className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
             <br />
@@ -34,7 +35,7 @@ function SlotsTableListItem(props) {
           <Card
             key={slot._id}
             onClick={() => { props.onClick(slot._id); }}
-            className={props.active === slot._id ? "bg-primary schedule-card" : "bg-transparent schedule-card"}
+            className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
           </Card>
@@ -45,7 +46,7 @@ function SlotsTableListItem(props) {
           <Card
             key={slot._id}
             onClick={() => { props.onClick(slot._id); }}
-            className={props.active === slot._id ? "bg-primary schedule-card" : "bg-transparent schedule-card"}
+            className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
           </Card>
@@ -56,7 +57,7 @@ function SlotsTableListItem(props) {
           <Card
             key={slot._id}
             onClick={() => { props.onClick(slot._id); }}
-            className={props.active === slot._id ? "bg-primary schedule-card" : "bg-transparent schedule-card"}
+            className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
           </Card>
@@ -67,15 +68,34 @@ function SlotsTableListItem(props) {
           <Card
             key={slot._id}
             onClick={() => { props.onClick(slot._id); }}
-            className={props.active === slot._id ? "bg-primary schedule-card" : "bg-transparent schedule-card"}
+            className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
-
           </Card>
         ))}
       </td>
     </tr>
   );
 }
+SlotsTableListItem.propTypes = {
+  slots: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    day: PropTypes.string,
+    staffMember: PropTypes.string,
+    slotNumber: PropTypes.string,
+    room: PropTypes.string,
+    course: PropTypes.string,
+    type: PropTypes.string,
+  })).isRequired,
+  activeSlot: PropTypes.string.isRequired,
+  slotNumber: PropTypes.string,
+  onClick: PropTypes.func,
+  request: PropTypes.string,
+};
 
+SlotsTableListItem.defaultProps = {
+  onClick: () => {},
+  slotNumber: "0",
+  request: "",
+};
 export default SlotsTableListItem;
