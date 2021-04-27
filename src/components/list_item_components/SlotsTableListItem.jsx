@@ -21,7 +21,7 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Sunday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); console.log(props.activeSlot); }}
+            onClick={() => { props.onClick(slot._id); }}
             className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}

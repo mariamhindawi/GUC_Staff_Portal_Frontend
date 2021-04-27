@@ -12,7 +12,6 @@ import Requests from "../academic_components/request_components/Requests";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";
 import CiAssignSlot from "../ci_components/CiAssignSlots";
-import HODViewDepartmentSlots from "./HodViewDepartmentSlots";
 import HODViewCourseSlots from "../ci_components/CiViewCoursesSlots";
 
 function HodHome(props) {
@@ -35,7 +34,6 @@ function HodHome(props) {
         <Route path={`${match.path}/courses`}><Courses /></Route>
         <Route path={`${match.path}/academic-members`}><AcademicMembers /></Route>
         <Route path={`${match.path}/assign-slot`}><CiAssignSlot /></Route>
-        <Route path={`${match.path}/department-slot-assignments`}><HODViewDepartmentSlots /></Route>
         <Route path={`${match.path}/course-slot-assignments`}><HODViewCourseSlots /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>

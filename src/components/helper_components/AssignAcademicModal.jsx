@@ -94,7 +94,7 @@ AssignAcademicModal.propTypes = {
   courseToAssign: PropTypes.shape({
     id: PropTypes.string,
   }).isRequired,
-  academicRole: PropTypes.oneOf(["", "Teaching Assistant", "Course Coordinator", "Course Instructor"]).isRequired,
+  academicRole: PropTypes.oneOf(["", "Teaching Assistant", "Course Coordinator", "Course Instructor", "Academic"]).isRequired,
   assignAcademic: PropTypes.func.isRequired,
   toggle: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,

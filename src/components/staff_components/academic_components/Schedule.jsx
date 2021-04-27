@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Modal, ModalBody, ModalHeader } from "reactstrap";
 import Axios from "axios";
 import AxiosInstance from "../../../others/AxiosInstance";
 import useAxiosCancel from "../../../hooks/AxiosCancel";
-import { useUserContext } from "../../../contexts/UserContext";
 import AuthTokenManager from "../../../others/AuthTokenManager";
 import SlotsTableList from "../../list_components/SlotsTableList";
 import Spinner from "../../helper_components/Spinner";
+import ScheduleDetailsModal from "../../helper_components/ScheduleDetailsModal";
 
 function Schedule() {
   const [isLoading, setLoading] = useState(true);
   const [slots, setSlots] = useState([]);
   const [activeSlot, setActiveSlot] = useState("");
-  const [modal, setModal] = useState(false);
-  const user = useUserContext();
+  const [unassignModalIsOpen, setUnassignModalOpen] = useState(false);
+  const [unassignModalState, setUnassignModalState] = useState("will submit");
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
@@ -46,11 +45,16 @@ function Schedule() {
       });
   };
   useEffect(fetchSchedule, []);
+  const toggleUnassignModal = () => {
+    setUnassignModalOpen(prevState => !prevState);
+  };
+  const resetUnassignModal = () => {
+    setUnassignModalState("will submit");
+  };
 
-  const toggle = () => setModal(!modal);
   const click = slot => {
     setActiveSlot(slot);
-    toggle();
+    toggleUnassignModal();
   };
   if (isLoading) {
     return (
@@ -63,37 +67,15 @@ function Schedule() {
       <div className="view-container text-center">
         <SlotsTableList slots={slots} activeSlot={activeSlot} onClick={click} />
       </div>
-      <Modal isOpen={modal} toggle={toggle}>
-        <ModalHeader toggle={toggle}>Slot Details</ModalHeader>
-        <ModalBody>
-          {slots.filter(slot => slot._id === activeSlot).map(slot => (
-            <ul key="slot._id" className="unstyled">
-              <li key="k1">
-                Slot:
-                {slot.slotNumber}
-              </li>
-              <li key="k2">
-                Day:
-                {slot.day}
-              </li>
-              <li key="k3">
-                Course:
-                {slot.course}
-              </li>
-              <li key="k4">
-                Room:
-                {slot.room}
-              </li>
-              {user.id !== slot.staffMember ? (
-                <li key="k5">
-                  Academic Member:
-                  {slot.staffMember}
-                </li>
-              ) : null}
-            </ul>
-          ))}
-        </ModalBody>
-      </Modal>
+      <ScheduleDetailsModal
+        isOpen={unassignModalIsOpen}
+        state={unassignModalState}
+        slots={slots}
+        toggle={toggleUnassignModal}
+        reset={resetUnassignModal}
+        activeSlot={activeSlot}
+        unassign="schedule"
+      />
     </>
   );
 }

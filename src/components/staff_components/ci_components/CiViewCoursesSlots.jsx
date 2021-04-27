@@ -1,86 +1,204 @@
-import React, { useState, useEffect } from "react";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalFooter } from "reactstrap";
+import React, { useEffect, useState } from "react";
 import Axios from "axios";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import AxiosInstance from "../../../others/AxiosInstance";
 import AuthTokenManager from "../../../others/AuthTokenManager";
+import useAxiosCancel from "../../../hooks/AxiosCancel";
+import { useUserContext } from "../../../contexts/UserContext";
+import Spinner from "../../helper_components/Spinner";
 import SlotsTableList from "../../list_components/SlotsTableList";
+import ScheduleDetailsModal from "../../helper_components/ScheduleDetailsModal";
 
-const CICoursesSlotsComponent = () => {
+function CiViewCoursesSlots() {
+  const [isLoading, setLoading] = useState(true);
   const [courses, setCourses] = useState([]);
-  const [course, setCourse] = useState("");
+  const [selectedCourse, setSelectedCourse] = useState("");
   const [slots, setSlots] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [active, setActive] = useState("");
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [activeSlot, setActiveSlot] = useState("");
+  const [unassignModalIsOpen, setUnassignModalOpen] = useState(false);
+  const [unassignModalState, setUnassignModalState] = useState("will submit");
+  const [unassignModalMessage, setUnassignModalMessage] = useState({ messageText: "", messageStyle: "" });
+  const user = useUserContext();
+  const axiosCancelSource = Axios.CancelToken.source();
+  useAxiosCancel(axiosCancelSource);
 
-  const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-
-  const toggle = (id) => { setActive(id); setModalOpen(!modalOpen); };
-
-  useEffect(() => {
-    AxiosInstance.get("staff/academic/get-my-courses", {
+  const fetchCourses = async () => {
+    const url = user.role === "Course Instructor" ? "/staff/academic/get-my-courses" : "/staff/academic/get-department-courses";
+    setLoading(true);
+    await AxiosInstance.get(url, {
+      cancelToken: axiosCancelSource.token,
       headers: {
-        "auth-access-token": AuthTokenManager.getAuthAccessToken()
-      }
-    }).then(res => setCourses(res.data));
-  }, []);
-
-  const getCourseSlots = (id) => {
-    setCourse(id);
-    AxiosInstance.get(`staff/academic/course-slots/${id}`, {
-      headers: {
-        "auth-access-token": AuthTokenManager.getAuthAccessToken()
+        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
-    }).then(res => setSlots(res.data)).catch(err => console.log(err));
+    })
+      .then(response => {
+        setCourses(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        if (Axios.isCancel(error)) {
+          console.log(error.message);
+        }
+        else if (error.response) {
+          console.log(error.response);
+          setLoading(false);
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+      });
   };
-  const handleSubmit = (event) => {
-    toggle("");
-    AxiosInstance("staff/ci/delete-academic-member-from-slot", {
-      method: "DELETE",
+  const fetchSlots = async id => {
+    setLoading(true);
+    await AxiosInstance({
+      method: "get",
+      url: `staff/academic/course-slots/${id}`,
+      cancelToken: axiosCancelSource.token,
       headers: {
-        "auth-access-token": AuthTokenManager.getAuthAccessToken()
+        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
+      },
+    })
+      .then(response => {
+        setSlots(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        if (Axios.isCancel(error)) {
+          console.log(error.message);
+        }
+        else if (error.response) {
+          console.log(error.response);
+          setLoading(false);
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+      });
+  };
+  const unassignAcademic = async () => {
+    setUnassignModalState("submitting");
+    await AxiosInstance({
+      method: "delete",
+      url: "staff/ci/unassign-academic-member-from-slot",
+      cancelToken: axiosCancelSource.token,
+      headers: {
+        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
       },
       data: {
-        day: slots.filter(slot => slot._id === active)[0].day,
-        room: slots.filter(slot => slot._id === active)[0].room,
-        slotNumber: slots.filter(slot => slot._id === active)[0].slotNumber
-      }
-    }).then(() => AxiosInstance.get(`staff/academic/course-slots/${course}`, {
-      headers: {
-        "auth-access-token": AuthTokenManager.getAuthAccessToken()
+        day: slots.filter(slot => slot._id === activeSlot)[0].day,
+        room: slots.filter(slot => slot._id === activeSlot)[0].room,
+        slotNumber: slots.filter(slot => slot._id === activeSlot)[0].slotNumber,
       },
-    }).then(res => setSlots(res.data)).catch(err => console.log(err)));
+    })
+      .then(response => {
+        setUnassignModalMessage({
+          messageText: response.data,
+          messageStyle: "success",
+        });
+        setUnassignModalState("submitted");
+        fetchSlots();
+      })
+      .catch(error => {
+        if (Axios.isCancel(error)) {
+          console.log(error.message);
+        }
+        else if (error.response) {
+          setUnassignModalMessage({
+            messageText: error.response.data,
+            messageStyle: "danger",
+          });
+          setUnassignModalState("submitted");
+        }
+        else if (error.request) {
+          console.log(error.request);
+        }
+        else {
+          console.log(error.message);
+        }
+      });
   };
-  let dropdownItems = courses.map(course => <DropdownItem onClick={() => getCourseSlots(course.id)} key={course._id}>{course.name}</DropdownItem>);
-  return <>
-    <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
-      <DropdownToggle caret>
-        {course ? courses.filter(cou => cou.id === course)[0].name : "Choose course"}
-      </DropdownToggle>
-      <DropdownMenu>
-        {dropdownItems}
-      </DropdownMenu>
-    </Dropdown>
-    <SlotsTableList slots={slots.filter(sl => sl.staffMember !== "UNASSIGNED")} active={active} onClick={toggle} />
-    <Modal isOpen={modalOpen} toggle={toggle}>
-      <ModalBody>
-        {slots.filter(slot => slot._id === active).map(slot => {
-          return <ul key={slot._id} className="unstyled">
-            <li key={slot._id + "k1"}>Slot: {slot.slotNumber}</li>
-            <li key={slot._id + "k2"}>Day: {slot.day}</li>
-            <li key={slot._id + "k3"}>Course: {slot.course}</li>
-            <li key={slot._id + "k4"}>Room: {slot.room}</li>
-            <li key={slot._id + "k5"}>Academic Member: {slot.staffMember}</li>
-          </ul>;
-        })}
-      </ModalBody>
-      <ModalFooter>
-        <Button type="submit" className="bg-danger" onClick={handleSubmit}>
-          Unassign
-                </Button>
-      </ModalFooter>
-    </Modal>
-  </>;
-};
+  const toggleUnassignModal = () => {
+    setUnassignModalOpen(prevState => !prevState);
+  };
+  const resetUnassignModal = () => {
+    setUnassignModalState("will submit");
+    setUnassignModalMessage({ messageText: "", messageStyle: "" });
+  };
 
-export default CICoursesSlotsComponent;
+  const toggle = slot => {
+    setActiveSlot(slot);
+    toggleUnassignModal();
+  };
+
+  useEffect(fetchCourses, []);
+  const mapCoursesToDropdownItems = dropdownCourses => {
+    if (dropdownCourses.length === 0) {
+      return <Dropdown.Item className="list-dropdown-item" as="span">No Assigned Courses</Dropdown.Item>;
+    }
+    const dropdownItems = dropdownCourses.map(course => (
+      <Dropdown.Item
+        key={course.id}
+        onClick={() => { setSelectedCourse(course.id); fetchSlots(course.id); }}
+      >
+        {course.id}
+      </Dropdown.Item>
+    ));
+    const defaultItem = (
+      <Dropdown.Item
+        key=""
+        onClick={() => { setSelectedCourse(""); setLoading(false); }}
+      >
+        Select Course
+      </Dropdown.Item>
+    );
+    dropdownItems.unshift(defaultItem);
+    return dropdownItems;
+  };
+  if (isLoading) {
+    return (
+      <div className="view-container">
+        <div className="view-select">
+          <span className="mr-2">Course</span>
+          <DropdownButton bsPrefix="view-dropdown-button" title={selectedCourse || "Choose course"}>
+            {mapCoursesToDropdownItems(courses)}
+          </DropdownButton>
+        </div>
+        <Spinner />
+      </div>
+    );
+  }
+  return (
+    <div className="view-container">
+      <div className="view-select">
+        <span className="mr-2">Course</span>
+        <DropdownButton bsPrefix="view-dropdown-button" title={selectedCourse || "Choose course"}>
+          {mapCoursesToDropdownItems(courses)}
+        </DropdownButton>
+      </div>
+      {selectedCourse === "" ? null : (
+        <div className=" view-container text-center">
+          <SlotsTableList slots={slots.filter(sl => sl.staffMember !== "UNASSIGNED")} activeSlot={activeSlot} onClick={toggle} />
+          <ScheduleDetailsModal
+            isOpen={unassignModalIsOpen}
+            state={unassignModalState}
+            message={unassignModalMessage}
+            slots={slots}
+            toggle={toggleUnassignModal}
+            reset={resetUnassignModal}
+            activeSlot={activeSlot}
+            unassignAcademic={unassignAcademic}
+            unassign="unassignAcademic"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default CiViewCoursesSlots;
