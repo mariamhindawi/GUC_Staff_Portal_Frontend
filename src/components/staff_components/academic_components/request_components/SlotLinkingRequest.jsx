@@ -87,7 +87,7 @@ function SlotLinkingRequest() {
     setLoading(true);
     await AxiosInstance({
       method: "get",
-      url: `staff/academic/course-slots/${id}`,
+      url: `staff/academic/get-slots/${id}`,
       cancelToken: axiosCancelSource.token,
       headers: {
         "auth-access-token": AuthTokenManager.getAuthAccessToken(),
