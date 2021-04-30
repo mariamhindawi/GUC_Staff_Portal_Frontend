@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Redirect, Route, Switch, useRouteMatch } from "react-router-dom";
 import { useUserContext } from "../../../contexts/UserContext";
-import HodHomeMain from "./HodHomeMain";
+import AcademicHomeMain from "../academic_components/AcademicHomeMain";
 import Notifications from "../academic_components/Notifications";
 import Profile from "../general_staff_components/Profile";
 import ResetPassword from "../general_staff_components/ResetPassword";
@@ -24,7 +24,7 @@ function HodHome(props) {
   return (
     <div className={`home-container ${props.homeContainerStyle}`}>
       <Switch>
-        <Route exact path={match.path}><HodHomeMain /></Route>
+        <Route exact path={match.path}><AcademicHomeMain /></Route>
         <Route path={`${match.path}/notifications`}><Notifications /></Route>
         <Route path={`${match.path}/profile`}><Profile /></Route>
         <Route path={`${match.path}/reset-password`}><ResetPassword /></Route>

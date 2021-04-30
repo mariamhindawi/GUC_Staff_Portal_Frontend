@@ -1,21 +1,73 @@
-.hr-counts-report {
+.counts-report {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  margin-top: 20px;
+  padding: 10px;
+  overflow-x: scroll;
 }
-.hr-counts-report>div{
+.counts-report>div{
   border: 1px solid lightgrey;
-  width: 17%;
-  height: 80px;
+  width: 250px;
+  min-width: 250px;
+  height: 90px;
+  padding: 25px;
+  margin-right: 30px;
 }
-.hr-counts-report>div:hover,
-.hr-counts-report>div:focus{
-  box-shadow: 0 0 10px 0 rgba(26, 151, 210, 1);
+.counts-report>div:last-child{
+  margin-right: 0px;
+}
+.counts-report>div:hover,
+.counts-report>div:focus{
+  box-shadow: 5px 0px 10px 0px lightgray;
   transform: scale(1.05);
-
 }
 .counts-report-icon{
 font-size: 30px;
-margin: auto 0px auto 10px;
+margin-right: 30px;
+}
+.counts-report>div>div {
+  margin-top: -5px;
+}
+
+.counts-report .number{
+font-size: 20px;
+font-weight: bold;
+}
+.counts-report .title{
+  font-size: 14px;
+  font-weight: bold;
+  color: darkgray;
+}
+
+.room-chart, .slot-chart{
+  width:700px;
+  height: 500px;
+  border: 1px solid lightgrey;
+  margin:10px
+
+}
+.chart-container{
+  overflow-x:scroll ;
+  clear: both;
+
+}
+.room-chart:hover,
+.room-chart:focus,
+.slot-chart:hover,
+.slot-chart:focus{
+  box-shadow: 5px 0px 10px 0px lightgray;
+  transform: scale(1.02);
+
+}
+
+.arrow {
+  display: none;
+}
+@media (max-width:1400px) {
+  .arrow{
+    display: block;
+    font-size: 30px;
+    float: right;
+    color: #0099ff;
+  }
+
 }
