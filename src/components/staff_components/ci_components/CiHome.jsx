@@ -11,7 +11,6 @@ import Schedule from "../academic_components/Schedule";
 import Requests from "../academic_components/request_components/Requests";
 import Courses from "../academic_components/Courses";
 import AcademicMembers from "../academic_components/AcademicMembers";
-import CiAssignSlot from "./CiAssignSlots";
 import CiSlots from "./CiViewCoursesSlots";
 
 function CiHome(props) {
@@ -33,7 +32,6 @@ function CiHome(props) {
         <Route path={`${match.path}/requests`}><Requests /></Route>
         <Route path={`${match.path}/courses`}><Courses /></Route>
         <Route path={`${match.path}/academic-members`}><AcademicMembers /></Route>
-        <Route path={`${match.path}/assign-slot`}><CiAssignSlot /></Route>
         <Route path={`${match.path}/course-slot-assignments`}><CiSlots /></Route>
         <Route path={match.path}><Redirect to="/404" /></Route>
       </Switch>

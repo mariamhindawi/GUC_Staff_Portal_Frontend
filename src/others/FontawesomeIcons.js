@@ -4,9 +4,7 @@ import {
   faEdit, faTrashAlt, faEnvelope, faSave, faEye, faBuilding, faClipboardList, faBook, faSitemap,
   faTable, faCalendarAlt, faSearch, faList, faUserTie, faUserGraduate, faAddressBook, faUserClock,
   faHourglassHalf, faCalendarDay, faCalendarPlus, faMinus, faClock, faUserPlus, faShare, faSpinner,
-  faCheck,
-  faUserCheck,
-  faArrowCircleRight
+  faCheck, faUserCheck, faArrowCircleRight, faHourglass
 } from "@fortawesome/free-solid-svg-icons";
 import { faFacebook, faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
@@ -15,4 +13,4 @@ library.add(faUser, faLock, faHome, faBell, faSignOutAlt, faKey, faAddressCard, 
   faFacebook, faBuilding, faClipboardList, faBook, faSitemap, faTable, faCalendarAlt,
   faSearch, faList, faUserTie, faUserGraduate, faAddressBook, faUserClock, faHourglassHalf,
   faCalendarDay, faCalendarPlus, faMinus, faClock, faUserPlus, faShare, faSpinner, faCheck,
-  faUserCheck, faArrowCircleRight, faHourglassHalf);
+  faUserCheck, faArrowCircleRight, faHourglass);

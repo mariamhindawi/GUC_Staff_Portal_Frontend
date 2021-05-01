@@ -2,11 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Alert, Button, Modal, Spinner } from "react-bootstrap";
 import CloseButton from "../button_components/CloseButton";
-import { useUserContext } from "../../contexts/UserContext";
 
 function ScheduleDetailsModal(props) {
-  const user = useUserContext();
-
   if (props.state === "submitting") {
     return (
       <Modal show={props.isOpen} backdrop="static" onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
@@ -35,7 +32,7 @@ function ScheduleDetailsModal(props) {
 
     <Modal show={props.isOpen} onHide={props.toggle} onExited={props.reset} restoreFocus={false}>
       <Modal.Header className="modal-header">
-        <Alert className="align-center-vertical text-center" variant="danger">
+        <Alert className="align-center-vertical text-center" variant={props.unassign === "schedule" ? "info" : "danger"}>
           Slot:
           {" "}
           {props.activeSlot}
@@ -64,13 +61,11 @@ function ScheduleDetailsModal(props) {
               {" "}
               {slot.room}
             </li>
-            {user.id !== slot.staffMember ? (
-              <li key="k5">
-                Academic Member:
-                {" "}
-                {slot.staffMember}
-              </li>
-            ) : null}
+            <li key="k5">
+              Academic Member:
+              {" "}
+              {slot.staffMember}
+            </li>
           </ul>
         ))}
       </Modal.Body>

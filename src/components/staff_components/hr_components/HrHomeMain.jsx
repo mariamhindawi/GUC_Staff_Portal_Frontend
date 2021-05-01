@@ -9,7 +9,13 @@ import Spinner from "../../helper_components/Spinner";
 
 function HrHomeMain() {
   const [isLoading, setLoading] = useState(true);
-  const [countsReport, setCountsReport] = useState({});
+  const [countsReport, setCountsReport] = useState({
+    academicMembers: -1,
+    hrMembers: -1,
+    faculties: -1,
+    departments: -1,
+    courses: -1,
+  });
   const [roomsStats, setRoomsStats] = useState({});
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
@@ -75,7 +81,8 @@ function HrHomeMain() {
   useEffect(fetchCountsReport, []);
   useEffect(fetchRoomsStats, []);
 
-  if (isLoading) {
+  if (isLoading || countsReport.academicMembers < 0 || countsReport.hrMembers < 0
+    || countsReport.courses < 0 || countsReport.faculties < 0 || countsReport.departments < 0) {
     return <Spinner />;
   }
   return (

@@ -25,7 +25,6 @@ function AcademicMembers() {
     courseInstructors: [], teachingAssistants: [],
   });
   const [academicsType, setAcademicsType] = useState("All");
-
   const axiosCancelSource = Axios.CancelToken.source();
   const axiosCancelSourcePersonalCourse = Axios.CancelToken.source();
   const axiosCancelSourceDepartmentCourse = Axios.CancelToken.source();

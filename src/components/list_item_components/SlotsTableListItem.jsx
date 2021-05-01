@@ -10,7 +10,7 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Saturday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); }}
+            onClick={() => { props.onClick(slot._id, slot.staffMember); }}
             className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
@@ -21,7 +21,7 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Sunday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); }}
+            onClick={() => { props.onClick(slot._id, slot.staffMember); }}
             className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
@@ -34,7 +34,7 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Monday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); }}
+            onClick={() => { props.onClick(slot._id, slot.staffMember); }}
             className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
@@ -45,7 +45,7 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Tuesday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); }}
+            onClick={() => { props.onClick(slot._id, slot.staffMember); }}
             className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
@@ -56,7 +56,7 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Wednesday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); }}
+            onClick={() => { props.onClick(slot._id, slot.staffMember); }}
             className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}
@@ -67,7 +67,7 @@ function SlotsTableListItem(props) {
         {props.slots.filter(slot => slot.day === "Thursday").map(slot => (
           <Card
             key={slot._id}
-            onClick={() => { props.onClick(slot._id); }}
+            onClick={() => { props.onClick(slot._id, slot.staffMember); }}
             className={props.activeSlot === slot._id && props.request === "slotLinkingRequest" ? "schedule-card-active" : "schedule-card"}
           >
             {slot.course}

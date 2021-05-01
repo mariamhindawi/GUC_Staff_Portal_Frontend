@@ -17,8 +17,8 @@ function AcademicHomeMain() {
   const [month] = useState(isBefore(new Date(), new Date().setDate(11))
     ? new Date().getMonth() : new Date().getMonth() + 1);
   const [year] = useState(addDays(Date.now(), -10).getFullYear());
-  const [hours, setHours] = useState(-1);
-  const [missingDays, setMissingDays] = useState(-1);
+  const [missingHours, setMissingHours] = useState(-1);
+  const [extraHours, setExtraHours] = useState(-1);
   const axiosCancelSource = Axios.CancelToken.source();
   useAxiosCancel(axiosCancelSource);
 
@@ -95,7 +95,8 @@ function AcademicHomeMain() {
       },
     })
       .then(response => {
-        setHours(response.data.missingHours);
+        setMissingHours(response.data.missingHours);
+        setExtraHours(response.data.extraHours);
         setLoading(false);
       })
       .catch(error => {
@@ -114,46 +115,11 @@ function AcademicHomeMain() {
         }
       });
   };
-  const fetchMissingDays = async () => {
-    setLoading(true);
-    await AxiosInstance.get("/staff/view-missing-days", {
-      cancelToken: axiosCancelSource.token,
-      headers: {
-        "auth-access-token": AuthTokenManager.getAuthAccessToken(),
-      },
-      params: {
-        month,
-        year,
-      },
-    })
-      .then(response => {
-        for (let i = 0; i < response.data.length; i++) {
-          response.data[i] = new Date(response.data[i]);
-        }
-        setMissingDays(response.data.length);
-        setLoading(false);
-      })
-      .catch(error => {
-        if (Axios.isCancel(error)) {
-          console.log(error.message);
-        }
-        else if (error.response) {
-          setLoading(false);
-          console.log(error.response);
-        }
-        else if (error.request) {
-          console.log(error.request);
-        }
-        else {
-          console.log(error.message);
-        }
-      });
-  };
+
   useEffect(fetchSlots, []);
   useEffect(fetchReport, []);
   useEffect(fetchHours, []);
-  useEffect(fetchMissingDays, []);
-  if (isLoading || missingDays < 0 || hours < 0
+  if (isLoading || missingHours < 0 || extraHours < 0
     || personalCourses < 0 || pendingRequests < 0 || recievedRequests < 0) {
     return <Spinner />;
   }
@@ -182,17 +148,17 @@ function AcademicHomeMain() {
           </div>
         </div>
         <div className="d-flex">
-          <FontAwesomeIcon className="sidebar-icon counts-report-icon" style={{ color: "#e6b800" }} icon="calendar-day" />
+          <FontAwesomeIcon className="sidebar-icon counts-report-icon" style={{ color: "#e6b800" }} icon="hourglass-half" />
           <div className="d-flex flex-column">
-            <span className="number">{missingDays}</span>
-            <span className="title">Missing Days</span>
+            <span className="number">{missingHours}</span>
+            <span className="title">Missing Hours</span>
           </div>
         </div>
         <div className="d-flex">
-          <FontAwesomeIcon className="sidebar-icon counts-report-icon" style={{ color: "#009999" }} icon="hourglass-half" />
+          <FontAwesomeIcon className="sidebar-icon counts-report-icon" style={{ color: "#009999" }} icon="hourglass" />
           <div className="d-flex flex-column">
-            <span className="number">{hours}</span>
-            <span className="title">Missing Hours</span>
+            <span className="number">{extraHours}</span>
+            <span className="title">Extra Hours</span>
           </div>
         </div>
       </div>

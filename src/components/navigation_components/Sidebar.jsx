@@ -71,16 +71,10 @@ function Sidebar(props) {
       )}
 
       {(user.role === "Course Instructor" || user.role === "Head of Department") && (
-        <>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/course-slot-assignments`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="clock" />
-            <span className="icon-text">Slots</span>
-          </Link>
-          <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/assign-slot`}>
-            <FontAwesomeIcon className="sidebar-icon" icon="user-plus" />
-            <span className="icon-text"> Assign Slot</span>
-          </Link>
-        </>
+      <Link className="sidebar-link" to={`${match.url}/${user.rolePath}/course-slot-assignments`}>
+        <FontAwesomeIcon className="sidebar-icon" icon="clock" />
+        <span className="icon-text">Slots</span>
+      </Link>
       )}
 
       {user.role === "Course Coordinator" && (
