@@ -6,7 +6,6 @@ function sendRequest() {
   const [requestType, setRequestType] = useState("");
   const [requestTypeShown, setRequestTypeShown] = useState("");
 
-
   return (
     <div className="view-container">
       <div className="view-select">
